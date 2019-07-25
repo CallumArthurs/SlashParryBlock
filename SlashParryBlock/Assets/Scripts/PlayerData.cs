@@ -71,17 +71,19 @@ public class PlayerData : MonoBehaviour
                     {
                         if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f)
                         {
+                            other.gameObject.GetComponent<Rigidbody>().AddForce(other.transform.position - transform.position, ForceMode.Impulse);
                             other.GetComponent<PlayerData>().TakeDamage(damage * 2);
                             Debug.Log(gameObject.name + " get Backstabbed");
                         }
                         else
                         {
+                            other.gameObject.GetComponent<Rigidbody>().AddForce(other.transform.position - transform.position, ForceMode.Impulse);
                             other.GetComponent<PlayerData>().TakeDamage(damage);
                         }
                     }
                     else
                     {
-                        gameObject.GetComponent<Rigidbody>().AddForce(other.transform.position - transform.position, ForceMode.Impulse);
+                        other.gameObject.GetComponent<Rigidbody>().AddForce(other.transform.position - transform.position, ForceMode.Impulse);
                         Debug.Log(gameObject.name + " get blocked");
                     }
                 }
@@ -89,11 +91,13 @@ public class PlayerData : MonoBehaviour
                 {
                     if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f)
                     {
+                        other.gameObject.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * 2.0f, ForceMode.Impulse);
                         other.GetComponent<PlayerData>().TakeDamage(damage * 2);
                         Debug.Log(gameObject.name + " get Backstabbed");
                     }
                     else
                     {
+                        other.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * 2.0f, ForceMode.Impulse);
                         other.GetComponent<PlayerData>().TakeDamage(damage);
                     }
                 }
