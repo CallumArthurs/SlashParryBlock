@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class CharacterMovmentScript : MonoBehaviour
 {
+    [Header("Player data default values")]
+    public int playerHealth;
+    public int playerDamage;
+    [Tooltip("this is a multiplyer on knockback hit halved for the shield")]
+    public float playerKnockback;
+
+    [Header("Character movement values")]
     public float speed;
     public float rotSpeed;
     public PlayerData[] players;
@@ -15,11 +22,25 @@ public class CharacterMovmentScript : MonoBehaviour
     private List<Vector3> SpawnPoints;
     void Start()
     {
-        //GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        GameObject[] tempobj = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        SpawnPoints = new List<Vector3>();
+        for (int i = 0; i < tempobj.Length; i++)
+        {
+            SpawnPoints.Add(tempobj[i].transform.position);
+        }
+
         playersRB = new List<Rigidbody>();
         for (int i = 0; i < 4; i++)
         {
             playersRB.Add(players[i].gameObject.GetComponent<Rigidbody>());
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            players[i].setHealth(playerHealth);
+            players[i].setDamage(playerDamage);
+            players[i].setKnockback(playerKnockback);
         }
     }
 
@@ -48,7 +69,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     players[i].Attack();
                 }
             }
-            healthText[i].text = players[i].health.ToString();
+            healthText[i].text = players[i].getHealth().ToString();
             scoreText[i].text = players[i].score.ToString();
         }
     }

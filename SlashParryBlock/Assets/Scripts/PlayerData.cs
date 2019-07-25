@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public int health;
-    public int damage;
     public int score;
     public bool blocking;
 
+    private int health;
+    private int damage;
+    private float knockback;
     private BoxCollider swordCollider;
     private float AttackTimer = 0.5f;
     private bool attacked = false;
@@ -58,6 +59,23 @@ public class PlayerData : MonoBehaviour
         health -= damage;
     }
 
+    public void setHealth(int value)
+    {
+        health = value;
+    }
+    public int getHealth()
+    {
+        return (health);
+    }
+    public void setDamage(int value)
+    {
+        damage = value;
+    }
+    public void setKnockback(float value)
+    {
+        knockback = value;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (attacked)
@@ -71,19 +89,19 @@ public class PlayerData : MonoBehaviour
                     {
                         if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f)
                         {
-                            other.gameObject.GetComponent<Rigidbody>().AddForce(other.transform.position - transform.position, ForceMode.Impulse);
+                            other.gameObject.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * (knockback * 0.5f), ForceMode.Impulse);
                             other.GetComponent<PlayerData>().TakeDamage(damage * 2);
                             Debug.Log(gameObject.name + " get Backstabbed");
                         }
                         else
                         {
-                            other.gameObject.GetComponent<Rigidbody>().AddForce(other.transform.position - transform.position, ForceMode.Impulse);
+                            other.gameObject.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * (knockback * 0.5f), ForceMode.Impulse);
                             other.GetComponent<PlayerData>().TakeDamage(damage);
                         }
                     }
                     else
                     {
-                        other.gameObject.GetComponent<Rigidbody>().AddForce(other.transform.position - transform.position, ForceMode.Impulse);
+                        other.gameObject.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * (knockback * 0.5f), ForceMode.Impulse);
                         Debug.Log(gameObject.name + " get blocked");
                     }
                 }
@@ -91,13 +109,13 @@ public class PlayerData : MonoBehaviour
                 {
                     if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f)
                     {
-                        other.gameObject.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * 2.0f, ForceMode.Impulse);
+                        other.gameObject.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
                         other.GetComponent<PlayerData>().TakeDamage(damage * 2);
                         Debug.Log(gameObject.name + " get Backstabbed");
                     }
                     else
                     {
-                        other.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * 2.0f, ForceMode.Impulse);
+                        other.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
                         other.GetComponent<PlayerData>().TakeDamage(damage);
                     }
                 }
