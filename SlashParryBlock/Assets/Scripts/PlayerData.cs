@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
     public int health;
-    public int Damage;
-    public bool Blocking;
+    public int damage;
+    public int score;
+    public bool blocking;
+
     private BoxCollider swordCollider;
     private float AttackTimer = 0.5f;
     private bool attacked = false;
@@ -22,7 +24,7 @@ public class PlayerData : MonoBehaviour
             Debug.Log(gameObject.name + " is dead");
         }
 
-        if (Blocking)
+        if (blocking)
         {
             Debug.Log(gameObject.name + " am blocking");
         }
@@ -63,17 +65,17 @@ public class PlayerData : MonoBehaviour
             swordCollider.enabled = false;
             if (other.GetComponent<PlayerData>() != null && other.GetComponent<PlayerData>() != this)
             {
-                if (other.GetComponent<PlayerData>().Blocking)
+                if (other.GetComponent<PlayerData>().blocking)
                 {
                     if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.0f)
                     {
                         if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f)
                         {
-                            other.GetComponent<PlayerData>().TakeDamage(Damage * 2);
+                            other.GetComponent<PlayerData>().TakeDamage(damage * 2);
                             Debug.Log(gameObject.name + " get Backstabbed");
                             return;
                         }
-                        other.GetComponent<PlayerData>().TakeDamage(Damage);
+                        other.GetComponent<PlayerData>().TakeDamage(damage);
                     }
                     else
                     {
@@ -84,12 +86,12 @@ public class PlayerData : MonoBehaviour
                 {
                     if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f)
                     {
-                        other.GetComponent<PlayerData>().TakeDamage(Damage * 2);
+                        other.GetComponent<PlayerData>().TakeDamage(damage * 2);
                         Debug.Log(gameObject.name + " get Backstabbed");
                     }
                     else
                     {
-                        other.GetComponent<PlayerData>().TakeDamage(Damage);
+                        other.GetComponent<PlayerData>().TakeDamage(damage);
                     }
                 }
             }
