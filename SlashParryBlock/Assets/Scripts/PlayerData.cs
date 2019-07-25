@@ -73,12 +73,15 @@ public class PlayerData : MonoBehaviour
                         {
                             other.GetComponent<PlayerData>().TakeDamage(damage * 2);
                             Debug.Log(gameObject.name + " get Backstabbed");
-                            return;
                         }
-                        other.GetComponent<PlayerData>().TakeDamage(damage);
+                        else
+                        {
+                            other.GetComponent<PlayerData>().TakeDamage(damage);
+                        }
                     }
                     else
                     {
+                        gameObject.GetComponent<Rigidbody>().AddForce(other.transform.position - transform.position, ForceMode.Impulse);
                         Debug.Log(gameObject.name + " get blocked");
                     }
                 }
@@ -95,6 +98,12 @@ public class PlayerData : MonoBehaviour
                     }
                 }
             }
+
+            if (health <= 0)
+            {
+                other.GetComponent<PlayerData>().score++;
+            }
+
         }
     }
 }

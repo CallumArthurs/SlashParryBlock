@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1909498443358865017}
   - component: {fileID: 4587407660391069619}
   - component: {fileID: 126996498235237473}
+  - component: {fileID: 6356270535941814526}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -80,6 +81,19 @@ MonoBehaviour:
   damage: 0
   score: 0
   blocking: 0
+--- !u!65 &6356270535941814526
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909498443358865016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.33613777, z: 1.0049348}
+  m_Center: {x: 0, y: -0.3319311, z: 0.8048332}
 --- !u!1 &1909498443647593605
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +106,7 @@ GameObject:
   - component: {fileID: 1909498443647593602}
   - component: {fileID: 2407747169625659660}
   - component: {fileID: 6262910018258141106}
+  - component: {fileID: 9067108181033763372}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -160,6 +175,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!65 &9067108181033763372
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909498443647593605}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.33613777, z: 1.0049348}
+  m_Center: {x: 0, y: -0.3319311, z: 0.8048332}
 --- !u!1 &1909498444345586211
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +255,7 @@ GameObject:
   - component: {fileID: 1909498444681442968}
   - component: {fileID: 9173380131099754634}
   - component: {fileID: 7729246595114027228}
+  - component: {fileID: 533474493857292954}
   m_Layer: 0
   m_Name: Player3
   m_TagString: Untagged
@@ -295,6 +324,19 @@ MonoBehaviour:
   damage: 0
   score: 0
   blocking: 0
+--- !u!65 &533474493857292954
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909498444681442971}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.33613777, z: 1.0049348}
+  m_Center: {x: 0, y: -0.3319311, z: 0.8048332}
 --- !u!1 &1909498444818793621
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,6 +349,7 @@ GameObject:
   - component: {fileID: 1909498444818793618}
   - component: {fileID: 8211183973308581484}
   - component: {fileID: 7894299158994425544}
+  - component: {fileID: 8058147197611180281}
   m_Layer: 0
   m_Name: Player4
   m_TagString: Untagged
@@ -375,6 +418,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!65 &8058147197611180281
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909498444818793621}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.33613777, z: 1.0049348}
+  m_Center: {x: 0, y: -0.3319311, z: 0.8048332}
 --- !u!1001 &780341023675251021
 PrefabInstance:
   m_ObjectHideFlags: 0

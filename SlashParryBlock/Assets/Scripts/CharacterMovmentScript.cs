@@ -9,6 +9,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public float rotSpeed;
     public PlayerData[] players;
     public Text[] healthText;
+    public Text[] scoreText;
 
     private List<Rigidbody> playersRB;
     private List<Vector3> SpawnPoints;
@@ -48,6 +49,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 }
             }
             healthText[i].text = players[i].health.ToString();
+            scoreText[i].text = players[i].score.ToString();
         }
     }
 }
