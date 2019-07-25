@@ -38,14 +38,14 @@ public class CharacterMovmentScript : MonoBehaviour
             }
 
             if (Input.GetAxis("L_BumperP" + (i + 1)) > 0){
-                playersRB[i].GetComponent<PlayerData>().blocking = true;
+                players[i].blocking = true;
             }
             else
             {
-                playersRB[i].GetComponent<PlayerData>().blocking = false;
+                players[i].blocking = false;
                 if (Input.GetAxis("R_BumperP" + (i + 1)) > 0)
                 {
-                    playersRB[i].gameObject.GetComponent<PlayerData>().Attack();
+                    players[i].Attack();
                 }
             }
             healthText[i].text = players[i].health.ToString();

@@ -99,9 +99,9 @@ public class PlayerData : MonoBehaviour
                 }
             }
 
-            if (health <= 0)
+            if (other.GetComponent<PlayerData>().health <= 0)
             {
-                other.GetComponent<PlayerData>().score++;
+                score++;
             }
 
         }
