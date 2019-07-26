@@ -1,6 +1,6 @@
 //Maya ASCII 2018ff09 scene
 //Name: Rig_KnightClean_Vr1.ma
-//Last modified: Fri, Jul 26, 2019 10:16:59 AM
+//Last modified: Fri, Jul 26, 2019 10:25:10 AM
 //Codeset: 1252
 requires maya "2018ff09";
 requires "stereoCamera" "10.0";
@@ -15,15 +15,15 @@ fileInfo "license" "student";
 createNode transform -s -n "persp";
 	rename -uid "6F823CFB-44CD-5F54-7D89-BA83F9E83D1F";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 163.28045264761198 134.50284803218958 480.15668943564003 ;
-	setAttr ".r" -type "double3" 1432.4616466930947 -2507.4000000001902 -1.0184509342601033e-16 ;
+	setAttr ".t" -type "double3" 84.259572922856862 147.16451354125658 214.82488812066924 ;
+	setAttr ".r" -type "double3" 1420.4616466930697 -2513.0000000001605 -2.0027750574890799e-16 ;
 	setAttr ".rp" -type "double3" 0 -8.8817841970012523e-16 0 ;
 	setAttr ".rpt" -type "double3" -5.5511552099771254e-12 3.2036639457228873e-12 -4.6369748355013517e-12 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "0A63B094-4449-975D-A35C-9C9989DB36BE";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999979;
-	setAttr ".coi" 493.86796528835634;
+	setAttr ".coi" 230.2413746290224;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -936,84 +936,42 @@ createNode joint -n "Index_end_L_JNT" -p "Index3_L_JNT";
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".radi" 0.6848781568005442;
-createNode transform -n "Index_3_L_Ctrl" -p "Index3_L_JNT";
-	rename -uid "33046919-41AC-30CD-0FC6-1381750B5D1F";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 13;
-	setAttr ".t" -type "double3" 5.0618037050753628e-07 -1.7793381914543716e-06 4.7039863559916739e-08 ;
-	setAttr ".s" -type "double3" 0.99999999999999867 0.99999999999999911 0.99999999999999889 ;
-	setAttr ".rp" -type "double3" -2.3200734986517061e-06 -3.1195518062077069e-06 7.7626633654403947e-07 ;
-	setAttr ".sp" -type "double3" -2.3200734986517091e-06 -3.1195518062077099e-06 7.7626633654404031e-07 ;
-	setAttr ".spt" -type "double3" 2.9646153153900474e-21 2.9646153153900486e-21 -8.470329472542994e-22 ;
-createNode nurbsCurve -n "Index_3_L_CtrlShape" -p "Index_3_L_Ctrl";
-	rename -uid "F0DD4D04-4DB0-D4F9-43B1-0194FCE79EF3";
+createNode orientConstraint -n "Index3_L_JNT_orientConstraint1" -p "Index3_L_JNT";
+	rename -uid "CBC0E1B1-438E-0A67-EA79-42B1AE317380";
+	addAttr -dcb 0 -ci true -k true -sn "w0" -ln "Index_3_L_CtrlW0" -dv 1 -min 0 -at "double";
+	setAttr -k on ".nds";
 	setAttr -k off ".v";
-	setAttr ".cc" -type "nurbsCurve" 
-		1 16 0 no 3
-		17 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-		17
-		-0.20804548290389846 2.5966782670028579 2.2941068729576344
-		-0.063114413552192161 2.4943452203364274 -2.539449408462378
-		6.5302213043628967 2.1152694466345991 -2.1557185538323029
-		6.4073343606159057 2.2020375592650083 1.9426501500586486
-		-0.20804548290389846 2.5966782670028579 2.2941068729576344
-		-0.28472926801421039 -2.2384897150336087 2.3941747276813423
-		-0.13979819866256094 -2.3408227617000392 -2.4393815537386416
-		-0.063114413552192161 2.4943452203364274 -2.539449408462378
-		-0.20804548290389846 2.5966782670028579 2.2941068729576344
-		-0.28472926801421039 -2.2384897150336087 2.3941747276813423
-		6.3423142373993215 -1.8976977043558918 2.0274976081593561
-		6.4073343606159057 2.2020375592650083 1.9426501500586486
-		6.5302213043628967 2.1152694466345991 -2.1557185538323029
-		6.4652011811464547 -1.9844658169863152 -2.0708710957316026
-		6.3423142373993215 -1.8976977043558918 2.0274976081593561
-		6.4652011811464547 -1.9844658169863152 -2.0708710957316026
-		-0.13979819866256094 -2.3408227617000392 -2.4393815537386416
-		;
-createNode transform -n "Index2_L_Ctrl" -p "Index2_L_JNT";
-	rename -uid "3A6A0F87-4D81-1303-6AD4-A3BF87AD2C17";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 13;
-	setAttr ".t" -type "double3" 5.7370876760387546e-07 -1.7587355074510924e-06 4.6727519631417636e-08 ;
-	setAttr ".s" -type "double3" 0.99999999999999889 0.99999999999999933 0.99999999999999889 ;
-	setAttr ".rp" -type "double3" -9.4497823255323859e-07 -2.5901081954771127e-06 4.0427604552917231e-07 ;
-	setAttr ".sp" -type "double3" -9.4497823255323965e-07 -2.5901081954771144e-06 4.0427604552917273e-07 ;
-	setAttr ".spt" -type "double3" 1.0587911840678743e-21 1.6940658945085995e-21 -4.235164736271497e-22 ;
-createNode nurbsCurve -n "Index2_L_CtrlShape" -p "Index2_L_Ctrl";
-	rename -uid "DE19CCD9-4B2C-208D-9420-59B4BE57EF2E";
+	setAttr -k off ".tx";
+	setAttr -k off ".ty";
+	setAttr -k off ".tz";
+	setAttr -k off ".rx";
+	setAttr -k off ".ry";
+	setAttr -k off ".rz";
+	setAttr -k off ".sx";
+	setAttr -k off ".sy";
+	setAttr -k off ".sz";
+	setAttr ".erp" yes;
+	setAttr ".lr" -type "double3" -4.0875097273495978e-15 1.8171714027248345e-14 4.0611086386850993e-16 ;
+	setAttr ".rsrr" -type "double3" -4.0875097273495978e-15 1.8171714027248345e-14 4.0611086386850993e-16 ;
+	setAttr -k on ".w0";
+createNode orientConstraint -n "Index2_L_JNT_orientConstraint1" -p "Index2_L_JNT";
+	rename -uid "C837C8FE-4203-0C5A-1A88-FE95D99BC216";
+	addAttr -dcb 0 -ci true -k true -sn "w0" -ln "Index2_L_CtrlW0" -dv 1 -min 0 -at "double";
+	setAttr -k on ".nds";
 	setAttr -k off ".v";
-	setAttr ".cc" -type "nurbsCurve" 
-		1 16 0 no 3
-		17 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-		17
-		-0.81162591925757965 2.5798637374161331 2.3267257909090553
-		-0.66714429767842631 2.5856606060229836 -2.5237052005014213
-		4.9884891696972602 2.4480517978853129 -2.3156778337770803
-		4.8522594160297174 2.4425860094084584 2.2577275026194563
-		-0.81162591925757965 2.5798637374161331 2.3267257909090553
-		-0.62336508422877301 -2.2690688428548498 2.3265385097525009
-		-0.47888346264942072 -2.2632719742482976 -2.5238924816580273
-		-0.66714429767842631 2.5856606060229836 -2.5237052005014213
-		-0.81162591925757965 2.5798637374161331 2.3267257909090553
-		-0.62336508422877301 -2.2690688428548498 2.3265385097525009
-		5.029767993943679 -2.1294064955278174 2.2575509177670572
-		4.8522594160297174 2.4425860094084584 2.2577275026194563
-		4.9884891696972602 2.4480517978853129 -2.3156778337770803
-		5.1659977476113284 -2.1239407070510197 -2.3158544186295273
-		5.029767993943679 -2.1294064955278174 2.2575509177670572
-		5.1659977476113284 -2.1239407070510197 -2.3158544186295273
-		-0.47888346264942072 -2.2632719742482976 -2.5238924816580273
-		;
-createNode transform -n "Index3_L_LOC" -p "Index2_L_Ctrl";
-	rename -uid "7126323C-4FA1-BB36-DA45-1D8DF3A25617";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 13;
-	setAttr ".t" -type "double3" 5.8552165615372189 0 -1.7763568394002505e-14 ;
-	setAttr ".r" -type "double3" -0.28851164678582752 1.0484638492600602 2.1565778829898363 ;
-	setAttr ".s" -type "double3" 1 1 1.0000000000000002 ;
-createNode locator -n "Index3_L_LOCShape" -p "Index3_L_LOC";
-	rename -uid "79369691-48AF-380D-01EA-CF96ADE59649";
-	setAttr -k off ".v";
+	setAttr -k off ".tx";
+	setAttr -k off ".ty";
+	setAttr -k off ".tz";
+	setAttr -k off ".rx";
+	setAttr -k off ".ry";
+	setAttr -k off ".rz";
+	setAttr -k off ".sx";
+	setAttr -k off ".sy";
+	setAttr -k off ".sz";
+	setAttr ".erp" yes;
+	setAttr ".lr" -type "double3" -4.1636069829119573e-15 1.0676522605659823e-14 1.4700747370475417e-14 ;
+	setAttr ".rsrr" -type "double3" -4.1636069829119573e-15 1.0676522605659823e-14 1.4700747370475417e-14 ;
+	setAttr -k on ".w0";
 createNode parentConstraint -n "Index1_L_JNT_parentConstraint1" -p "Index1_L_JNT";
 	rename -uid "C6F296F1-438A-9E0E-C705-25BE35B2A1EB";
 	addAttr -dcb 0 -ci true -k true -sn "w0" -ln "Index1_L_CtrlW0" -dv 1 -min 0 -at "double";
@@ -2785,6 +2743,84 @@ createNode transform -n "Index2_L_LOC" -p "Index1_L_Ctrl";
 createNode locator -n "Index2_L_LOCShape" -p "Index2_L_LOC";
 	rename -uid "3AB78930-48E2-BC6A-CE9F-FC83D08E7C50";
 	setAttr -k off ".v";
+createNode transform -n "Index2_L_Ctrl" -p "Index2_L_LOC";
+	rename -uid "3A6A0F87-4D81-1303-6AD4-A3BF87AD2C17";
+	setAttr ".ove" yes;
+	setAttr ".ovc" 13;
+	setAttr ".t" -type "double3" -2.1316282072803006e-14 -1.4210854715202004e-14 -1.7763568394002505e-15 ;
+	setAttr ".s" -type "double3" 1 1 1.0000000000000002 ;
+	setAttr ".rp" -type "double3" -9.4497823255323965e-07 -2.5901081954771144e-06 4.0427604552917284e-07 ;
+	setAttr ".sp" -type "double3" -9.4497823255323965e-07 -2.5901081954771144e-06 4.0427604552917273e-07 ;
+	setAttr ".spt" -type "double3" 0 0 1.0587911840678757e-22 ;
+createNode nurbsCurve -n "Index2_L_CtrlShape" -p "Index2_L_Ctrl";
+	rename -uid "DE19CCD9-4B2C-208D-9420-59B4BE57EF2E";
+	setAttr -k off ".v";
+	setAttr ".cc" -type "nurbsCurve" 
+		1 16 0 no 3
+		17 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+		17
+		-0.81162591925757965 2.5798637374161331 2.3267257909090553
+		-0.66714429767842631 2.5856606060229836 -2.5237052005014213
+		4.9884891696972602 2.4480517978853129 -2.3156778337770803
+		4.8522594160297174 2.4425860094084584 2.2577275026194563
+		-0.81162591925757965 2.5798637374161331 2.3267257909090553
+		-0.62336508422877301 -2.2690688428548498 2.3265385097525009
+		-0.47888346264942072 -2.2632719742482976 -2.5238924816580273
+		-0.66714429767842631 2.5856606060229836 -2.5237052005014213
+		-0.81162591925757965 2.5798637374161331 2.3267257909090553
+		-0.62336508422877301 -2.2690688428548498 2.3265385097525009
+		5.029767993943679 -2.1294064955278174 2.2575509177670572
+		4.8522594160297174 2.4425860094084584 2.2577275026194563
+		4.9884891696972602 2.4480517978853129 -2.3156778337770803
+		5.1659977476113284 -2.1239407070510197 -2.3158544186295273
+		5.029767993943679 -2.1294064955278174 2.2575509177670572
+		5.1659977476113284 -2.1239407070510197 -2.3158544186295273
+		-0.47888346264942072 -2.2632719742482976 -2.5238924816580273
+		;
+createNode transform -n "Index3_L_LOC" -p "Index2_L_Ctrl";
+	rename -uid "7126323C-4FA1-BB36-DA45-1D8DF3A25617";
+	setAttr ".ove" yes;
+	setAttr ".ovc" 13;
+	setAttr ".t" -type "double3" 5.8552165615372189 -4.2632564145606011e-14 -2.4868995751603507e-14 ;
+	setAttr ".r" -type "double3" -0.28851164678582913 1.0484638492600602 2.156577882989823 ;
+	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999989 1 ;
+createNode locator -n "Index3_L_LOCShape" -p "Index3_L_LOC";
+	rename -uid "79369691-48AF-380D-01EA-CF96ADE59649";
+	setAttr -k off ".v";
+createNode transform -n "Index_3_L_Ctrl" -p "Index3_L_LOC";
+	rename -uid "33046919-41AC-30CD-0FC6-1381750B5D1F";
+	setAttr ".ove" yes;
+	setAttr ".ovc" 13;
+	setAttr ".t" -type "double3" 7.1054273576010019e-15 2.8421709430404007e-14 5.3290705182007514e-15 ;
+	setAttr ".s" -type "double3" 1.0000000000000002 0.99999999999999978 1 ;
+	setAttr ".rp" -type "double3" -2.3200734986517095e-06 -3.119551806207709e-06 7.7626633654404031e-07 ;
+	setAttr ".sp" -type "double3" -2.3200734986517091e-06 -3.1195518062077099e-06 7.7626633654404031e-07 ;
+	setAttr ".spt" -type "double3" -4.2351647362715026e-22 8.4703294725430015e-22 0 ;
+createNode nurbsCurve -n "Index_3_L_CtrlShape" -p "Index_3_L_Ctrl";
+	rename -uid "F0DD4D04-4DB0-D4F9-43B1-0194FCE79EF3";
+	setAttr -k off ".v";
+	setAttr ".cc" -type "nurbsCurve" 
+		1 16 0 no 3
+		17 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+		17
+		-0.20804548290389846 2.5966782670028579 2.2941068729576344
+		-0.063114413552192161 2.4943452203364274 -2.539449408462378
+		6.5302213043628967 2.1152694466345991 -2.1557185538323029
+		6.4073343606159057 2.2020375592650083 1.9426501500586486
+		-0.20804548290389846 2.5966782670028579 2.2941068729576344
+		-0.28472926801421039 -2.2384897150336087 2.3941747276813423
+		-0.13979819866256094 -2.3408227617000392 -2.4393815537386416
+		-0.063114413552192161 2.4943452203364274 -2.539449408462378
+		-0.20804548290389846 2.5966782670028579 2.2941068729576344
+		-0.28472926801421039 -2.2384897150336087 2.3941747276813423
+		6.3423142373993215 -1.8976977043558918 2.0274976081593561
+		6.4073343606159057 2.2020375592650083 1.9426501500586486
+		6.5302213043628967 2.1152694466345991 -2.1557185538323029
+		6.4652011811464547 -1.9844658169863152 -2.0708710957316026
+		6.3423142373993215 -1.8976977043558918 2.0274976081593561
+		6.4652011811464547 -1.9844658169863152 -2.0708710957316026
+		-0.13979819866256094 -2.3408227617000392 -2.4393815537386416
+		;
 createNode transform -n "Middle1_L_LOC" -p "Wrist_L_Ctrl";
 	rename -uid "E32B4368-42C7-4C60-3CE4-04AF1B708D59";
 	setAttr ".ove" yes;
@@ -3749,19 +3785,19 @@ createNode ikHandle -n "Ball_L_IK" -p "Toe_end_L_Ctrl";
 	setAttr ".pv" -type "double3" -0.18861609315310751 1.1060452603036015e-07 -2.9940647904484998 ;
 	setAttr ".roc" yes;
 createNode lightLinker -s -n "lightLinker1";
-	rename -uid "7286F10C-4EFC-A167-2573-DDA26BC8BB9B";
+	rename -uid "959AB43B-447C-C483-7B84-9282B1C59B92";
 	setAttr -s 16 ".lnk";
 	setAttr -s 16 ".slnk";
 createNode shapeEditorManager -n "shapeEditorManager";
-	rename -uid "BDB17327-4558-6DCC-49EF-AC8775D0CDA3";
+	rename -uid "B9905AAF-4587-FC82-0A9B-7DB0498DC4ED";
 createNode poseInterpolatorManager -n "poseInterpolatorManager";
-	rename -uid "7C687EAE-479C-F07A-EE0F-D19D778E957E";
+	rename -uid "59934833-425C-CA57-2AD5-61927420EAAE";
 createNode displayLayerManager -n "layerManager";
-	rename -uid "1E50FAC1-4AF1-F5F7-C669-D4873D904CF1";
+	rename -uid "930D5CE6-48A5-5207-BA95-64A7EBE6C547";
 createNode displayLayer -n "defaultLayer";
 	rename -uid "0B918335-4A5D-FD49-7F3F-1FA1E6ECEF39";
 createNode renderLayerManager -n "renderLayerManager";
-	rename -uid "87B3627F-469F-1E79-A6B4-5ABF909BA9C2";
+	rename -uid "4B3A00A4-4DF3-B4DF-05E5-DCA040DB0D20";
 createNode renderLayer -n "defaultRenderLayer";
 	rename -uid "8F40FA3E-4589-51F4-C830-2FBA33D2CA0F";
 	setAttr ".g" yes;
@@ -3793,7 +3829,7 @@ createNode script -n "uiConfigurationScriptNode";
 		+ "            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -greasePencils 1\n            -shadows 0\n            -captureSequenceNumber -1\n            -width 1\n            -height 1\n            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"modelPanel\" (localizedPanelLabel(\"Persp View\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tmodelPanel -edit -l (localizedPanelLabel(\"Persp View\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        modelEditor -e \n            -camera \"persp\" \n            -useInteractiveMode 0\n            -displayLights \"default\" \n            -displayAppearance \"smoothShaded\" \n            -activeOnly 0\n            -ignorePanZoom 0\n"
 		+ "            -wireframeOnShaded 0\n            -headsUpDisplay 1\n            -holdOuts 1\n            -selectionHiliteDisplay 1\n            -useDefaultMaterial 0\n            -bufferMode \"double\" \n            -twoSidedLighting 0\n            -backfaceCulling 0\n            -xray 1\n            -jointXray 0\n            -activeComponentsXray 0\n            -displayTextures 0\n            -smoothWireframe 0\n            -lineWidth 1\n            -textureAnisotropic 0\n            -textureHilight 1\n            -textureSampling 2\n            -textureDisplay \"modulate\" \n            -textureMaxSize 16384\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n            -depthOfFieldPreview 1\n            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n            -bumpResolution 512 512 \n"
 		+ "            -textureCompression 0\n            -transparencyAlgorithm \"frontAndBackCull\" \n            -transpInShadows 0\n            -cullingOverride \"none\" \n            -lowQualityLighting 0\n            -maximumNumHardwareLights 1\n            -occlusionCulling 0\n            -shadingModel 0\n            -useBaseRenderer 0\n            -useReducedRenderer 0\n            -smallObjectCulling 0\n            -smallObjectThreshold -1 \n            -interactiveDisableShadows 0\n            -interactiveBackFaceCull 0\n            -sortTransparent 1\n            -controllers 1\n            -nurbsCurves 1\n            -nurbsSurfaces 1\n            -polymeshes 1\n            -subdivSurfaces 1\n            -planes 1\n            -lights 1\n            -cameras 1\n            -controlVertices 1\n            -hulls 1\n            -grid 1\n            -imagePlane 1\n            -joints 1\n            -ikHandles 1\n            -deformers 1\n            -dynamics 1\n            -particleInstancers 1\n            -fluids 1\n            -hairSystems 1\n            -follicles 1\n"
-		+ "            -nCloths 1\n            -nParticles 1\n            -nRigids 1\n            -dynamicConstraints 1\n            -locators 1\n            -manipulators 1\n            -pluginShapes 1\n            -dimensions 1\n            -handles 1\n            -pivots 1\n            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -greasePencils 1\n            -shadows 0\n            -captureSequenceNumber -1\n            -width 1149\n            -height 546\n            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"outlinerPanel\" (localizedPanelLabel(\"ToggledOutliner\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\toutlinerPanel -edit -l (localizedPanelLabel(\"ToggledOutliner\")) -mbv $menusOkayInPanels  $panelName;\n"
+		+ "            -nCloths 1\n            -nParticles 1\n            -nRigids 1\n            -dynamicConstraints 1\n            -locators 1\n            -manipulators 1\n            -pluginShapes 1\n            -dimensions 1\n            -handles 1\n            -pivots 1\n            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -greasePencils 1\n            -shadows 0\n            -captureSequenceNumber -1\n            -width 1219\n            -height 546\n            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"outlinerPanel\" (localizedPanelLabel(\"ToggledOutliner\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\toutlinerPanel -edit -l (localizedPanelLabel(\"ToggledOutliner\")) -mbv $menusOkayInPanels  $panelName;\n"
 		+ "\t\t$editorName = $panelName;\n        outlinerEditor -e \n            -docTag \"isolOutln_fromSeln\" \n            -showShapes 0\n            -showAssignedMaterials 0\n            -showTimeEditor 1\n            -showReferenceNodes 1\n            -showReferenceMembers 1\n            -showAttributes 0\n            -showConnected 0\n            -showAnimCurvesOnly 0\n            -showMuteInfo 0\n            -organizeByLayer 1\n            -organizeByClip 1\n            -showAnimLayerWeight 1\n            -autoExpandLayers 1\n            -autoExpand 0\n            -showDagOnly 1\n            -showAssets 1\n            -showContainedOnly 1\n            -showPublishedAsConnected 0\n            -showParentContainers 0\n            -showContainerContents 1\n            -ignoreDagHierarchy 0\n            -expandConnections 0\n            -showUpstreamCurves 1\n            -showUnitlessCurves 1\n            -showCompounds 1\n            -showLeafs 1\n            -showNumericAttrsOnly 0\n            -highlightActive 1\n            -autoSelectNewObjects 0\n"
 		+ "            -doNotSelectNewObjects 0\n            -dropIsParent 1\n            -transmitFilters 0\n            -setFilter \"defaultSetFilter\" \n            -showSetMembers 1\n            -allowMultiSelection 1\n            -alwaysToggleSelect 0\n            -directSelect 0\n            -isSet 0\n            -isSetMember 0\n            -displayMode \"DAG\" \n            -expandObjects 0\n            -setsIgnoreFilters 1\n            -containersIgnoreFilters 0\n            -editAttrName 0\n            -showAttrValues 0\n            -highlightSecondary 0\n            -showUVAttrsOnly 0\n            -showTextureNodesOnly 0\n            -attrAlphaOrder \"default\" \n            -animLayerFilterOptions \"allAffecting\" \n            -sortOrder \"none\" \n            -longNames 0\n            -niceNames 1\n            -showNamespace 1\n            -showPinIcons 0\n            -mapMotionTrails 0\n            -ignoreHiddenAttribute 0\n            -ignoreOutlinerColor 0\n            -renderFilterVisible 0\n            -renderFilterIndex 0\n            -selectionOrder \"chronological\" \n"
 		+ "            -expandAttribute 0\n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"outlinerPanel\" (localizedPanelLabel(\"Outliner\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\toutlinerPanel -edit -l (localizedPanelLabel(\"Outliner\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        outlinerEditor -e \n            -showShapes 0\n            -showAssignedMaterials 0\n            -showTimeEditor 1\n            -showReferenceNodes 0\n            -showReferenceMembers 0\n            -showAttributes 0\n            -showConnected 0\n            -showAnimCurvesOnly 0\n            -showMuteInfo 0\n            -organizeByLayer 1\n            -organizeByClip 1\n            -showAnimLayerWeight 1\n            -autoExpandLayers 1\n            -autoExpand 0\n            -showDagOnly 1\n            -showAssets 1\n            -showContainedOnly 1\n            -showPublishedAsConnected 0\n            -showParentContainers 0\n"
@@ -3821,8 +3857,8 @@ createNode script -n "uiConfigurationScriptNode";
 		+ "                -lowQualityLighting 0\n                -maximumNumHardwareLights 0\n                -occlusionCulling 0\n                -shadingModel 0\n                -useBaseRenderer 0\n                -useReducedRenderer 0\n                -smallObjectCulling 0\n                -smallObjectThreshold -1 \n                -interactiveDisableShadows 0\n                -interactiveBackFaceCull 0\n                -sortTransparent 1\n                -controllers 1\n                -nurbsCurves 1\n                -nurbsSurfaces 1\n                -polymeshes 1\n                -subdivSurfaces 1\n                -planes 1\n                -lights 1\n                -cameras 1\n                -controlVertices 1\n                -hulls 1\n                -grid 1\n                -imagePlane 1\n                -joints 1\n                -ikHandles 1\n                -deformers 1\n                -dynamics 1\n                -particleInstancers 1\n                -fluids 1\n                -hairSystems 1\n                -follicles 1\n                -nCloths 1\n"
 		+ "                -nParticles 1\n                -nRigids 1\n                -dynamicConstraints 1\n                -locators 1\n                -manipulators 1\n                -pluginShapes 1\n                -dimensions 1\n                -handles 1\n                -pivots 1\n                -textures 1\n                -strokes 1\n                -motionTrails 1\n                -clipGhosts 1\n                -greasePencils 1\n                -shadows 0\n                -captureSequenceNumber -1\n                -width 0\n                -height 0\n                -sceneRenderFilter 0\n                -displayMode \"centerEye\" \n                -viewColor 0 0 0 1 \n                -useCustomBackground 1\n                $editorName;\n            stereoCameraView -e -viewSelected 0 $editorName;\n            stereoCameraView -e \n                -pluginObjects \"gpuCacheDisplayFilter\" 1 \n                $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\tif ($useSceneConfig) {\n        string $configName = `getPanel -cwl (localizedPanelLabel(\"Current Layout\"))`;\n"
 		+ "        if (\"\" != $configName) {\n\t\t\tpanelConfiguration -edit -label (localizedPanelLabel(\"Current Layout\")) \n\t\t\t\t-userCreated false\n\t\t\t\t-defaultImage \"\"\n\t\t\t\t-image \"\"\n\t\t\t\t-sc false\n\t\t\t\t-configString \"global string $gMainPane; paneLayout -e -cn \\\"single\\\" -ps 1 100 100 $gMainPane;\"\n\t\t\t\t-removeAllPanels\n\t\t\t\t-ap false\n\t\t\t\t\t(localizedPanelLabel(\"Persp View\")) \n\t\t\t\t\t\"modelPanel\"\n"
-		+ "\t\t\t\t\t\"$panelName = `modelPanel -unParent -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels `;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 0\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 1\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 16384\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -greasePencils 1\\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 1149\\n    -height 546\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
-		+ "\t\t\t\t\t\"modelPanel -edit -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels  $panelName;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 0\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 1\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 16384\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -greasePencils 1\\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 1149\\n    -height 546\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
+		+ "\t\t\t\t\t\"$panelName = `modelPanel -unParent -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels `;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 0\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 1\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 16384\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -greasePencils 1\\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 1219\\n    -height 546\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
+		+ "\t\t\t\t\t\"modelPanel -edit -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels  $panelName;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 0\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 1\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 16384\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -greasePencils 1\\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 1219\\n    -height 546\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
 		+ "\t\t\t\t$configName;\n\n            setNamedPanelLayout (localizedPanelLabel(\"Current Layout\"));\n        }\n\n        panelHistory -e -clear mainPanelHistory;\n        sceneUIReplacement -clear;\n\t}\n\n\ngrid -spacing 100 -size 150 -divisions 4 -displayAxes yes -displayGridLines yes -displayDivisionLines yes -displayPerspectiveLabels no -displayOrthographicLabels no -displayAxesBold yes -perspectiveLabelPosition axis -orthographicLabelPosition edge;\nviewManip -drawCompass 0 -compassAngle 0 -frontParameters \"\" -homeParameters \"\" -selectionLockParameters \"\";\n}\n");
 	setAttr ".st" 3;
 createNode script -n "sceneConfigurationScriptNode";
@@ -3974,953 +4010,959 @@ createNode transformGeometry -n "transformGeometry1";
 	setAttr ".txf" -type "matrix" 27.682085730443276 0 0 0 0 27.682085730443276 0 0
 		 0 0 27.682085730443276 0 0.027720179408788681 64.306732177734375 -1.4029539823532104 1;
 createNode nodeGraphEditorInfo -n "MayaNodeEditorSavedTabsInfo";
-	rename -uid "2E6207EA-40BE-6403-5644-36A469FDF710";
+	rename -uid "2FBBDEFB-42F4-55C8-43C5-279E1E353A0E";
 	setAttr ".tgi[0].tn" -type "string" "Untitled_1";
-	setAttr ".tgi[0].vl" -type "double2" -805.32536482464207 -23.80952286341838 ;
-	setAttr ".tgi[0].vh" -type "double2" 463.65871173458834 60.714283301716868 ;
-	setAttr -s 314 ".tgi[0].ni";
-	setAttr ".tgi[0].ni[0].x" 1915.7142333984375;
-	setAttr ".tgi[0].ni[0].y" 2.8571429252624512;
+	setAttr ".tgi[0].vl" -type "double2" -822.61901493110486 -26.78571322134567 ;
+	setAttr ".tgi[0].vh" -type "double2" 601.19045230131394 62.499997516473243 ;
+	setAttr -s 316 ".tgi[0].ni";
+	setAttr ".tgi[0].ni[0].x" 822.85711669921875;
+	setAttr ".tgi[0].ni[0].y" 2141.428466796875;
 	setAttr ".tgi[0].ni[0].nvs" 18304;
-	setAttr ".tgi[0].ni[1].x" -2451.428466796875;
-	setAttr ".tgi[0].ni[1].y" 2800;
+	setAttr ".tgi[0].ni[1].x" 1162.857177734375;
+	setAttr ".tgi[0].ni[1].y" 138.57142639160156;
 	setAttr ".tgi[0].ni[1].nvs" 18304;
-	setAttr ".tgi[0].ni[2].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[2].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[2].x" 1470;
+	setAttr ".tgi[0].ni[2].y" 311.42855834960938;
 	setAttr ".tgi[0].ni[2].nvs" 18304;
-	setAttr ".tgi[0].ni[3].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[3].y" 2061.428466796875;
+	setAttr ".tgi[0].ni[3].x" 1162.857177734375;
+	setAttr ".tgi[0].ni[3].y" 311.42855834960938;
 	setAttr ".tgi[0].ni[3].nvs" 18304;
-	setAttr ".tgi[0].ni[4].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[4].y" -1688.5714111328125;
+	setAttr ".tgi[0].ni[4].x" -1647.142822265625;
+	setAttr ".tgi[0].ni[4].y" 2590;
 	setAttr ".tgi[0].ni[4].nvs" 18304;
-	setAttr ".tgi[0].ni[5].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[5].y" 1332.857177734375;
+	setAttr ".tgi[0].ni[5].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[5].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[5].nvs" 18304;
-	setAttr ".tgi[0].ni[6].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[6].y" 892.85711669921875;
+	setAttr ".tgi[0].ni[6].x" -2568.571533203125;
+	setAttr ".tgi[0].ni[6].y" 2484.28564453125;
 	setAttr ".tgi[0].ni[6].nvs" 18304;
-	setAttr ".tgi[0].ni[7].x" -375.71429443359375;
-	setAttr ".tgi[0].ni[7].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[7].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[7].y" 780;
 	setAttr ".tgi[0].ni[7].nvs" 18304;
-	setAttr ".tgi[0].ni[8].x" -367.14285278320313;
-	setAttr ".tgi[0].ni[8].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[8].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[8].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[8].nvs" 18304;
-	setAttr ".tgi[0].ni[9].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[9].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[9].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[9].y" 2117.142822265625;
 	setAttr ".tgi[0].ni[9].nvs" 18304;
-	setAttr ".tgi[0].ni[10].x" 620;
-	setAttr ".tgi[0].ni[10].y" 894.28570556640625;
+	setAttr ".tgi[0].ni[10].x" -384.28570556640625;
+	setAttr ".tgi[0].ni[10].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[10].nvs" 18304;
-	setAttr ".tgi[0].ni[11].x" 1162.857177734375;
-	setAttr ".tgi[0].ni[11].y" -207.14285278320313;
+	setAttr ".tgi[0].ni[11].x" 1608.5714111328125;
+	setAttr ".tgi[0].ni[11].y" -67.142860412597656;
 	setAttr ".tgi[0].ni[11].nvs" 18304;
-	setAttr ".tgi[0].ni[12].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[12].x" -160;
 	setAttr ".tgi[0].ni[12].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[12].nvs" 18304;
-	setAttr ".tgi[0].ni[13].x" 1470;
-	setAttr ".tgi[0].ni[13].y" -207.14285278320313;
+	setAttr ".tgi[0].ni[13].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[13].y" -1084.2857666015625;
 	setAttr ".tgi[0].ni[13].nvs" 18304;
-	setAttr ".tgi[0].ni[14].x" 927.14288330078125;
-	setAttr ".tgi[0].ni[14].y" -181.42857360839844;
+	setAttr ".tgi[0].ni[14].x" 1608.5714111328125;
+	setAttr ".tgi[0].ni[14].y" -55.714286804199219;
 	setAttr ".tgi[0].ni[14].nvs" 18304;
-	setAttr ".tgi[0].ni[15].x" -155.71427917480469;
-	setAttr ".tgi[0].ni[15].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[15].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[15].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[15].nvs" 18304;
-	setAttr ".tgi[0].ni[16].x" -378.57144165039063;
-	setAttr ".tgi[0].ni[16].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[16].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[16].y" 1780;
 	setAttr ".tgi[0].ni[16].nvs" 18304;
-	setAttr ".tgi[0].ni[17].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[17].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[17].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[17].y" 971.4285888671875;
 	setAttr ".tgi[0].ni[17].nvs" 18304;
-	setAttr ".tgi[0].ni[18].x" -915.71429443359375;
-	setAttr ".tgi[0].ni[18].y" 1810;
+	setAttr ".tgi[0].ni[18].x" 1470;
+	setAttr ".tgi[0].ni[18].y" -1244.2857666015625;
 	setAttr ".tgi[0].ni[18].nvs" 18304;
-	setAttr ".tgi[0].ni[19].x" -401.42855834960938;
-	setAttr ".tgi[0].ni[19].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[19].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[19].y" 2522.857177734375;
 	setAttr ".tgi[0].ni[19].nvs" 18304;
-	setAttr ".tgi[0].ni[20].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[20].y" 341.42855834960938;
+	setAttr ".tgi[0].ni[20].x" -384.28570556640625;
+	setAttr ".tgi[0].ni[20].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[20].nvs" 18304;
-	setAttr ".tgi[0].ni[21].x" 1761.4285888671875;
-	setAttr ".tgi[0].ni[21].y" 20;
+	setAttr ".tgi[0].ni[21].x" 1608.5714111328125;
+	setAttr ".tgi[0].ni[21].y" -61.428569793701172;
 	setAttr ".tgi[0].ni[21].nvs" 18304;
-	setAttr ".tgi[0].ni[22].x" -384.28570556640625;
+	setAttr ".tgi[0].ni[22].x" -401.42855834960938;
 	setAttr ".tgi[0].ni[22].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[22].nvs" 18304;
-	setAttr ".tgi[0].ni[23].x" 1108.5714111328125;
-	setAttr ".tgi[0].ni[23].y" -911.4285888671875;
+	setAttr ".tgi[0].ni[23].x" -401.42855834960938;
+	setAttr ".tgi[0].ni[23].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[23].nvs" 18304;
-	setAttr ".tgi[0].ni[24].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[24].y" 2325.71435546875;
+	setAttr ".tgi[0].ni[24].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[24].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[24].nvs" 18304;
-	setAttr ".tgi[0].ni[25].x" 1470;
-	setAttr ".tgi[0].ni[25].y" -898.5714111328125;
+	setAttr ".tgi[0].ni[25].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[25].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[25].nvs" 18304;
-	setAttr ".tgi[0].ni[26].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[26].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[26].x" 1470;
+	setAttr ".tgi[0].ni[26].y" -552.85711669921875;
 	setAttr ".tgi[0].ni[26].nvs" 18304;
-	setAttr ".tgi[0].ni[27].x" 927.14288330078125;
-	setAttr ".tgi[0].ni[27].y" 281.42855834960938;
+	setAttr ".tgi[0].ni[27].x" -151.42857360839844;
+	setAttr ".tgi[0].ni[27].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[27].nvs" 18304;
-	setAttr ".tgi[0].ni[28].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[28].x" -371.42855834960938;
 	setAttr ".tgi[0].ni[28].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[28].nvs" 18304;
-	setAttr ".tgi[0].ni[29].x" 620;
-	setAttr ".tgi[0].ni[29].y" 2330;
+	setAttr ".tgi[0].ni[29].x" 1130;
+	setAttr ".tgi[0].ni[29].y" 1071.4285888671875;
 	setAttr ".tgi[0].ni[29].nvs" 18304;
-	setAttr ".tgi[0].ni[30].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[30].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[30].x" -712.85711669921875;
+	setAttr ".tgi[0].ni[30].y" 1884.2857666015625;
 	setAttr ".tgi[0].ni[30].nvs" 18304;
 	setAttr ".tgi[0].ni[31].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[31].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[31].nvs" 18304;
-	setAttr ".tgi[0].ni[32].x" -411.42855834960938;
-	setAttr ".tgi[0].ni[32].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[32].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[32].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[32].nvs" 18304;
-	setAttr ".tgi[0].ni[33].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[33].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[33].x" -1340;
+	setAttr ".tgi[0].ni[33].y" 2564.28564453125;
 	setAttr ".tgi[0].ni[33].nvs" 18304;
-	setAttr ".tgi[0].ni[34].x" -151.42857360839844;
-	setAttr ".tgi[0].ni[34].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[34].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[34].y" 388.57144165039063;
 	setAttr ".tgi[0].ni[34].nvs" 18304;
 	setAttr ".tgi[0].ni[35].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[35].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[35].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[35].nvs" 18304;
-	setAttr ".tgi[0].ni[36].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[36].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[36].x" -237.14285278320313;
+	setAttr ".tgi[0].ni[36].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[36].nvs" 18304;
-	setAttr ".tgi[0].ni[37].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[37].y" 601.4285888671875;
+	setAttr ".tgi[0].ni[37].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[37].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[37].nvs" 18304;
-	setAttr ".tgi[0].ni[38].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[38].y" 1254.2857666015625;
+	setAttr ".tgi[0].ni[38].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[38].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[38].nvs" 18304;
-	setAttr ".tgi[0].ni[39].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[39].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[39].x" -161.42857360839844;
+	setAttr ".tgi[0].ni[39].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[39].nvs" 18304;
-	setAttr ".tgi[0].ni[40].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[40].y" 2321.428466796875;
+	setAttr ".tgi[0].ni[40].x" -161.42857360839844;
+	setAttr ".tgi[0].ni[40].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[40].nvs" 18304;
-	setAttr ".tgi[0].ni[41].x" -382.85714721679688;
-	setAttr ".tgi[0].ni[41].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[41].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[41].y" -880;
 	setAttr ".tgi[0].ni[41].nvs" 18304;
-	setAttr ".tgi[0].ni[42].x" 1470;
-	setAttr ".tgi[0].ni[42].y" -1417.142822265625;
+	setAttr ".tgi[0].ni[42].x" 1915.7142333984375;
+	setAttr ".tgi[0].ni[42].y" 2.8571429252624512;
 	setAttr ".tgi[0].ni[42].nvs" 18304;
-	setAttr ".tgi[0].ni[43].x" 1607.142822265625;
-	setAttr ".tgi[0].ni[43].y" 242.85714721679688;
+	setAttr ".tgi[0].ni[43].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[43].y" 2574.28564453125;
 	setAttr ".tgi[0].ni[43].nvs" 18304;
-	setAttr ".tgi[0].ni[44].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[44].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[44].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[44].y" 1084.2857666015625;
 	setAttr ".tgi[0].ni[44].nvs" 18304;
-	setAttr ".tgi[0].ni[45].x" -160;
+	setAttr ".tgi[0].ni[45].x" -154.28572082519531;
 	setAttr ".tgi[0].ni[45].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[45].nvs" 18304;
-	setAttr ".tgi[0].ni[46].x" -240;
-	setAttr ".tgi[0].ni[46].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[46].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[46].y" 1185.7142333984375;
 	setAttr ".tgi[0].ni[46].nvs" 18304;
-	setAttr ".tgi[0].ni[47].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[47].y" -1257.142822265625;
+	setAttr ".tgi[0].ni[47].x" -1020;
+	setAttr ".tgi[0].ni[47].y" 2331.428466796875;
 	setAttr ".tgi[0].ni[47].nvs" 18304;
-	setAttr ".tgi[0].ni[48].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[48].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[48].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[48].y" -721.4285888671875;
 	setAttr ".tgi[0].ni[48].nvs" 18304;
-	setAttr ".tgi[0].ni[49].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[49].y" -882.85711669921875;
+	setAttr ".tgi[0].ni[49].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[49].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[49].nvs" 18304;
-	setAttr ".tgi[0].ni[50].x" -151.42857360839844;
-	setAttr ".tgi[0].ni[50].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[50].x" 208.57142639160156;
+	setAttr ".tgi[0].ni[50].y" 1101.4285888671875;
 	setAttr ".tgi[0].ni[50].nvs" 18304;
-	setAttr ".tgi[0].ni[51].x" -372.85714721679688;
-	setAttr ".tgi[0].ni[51].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[51].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[51].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[51].nvs" 18304;
-	setAttr ".tgi[0].ni[52].x" 1470;
-	setAttr ".tgi[0].ni[52].y" 311.42855834960938;
+	setAttr ".tgi[0].ni[52].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[52].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[52].nvs" 18304;
-	setAttr ".tgi[0].ni[53].x" -411.42855834960938;
-	setAttr ".tgi[0].ni[53].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[53].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[53].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[53].nvs" 18304;
-	setAttr ".tgi[0].ni[54].x" 1760;
-	setAttr ".tgi[0].ni[54].y" 47.142856597900391;
+	setAttr ".tgi[0].ni[54].x" 208.57142639160156;
+	setAttr ".tgi[0].ni[54].y" 1260;
 	setAttr ".tgi[0].ni[54].nvs" 18304;
-	setAttr ".tgi[0].ni[55].x" 927.14288330078125;
-	setAttr ".tgi[0].ni[55].y" 1960;
+	setAttr ".tgi[0].ni[55].x" 1415.7142333984375;
+	setAttr ".tgi[0].ni[55].y" 281.42855834960938;
 	setAttr ".tgi[0].ni[55].nvs" 18304;
-	setAttr ".tgi[0].ni[56].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[56].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[56].x" -410;
+	setAttr ".tgi[0].ni[56].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[56].nvs" 18304;
-	setAttr ".tgi[0].ni[57].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[57].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[57].x" 1162.857177734375;
+	setAttr ".tgi[0].ni[57].y" -207.14285278320313;
 	setAttr ".tgi[0].ni[57].nvs" 18304;
-	setAttr ".tgi[0].ni[58].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[58].y" 582.85711669921875;
+	setAttr ".tgi[0].ni[58].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[58].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[58].nvs" 18304;
 	setAttr ".tgi[0].ni[59].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[59].y" -77.142860412597656;
+	setAttr ".tgi[0].ni[59].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[59].nvs" 18304;
-	setAttr ".tgi[0].ni[60].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[60].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[60].x" -155.71427917480469;
+	setAttr ".tgi[0].ni[60].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[60].nvs" 18304;
-	setAttr ".tgi[0].ni[61].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[61].y" 2167.142822265625;
+	setAttr ".tgi[0].ni[61].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[61].y" 2154.28564453125;
 	setAttr ".tgi[0].ni[61].nvs" 18304;
-	setAttr ".tgi[0].ni[62].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[62].y" 481.42855834960938;
+	setAttr ".tgi[0].ni[62].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[62].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[62].nvs" 18304;
-	setAttr ".tgi[0].ni[63].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[63].y" 2422.857177734375;
+	setAttr ".tgi[0].ni[63].x" -245.71427917480469;
+	setAttr ".tgi[0].ni[63].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[63].nvs" 18304;
-	setAttr ".tgi[0].ni[64].x" -82.857139587402344;
-	setAttr ".tgi[0].ni[64].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[64].x" -161.42857360839844;
+	setAttr ".tgi[0].ni[64].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[64].nvs" 18304;
-	setAttr ".tgi[0].ni[65].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[65].y" 684.28570556640625;
+	setAttr ".tgi[0].ni[65].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[65].y" -1087.142822265625;
 	setAttr ".tgi[0].ni[65].nvs" 18304;
-	setAttr ".tgi[0].ni[66].x" -384.28570556640625;
+	setAttr ".tgi[0].ni[66].x" -411.42855834960938;
 	setAttr ".tgi[0].ni[66].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[66].nvs" 18304;
-	setAttr ".tgi[0].ni[67].x" -405.71429443359375;
-	setAttr ".tgi[0].ni[67].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[67].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[67].y" 81.428573608398438;
 	setAttr ".tgi[0].ni[67].nvs" 18304;
-	setAttr ".tgi[0].ni[68].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[68].y" 1124.2857666015625;
+	setAttr ".tgi[0].ni[68].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[68].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[68].nvs" 18304;
-	setAttr ".tgi[0].ni[69].x" 1470;
-	setAttr ".tgi[0].ni[69].y" -1244.2857666015625;
+	setAttr ".tgi[0].ni[69].x" 1162.857177734375;
+	setAttr ".tgi[0].ni[69].y" -34.285713195800781;
 	setAttr ".tgi[0].ni[69].nvs" 18304;
-	setAttr ".tgi[0].ni[70].x" 1162.857177734375;
-	setAttr ".tgi[0].ni[70].y" -380;
+	setAttr ".tgi[0].ni[70].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[70].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[70].nvs" 18304;
-	setAttr ".tgi[0].ni[71].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[71].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[71].x" -401.42855834960938;
+	setAttr ".tgi[0].ni[71].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[71].nvs" 18304;
 	setAttr ".tgi[0].ni[72].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[72].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[72].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[72].nvs" 18304;
-	setAttr ".tgi[0].ni[73].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[73].y" 1227.142822265625;
+	setAttr ".tgi[0].ni[73].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[73].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[73].nvs" 18304;
-	setAttr ".tgi[0].ni[74].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[74].y" 105.71428680419922;
+	setAttr ".tgi[0].ni[74].x" 822.85711669921875;
+	setAttr ".tgi[0].ni[74].y" 984.28570556640625;
 	setAttr ".tgi[0].ni[74].nvs" 18304;
-	setAttr ".tgi[0].ni[75].x" -608.5714111328125;
-	setAttr ".tgi[0].ni[75].y" 1632.857177734375;
+	setAttr ".tgi[0].ni[75].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[75].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[75].nvs" 18304;
 	setAttr ".tgi[0].ni[76].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[76].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[76].nvs" 18304;
-	setAttr ".tgi[0].ni[77].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[77].y" 2004.2857666015625;
+	setAttr ".tgi[0].ni[77].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[77].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[77].nvs" 18304;
-	setAttr ".tgi[0].ni[78].x" 312.85714721679688;
-	setAttr ".tgi[0].ni[78].y" 2387.142822265625;
+	setAttr ".tgi[0].ni[78].x" 822.85711669921875;
+	setAttr ".tgi[0].ni[78].y" 1720;
 	setAttr ".tgi[0].ni[78].nvs" 18304;
-	setAttr ".tgi[0].ni[79].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[79].y" -224.28572082519531;
+	setAttr ".tgi[0].ni[79].x" -151.42857360839844;
+	setAttr ".tgi[0].ni[79].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[79].nvs" 18304;
-	setAttr ".tgi[0].ni[80].x" -121.42857360839844;
-	setAttr ".tgi[0].ni[80].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[80].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[80].y" -1140;
 	setAttr ".tgi[0].ni[80].nvs" 18304;
-	setAttr ".tgi[0].ni[81].x" -247.14285278320313;
-	setAttr ".tgi[0].ni[81].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[81].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[81].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[81].nvs" 18304;
-	setAttr ".tgi[0].ni[82].x" -117.14286041259766;
-	setAttr ".tgi[0].ni[82].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[82].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[82].y" 2421.428466796875;
 	setAttr ".tgi[0].ni[82].nvs" 18304;
-	setAttr ".tgi[0].ni[83].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[83].y" 702.85711669921875;
+	setAttr ".tgi[0].ni[83].x" -410;
+	setAttr ".tgi[0].ni[83].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[83].nvs" 18304;
-	setAttr ".tgi[0].ni[84].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[84].y" 2185.71435546875;
+	setAttr ".tgi[0].ni[84].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[84].y" 2624.28564453125;
 	setAttr ".tgi[0].ni[84].nvs" 18304;
-	setAttr ".tgi[0].ni[85].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[85].y" 1610;
+	setAttr ".tgi[0].ni[85].x" -377.14285278320313;
+	setAttr ".tgi[0].ni[85].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[85].nvs" 18304;
-	setAttr ".tgi[0].ni[86].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[86].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[86].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[86].y" 1548.5714111328125;
 	setAttr ".tgi[0].ni[86].nvs" 18304;
-	setAttr ".tgi[0].ni[87].x" 1607.142822265625;
-	setAttr ".tgi[0].ni[87].y" -64.285713195800781;
+	setAttr ".tgi[0].ni[87].x" -155.71427917480469;
+	setAttr ".tgi[0].ni[87].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[87].nvs" 18304;
 	setAttr ".tgi[0].ni[88].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[88].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[88].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[88].nvs" 18304;
-	setAttr ".tgi[0].ni[89].x" -154.28572082519531;
+	setAttr ".tgi[0].ni[89].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[89].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[89].nvs" 18304;
-	setAttr ".tgi[0].ni[90].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[90].y" -571.4285888671875;
+	setAttr ".tgi[0].ni[90].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[90].y" 2218.571533203125;
 	setAttr ".tgi[0].ni[90].nvs" 18304;
-	setAttr ".tgi[0].ni[91].x" -154.28572082519531;
-	setAttr ".tgi[0].ni[91].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[91].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[91].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[91].nvs" 18304;
 	setAttr ".tgi[0].ni[92].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[92].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[92].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[92].nvs" 18304;
-	setAttr ".tgi[0].ni[93].x" 1470;
-	setAttr ".tgi[0].ni[93].y" 138.57142639160156;
+	setAttr ".tgi[0].ni[93].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[93].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[93].nvs" 18304;
-	setAttr ".tgi[0].ni[94].x" 1915.7142333984375;
-	setAttr ".tgi[0].ni[94].y" 14.285714149475098;
+	setAttr ".tgi[0].ni[94].x" -384.28570556640625;
+	setAttr ".tgi[0].ni[94].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[94].nvs" 18304;
-	setAttr ".tgi[0].ni[95].x" -411.42855834960938;
+	setAttr ".tgi[0].ni[95].x" -378.57144165039063;
 	setAttr ".tgi[0].ni[95].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[95].nvs" 18304;
 	setAttr ".tgi[0].ni[96].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[96].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[96].nvs" 18304;
-	setAttr ".tgi[0].ni[97].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[97].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[97].x" 1162.857177734375;
+	setAttr ".tgi[0].ni[97].y" -380;
 	setAttr ".tgi[0].ni[97].nvs" 18304;
 	setAttr ".tgi[0].ni[98].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[98].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[98].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[98].nvs" 18304;
-	setAttr ".tgi[0].ni[99].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[99].y" -2697.142822265625;
+	setAttr ".tgi[0].ni[99].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[99].y" 1384.2857666015625;
 	setAttr ".tgi[0].ni[99].nvs" 18304;
-	setAttr ".tgi[0].ni[100].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[100].y" -672.85711669921875;
+	setAttr ".tgi[0].ni[100].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[100].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[100].nvs" 18304;
-	setAttr ".tgi[0].ni[101].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[101].y" -774.28570556640625;
+	setAttr ".tgi[0].ni[101].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[101].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[101].nvs" 18304;
-	setAttr ".tgi[0].ni[102].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[102].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[102].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[102].y" 1701.4285888671875;
 	setAttr ".tgi[0].ni[102].nvs" 18304;
-	setAttr ".tgi[0].ni[103].x" -384.28570556640625;
-	setAttr ".tgi[0].ni[103].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[103].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[103].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[103].nvs" 18304;
-	setAttr ".tgi[0].ni[104].x" -401.42855834960938;
-	setAttr ".tgi[0].ni[104].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[104].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[104].y" -2104.28564453125;
 	setAttr ".tgi[0].ni[104].nvs" 18304;
 	setAttr ".tgi[0].ni[105].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[105].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[105].nvs" 18304;
-	setAttr ".tgi[0].ni[106].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[106].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[106].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[106].y" 2015.7142333984375;
 	setAttr ".tgi[0].ni[106].nvs" 18304;
-	setAttr ".tgi[0].ni[107].x" 1162.857177734375;
-	setAttr ".tgi[0].ni[107].y" -34.285713195800781;
+	setAttr ".tgi[0].ni[107].x" 1470;
+	setAttr ".tgi[0].ni[107].y" -207.14285278320313;
 	setAttr ".tgi[0].ni[107].nvs" 18304;
-	setAttr ".tgi[0].ni[108].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[108].y" 2264.28564453125;
+	setAttr ".tgi[0].ni[108].x" -384.28570556640625;
+	setAttr ".tgi[0].ni[108].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[108].nvs" 18304;
-	setAttr ".tgi[0].ni[109].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[109].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[109].x" -117.14286041259766;
+	setAttr ".tgi[0].ni[109].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[109].nvs" 18304;
-	setAttr ".tgi[0].ni[110].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[110].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[110].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[110].y" 820;
 	setAttr ".tgi[0].ni[110].nvs" 18304;
-	setAttr ".tgi[0].ni[111].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[111].y" 2084.28564453125;
+	setAttr ".tgi[0].ni[111].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[111].y" 128.57142639160156;
 	setAttr ".tgi[0].ni[111].nvs" 18304;
-	setAttr ".tgi[0].ni[112].x" -2451.428466796875;
-	setAttr ".tgi[0].ni[112].y" 2698.571533203125;
+	setAttr ".tgi[0].ni[112].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[112].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[112].nvs" 18304;
-	setAttr ".tgi[0].ni[113].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[113].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[113].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[113].y" 27.142856597900391;
 	setAttr ".tgi[0].ni[113].nvs" 18304;
-	setAttr ".tgi[0].ni[114].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[114].y" -565.71429443359375;
+	setAttr ".tgi[0].ni[114].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[114].y" 1417.142822265625;
 	setAttr ".tgi[0].ni[114].nvs" 18304;
-	setAttr ".tgi[0].ni[115].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[115].y" -1234.2857666015625;
+	setAttr ".tgi[0].ni[115].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[115].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[115].nvs" 18304;
-	setAttr ".tgi[0].ni[116].x" 1607.142822265625;
-	setAttr ".tgi[0].ni[116].y" -55.714286804199219;
+	setAttr ".tgi[0].ni[116].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[116].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[116].nvs" 18304;
-	setAttr ".tgi[0].ni[117].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[117].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[117].x" -370;
+	setAttr ".tgi[0].ni[117].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[117].nvs" 18304;
-	setAttr ".tgi[0].ni[118].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[118].y" -667.14288330078125;
+	setAttr ".tgi[0].ni[118].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[118].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[118].nvs" 18304;
-	setAttr ".tgi[0].ni[119].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[119].y" 918.5714111328125;
+	setAttr ".tgi[0].ni[119].x" 1607.142822265625;
+	setAttr ".tgi[0].ni[119].y" -64.285713195800781;
 	setAttr ".tgi[0].ni[119].nvs" 18304;
 	setAttr ".tgi[0].ni[120].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[120].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[120].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[120].nvs" 18304;
-	setAttr ".tgi[0].ni[121].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[121].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[121].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[121].y" 2320;
 	setAttr ".tgi[0].ni[121].nvs" 18304;
-	setAttr ".tgi[0].ni[122].x" 1470;
-	setAttr ".tgi[0].ni[122].y" -552.85711669921875;
+	setAttr ".tgi[0].ni[122].x" 1607.142822265625;
+	setAttr ".tgi[0].ni[122].y" -58.571430206298828;
 	setAttr ".tgi[0].ni[122].nvs" 18304;
-	setAttr ".tgi[0].ni[123].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[123].y" 1500;
+	setAttr ".tgi[0].ni[123].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[123].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[123].nvs" 18304;
-	setAttr ".tgi[0].ni[124].x" 927.14288330078125;
-	setAttr ".tgi[0].ni[124].y" 2188.571533203125;
+	setAttr ".tgi[0].ni[124].x" 1108.5714111328125;
+	setAttr ".tgi[0].ni[124].y" -911.4285888671875;
 	setAttr ".tgi[0].ni[124].nvs" 18304;
-	setAttr ".tgi[0].ni[125].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[125].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[125].x" 1607.142822265625;
+	setAttr ".tgi[0].ni[125].y" 242.85714721679688;
 	setAttr ".tgi[0].ni[125].nvs" 18304;
-	setAttr ".tgi[0].ni[126].x" -151.42857360839844;
+	setAttr ".tgi[0].ni[126].x" -234.28572082519531;
 	setAttr ".tgi[0].ni[126].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[126].nvs" 18304;
-	setAttr ".tgi[0].ni[127].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[127].y" 2655.71435546875;
+	setAttr ".tgi[0].ni[127].x" -82.857139587402344;
+	setAttr ".tgi[0].ni[127].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[127].nvs" 18304;
-	setAttr ".tgi[0].ni[128].x" 312.85714721679688;
-	setAttr ".tgi[0].ni[128].y" 1361.4285888671875;
+	setAttr ".tgi[0].ni[128].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[128].y" -292.85714721679688;
 	setAttr ".tgi[0].ni[128].nvs" 18304;
-	setAttr ".tgi[0].ni[129].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[129].y" 2422.857177734375;
+	setAttr ".tgi[0].ni[129].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[129].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[129].nvs" 18304;
-	setAttr ".tgi[0].ni[130].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[130].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[130].x" -367.14285278320313;
+	setAttr ".tgi[0].ni[130].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[130].nvs" 18304;
-	setAttr ".tgi[0].ni[131].x" -161.42857360839844;
+	setAttr ".tgi[0].ni[131].x" -378.57144165039063;
 	setAttr ".tgi[0].ni[131].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[131].nvs" 18304;
-	setAttr ".tgi[0].ni[132].x" 1628.5714111328125;
-	setAttr ".tgi[0].ni[132].y" -192.85714721679688;
+	setAttr ".tgi[0].ni[132].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[132].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[132].nvs" 18304;
 	setAttr ".tgi[0].ni[133].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[133].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[133].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[133].nvs" 18304;
-	setAttr ".tgi[0].ni[134].x" -1837.142822265625;
-	setAttr ".tgi[0].ni[134].y" 2562.857177734375;
+	setAttr ".tgi[0].ni[134].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[134].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[134].nvs" 18304;
-	setAttr ".tgi[0].ni[135].x" -122.85713958740234;
-	setAttr ".tgi[0].ni[135].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[135].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[135].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[135].nvs" 18304;
-	setAttr ".tgi[0].ni[136].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[136].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[136].x" -405.71429443359375;
+	setAttr ".tgi[0].ni[136].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[136].nvs" 18304;
-	setAttr ".tgi[0].ni[137].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[137].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[137].x" -121.42857360839844;
+	setAttr ".tgi[0].ni[137].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[137].nvs" 18304;
-	setAttr ".tgi[0].ni[138].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[138].y" 994.28570556640625;
+	setAttr ".tgi[0].ni[138].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[138].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[138].nvs" 18304;
-	setAttr ".tgi[0].ni[139].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[139].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[139].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[139].y" -394.28570556640625;
 	setAttr ".tgi[0].ni[139].nvs" 18304;
-	setAttr ".tgi[0].ni[140].x" -404.28570556640625;
-	setAttr ".tgi[0].ni[140].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[140].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[140].y" 547.14288330078125;
 	setAttr ".tgi[0].ni[140].nvs" 18304;
-	setAttr ".tgi[0].ni[141].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[141].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[141].x" -375.71429443359375;
+	setAttr ".tgi[0].ni[141].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[141].nvs" 18304;
-	setAttr ".tgi[0].ni[142].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[142].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[142].x" 822.85711669921875;
+	setAttr ".tgi[0].ni[142].y" 1618.5714111328125;
 	setAttr ".tgi[0].ni[142].nvs" 18304;
-	setAttr ".tgi[0].ni[143].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[143].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[143].x" -2875.71435546875;
+	setAttr ".tgi[0].ni[143].y" 2484.28564453125;
 	setAttr ".tgi[0].ni[143].nvs" 18304;
-	setAttr ".tgi[0].ni[144].x" -234.28572082519531;
-	setAttr ".tgi[0].ni[144].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[144].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[144].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[144].nvs" 18304;
-	setAttr ".tgi[0].ni[145].x" 1162.857177734375;
-	setAttr ".tgi[0].ni[145].y" -552.85711669921875;
+	setAttr ".tgi[0].ni[145].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[145].y" -495.71429443359375;
 	setAttr ".tgi[0].ni[145].nvs" 18304;
-	setAttr ".tgi[0].ni[146].x" -410;
-	setAttr ".tgi[0].ni[146].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[146].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[146].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[146].nvs" 18304;
-	setAttr ".tgi[0].ni[147].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[147].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[147].x" -2261.428466796875;
+	setAttr ".tgi[0].ni[147].y" 2484.28564453125;
 	setAttr ".tgi[0].ni[147].nvs" 18304;
-	setAttr ".tgi[0].ni[148].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[148].y" -21.428571701049805;
+	setAttr ".tgi[0].ni[148].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[148].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[148].nvs" 18304;
-	setAttr ".tgi[0].ni[149].x" 1761.4285888671875;
-	setAttr ".tgi[0].ni[149].y" -12.857142448425293;
+	setAttr ".tgi[0].ni[149].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[149].y" 1917.142822265625;
 	setAttr ".tgi[0].ni[149].nvs" 18304;
-	setAttr ".tgi[0].ni[150].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[150].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[150].x" -122.85713958740234;
+	setAttr ".tgi[0].ni[150].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[150].nvs" 18304;
-	setAttr ".tgi[0].ni[151].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[151].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[151].x" -384.28570556640625;
+	setAttr ".tgi[0].ni[151].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[151].nvs" 18304;
-	setAttr ".tgi[0].ni[152].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[152].y" -2221.428466796875;
+	setAttr ".tgi[0].ni[152].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[152].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[152].nvs" 18304;
-	setAttr ".tgi[0].ni[153].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[153].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[153].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[153].y" 385.71429443359375;
 	setAttr ".tgi[0].ni[153].nvs" 18304;
-	setAttr ".tgi[0].ni[154].x" -375.71429443359375;
+	setAttr ".tgi[0].ni[154].x" -155.71427917480469;
 	setAttr ".tgi[0].ni[154].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[154].nvs" 18304;
-	setAttr ".tgi[0].ni[155].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[155].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[155].x" -82.857139587402344;
+	setAttr ".tgi[0].ni[155].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[155].nvs" 18304;
-	setAttr ".tgi[0].ni[156].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[156].y" 2011.4285888671875;
+	setAttr ".tgi[0].ni[156].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[156].y" 1507.142822265625;
 	setAttr ".tgi[0].ni[156].nvs" 18304;
-	setAttr ".tgi[0].ni[157].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[157].y" 4.2857141494750977;
+	setAttr ".tgi[0].ni[157].x" 1607.142822265625;
+	setAttr ".tgi[0].ni[157].y" -55.714286804199219;
 	setAttr ".tgi[0].ni[157].nvs" 18304;
 	setAttr ".tgi[0].ni[158].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[158].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[158].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[158].nvs" 18304;
 	setAttr ".tgi[0].ni[159].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[159].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[159].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[159].nvs" 18304;
-	setAttr ".tgi[0].ni[160].x" 1470;
-	setAttr ".tgi[0].ni[160].y" -34.285713195800781;
+	setAttr ".tgi[0].ni[160].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[160].y" 230;
 	setAttr ".tgi[0].ni[160].nvs" 18304;
-	setAttr ".tgi[0].ni[161].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[161].y" 2524.28564453125;
+	setAttr ".tgi[0].ni[161].x" 1470;
+	setAttr ".tgi[0].ni[161].y" 138.57142639160156;
 	setAttr ".tgi[0].ni[161].nvs" 18304;
-	setAttr ".tgi[0].ni[162].x" 1162.857177734375;
-	setAttr ".tgi[0].ni[162].y" 138.57142639160156;
+	setAttr ".tgi[0].ni[162].x" -160;
+	setAttr ".tgi[0].ni[162].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[162].nvs" 18304;
-	setAttr ".tgi[0].ni[163].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[163].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[163].x" 1470;
+	setAttr ".tgi[0].ni[163].y" -898.5714111328125;
 	setAttr ".tgi[0].ni[163].nvs" 18304;
-	setAttr ".tgi[0].ni[164].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[164].y" 2361.428466796875;
+	setAttr ".tgi[0].ni[164].x" -240;
+	setAttr ".tgi[0].ni[164].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[164].nvs" 18304;
-	setAttr ".tgi[0].ni[165].x" 1761.4285888671875;
-	setAttr ".tgi[0].ni[165].y" 34.285713195800781;
+	setAttr ".tgi[0].ni[165].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[165].y" -597.14288330078125;
 	setAttr ".tgi[0].ni[165].nvs" 18304;
-	setAttr ".tgi[0].ni[166].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[166].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[166].x" 1915.7142333984375;
+	setAttr ".tgi[0].ni[166].y" 14.285714149475098;
 	setAttr ".tgi[0].ni[166].nvs" 18304;
-	setAttr ".tgi[0].ni[167].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[167].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[167].x" -120;
+	setAttr ".tgi[0].ni[167].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[167].nvs" 18304;
 	setAttr ".tgi[0].ni[168].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[168].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[168].nvs" 18304;
-	setAttr ".tgi[0].ni[169].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[169].y" 1235.7142333984375;
+	setAttr ".tgi[0].ni[169].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[169].y" -774.28570556640625;
 	setAttr ".tgi[0].ni[169].nvs" 18304;
-	setAttr ".tgi[0].ni[170].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[170].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[170].x" -411.42855834960938;
+	setAttr ".tgi[0].ni[170].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[170].nvs" 18304;
-	setAttr ".tgi[0].ni[171].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[171].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[171].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[171].y" 494.28570556640625;
 	setAttr ".tgi[0].ni[171].nvs" 18304;
-	setAttr ".tgi[0].ni[172].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[172].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[172].x" 1761.4285888671875;
+	setAttr ".tgi[0].ni[172].y" 34.285713195800781;
 	setAttr ".tgi[0].ni[172].nvs" 18304;
-	setAttr ".tgi[0].ni[173].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[173].y" 1020;
+	setAttr ".tgi[0].ni[173].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[173].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[173].nvs" 18304;
-	setAttr ".tgi[0].ni[174].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[174].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[174].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[174].y" 978.5714111328125;
 	setAttr ".tgi[0].ni[174].nvs" 18304;
-	setAttr ".tgi[0].ni[175].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[175].y" 81.428573608398438;
+	setAttr ".tgi[0].ni[175].x" -240;
+	setAttr ".tgi[0].ni[175].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[175].nvs" 18304;
 	setAttr ".tgi[0].ni[176].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[176].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[176].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[176].nvs" 18304;
-	setAttr ".tgi[0].ni[177].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[177].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[177].x" -154.28572082519531;
+	setAttr ".tgi[0].ni[177].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[177].nvs" 18304;
-	setAttr ".tgi[0].ni[178].x" -370;
-	setAttr ".tgi[0].ni[178].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[178].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[178].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[178].nvs" 18304;
-	setAttr ".tgi[0].ni[179].x" -82.857139587402344;
-	setAttr ".tgi[0].ni[179].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[179].x" 1618.5714111328125;
+	setAttr ".tgi[0].ni[179].y" -54.285713195800781;
 	setAttr ".tgi[0].ni[179].nvs" 18304;
-	setAttr ".tgi[0].ni[180].x" -155.71427917480469;
-	setAttr ".tgi[0].ni[180].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[180].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[180].y" 1287.142822265625;
 	setAttr ".tgi[0].ni[180].nvs" 18304;
-	setAttr ".tgi[0].ni[181].x" -1222.857177734375;
-	setAttr ".tgi[0].ni[181].y" 1932.857177734375;
+	setAttr ".tgi[0].ni[181].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[181].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[181].nvs" 18304;
-	setAttr ".tgi[0].ni[182].x" -378.57144165039063;
+	setAttr ".tgi[0].ni[182].x" -240;
 	setAttr ".tgi[0].ni[182].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[182].nvs" 18304;
-	setAttr ".tgi[0].ni[183].x" -542.85711669921875;
-	setAttr ".tgi[0].ni[183].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[183].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[183].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[183].nvs" 18304;
-	setAttr ".tgi[0].ni[184].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[184].y" -1847.142822265625;
+	setAttr ".tgi[0].ni[184].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[184].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[184].nvs" 18304;
 	setAttr ".tgi[0].ni[185].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[185].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[185].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[185].nvs" 18304;
-	setAttr ".tgi[0].ni[186].x" 1608.5714111328125;
-	setAttr ".tgi[0].ni[186].y" -61.428569793701172;
+	setAttr ".tgi[0].ni[186].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[186].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[186].nvs" 18304;
 	setAttr ".tgi[0].ni[187].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[187].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[187].nvs" 18304;
-	setAttr ".tgi[0].ni[188].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[188].y" 1095.7142333984375;
+	setAttr ".tgi[0].ni[188].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[188].y" 2142.857177734375;
 	setAttr ".tgi[0].ni[188].nvs" 18304;
-	setAttr ".tgi[0].ni[189].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[189].y" 442.85714721679688;
+	setAttr ".tgi[0].ni[189].x" 1130;
+	setAttr ".tgi[0].ni[189].y" 1345.7142333984375;
 	setAttr ".tgi[0].ni[189].nvs" 18304;
-	setAttr ".tgi[0].ni[190].x" -161.42857360839844;
+	setAttr ".tgi[0].ni[190].x" -404.28570556640625;
 	setAttr ".tgi[0].ni[190].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[190].nvs" 18304;
-	setAttr ".tgi[0].ni[191].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[191].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[191].x" 1761.4285888671875;
+	setAttr ".tgi[0].ni[191].y" 20;
 	setAttr ".tgi[0].ni[191].nvs" 18304;
-	setAttr ".tgi[0].ni[192].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[192].y" 897.14288330078125;
+	setAttr ".tgi[0].ni[192].x" -405.71429443359375;
+	setAttr ".tgi[0].ni[192].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[192].nvs" 18304;
-	setAttr ".tgi[0].ni[193].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[193].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[193].x" 1130;
+	setAttr ".tgi[0].ni[193].y" 20;
 	setAttr ".tgi[0].ni[193].nvs" 18304;
 	setAttr ".tgi[0].ni[194].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[194].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[194].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[194].nvs" 18304;
-	setAttr ".tgi[0].ni[195].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[195].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[195].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[195].y" -875.71429443359375;
 	setAttr ".tgi[0].ni[195].nvs" 18304;
-	setAttr ".tgi[0].ni[196].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[196].y" 182.85714721679688;
+	setAttr ".tgi[0].ni[196].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[196].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[196].nvs" 18304;
-	setAttr ".tgi[0].ni[197].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[197].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[197].x" 1470;
+	setAttr ".tgi[0].ni[197].y" -380;
 	setAttr ".tgi[0].ni[197].nvs" 18304;
 	setAttr ".tgi[0].ni[198].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[198].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[198].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[198].nvs" 18304;
-	setAttr ".tgi[0].ni[199].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[199].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[199].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[199].y" 284.28570556640625;
 	setAttr ".tgi[0].ni[199].nvs" 18304;
-	setAttr ".tgi[0].ni[200].x" -410;
-	setAttr ".tgi[0].ni[200].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[200].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[200].y" -404.28570556640625;
 	setAttr ".tgi[0].ni[200].nvs" 18304;
-	setAttr ".tgi[0].ni[201].x" -405.71429443359375;
-	setAttr ".tgi[0].ni[201].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[201].x" 1760;
+	setAttr ".tgi[0].ni[201].y" 47.142856597900391;
 	setAttr ".tgi[0].ni[201].nvs" 18304;
-	setAttr ".tgi[0].ni[202].x" 1614.2857666015625;
-	setAttr ".tgi[0].ni[202].y" 312.85714721679688;
+	setAttr ".tgi[0].ni[202].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[202].y" -1787.142822265625;
 	setAttr ".tgi[0].ni[202].nvs" 18304;
 	setAttr ".tgi[0].ni[203].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[203].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[203].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[203].nvs" 18304;
 	setAttr ".tgi[0].ni[204].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[204].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[204].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[204].nvs" 18304;
-	setAttr ".tgi[0].ni[205].x" -1530;
-	setAttr ".tgi[0].ni[205].y" 2180;
+	setAttr ".tgi[0].ni[205].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[205].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[205].nvs" 18304;
-	setAttr ".tgi[0].ni[206].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[206].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[206].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[206].y" -2522.857177734375;
 	setAttr ".tgi[0].ni[206].nvs" 18304;
-	setAttr ".tgi[0].ni[207].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[207].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[207].x" 1760;
+	setAttr ".tgi[0].ni[207].y" 47.142856597900391;
 	setAttr ".tgi[0].ni[207].nvs" 18304;
-	setAttr ".tgi[0].ni[208].x" -237.14285278320313;
-	setAttr ".tgi[0].ni[208].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[208].x" 1761.4285888671875;
+	setAttr ".tgi[0].ni[208].y" -12.857142448425293;
 	setAttr ".tgi[0].ni[208].nvs" 18304;
-	setAttr ".tgi[0].ni[209].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[209].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[209].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[209].y" -505.71429443359375;
 	setAttr ".tgi[0].ni[209].nvs" 18304;
-	setAttr ".tgi[0].ni[210].x" -155.71427917480469;
-	setAttr ".tgi[0].ni[210].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[210].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[210].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[210].nvs" 18304;
 	setAttr ".tgi[0].ni[211].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[211].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[211].nvs" 18304;
-	setAttr ".tgi[0].ni[212].x" 1415.7142333984375;
-	setAttr ".tgi[0].ni[212].y" 281.42855834960938;
+	setAttr ".tgi[0].ni[212].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[212].y" 1291.4285888671875;
 	setAttr ".tgi[0].ni[212].nvs" 18304;
-	setAttr ".tgi[0].ni[213].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[213].y" -1335.7142333984375;
+	setAttr ".tgi[0].ni[213].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[213].y" 982.85711669921875;
 	setAttr ".tgi[0].ni[213].nvs" 18304;
-	setAttr ".tgi[0].ni[214].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[214].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[214].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[214].y" 1282.857177734375;
 	setAttr ".tgi[0].ni[214].nvs" 18304;
-	setAttr ".tgi[0].ni[215].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[215].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[215].x" 1130;
+	setAttr ".tgi[0].ni[215].y" 2332.857177734375;
 	setAttr ".tgi[0].ni[215].nvs" 18304;
-	setAttr ".tgi[0].ni[216].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[216].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[216].x" -410;
+	setAttr ".tgi[0].ni[216].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[216].nvs" 18304;
-	setAttr ".tgi[0].ni[217].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[217].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[217].x" -151.42857360839844;
+	setAttr ".tgi[0].ni[217].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[217].nvs" 18304;
-	setAttr ".tgi[0].ni[218].x" 1760;
-	setAttr ".tgi[0].ni[218].y" 47.142856597900391;
+	setAttr ".tgi[0].ni[218].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[218].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[218].nvs" 18304;
-	setAttr ".tgi[0].ni[219].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[219].y" 2705.71435546875;
+	setAttr ".tgi[0].ni[219].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[219].y" 1995.7142333984375;
 	setAttr ".tgi[0].ni[219].nvs" 18304;
 	setAttr ".tgi[0].ni[220].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[220].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[220].nvs" 18304;
 	setAttr ".tgi[0].ni[221].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[221].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[221].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[221].nvs" 18304;
-	setAttr ".tgi[0].ni[222].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[222].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[222].x" -372.85714721679688;
+	setAttr ".tgi[0].ni[222].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[222].nvs" 18304;
-	setAttr ".tgi[0].ni[223].x" -160;
-	setAttr ".tgi[0].ni[223].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[223].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[223].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[223].nvs" 18304;
-	setAttr ".tgi[0].ni[224].x" -405.71429443359375;
-	setAttr ".tgi[0].ni[224].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[224].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[224].y" 1600;
 	setAttr ".tgi[0].ni[224].nvs" 18304;
-	setAttr ".tgi[0].ni[225].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[225].y" 785.71429443359375;
+	setAttr ".tgi[0].ni[225].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[225].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[225].nvs" 18304;
-	setAttr ".tgi[0].ni[226].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[226].y" -464.28570556640625;
+	setAttr ".tgi[0].ni[226].x" -1647.142822265625;
+	setAttr ".tgi[0].ni[226].y" 2374.28564453125;
 	setAttr ".tgi[0].ni[226].nvs" 18304;
-	setAttr ".tgi[0].ni[227].x" -240;
-	setAttr ".tgi[0].ni[227].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[227].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[227].y" -1185.7142333984375;
 	setAttr ".tgi[0].ni[227].nvs" 18304;
-	setAttr ".tgi[0].ni[228].x" 71.428573608398438;
-	setAttr ".tgi[0].ni[228].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[228].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[228].y" -77.142860412597656;
 	setAttr ".tgi[0].ni[228].nvs" 18304;
-	setAttr ".tgi[0].ni[229].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[229].y" -1437.142822265625;
+	setAttr ".tgi[0].ni[229].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[229].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[229].nvs" 18304;
-	setAttr ".tgi[0].ni[230].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[230].y" 1451.4285888671875;
+	setAttr ".tgi[0].ni[230].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[230].y" 881.4285888671875;
 	setAttr ".tgi[0].ni[230].nvs" 18304;
-	setAttr ".tgi[0].ni[231].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[231].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[231].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[231].y" -1287.142822265625;
 	setAttr ".tgi[0].ni[231].nvs" 18304;
-	setAttr ".tgi[0].ni[232].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[232].y" 207.14285278320313;
+	setAttr ".tgi[0].ni[232].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[232].y" -2364.28564453125;
 	setAttr ".tgi[0].ni[232].nvs" 18304;
-	setAttr ".tgi[0].ni[233].x" -240;
-	setAttr ".tgi[0].ni[233].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[233].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[233].y" 1080;
 	setAttr ".tgi[0].ni[233].nvs" 18304;
-	setAttr ".tgi[0].ni[234].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[234].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[234].x" -382.85714721679688;
+	setAttr ".tgi[0].ni[234].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[234].nvs" 18304;
-	setAttr ".tgi[0].ni[235].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[235].y" 1434.2857666015625;
+	setAttr ".tgi[0].ni[235].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[235].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[235].nvs" 18304;
-	setAttr ".tgi[0].ni[236].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[236].y" 1902.857177734375;
+	setAttr ".tgi[0].ni[236].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[236].y" -2262.857177734375;
 	setAttr ".tgi[0].ni[236].nvs" 18304;
-	setAttr ".tgi[0].ni[237].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[237].y" -2005.7142333984375;
+	setAttr ".tgi[0].ni[237].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[237].y" -1945.7142333984375;
 	setAttr ".tgi[0].ni[237].nvs" 18304;
 	setAttr ".tgi[0].ni[238].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[238].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[238].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[238].nvs" 18304;
-	setAttr ".tgi[0].ni[239].x" -240;
-	setAttr ".tgi[0].ni[239].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[239].x" 1914.2857666015625;
+	setAttr ".tgi[0].ni[239].y" 51.428569793701172;
 	setAttr ".tgi[0].ni[239].nvs" 18304;
-	setAttr ".tgi[0].ni[240].x" 620;
-	setAttr ".tgi[0].ni[240].y" 2000;
+	setAttr ".tgi[0].ni[240].x" 1130;
+	setAttr ".tgi[0].ni[240].y" 2174.28564453125;
 	setAttr ".tgi[0].ni[240].nvs" 18304;
 	setAttr ".tgi[0].ni[241].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[241].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[241].nvs" 18304;
-	setAttr ".tgi[0].ni[242].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[242].y" -191.42857360839844;
+	setAttr ".tgi[0].ni[242].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[242].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[242].nvs" 18304;
 	setAttr ".tgi[0].ni[243].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[243].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[243].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[243].nvs" 18304;
-	setAttr ".tgi[0].ni[244].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[244].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[244].x" 1130;
+	setAttr ".tgi[0].ni[244].y" 1230;
 	setAttr ".tgi[0].ni[244].nvs" 18304;
-	setAttr ".tgi[0].ni[245].x" -160;
+	setAttr ".tgi[0].ni[245].x" -404.28570556640625;
 	setAttr ".tgi[0].ni[245].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[245].nvs" 18304;
 	setAttr ".tgi[0].ni[246].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[246].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[246].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[246].nvs" 18304;
-	setAttr ".tgi[0].ni[247].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[247].y" -325.71429443359375;
+	setAttr ".tgi[0].ni[247].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[247].y" -1628.5714111328125;
 	setAttr ".tgi[0].ni[247].nvs" 18304;
-	setAttr ".tgi[0].ni[248].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[248].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[248].x" -240;
+	setAttr ".tgi[0].ni[248].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[248].nvs" 18304;
-	setAttr ".tgi[0].ni[249].x" 1607.142822265625;
-	setAttr ".tgi[0].ni[249].y" -58.571430206298828;
+	setAttr ".tgi[0].ni[249].x" -404.28570556640625;
+	setAttr ".tgi[0].ni[249].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[249].nvs" 18304;
 	setAttr ".tgi[0].ni[250].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[250].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[250].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[250].nvs" 18304;
-	setAttr ".tgi[0].ni[251].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[251].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[251].x" -160;
+	setAttr ".tgi[0].ni[251].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[251].nvs" 18304;
-	setAttr ".tgi[0].ni[252].x" -384.28570556640625;
-	setAttr ".tgi[0].ni[252].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[252].x" 1614.2857666015625;
+	setAttr ".tgi[0].ni[252].y" 312.85714721679688;
 	setAttr ".tgi[0].ni[252].nvs" 18304;
-	setAttr ".tgi[0].ni[253].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[253].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[253].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[253].y" 1728.5714111328125;
 	setAttr ".tgi[0].ni[253].nvs" 18304;
-	setAttr ".tgi[0].ni[254].x" -377.14285278320313;
-	setAttr ".tgi[0].ni[254].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[254].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[254].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[254].nvs" 18304;
-	setAttr ".tgi[0].ni[255].x" -245.71427917480469;
-	setAttr ".tgi[0].ni[255].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[255].x" -1340;
+	setAttr ".tgi[0].ni[255].y" 2338.571533203125;
 	setAttr ".tgi[0].ni[255].nvs" 18304;
 	setAttr ".tgi[0].ni[256].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[256].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[256].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[256].nvs" 18304;
-	setAttr ".tgi[0].ni[257].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[257].y" -2322.857177734375;
+	setAttr ".tgi[0].ni[257].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[257].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[257].nvs" 18304;
-	setAttr ".tgi[0].ni[258].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[258].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[258].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[258].y" 2244.28564453125;
 	setAttr ".tgi[0].ni[258].nvs" 18304;
-	setAttr ".tgi[0].ni[259].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[259].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[259].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[259].y" -188.57142639160156;
 	setAttr ".tgi[0].ni[259].nvs" 18304;
-	setAttr ".tgi[0].ni[260].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[260].y" -1538.5714111328125;
+	setAttr ".tgi[0].ni[260].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[260].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[260].nvs" 18304;
-	setAttr ".tgi[0].ni[261].x" 2228.571533203125;
-	setAttr ".tgi[0].ni[261].y" 1982.857177734375;
+	setAttr ".tgi[0].ni[261].x" -411.42855834960938;
+	setAttr ".tgi[0].ni[261].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[261].nvs" 18304;
-	setAttr ".tgi[0].ni[262].x" -301.42855834960938;
-	setAttr ".tgi[0].ni[262].y" 1094.2857666015625;
+	setAttr ".tgi[0].ni[262].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[262].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[262].nvs" 18304;
-	setAttr ".tgi[0].ni[263].x" -132.85714721679688;
-	setAttr ".tgi[0].ni[263].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[263].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[263].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[263].nvs" 18304;
-	setAttr ".tgi[0].ni[264].x" 1162.857177734375;
-	setAttr ".tgi[0].ni[264].y" 311.42855834960938;
+	setAttr ".tgi[0].ni[264].x" 1130;
+	setAttr ".tgi[0].ni[264].y" 591.4285888671875;
 	setAttr ".tgi[0].ni[264].nvs" 18304;
-	setAttr ".tgi[0].ni[265].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[265].y" 80;
+	setAttr ".tgi[0].ni[265].x" -405.71429443359375;
+	setAttr ".tgi[0].ni[265].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[265].nvs" 18304;
-	setAttr ".tgi[0].ni[266].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[266].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[266].x" 1607.142822265625;
+	setAttr ".tgi[0].ni[266].y" -55.714286804199219;
 	setAttr ".tgi[0].ni[266].nvs" 18304;
-	setAttr ".tgi[0].ni[267].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[267].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[267].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[267].y" 1984.2857666015625;
 	setAttr ".tgi[0].ni[267].nvs" 18304;
 	setAttr ".tgi[0].ni[268].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[268].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[268].nvs" 18304;
-	setAttr ".tgi[0].ni[269].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[269].y" -1041.4285888671875;
+	setAttr ".tgi[0].ni[269].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[269].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[269].nvs" 18304;
-	setAttr ".tgi[0].ni[270].x" -404.28570556640625;
-	setAttr ".tgi[0].ni[270].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[270].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[270].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[270].nvs" 18304;
 	setAttr ".tgi[0].ni[271].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[271].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[271].nvs" 18304;
-	setAttr ".tgi[0].ni[272].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[272].y" -2481.428466796875;
+	setAttr ".tgi[0].ni[272].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[272].y" 1650;
 	setAttr ".tgi[0].ni[272].nvs" 18304;
-	setAttr ".tgi[0].ni[273].x" -2144.28564453125;
-	setAttr ".tgi[0].ni[273].y" 2714.28564453125;
+	setAttr ".tgi[0].ni[273].x" 515.71429443359375;
+	setAttr ".tgi[0].ni[273].y" 1011.4285888671875;
 	setAttr ".tgi[0].ni[273].nvs" 18304;
-	setAttr ".tgi[0].ni[274].x" 5.7142858505249023;
-	setAttr ".tgi[0].ni[274].y" 1305.7142333984375;
+	setAttr ".tgi[0].ni[274].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[274].y" 2018.5714111328125;
 	setAttr ".tgi[0].ni[274].nvs" 18304;
-	setAttr ".tgi[0].ni[275].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[275].y" -122.85713958740234;
+	setAttr ".tgi[0].ni[275].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[275].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[275].nvs" 18304;
-	setAttr ".tgi[0].ni[276].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[276].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[276].x" -1954.2857666015625;
+	setAttr ".tgi[0].ni[276].y" 2484.28564453125;
 	setAttr ".tgi[0].ni[276].nvs" 18304;
 	setAttr ".tgi[0].ni[277].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[277].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[277].nvs" 18304;
-	setAttr ".tgi[0].ni[278].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[278].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[278].x" -132.85714721679688;
+	setAttr ".tgi[0].ni[278].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[278].nvs" 18304;
-	setAttr ".tgi[0].ni[279].x" 1608.5714111328125;
-	setAttr ".tgi[0].ni[279].y" -55.714286804199219;
+	setAttr ".tgi[0].ni[279].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[279].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[279].nvs" 18304;
-	setAttr ".tgi[0].ni[280].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[280].y" -1132.857177734375;
+	setAttr ".tgi[0].ni[280].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[280].y" -981.4285888671875;
 	setAttr ".tgi[0].ni[280].nvs" 18304;
-	setAttr ".tgi[0].ni[281].x" -371.42855834960938;
+	setAttr ".tgi[0].ni[281].x" -154.28572082519531;
 	setAttr ".tgi[0].ni[281].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[281].nvs" 18304;
-	setAttr ".tgi[0].ni[282].x" 1234.2857666015625;
-	setAttr ".tgi[0].ni[282].y" 308.57144165039063;
+	setAttr ".tgi[0].ni[282].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[282].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[282].nvs" 18304;
-	setAttr ".tgi[0].ni[283].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[283].y" 2484.28564453125;
+	setAttr ".tgi[0].ni[283].x" -375.71429443359375;
+	setAttr ".tgi[0].ni[283].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[283].nvs" 18304;
-	setAttr ".tgi[0].ni[284].x" -384.28570556640625;
-	setAttr ".tgi[0].ni[284].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[284].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[284].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[284].nvs" 18304;
-	setAttr ".tgi[0].ni[285].x" -120;
-	setAttr ".tgi[0].ni[285].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[285].x" -405.71429443359375;
+	setAttr ".tgi[0].ni[285].y" 1595.7142333984375;
 	setAttr ".tgi[0].ni[285].nvs" 18304;
 	setAttr ".tgi[0].ni[286].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[286].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[286].nvs" 18304;
 	setAttr ".tgi[0].ni[287].x" 1470;
-	setAttr ".tgi[0].ni[287].y" -380;
+	setAttr ".tgi[0].ni[287].y" -34.285713195800781;
 	setAttr ".tgi[0].ni[287].nvs" 18304;
-	setAttr ".tgi[0].ni[288].x" -401.42855834960938;
-	setAttr ".tgi[0].ni[288].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[288].x" 2468.571533203125;
+	setAttr ".tgi[0].ni[288].y" 1627.142822265625;
 	setAttr ".tgi[0].ni[288].nvs" 18304;
-	setAttr ".tgi[0].ni[289].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[289].y" -77.142860412597656;
+	setAttr ".tgi[0].ni[289].x" 1628.5714111328125;
+	setAttr ".tgi[0].ni[289].y" -192.85714721679688;
 	setAttr ".tgi[0].ni[289].nvs" 18304;
-	setAttr ".tgi[0].ni[290].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[290].y" 1355.7142333984375;
+	setAttr ".tgi[0].ni[290].x" 1474.2857666015625;
+	setAttr ".tgi[0].ni[290].y" 595.71429443359375;
 	setAttr ".tgi[0].ni[290].nvs" 18304;
-	setAttr ".tgi[0].ni[291].x" 1608.5714111328125;
-	setAttr ".tgi[0].ni[291].y" -60;
+	setAttr ".tgi[0].ni[291].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[291].y" 1181.4285888671875;
 	setAttr ".tgi[0].ni[291].nvs" 18304;
 	setAttr ".tgi[0].ni[292].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[292].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[292].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[292].nvs" 18304;
-	setAttr ".tgi[0].ni[293].x" -404.28570556640625;
-	setAttr ".tgi[0].ni[293].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[293].x" 1781.4285888671875;
+	setAttr ".tgi[0].ni[293].y" -1355.7142333984375;
 	setAttr ".tgi[0].ni[293].nvs" 18304;
-	setAttr ".tgi[0].ni[294].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[294].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[294].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[294].y" -1388.5714111328125;
 	setAttr ".tgi[0].ni[294].nvs" 18304;
-	setAttr ".tgi[0].ni[295].x" -410;
-	setAttr ".tgi[0].ni[295].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[295].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[295].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[295].nvs" 18304;
-	setAttr ".tgi[0].ni[296].x" 1914.2857666015625;
-	setAttr ".tgi[0].ni[296].y" 51.428569793701172;
+	setAttr ".tgi[0].ni[296].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[296].y" -1490;
 	setAttr ".tgi[0].ni[296].nvs" 18304;
-	setAttr ".tgi[0].ni[297].x" 1618.5714111328125;
-	setAttr ".tgi[0].ni[297].y" -54.285713195800781;
+	setAttr ".tgi[0].ni[297].x" 1470;
+	setAttr ".tgi[0].ni[297].y" -1417.142822265625;
 	setAttr ".tgi[0].ni[297].nvs" 18304;
-	setAttr ".tgi[0].ni[298].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[298].y" -1640;
+	setAttr ".tgi[0].ni[298].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[298].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[298].nvs" 18304;
-	setAttr ".tgi[0].ni[299].x" 1915.7142333984375;
-	setAttr ".tgi[0].ni[299].y" 15.714285850524902;
+	setAttr ".tgi[0].ni[299].x" 1608.5714111328125;
+	setAttr ".tgi[0].ni[299].y" -60;
 	setAttr ".tgi[0].ni[299].nvs" 18304;
-	setAttr ".tgi[0].ni[300].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[300].y" 2162.857177734375;
+	setAttr ".tgi[0].ni[300].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[300].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[300].nvs" 18304;
-	setAttr ".tgi[0].ni[301].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[301].y" 118.57142639160156;
+	setAttr ".tgi[0].ni[301].x" -98.571426391601563;
+	setAttr ".tgi[0].ni[301].y" 1527.142822265625;
 	setAttr ".tgi[0].ni[301].nvs" 18304;
-	setAttr ".tgi[0].ni[302].x" 927.14288330078125;
-	setAttr ".tgi[0].ni[302].y" 1312.857177734375;
+	setAttr ".tgi[0].ni[302].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[302].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[302].nvs" 18304;
-	setAttr ".tgi[0].ni[303].x" 1607.142822265625;
-	setAttr ".tgi[0].ni[303].y" -55.714286804199219;
+	setAttr ".tgi[0].ni[303].x" 515.71429443359375;
+	setAttr ".tgi[0].ni[303].y" 1650;
 	setAttr ".tgi[0].ni[303].nvs" 18304;
-	setAttr ".tgi[0].ni[304].x" -161.42857360839844;
-	setAttr ".tgi[0].ni[304].y" 52.857143402099609;
+	setAttr ".tgi[0].ni[304].x" 1915.7142333984375;
+	setAttr ".tgi[0].ni[304].y" 15.714285850524902;
 	setAttr ".tgi[0].ni[304].nvs" 18304;
-	setAttr ".tgi[0].ni[305].x" 1541.4285888671875;
-	setAttr ".tgi[0].ni[305].y" -1358.5714111328125;
+	setAttr ".tgi[0].ni[305].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[305].y" 118.57142639160156;
 	setAttr ".tgi[0].ni[305].nvs" 18304;
-	setAttr ".tgi[0].ni[306].x" 5.7142858505249023;
-	setAttr ".tgi[0].ni[306].y" 2530;
+	setAttr ".tgi[0].ni[306].x" 1162.857177734375;
+	setAttr ".tgi[0].ni[306].y" -552.85711669921875;
 	setAttr ".tgi[0].ni[306].nvs" 18304;
-	setAttr ".tgi[0].ni[307].x" -154.28572082519531;
+	setAttr ".tgi[0].ni[307].x" -542.85711669921875;
 	setAttr ".tgi[0].ni[307].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[307].nvs" 18304;
 	setAttr ".tgi[0].ni[308].x" -235.71427917480469;
 	setAttr ".tgi[0].ni[308].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[308].nvs" 18304;
-	setAttr ".tgi[0].ni[309].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[309].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[309].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[309].y" 1388.5714111328125;
 	setAttr ".tgi[0].ni[309].nvs" 18304;
-	setAttr ".tgi[0].ni[310].x" 1608.5714111328125;
-	setAttr ".tgi[0].ni[310].y" -67.142860412597656;
+	setAttr ".tgi[0].ni[310].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[310].y" -77.142860412597656;
 	setAttr ".tgi[0].ni[310].nvs" 18304;
-	setAttr ".tgi[0].ni[311].x" -235.71427917480469;
-	setAttr ".tgi[0].ni[311].y" -11.428571701049805;
+	setAttr ".tgi[0].ni[311].x" 71.428573608398438;
+	setAttr ".tgi[0].ni[311].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[311].nvs" 18304;
-	setAttr ".tgi[0].ni[312].x" -2758.571533203125;
-	setAttr ".tgi[0].ni[312].y" 2698.571533203125;
+	setAttr ".tgi[0].ni[312].x" -247.14285278320313;
+	setAttr ".tgi[0].ni[312].y" 52.857143402099609;
 	setAttr ".tgi[0].ni[312].nvs" 18304;
-	setAttr ".tgi[0].ni[313].x" 1878.5714111328125;
-	setAttr ".tgi[0].ni[313].y" -470;
+	setAttr ".tgi[0].ni[313].x" -235.71427917480469;
+	setAttr ".tgi[0].ni[313].y" -11.428571701049805;
 	setAttr ".tgi[0].ni[313].nvs" 18304;
+	setAttr ".tgi[0].ni[314].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[314].y" 182.85714721679688;
+	setAttr ".tgi[0].ni[314].nvs" 18304;
+	setAttr ".tgi[0].ni[315].x" 2118.571533203125;
+	setAttr ".tgi[0].ni[315].y" -191.42857360839844;
+	setAttr ".tgi[0].ni[315].nvs" 18304;
 select -ne :time1;
 	setAttr ".o" 1;
 	setAttr ".unw" 1;
@@ -5362,8 +5404,32 @@ connectAttr "Index1_L_JNT_parentConstraint1.crx" "Index1_L_JNT.rx";
 connectAttr "Index1_L_JNT_parentConstraint1.cry" "Index1_L_JNT.ry";
 connectAttr "Index1_L_JNT_parentConstraint1.crz" "Index1_L_JNT.rz";
 connectAttr "Index1_L_JNT.s" "Index2_L_JNT.is";
+connectAttr "Index2_L_JNT_orientConstraint1.crx" "Index2_L_JNT.rx";
+connectAttr "Index2_L_JNT_orientConstraint1.cry" "Index2_L_JNT.ry";
+connectAttr "Index2_L_JNT_orientConstraint1.crz" "Index2_L_JNT.rz";
 connectAttr "Index2_L_JNT.s" "Index3_L_JNT.is";
+connectAttr "Index3_L_JNT_orientConstraint1.crx" "Index3_L_JNT.rx";
+connectAttr "Index3_L_JNT_orientConstraint1.cry" "Index3_L_JNT.ry";
+connectAttr "Index3_L_JNT_orientConstraint1.crz" "Index3_L_JNT.rz";
 connectAttr "Index3_L_JNT.s" "Index_end_L_JNT.is";
+connectAttr "Index3_L_JNT.ro" "Index3_L_JNT_orientConstraint1.cro";
+connectAttr "Index3_L_JNT.pim" "Index3_L_JNT_orientConstraint1.cpim";
+connectAttr "Index3_L_JNT.jo" "Index3_L_JNT_orientConstraint1.cjo";
+connectAttr "Index3_L_JNT.is" "Index3_L_JNT_orientConstraint1.is";
+connectAttr "Index_3_L_Ctrl.r" "Index3_L_JNT_orientConstraint1.tg[0].tr";
+connectAttr "Index_3_L_Ctrl.ro" "Index3_L_JNT_orientConstraint1.tg[0].tro";
+connectAttr "Index_3_L_Ctrl.pm" "Index3_L_JNT_orientConstraint1.tg[0].tpm";
+connectAttr "Index3_L_JNT_orientConstraint1.w0" "Index3_L_JNT_orientConstraint1.tg[0].tw"
+		;
+connectAttr "Index2_L_JNT.ro" "Index2_L_JNT_orientConstraint1.cro";
+connectAttr "Index2_L_JNT.pim" "Index2_L_JNT_orientConstraint1.cpim";
+connectAttr "Index2_L_JNT.jo" "Index2_L_JNT_orientConstraint1.cjo";
+connectAttr "Index2_L_JNT.is" "Index2_L_JNT_orientConstraint1.is";
+connectAttr "Index2_L_Ctrl.r" "Index2_L_JNT_orientConstraint1.tg[0].tr";
+connectAttr "Index2_L_Ctrl.ro" "Index2_L_JNT_orientConstraint1.tg[0].tro";
+connectAttr "Index2_L_Ctrl.pm" "Index2_L_JNT_orientConstraint1.tg[0].tpm";
+connectAttr "Index2_L_JNT_orientConstraint1.w0" "Index2_L_JNT_orientConstraint1.tg[0].tw"
+		;
 connectAttr "Index1_L_JNT.ro" "Index1_L_JNT_parentConstraint1.cro";
 connectAttr "Index1_L_JNT.pim" "Index1_L_JNT_parentConstraint1.cpim";
 connectAttr "Index1_L_JNT.rp" "Index1_L_JNT_parentConstraint1.crp";
@@ -5896,499 +5962,502 @@ connectAttr "Basic_testKnight_RIG1:HumanBody2:blinn1SG.msg" "Basic_testKnight_RI
 connectAttr "Basic_testKnight_RIG1:HumanBody2:blinn1.msg" "Basic_testKnight_RIG1:HumanBody2:materialInfo2.m"
 		;
 connectAttr "makeNurbCircle1.oc" "transformGeometry1.ig";
-connectAttr "Middle3_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[0].dn";
-connectAttr "Cog_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[1].dn"
+connectAttr "Middle1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[0].dn";
+connectAttr "Basic_testKnight_RIG1:HumanBody:place2dTexture1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[1].dn"
 		;
-connectAttr "Ankle_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[2].dn";
-connectAttr "Ankle_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[3].dn";
-connectAttr "Pinky1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[4].dn";
-connectAttr "Middle_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[5].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody:blinn1SG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[2].dn"
 		;
-connectAttr "Thumb1_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[6].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody:blinn1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[3].dn"
 		;
-connectAttr "Ring1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[7].dn";
-connectAttr "Head_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[8].dn";
-connectAttr "Ring3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[9].dn"
+connectAttr "Spine3_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[4].dn";
+connectAttr "Clav2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[5].dn"
 		;
-connectAttr "Palm_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[10].dn";
-connectAttr "Basic_testKnight_RIG1:HumanBody1:blinn1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[11].dn"
+connectAttr "Root_JNT_pointConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[6].dn"
 		;
-connectAttr "Foot_L_Ctrl_Group.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[12].dn"
+connectAttr "Ling3_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[7].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody1:blinn1SG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[13].dn"
+connectAttr "Middle3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[8].dn"
 		;
-connectAttr "Ring_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[14].dn";
-connectAttr "Index1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[15].dn"
+connectAttr "Ankle_L_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[9].dn";
+connectAttr "Middle3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[10].dn";
+connectAttr "Middle1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[11].dn";
+connectAttr "Middle1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[12].dn"
 		;
-connectAttr "Pinky1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[16].dn";
-connectAttr "Thumb3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[17].dn"
+connectAttr "Leg_R_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[13].dn";
+connectAttr "Ring1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[14].dn";
+connectAttr "Neck_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[15].dn";
+connectAttr "Toe_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[16].dn";
+connectAttr "Thumb2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[17].dn";
+connectAttr "Basic_testKnight_RIG1:HumanBody:humanBodySG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[18].dn"
 		;
-connectAttr "Clav1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[18].dn";
-connectAttr "Ring1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[19].dn";
-connectAttr "Thumb2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[20].dn";
-connectAttr "Ring2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[21].dn";
-connectAttr "Middle1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[22].dn";
-connectAttr "Middle3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[23].dn";
-connectAttr "Leg_R_IK_poleVectorConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[24].dn"
+connectAttr "Pinky_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[19].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody1:humanBodySG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[25].dn"
+connectAttr "Thumb3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[20].dn";
+connectAttr "Index1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[21].dn";
+connectAttr "Ring3_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[22].dn";
+connectAttr "Ring2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[23].dn";
+connectAttr "Pinky2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[24].dn"
 		;
-connectAttr "transformGeometry1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[26].dn"
+connectAttr "Middle2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[25].dn"
 		;
-connectAttr "Pinky1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[27].dn";
-connectAttr "Knee_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[28].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody1:ReflectionMap.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[26].dn"
 		;
-connectAttr "Knee2_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[29].dn";
-connectAttr "Toe_end_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[30].dn"
+connectAttr "Ring1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[27].dn"
 		;
-connectAttr "Index3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[31].dn"
+connectAttr "Clav2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[28].dn";
+connectAttr "Thumb1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[29].dn";
+connectAttr "Clav1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[30].dn";
+connectAttr "Toe_end_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[31].dn"
 		;
-connectAttr "Thumb2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[32].dn";
-connectAttr "Index_3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[33].dn";
-connectAttr "Ring3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[34].dn"
+connectAttr "Foot_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[32].dn"
 		;
-connectAttr "Ankle_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[35].dn";
-connectAttr "Index1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[36].dn"
+connectAttr "Spine3_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[33].dn"
 		;
-connectAttr "Thumb1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[37].dn";
-connectAttr "Thumb3_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[38].dn"
+connectAttr "Neck_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[34].dn";
+connectAttr "Index1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[35].dn"
 		;
-connectAttr "Ring2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[39].dn"
+connectAttr "Ring2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[36].dn";
+connectAttr "Pinky3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[37].dn"
 		;
-connectAttr "Thumb_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[40].dn"
+connectAttr "Ring1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[38].dn"
 		;
-connectAttr "Shoulder_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[41].dn"
+connectAttr "Thumb1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[39].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody2:humanBodySG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[42].dn"
+connectAttr "Thumb2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[40].dn"
 		;
-connectAttr "Toe_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[43].dn";
-connectAttr "Ball_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[44].dn"
+connectAttr "Index2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[41].dn";
+connectAttr "Middle3_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[42].dn";
+connectAttr "effector2.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[43].dn";
+connectAttr "Ring_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[44].dn"
 		;
-connectAttr "Middle1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[45].dn"
+connectAttr "Pinky1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[45].dn"
 		;
-connectAttr "Index1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[46].dn";
-connectAttr "Index1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[47].dn";
-connectAttr "Ankle_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[48].dn"
+connectAttr "Pinky2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[46].dn"
 		;
-connectAttr "Clav2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[49].dn";
-connectAttr "Ring1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[50].dn"
+connectAttr "Spine3_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[47].dn";
+connectAttr "Thumb1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[48].dn";
+connectAttr "Ring1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[49].dn"
 		;
-connectAttr "Elbow_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[51].dn";
-connectAttr "Basic_testKnight_RIG1:HumanBody:blinn1SG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[52].dn"
+connectAttr "Hip_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[50].dn";
+connectAttr "Wrist_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[51].dn"
 		;
-connectAttr "Thumb1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[53].dn";
-connectAttr "Index2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[54].dn";
-connectAttr "Knee1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[55].dn";
-connectAttr "Thumb3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[56].dn"
+connectAttr "Shoulder_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[52].dn"
 		;
-connectAttr "Pinky2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[57].dn"
+connectAttr "Pinky1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[53].dn"
 		;
-connectAttr "Wrist_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[58].dn"
+connectAttr "Elbow_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[54].dn";
+connectAttr "Ring2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[55].dn";
+connectAttr "Middle2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[56].dn";
+connectAttr "Basic_testKnight_RIG1:HumanBody1:blinn1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[57].dn"
 		;
-connectAttr "Foot_R_Ctrl_Group.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[59].dn"
+connectAttr "Pinky2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[58].dn"
 		;
-connectAttr "Index_3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[60].dn"
+connectAttr "Ring3_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[59].dn"
 		;
-connectAttr "effector1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[61].dn";
-connectAttr "Spine1_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[62].dn"
+connectAttr "Index1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[60].dn"
 		;
-connectAttr "Index3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[63].dn";
-connectAttr "Foot_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[64].dn"
+connectAttr "Knee2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[61].dn";
+connectAttr "Middle1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[62].dn"
 		;
-connectAttr "Pinky3_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[65].dn"
+connectAttr "Thumb2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[63].dn";
+connectAttr "Thumb3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[64].dn"
 		;
-connectAttr "Thumb1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[66].dn";
-connectAttr "Index2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[67].dn";
-connectAttr "Ball_R_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[68].dn";
-connectAttr "Basic_testKnight_RIG1:HumanBody:humanBodySG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[69].dn"
+connectAttr "Knee_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[65].dn";
+connectAttr "Thumb1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[66].dn";
+connectAttr "Thumb1_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[67].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody2:place2dTexture1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[70].dn"
+connectAttr "Pinky3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[68].dn"
 		;
-connectAttr "Index1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[71].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody2:blinn1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[69].dn"
 		;
-connectAttr "Clav2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[72].dn";
-connectAttr "Thumb2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[73].dn";
-connectAttr "Ling2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[74].dn";
-connectAttr "Clav2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[75].dn";
-connectAttr "Middle2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[76].dn"
+connectAttr "Wrist_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[70].dn"
 		;
-connectAttr "effector5.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[77].dn";
-connectAttr "Knee1_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[78].dn";
-connectAttr "Clav2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[79].dn"
+connectAttr "Ring1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[71].dn";
+connectAttr "Ring3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[72].dn"
 		;
-connectAttr "Clav2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[80].dn"
+connectAttr "Clav2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[73].dn";
+connectAttr "Palm_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[74].dn";
+connectAttr "Toe_end_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[75].dn"
 		;
-connectAttr "Shoulder_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[81].dn";
-connectAttr "Head1_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[82].dn"
+connectAttr "Index2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[76].dn"
 		;
-connectAttr "Leg_L_IK_poleVectorConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[83].dn"
+connectAttr "Middle3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[77].dn"
 		;
-connectAttr "|Root_JNT|Cog_JNT|Hip_L_JNT|Knee1_L_JNT|Knee2_L_JNT|Ankle_L_JNT|Toe_L_JNT|Toe_end_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[84].dn"
+connectAttr "Hip_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[78].dn";
+connectAttr "Ring3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[79].dn"
 		;
-connectAttr "Thumb3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[85].dn";
-connectAttr "Toe_end_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[86].dn"
+connectAttr "Spine2_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[80].dn";
+connectAttr "Spine3_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[81].dn"
 		;
-connectAttr "Wrist_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[87].dn";
-connectAttr "Wrist_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[88].dn"
+connectAttr "Index_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[82].dn"
 		;
-connectAttr "Pinky1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[89].dn"
+connectAttr "Middle1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[83].dn";
+connectAttr "Ankle_R_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[84].dn";
+connectAttr "Elbow_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[85].dn";
+connectAttr "Pinky3_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[86].dn"
 		;
-connectAttr "Elbow_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[90].dn"
+connectAttr "Index3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[87].dn"
 		;
-connectAttr "Pinky3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[91].dn"
+connectAttr "Toe_end_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[88].dn"
 		;
-connectAttr "Ankle_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[92].dn"
+connectAttr "Foot_L_Ctrl_Group.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[89].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody:ReflectionMap.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[93].dn"
+connectAttr "|Root_JNT|Cog_JNT|Hip_L_JNT|Knee1_L_JNT|Knee2_L_JNT|Ankle_L_JNT|Toe_L_JNT|Toe_end_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[90].dn"
 		;
-connectAttr "Pinky3_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[94].dn";
-connectAttr "Thumb3_R_ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[95].dn";
-connectAttr "Clav2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[96].dn"
+connectAttr "Shoulder_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[91].dn"
 		;
-connectAttr "Pinky1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[97].dn"
+connectAttr "Ball_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[92].dn"
 		;
-connectAttr "Pinky1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[98].dn"
+connectAttr "Clav2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[93].dn"
 		;
-connectAttr "Ring1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[99].dn";
-connectAttr "Cog_JNT_pointConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[100].dn"
+connectAttr "Middle2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[94].dn";
+connectAttr "Pinky1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[95].dn";
+connectAttr "Wrist_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[96].dn"
 		;
-connectAttr "Pinky1_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[101].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody2:place2dTexture1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[97].dn"
 		;
-connectAttr "Thumb1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[102].dn"
+connectAttr "Middle2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[98].dn"
 		;
-connectAttr "Middle3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[103].dn";
-connectAttr "Ring2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[104].dn";
-connectAttr "Thumb2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[105].dn"
+connectAttr "Middle2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[99].dn";
+connectAttr "transformGeometry1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[100].dn"
 		;
-connectAttr "Shoulder_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[106].dn"
+connectAttr "Ring3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[101].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody2:blinn1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[107].dn"
+connectAttr "Thumb3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[102].dn";
+connectAttr "Ankle_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[103].dn";
+connectAttr "Clav2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[104].dn";
+connectAttr "Ankle_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[105].dn";
+connectAttr "Ball_L_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[106].dn";
+connectAttr "Basic_testKnight_RIG1:HumanBody1:blinn1SG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[107].dn"
 		;
-connectAttr "Leg_R_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[108].dn";
-connectAttr "Ball_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[109].dn"
+connectAttr "Thumb1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[108].dn";
+connectAttr "Head1_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[109].dn"
 		;
-connectAttr "Wrist_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[110].dn"
+connectAttr "Pinky2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[110].dn";
+connectAttr "Thumb3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[111].dn";
+connectAttr "Pinky3_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[112].dn"
 		;
-connectAttr "Ankle_L_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[111].dn";
-connectAttr "Root_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[112].dn";
-connectAttr "Index2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[113].dn";
-connectAttr "Middle2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[114].dn"
+connectAttr "Ring3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[113].dn";
+connectAttr "Ball_R_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[114].dn";
+connectAttr "Toe_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[115].dn"
 		;
-connectAttr "Root_JNT_pointConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[115].dn"
+connectAttr "Foot_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[116].dn";
+connectAttr "Wrist_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[117].dn";
+connectAttr "Pinky3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[118].dn"
 		;
-connectAttr "Shoulder_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[116].dn"
+connectAttr "Wrist_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[119].dn";
+connectAttr "Thumb2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[120].dn"
 		;
-connectAttr "Pinky3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[117].dn"
+connectAttr "Thumb_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[121].dn"
 		;
-connectAttr "Pinky2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[118].dn";
-connectAttr "effector6.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[119].dn";
-connectAttr "Ring1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[120].dn"
+connectAttr "Thumb1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[122].dn";
+connectAttr "Elbow_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[123].dn"
 		;
-connectAttr "Thumb1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[121].dn"
+connectAttr "Middle3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[124].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody1:ReflectionMap.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[122].dn"
+connectAttr "Toe_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[125].dn";
+connectAttr "Wrist_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[126].dn";
+connectAttr "Foot_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[127].dn";
+connectAttr "Shoulder_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[128].dn"
 		;
-connectAttr "Toe_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[123].dn";
-connectAttr "Ankle_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[124].dn";
-connectAttr "Pinky3_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[125].dn"
+connectAttr "Elbow_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[129].dn"
 		;
-connectAttr "Ring2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[126].dn"
+connectAttr "Head_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[130].dn";
+connectAttr "Index3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[131].dn";
+connectAttr "Toe_end_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[132].dn"
 		;
-connectAttr "Ankle_R_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[127].dn";
-connectAttr "Wrist_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[128].dn";
-connectAttr "Index_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[129].dn"
+connectAttr "Thumb3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[133].dn"
 		;
-connectAttr "Index2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[130].dn"
+connectAttr "Middle2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[134].dn"
 		;
-connectAttr "Thumb3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[131].dn"
+connectAttr "Ring1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[135].dn"
 		;
-connectAttr "Toe_end_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[132].dn";
-connectAttr "Clav2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[133].dn";
-connectAttr "Spine1_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[134].dn";
-connectAttr "Elbow_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[135].dn"
+connectAttr "Index3_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[136].dn";
+connectAttr "Clav2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[137].dn"
 		;
-connectAttr "Thumb2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[136].dn"
+connectAttr "Middle3_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[138].dn"
 		;
-connectAttr "Head_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[137].dn"
+connectAttr "Spine2_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[139].dn"
 		;
-connectAttr "Leg_L_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[138].dn";
-connectAttr "Thumb3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[139].dn"
+connectAttr "Ring1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[140].dn";
+connectAttr "Ring1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[141].dn";
+connectAttr "Knee2_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[142].dn";
+connectAttr "Root_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[143].dn";
+connectAttr "Ring2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[144].dn"
 		;
-connectAttr "Pinky2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[140].dn";
-connectAttr "Ankle_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[141].dn"
+connectAttr "Elbow_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[145].dn"
 		;
-connectAttr "Foot_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[142].dn"
+connectAttr "Thumb1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[146].dn"
 		;
-connectAttr "Ring3_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[143].dn"
+connectAttr "Root_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[147].dn";
+connectAttr "Root_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[148].dn"
 		;
-connectAttr "Wrist_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[144].dn";
-connectAttr "Basic_testKnight_RIG1:HumanBody1:place2dTexture1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[145].dn"
+connectAttr "Pinky3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[149].dn";
+connectAttr "Elbow_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[150].dn"
 		;
-connectAttr "Middle1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[146].dn"
+connectAttr "Middle1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[151].dn";
+connectAttr "Middle3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[152].dn"
 		;
-connectAttr "Thumb3_R_ctrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[147].dn"
+connectAttr "Leg_L_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[153].dn";
+connectAttr "Index2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[154].dn"
 		;
-connectAttr "Middle2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[148].dn"
+connectAttr "Foot_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[155].dn"
 		;
-connectAttr "Pinky2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[149].dn";
-connectAttr "Index1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[150].dn"
+connectAttr "Pinky2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[156].dn";
+connectAttr "Shoulder_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[157].dn"
 		;
-connectAttr "Toe_end_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[151].dn"
+connectAttr "Pinky2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[158].dn"
 		;
-connectAttr "Spine2_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[152].dn";
-connectAttr "Ring2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[153].dn"
+connectAttr "Index2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[159].dn"
 		;
-connectAttr "Ring3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[154].dn";
-connectAttr "Toe_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[155].dn"
+connectAttr "Leg_L_IK_poleVectorConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[160].dn"
 		;
-connectAttr "Knee2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[156].dn";
-connectAttr "Middle1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[157].dn";
-connectAttr "Clav2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[158].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody:ReflectionMap.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[161].dn"
 		;
-connectAttr "Index2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[159].dn"
+connectAttr "Middle3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[162].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody2:blinn1SG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[160].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody1:humanBodySG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[163].dn"
 		;
-connectAttr "Pinky_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[161].dn"
+connectAttr "Index1_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[164].dn";
+connectAttr "Wrist_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[165].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody:place2dTexture1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[162].dn"
+connectAttr "Pinky3_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[166].dn";
+connectAttr "Wrist_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[167].dn"
 		;
-connectAttr "Pinky3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[163].dn"
+connectAttr "Index3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[168].dn"
 		;
-connectAttr "Knee_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[164].dn";
-connectAttr "Middle2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[165].dn";
-connectAttr "Middle2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[166].dn"
+connectAttr "Cog_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[169].dn"
 		;
-connectAttr "Thumb1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[167].dn"
+connectAttr "Thumb3_R_ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[170].dn";
+connectAttr "Knee_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[171].dn";
+connectAttr "Middle2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[172].dn";
+connectAttr "Ring2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[173].dn"
 		;
-connectAttr "Spine3_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[168].dn"
+connectAttr "Middle2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[174].dn"
 		;
-connectAttr "Thumb3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[169].dn";
-connectAttr "Middle3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[170].dn"
+connectAttr "Pinky3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[175].dn";
+connectAttr "Elbow_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[176].dn"
 		;
-connectAttr "Thumb2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[171].dn"
+connectAttr "Pinky2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[177].dn"
 		;
-connectAttr "Foot_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[172].dn";
-connectAttr "|Root_JNT|Cog_JNT|Hip_R_JNT|Knee1_R_JNT|Knee2_R_JNT|Ankle_R_JNT|Toe_R_JNT|Toe_end_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[173].dn"
+connectAttr "Ball_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[178].dn";
+connectAttr "Toe_end_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[179].dn";
+connectAttr "Middle2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[180].dn"
 		;
-connectAttr "Elbow_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[174].dn"
+connectAttr "Ankle_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[181].dn"
 		;
-connectAttr "Pinky3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[175].dn";
-connectAttr "Middle1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[176].dn"
+connectAttr "Pinky2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[182].dn";
+connectAttr "Clav2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[183].dn"
 		;
-connectAttr "Shoulder_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[177].dn"
+connectAttr "Thumb3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[184].dn"
 		;
-connectAttr "Wrist_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[178].dn";
-connectAttr "Foot_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[179].dn";
-connectAttr "Index3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[180].dn"
+connectAttr "Middle1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[185].dn"
 		;
-connectAttr "Spine3_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[181].dn";
-connectAttr "Index3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[182].dn";
-connectAttr "makeNurbCircle1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[183].dn"
+connectAttr "Head_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[186].dn"
 		;
-connectAttr "Neck_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[184].dn";
-connectAttr "Ankle_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[185].dn";
-connectAttr "Index1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[186].dn";
-connectAttr "Toe_end_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[187].dn"
+connectAttr "Pinky1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[187].dn"
 		;
-connectAttr "effector3.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[188].dn";
-connectAttr "Middle2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[189].dn";
-connectAttr "Thumb2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[190].dn"
+connectAttr "Toe_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[188].dn";
+connectAttr "Ankle_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[189].dn";
+connectAttr "Pinky3_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[190].dn";
+connectAttr "Ring2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[191].dn";
+connectAttr "Index1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[192].dn";
+connectAttr "Index1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[193].dn";
+connectAttr "Knee_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[194].dn"
 		;
-connectAttr "Middle2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[191].dn"
+connectAttr "Spine1_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[195].dn"
 		;
-connectAttr "Knee_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[192].dn";
-connectAttr "Ring2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[193].dn"
+connectAttr "Thumb2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[196].dn"
 		;
-connectAttr "Ring1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[194].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody2:ReflectionMap.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[197].dn"
 		;
-connectAttr "Ankle_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[195].dn"
+connectAttr "Thumb1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[198].dn"
 		;
-connectAttr "Ling3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[196].dn";
-connectAttr "Neck_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[197].dn"
+connectAttr "Thumb2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[199].dn"
 		;
-connectAttr "Toe_end_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[198].dn"
+connectAttr "Thumb2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[200].dn";
+connectAttr "Index2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[201].dn";
+connectAttr "effector1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[202].dn";
+connectAttr "Index2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[203].dn"
 		;
-connectAttr "Knee_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[199].dn"
+connectAttr "Toe_end_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[204].dn"
 		;
-connectAttr "Middle3_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[200].dn"
+connectAttr "Toe_end_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[205].dn"
 		;
-connectAttr "Index3_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[201].dn";
-connectAttr "Toe_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[202].dn";
-connectAttr "Clav2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[203].dn"
+connectAttr "Index1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[206].dn";
+connectAttr "Thumb2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[207].dn";
+connectAttr "Pinky2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[208].dn";
+connectAttr "Index_3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[209].dn"
 		;
-connectAttr "Ring3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[204].dn"
+connectAttr "Middle1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[210].dn"
 		;
-connectAttr "Spine2_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[205].dn";
-connectAttr "Ring2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[206].dn"
+connectAttr "Shoulder_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[211].dn"
 		;
-connectAttr "Pinky2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[207].dn"
+connectAttr "Ling2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[212].dn";
+connectAttr "Neck_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[213].dn"
 		;
-connectAttr "Ring2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[208].dn";
-connectAttr "Elbow_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[209].dn"
+connectAttr "Index3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[214].dn";
+connectAttr "Knee1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[215].dn";
+connectAttr "Middle3_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[216].dn"
 		;
-connectAttr "Index2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[210].dn"
+connectAttr "Ring2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[217].dn"
 		;
-connectAttr "Index3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[211].dn"
+connectAttr "Ball_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[218].dn";
+connectAttr "Middle1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[219].dn";
+connectAttr "Thumb1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[220].dn"
 		;
-connectAttr "Ring2_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[212].dn";
-connectAttr "Spine2_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[213].dn"
+connectAttr "Index_3_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[221].dn"
 		;
-connectAttr "Middle3_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[214].dn"
+connectAttr "Elbow_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[222].dn";
+connectAttr "Middle2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[223].dn"
 		;
-connectAttr "Index1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[215].dn"
+connectAttr "Pinky3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[224].dn";
+connectAttr "Index3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[225].dn"
 		;
-connectAttr "Elbow_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[216].dn"
+connectAttr "Spine1_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[226].dn";
+connectAttr "Clav2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[227].dn"
 		;
-connectAttr "Thumb2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[217].dn"
+connectAttr "Root_Ctrl_Group.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[228].dn"
 		;
-connectAttr "Thumb2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[218].dn";
-connectAttr "effector2.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[219].dn";
-connectAttr "Ball_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[220].dn";
-connectAttr "Root_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[221].dn"
+connectAttr "Ankle_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[229].dn";
+connectAttr "Thumb3_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[230].dn"
 		;
-connectAttr "Clav2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[222].dn"
+connectAttr "Cog_JNT_pointConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[231].dn"
 		;
-connectAttr "Middle3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[223].dn"
+connectAttr "Pinky1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[232].dn";
+connectAttr "Ling3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[233].dn";
+connectAttr "Shoulder_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[234].dn"
 		;
-connectAttr "Index1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[224].dn";
-connectAttr "Thumb2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[225].dn"
+connectAttr "Index1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[235].dn"
 		;
-connectAttr "Middle1_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[226].dn"
+connectAttr "Leg_R_IK_poleVectorConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[236].dn"
 		;
-connectAttr "Pinky2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[227].dn";
-connectAttr "Hips_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[228].dn"
+connectAttr "Hips_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[237].dn";
+connectAttr "Ring1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[238].dn"
 		;
-connectAttr "Spine3_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[229].dn"
+connectAttr "Thumb3_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[239].dn";
+connectAttr "Middle1_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[240].dn"
 		;
-connectAttr "Pinky3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[230].dn";
-connectAttr "Pinky1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[231].dn"
+connectAttr "Spine2_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[241].dn"
 		;
-connectAttr "Pinky2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[232].dn";
-connectAttr "Pinky3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[233].dn";
-connectAttr "Toe_end_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[234].dn"
+connectAttr "Ankle_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[242].dn"
 		;
-connectAttr "Ling_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[235].dn"
+connectAttr "Index2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[243].dn"
 		;
-connectAttr "effector4.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[236].dn";
-connectAttr "Root_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[237].dn";
-connectAttr "Index2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[238].dn"
+connectAttr "Ring_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[244].dn";
+connectAttr "Pinky2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[245].dn";
+connectAttr "Spine1_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[246].dn"
 		;
-connectAttr "Index2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[239].dn";
-connectAttr "Hip_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[240].dn";
-connectAttr "Thumb1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[241].dn"
+connectAttr "Spine1_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[247].dn";
+connectAttr "Index2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[248].dn";
+connectAttr "Pinky1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[249].dn";
+connectAttr "Clav2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[250].dn"
 		;
-connectAttr "Spine1_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[242].dn";
-connectAttr "Ring3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[243].dn"
+connectAttr "Middle2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[251].dn"
 		;
-connectAttr "Middle2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[244].dn"
+connectAttr "Toe_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[252].dn";
+connectAttr "Ling_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[253].dn"
 		;
-connectAttr "Middle2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[245].dn"
+connectAttr "Pinky1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[254].dn"
 		;
-connectAttr "Index3_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[246].dn"
+connectAttr "Spine2_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[255].dn";
+connectAttr "Ankle_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[256].dn";
+connectAttr "Index3_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[257].dn"
 		;
-connectAttr "Ling3_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[247].dn"
+connectAttr "effector5.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[258].dn";
+connectAttr "effector6.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[259].dn";
+connectAttr "Shoulder_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[260].dn"
 		;
-connectAttr "Ring1_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[248].dn"
+connectAttr "Thumb2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[261].dn";
+connectAttr "Thumb2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[262].dn"
 		;
-connectAttr "Thumb1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[249].dn";
-connectAttr "Pinky2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[250].dn"
+connectAttr "Pinky1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[263].dn"
 		;
-connectAttr "Middle1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[251].dn"
+connectAttr "Pinky1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[264].dn";
+connectAttr "Index2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[265].dn";
+connectAttr "Elbow_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[266].dn";
+connectAttr "effector4.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[267].dn";
+connectAttr "Wrist_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[268].dn"
 		;
-connectAttr "Thumb3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[252].dn";
-connectAttr "Pinky2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[253].dn"
+connectAttr "Knee_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[269].dn"
 		;
-connectAttr "Elbow_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[254].dn";
-connectAttr "Thumb2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[255].dn";
-connectAttr "Elbow_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[256].dn"
+connectAttr "Ring2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[270].dn"
 		;
-connectAttr "Spine3_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[257].dn";
-connectAttr "Ankle_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[258].dn";
-connectAttr "Pinky1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[259].dn"
+connectAttr "Clav2_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[271].dn";
+connectAttr "Middle3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[272].dn";
+connectAttr "Wrist_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[273].dn";
+connectAttr "Ankle_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[274].dn";
+connectAttr "Thumb3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[275].dn"
 		;
-connectAttr "Shoulder_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[260].dn"
+connectAttr "Cog_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[276].dn";
+connectAttr "Thumb1_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[277].dn"
 		;
-connectAttr "Ball_L_IK.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[261].dn";
-connectAttr "Shoulder_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[262].dn"
+connectAttr "Shoulder_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[278].dn"
 		;
-connectAttr "Shoulder_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[263].dn"
+connectAttr "Ring2_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[279].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody:blinn1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[264].dn"
+connectAttr "Shoulder_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[280].dn"
 		;
-connectAttr "Middle1_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[265].dn"
+connectAttr "Pinky3_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[281].dn"
 		;
-connectAttr "Middle3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[266].dn"
+connectAttr "Thumb2_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[282].dn"
 		;
-connectAttr "Shoulder_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[267].dn"
+connectAttr "Ring3_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[283].dn";
+connectAttr "Middle1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[284].dn"
 		;
-connectAttr "Spine1_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[268].dn"
+connectAttr "Clav2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[285].dn";
+connectAttr "Elbow_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[286].dn"
 		;
-connectAttr "Ring3_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[269].dn";
-connectAttr "Pinky1_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[270].dn";
-connectAttr "Pinky3_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[271].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody2:blinn1SG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[287].dn"
 		;
-connectAttr "Shoulder_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[272].dn"
+connectAttr "Middle_end_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[288].dn"
 		;
-connectAttr "Cog_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[273].dn";
-connectAttr "Elbow_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[274].dn";
-connectAttr "Pinky2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[275].dn"
+connectAttr "Toe_end_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[289].dn";
+connectAttr "Index2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[290].dn";
+connectAttr "|Root_JNT|Cog_JNT|Hip_R_JNT|Knee1_R_JNT|Knee2_R_JNT|Ankle_R_JNT|Toe_R_JNT|Toe_end_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[291].dn"
 		;
-connectAttr "Index2_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[276].dn"
+connectAttr "Index1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[292].dn"
 		;
-connectAttr "Wrist_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[277].dn"
+connectAttr "Elbow_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[293].dn";
+connectAttr "Pinky1_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[294].dn"
 		;
-connectAttr "Middle1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[278].dn"
+connectAttr "Pinky2_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[295].dn"
 		;
-connectAttr "Ring1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[279].dn";
-connectAttr "Neck_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[280].dn"
+connectAttr "Index1_L_JNT_parentConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[296].dn"
 		;
-connectAttr "Clav2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[281].dn";
-connectAttr "Index1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[282].dn";
-connectAttr "Index2_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[283].dn";
-connectAttr "Middle2_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[284].dn";
-connectAttr "Wrist_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[285].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody2:humanBodySG.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[297].dn"
 		;
-connectAttr "Spine2_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[286].dn"
+connectAttr "Ankle_R_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[298].dn"
 		;
-connectAttr "Basic_testKnight_RIG1:HumanBody2:ReflectionMap.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[287].dn"
+connectAttr "Pinky1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[299].dn";
+connectAttr "Index1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[300].dn"
 		;
-connectAttr "Ring3_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[288].dn";
-connectAttr "Root_Ctrl_Group.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[289].dn"
+connectAttr "Shoulder_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[301].dn"
 		;
-connectAttr "Middle3_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[290].dn";
-connectAttr "Pinky1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[291].dn";
-connectAttr "Middle3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[292].dn"
+connectAttr "Ring3_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[302].dn"
 		;
-connectAttr "Pinky3_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[293].dn";
-connectAttr "Wrist_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[294].dn"
+connectAttr "Knee1_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[303].dn";
+connectAttr "Ring3_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[304].dn";
+connectAttr "Thumb3_R_ctrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[305].dn"
 		;
-connectAttr "Middle2_R_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[295].dn"
+connectAttr "Basic_testKnight_RIG1:HumanBody1:place2dTexture1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[306].dn"
 		;
-connectAttr "Thumb3_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[296].dn";
-connectAttr "Toe_end_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[297].dn";
-connectAttr "Ring_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[298].dn"
+connectAttr "makeNurbCircle1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[307].dn"
 		;
-connectAttr "Ring3_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[299].dn";
-connectAttr "Toe_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[300].dn";
-connectAttr "Ball_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[301].dn";
-connectAttr "Thumb1_L_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[302].dn";
-connectAttr "Elbow_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[303].dn";
-connectAttr "Thumb1_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[304].dn"
+connectAttr "Ball_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[308].dn"
 		;
-connectAttr "Elbow_L_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[305].dn";
-connectAttr "Hip_R_JNT.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[306].dn";
-connectAttr "Pinky2_R_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[307].dn"
+connectAttr "effector3.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[309].dn";
+connectAttr "Foot_R_Ctrl_Group.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[310].dn"
 		;
-connectAttr "Shoulder_R_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[308].dn"
+connectAttr "Hips_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[311].dn"
 		;
-connectAttr "Middle1_L_CtrlShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[309].dn"
+connectAttr "Shoulder_R_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[312].dn"
 		;
-connectAttr "Middle1_L_LOC.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[310].dn";
-connectAttr "Ring1_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[311].dn"
+connectAttr "Ankle_L_LOCShape.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[313].dn"
 		;
-connectAttr "Hips_Ctrl.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[312].dn";
-connectAttr "Index1_L_JNT_parentConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[313].dn"
+connectAttr "Index3_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[314].dn"
+		;
+connectAttr "Index2_L_JNT_orientConstraint1.msg" "MayaNodeEditorSavedTabsInfo.tgi[0].ni[315].dn"
 		;
 connectAttr "humanBodySG.pa" ":renderPartition.st" -na;
 connectAttr "blinn1SG.pa" ":renderPartition.st" -na;
