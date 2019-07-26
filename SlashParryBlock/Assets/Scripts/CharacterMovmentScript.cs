@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class CharacterMovmentScript : MonoBehaviour
 {
+    enum AnimSelector
+    {
+        Attack = 1,
+        Block,
+        Parry
+    }
+
     //this sets the default values for the players at game start
     [Header("Player data default values")]
     public int playerHealth;
@@ -20,10 +27,11 @@ public class CharacterMovmentScript : MonoBehaviour
     public Text[] scoreText;
 
     private List<Rigidbody> playersRB = new List<Rigidbody>();
+    private List<Animator> playersAni = new List<Animator>();
     void Start()
     {
         //setting the values of the players
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             players[i].setHealth(playerHealth);
             players[i].setDamage(playerDamage, backstabDamage, riposteDamage);
@@ -34,15 +42,16 @@ public class CharacterMovmentScript : MonoBehaviour
         //starting at 1 to skip the parent
         for (int i = 1; i < tempobj.Length; i++)
         {
-            for (int k = 0; k < 4; k++)
+            for (int k = 0; k < players.Length; k++)
             {
                 players[k].spawnpoints.Add(tempobj[i].position);
             }
         }
         //getting a reference to all the player's rigidbodies
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             playersRB.Add(players[i].gameObject.GetComponent<Rigidbody>());
+            playersAni.Add(players[i].gameObject.GetComponentInChildren<Animator>());
         }
     }
 
@@ -67,12 +76,14 @@ public class CharacterMovmentScript : MonoBehaviour
                 if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getParried())
                 {
                     players[i].blocking = true;
+                    playersAni[i].SetInteger("Anim", (int)AnimSelector.Block);
                 }
                 else
                 {
                     players[i].blocking = false;
                     if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getParried())
                     {
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Attack);
                         players[i].Attack();
                     }
                     else
@@ -83,7 +94,6 @@ public class CharacterMovmentScript : MonoBehaviour
                         }
                     }
                 }
-
             }
             //updating the ui on game loop
             healthText[i].text = players[i].getHealth().ToString();

@@ -17,16 +17,21 @@ public class PlayerData : MonoBehaviour
     private int damage, backstabDamage, RiposteDamage;
     private float knockback;
     private BoxCollider swordCollider;
+    private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
     private float AttackTimer = 0.5f;
     private float ParryTimer = 0.5f;
     private float gotParriedTimer = 2.0f;
     private bool attacked = false, parried = false, isParried = false;
+
+    public GameObject particles;
     
     void Start()
     {
         //getting the collider that attacks people
-        swordCollider = gameObject.GetComponent<BoxCollider>();
+        swordCollider = gameObject.GetComponentInChildren<BoxCollider>();
+
+        animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -41,9 +46,9 @@ public class PlayerData : MonoBehaviour
             health = 0;
         }
 
-        if (blocking)
+        if (animator.GetInteger("Anim") == 2 && !blocking)
         {
-
+            animator.SetInteger("Anim", 0);
         }
 
         if (attacked)
@@ -56,7 +61,7 @@ public class PlayerData : MonoBehaviour
                 swordCollider.enabled = false;
                 attacked = false;
                 AttackTimer = 0.5f;
-                
+                animator.SetInteger("Anim", 0);
             }
         }
 
@@ -108,7 +113,13 @@ public class PlayerData : MonoBehaviour
         swordCollider.enabled = true;
         parried = true;
     }
-    
+
+    public void Parried()
+    {
+        Instantiate(particles, transform.position,Quaternion.Euler(transform.up));
+        animator.SetInteger("Anim", 0);
+    }
+
     void TakeDamage(int damage)
     {
         health -= damage;
@@ -236,7 +247,7 @@ public class PlayerData : MonoBehaviour
             {
                 CollisionPlayerData.isParried = true;
                 CollisionPlayerData.attacked = false;
-
+                CollisionPlayerData.Parried();
                 swordCollider.enabled = false;
                 parried = false;
                 ParryTimer = 0.5f;
