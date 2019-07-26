@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1909498443358864996}
   - component: {fileID: 1909498443358865017}
-  - component: {fileID: 4587407660391069619}
   - component: {fileID: 126996498235237473}
+  - component: {fileID: 4587407660391069619}
   - component: {fileID: 6356270535941814526}
   m_Layer: 0
   m_Name: Player2
@@ -49,6 +49,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &126996498235237473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909498443358865016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3f42b9715c4a44d9f706e7bb295552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
+  blocking: 0
+  spawnpoints: []
 --- !u!54 &4587407660391069619
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -65,22 +80,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &126996498235237473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1909498443358865016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3f42b9715c4a44d9f706e7bb295552, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  damage: 0
-  score: 0
-  blocking: 0
 --- !u!65 &6356270535941814526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -155,10 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3f42b9715c4a44d9f706e7bb295552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  damage: 0
   score: 0
   blocking: 0
+  spawnpoints: []
 --- !u!54 &6262910018258141106
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -235,6 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b506bbc786e2f4d8ee14809250c5dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: 0
+  playerDamage: 0
+  playerKnockback: 0
   speed: 5
   rotSpeed: 10
   players:
@@ -254,8 +255,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1909498444681442951}
   - component: {fileID: 1909498444681442968}
-  - component: {fileID: 9173380131099754634}
   - component: {fileID: 7729246595114027228}
+  - component: {fileID: 9173380131099754634}
   - component: {fileID: 533474493857292954}
   m_Layer: 0
   m_Name: Player3
@@ -293,6 +294,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7729246595114027228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909498444681442971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3f42b9715c4a44d9f706e7bb295552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
+  blocking: 0
+  spawnpoints: []
 --- !u!54 &9173380131099754634
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -309,22 +325,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &7729246595114027228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1909498444681442971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3f42b9715c4a44d9f706e7bb295552, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  damage: 0
-  score: 0
-  blocking: 0
 --- !u!65 &533474493857292954
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -399,10 +399,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3f42b9715c4a44d9f706e7bb295552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  damage: 0
   score: 0
   blocking: 0
+  spawnpoints: []
 --- !u!54 &7894299158994425544
 Rigidbody:
   m_ObjectHideFlags: 0
