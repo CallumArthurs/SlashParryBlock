@@ -10,7 +10,7 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public bool blocking;
     [HideInInspector]
-    public List<Vector3> spawnpoints = new List<Vector3>();
+    public List<RespawnPoints> spawnpoints = new List<RespawnPoints>();
 
     //original health is their spawned health 
     private int originalHealth, health;
@@ -120,7 +120,7 @@ public class PlayerData : MonoBehaviour
         animator.SetInteger("Anim", 0);
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         health -= damage;
     }
@@ -133,6 +133,10 @@ public class PlayerData : MonoBehaviour
     public int getHealth()
     {
         return (health);
+    }
+    public int getOriginalHealth()
+    {
+        return (originalHealth);
     }
     public void setDamage(int value,int backValue,int ripValue)
     {
@@ -160,7 +164,16 @@ public class PlayerData : MonoBehaviour
         //sleep the rigidbody because velocity doesn't update properly
         GetComponent<Rigidbody>().Sleep();
         GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
-        GetComponent<Rigidbody>().position = spawnpoints[Random.Range(0, spawnpoints.Count)];
+
+        for (int i = 0; i < spawnpoints.Count; i++)
+        {
+            RespawnPoints PotentialSpawn = spawnpoints[i];
+            if (PotentialSpawn.spawnCheck())
+            {
+                GetComponent<Rigidbody>().position = PotentialSpawn.transform.position;
+                break;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
