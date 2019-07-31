@@ -23,11 +23,8 @@ public class CharacterMovmentScript : MonoBehaviour
     public float speed;
     public float rotSpeed;
     public PlayerData[] players;
-    public List<PlayerHeartsContainer> playerHearts;
     public Text[] healthText;
     public Text[] scoreText;
-
-    public Sprite emptyHeart, halfHeart, fullHeart;
 
     private List<Rigidbody> playersRB = new List<Rigidbody>();
     private List<Animator> playersAni = new List<Animator>();
@@ -40,16 +37,14 @@ public class CharacterMovmentScript : MonoBehaviour
             players[i].setDamage(playerDamage, backstabDamage, riposteDamage);
             players[i].setKnockback(playerKnockback);
         }
-
         //getting the spawnpoint parent to find all the spawnpoints
-        RespawnPoints[] tempobj = GameObject.FindGameObjectWithTag("SpawnPoints").GetComponentsInChildren<RespawnPoints>();
-
+        Transform[] tempobj = GameObject.FindGameObjectWithTag("SpawnPoints").GetComponentsInChildren<Transform>();
         //starting at 1 to skip the parent
-        for (int i = 0; i < tempobj.Length; i++)
+        for (int i = 1; i < tempobj.Length; i++)
         {
             for (int k = 0; k < players.Length; k++)
             {
-                players[k].spawnpoints.Add(tempobj[i]);
+                players[k].spawnpoints.Add(tempobj[i].position);
             }
         }
         //getting a reference to all the player's rigidbodies
@@ -100,28 +95,6 @@ public class CharacterMovmentScript : MonoBehaviour
                     }
                 }
             }
-
-            float playerHealth = players[i].getHealth();
-            float fullHeartAmount = players[i].getOriginalHealth() / 5;
-
-            for (int j = 0; j < playerHearts[i].hearts.Count; j++)
-            {
-                if (playerHealth - fullHeartAmount >= 0)
-                {
-                    playerHearts[i].hearts[j].sprite = fullHeart;
-                    playerHealth -= fullHeartAmount;
-                }
-                else if (playerHealth - (fullHeartAmount / 2) >= 0)
-                {
-                    playerHearts[i].hearts[j].sprite = halfHeart;
-                    playerHealth = 0;
-                }
-                else
-                {
-                    playerHearts[i].hearts[j].sprite = emptyHeart;
-                }
-            }
-
             //updating the ui on game loop
             healthText[i].text = players[i].getHealth().ToString();
             scoreText[i].text = players[i].score.ToString();
