@@ -118,7 +118,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 }
                 else
                 {
-                    playerHearts[i].hearts[j].sprite = null;
+                    playerHearts[i].hearts[j].sprite = emptyHeart;
                 }
             }
 
