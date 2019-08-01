@@ -66,9 +66,6 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < playersRB.Count; i++)
         {
-
-           
-
             if (!players[i].getIsParried())
             {
                 //if (i == 1)
@@ -76,6 +73,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 //    players[i].Attack();
                 //    playersAni[i].SetInteger("Anim", (int)AnimSelector.Attack);
                 //}
+
                 //for player1 this will evaluate to "HorizontalP1"
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0)
                 {
