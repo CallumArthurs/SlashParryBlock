@@ -25,7 +25,7 @@ public class PlayerData : MonoBehaviour
     private bool attacked = false, parried = false, isParried = false;
 
     public GameObject particles;
-    
+    public GameObject AttackParticles;
     void Start()
     {
         //getting the collider that attacks people
@@ -218,6 +218,7 @@ public class PlayerData : MonoBehaviour
                         CollisionRigidBody.velocity = new Vector3(0, 0, 0);
                         CollisionRigidBody.AddForce((other.transform.position - transform.position) * (knockback * 0.5f), ForceMode.Impulse);
                     }
+                    Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                 }
                 else // no shield
                 {
@@ -235,12 +236,15 @@ public class PlayerData : MonoBehaviour
                         CollisionRigidBody.velocity = new Vector3(0, 0, 0);
                         CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
                         CollisionPlayerData.TakeDamage(backstabDamage);
+                        Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
+
                     }
                     else // hit their side or front
                     {
                         CollisionRigidBody.velocity = new Vector3(0, 0, 0);
                         CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
                         CollisionPlayerData.TakeDamage(damage);
+                        Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                     }
                 }
             }
