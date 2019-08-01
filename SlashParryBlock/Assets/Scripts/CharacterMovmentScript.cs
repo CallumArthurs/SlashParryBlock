@@ -64,10 +64,18 @@ public class CharacterMovmentScript : MonoBehaviour
     {
 
         //iterate through all the players
-        for(int i = 0; i < playersRB.Count; i++)
+        for (int i = 0; i < playersRB.Count; i++)
         {
+
+           
+
             if (!players[i].getIsParried())
             {
+                //if (i == 1)
+                //{
+                //    players[i].Attack();
+                //    playersAni[i].SetInteger("Anim", (int)AnimSelector.Attack);
+                //}
                 //for player1 this will evaluate to "HorizontalP1"
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0)
                 {
@@ -79,7 +87,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), rotSpeed);
                 }
 
-                if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getParried())
+                if (Input.GetAxis("L_BumperP" + (i + 1)) > 0)
                 {
                     players[i].blocking = true;
                     playersAni[i].SetInteger("Anim", (int)AnimSelector.Block);
@@ -87,7 +95,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 else
                 {
                     players[i].blocking = false;
-                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getParried())
+                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
                     {
                         players[i].Attack();
                     }
@@ -105,23 +113,23 @@ public class CharacterMovmentScript : MonoBehaviour
             float playerHealth = players[i].getHealth();
             float fullHeartAmount = players[i].getOriginalHealth() / 5;
 
-            for (int j = 0; j < playerHearts[i].hearts.Count; j++)
-            {
-                if (playerHealth - fullHeartAmount >= 0)
-                {
-                    playerHearts[i].hearts[j].sprite = fullHeart;
-                    playerHealth -= fullHeartAmount;
-                }
-                else if (playerHealth - (fullHeartAmount / 2) >= 0)
-                {
-                    playerHearts[i].hearts[j].sprite = halfHeart;
-                    playerHealth = 0;
-                }
-                else
-                {
-                    playerHearts[i].hearts[j].sprite = emptyHeart;
-                }
-            }
+            //for (int j = 0; j < playerHearts[i].hearts.Count; j++)
+            //{
+            //    if (playerHealth - fullHeartAmount >= 0)
+            //    {
+            //        playerHearts[i].hearts[j].sprite = fullHeart;
+            //        playerHealth -= fullHeartAmount;
+            //    }
+            //    else if (playerHealth - (fullHeartAmount / 2) >= 0)
+            //    {
+            //        playerHearts[i].hearts[j].sprite = halfHeart;
+            //        playerHealth = 0;
+            //    }
+            //    else
+            //    {
+            //        playerHearts[i].hearts[j].sprite = emptyHeart;
+            //    }
+            //}
 
             //updating the ui on game loop
             healthText[i].text = players[i].getHealth().ToString();
