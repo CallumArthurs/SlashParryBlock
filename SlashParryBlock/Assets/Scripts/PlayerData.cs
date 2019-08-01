@@ -22,7 +22,7 @@ public class PlayerData : MonoBehaviour
     private float AttackTimer = 1.2f;
     private float ParryTimer = 0.5f;
     private float gotParriedTimer = 2.0f;
-    private bool attacked = false, parried = false, isParried = false;
+    private bool attacked = false, parried = false, isParried = false, alreadyAttacked = false;
 
     public GameObject particles;
     public GameObject AttackParticles;
@@ -55,12 +55,13 @@ public class PlayerData : MonoBehaviour
         {
             //run the timer for the attack
             AttackTimer -= Time.deltaTime;
-            if (/*AttackTimer <= 0 && */animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            if (AttackTimer <= 0 && animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
                 //turn off attack and reset timer
                 swordCollider.enabled = false;
                 attacked = false;
                 AttackTimer = 1.2f;
+                alreadyAttacked = false;
             }
         }
 
@@ -122,6 +123,7 @@ public class PlayerData : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        Debug.Log("Hit");
     }
 
     public void setHealth(int value)
@@ -181,6 +183,11 @@ public class PlayerData : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (alreadyAttacked == true)
+        {
+            return;
+        }
+
         swordCollider.enabled = false;
         //caching these for readability
         PlayerData CollisionPlayerData = other.GetComponent<PlayerData>();
@@ -201,6 +208,7 @@ public class PlayerData : MonoBehaviour
                     CollisionPlayerData.gotParriedTimer = 2.0f;
                     CollisionPlayerData.isParried = false;
                     animator.SetInteger("Anim", 4);
+
                 }
                 else if (CollisionPlayerData.blocking)
                 {
@@ -279,5 +287,6 @@ public class PlayerData : MonoBehaviour
                 ParryTimer = 0.5f;
             }
         }
+        alreadyAttacked = true;
     }
 }
