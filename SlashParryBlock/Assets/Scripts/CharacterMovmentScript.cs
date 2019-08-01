@@ -113,23 +113,23 @@ public class CharacterMovmentScript : MonoBehaviour
             float playerHealth = players[i].getHealth();
             float fullHeartAmount = players[i].getOriginalHealth() / 5;
 
-            //for (int j = 0; j < playerHearts[i].hearts.Count; j++)
-            //{
-            //    if (playerHealth - fullHeartAmount >= 0)
-            //    {
-            //        playerHearts[i].hearts[j].sprite = fullHeart;
-            //        playerHealth -= fullHeartAmount;
-            //    }
-            //    else if (playerHealth - (fullHeartAmount / 2) >= 0)
-            //    {
-            //        playerHearts[i].hearts[j].sprite = halfHeart;
-            //        playerHealth = 0;
-            //    }
-            //    else
-            //    {
-            //        playerHearts[i].hearts[j].sprite = emptyHeart;
-            //    }
-            //}
+            for (int j = 0; j < playerHearts[i].hearts.Count; j++)
+            {
+                if (playerHealth - fullHeartAmount >= 0)
+                {
+                    playerHearts[i].hearts[j].sprite = fullHeart;
+                    playerHealth -= fullHeartAmount;
+                }
+                else if (playerHealth - (fullHeartAmount / 2) >= 0)
+                {
+                    playerHearts[i].hearts[j].sprite = halfHeart;
+                    playerHealth = 0;
+                }
+                else
+                {
+                    playerHearts[i].hearts[j].sprite = emptyHeart;
+                }
+            }
 
             //updating the ui on game loop
             healthText[i].text = players[i].getHealth().ToString();
