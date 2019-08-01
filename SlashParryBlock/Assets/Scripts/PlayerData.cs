@@ -75,7 +75,7 @@ public class PlayerData : MonoBehaviour
                 swordCollider.enabled = false;
                 parried = false;
                 ParryTimer = 0.5f;
-
+                animator.SetInteger("Anim", 0);
             }
         }
 
@@ -189,8 +189,20 @@ public class PlayerData : MonoBehaviour
             //making sure you acually hit someone, and making sure you didn't hit yourself
             if (CollisionPlayerData != null && CollisionPlayerData != this)
             {
-                if (CollisionPlayerData.blocking)
+                //hit their front during riposte
+                if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
                 {
+                    CollisionRigidBody.velocity = new Vector3(0, 0, 0);
+                    CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
+                    CollisionPlayerData.TakeDamage(RiposteDamage);
+                    CollisionPlayerData.gotParriedTimer = 2.0f;
+                    CollisionPlayerData.isParried = false;
+                    animator.SetInteger("Anim", 4);
+                }
+                else if (CollisionPlayerData.blocking)
+                {
+                    animator.SetInteger("Anim", 1);
+
                     //dot product confirms which direction you hit the other player from
                     //1 = back
                     //-1 = front
@@ -222,16 +234,9 @@ public class PlayerData : MonoBehaviour
                 }
                 else // no shield
                 {
-                    //hit their front during riposte
-                    if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
-                    {
-                        CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                        CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
-                        CollisionPlayerData.TakeDamage(RiposteDamage);
-                        CollisionPlayerData.isParried = false;
-                        CollisionPlayerData.gotParriedTimer = 2.0f;
-                    }
-                    else if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
+                    animator.SetInteger("Anim", 1);
+
+                    if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
                     {
                         CollisionRigidBody.velocity = new Vector3(0, 0, 0);
                         CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);

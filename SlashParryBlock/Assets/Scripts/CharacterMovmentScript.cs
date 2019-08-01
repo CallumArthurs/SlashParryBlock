@@ -62,6 +62,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     void Update()
     {
+
         //iterate through all the players
         for(int i = 0; i < playersRB.Count; i++)
         {
@@ -88,13 +89,13 @@ public class CharacterMovmentScript : MonoBehaviour
                     players[i].blocking = false;
                     if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getParried())
                     {
-                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Attack);
                         players[i].Attack();
                     }
                     else
                     {
                         if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0)
                         {
+                            playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
                             players[i].Parry();
                         }
                     }
