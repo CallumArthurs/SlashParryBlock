@@ -19,7 +19,7 @@ public class PlayerData : MonoBehaviour
     private BoxCollider swordCollider;
     private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
-    private float AttackTimer = 0.5f;
+    private float AttackTimer = 1.2f;
     private float ParryTimer = 0.5f;
     private float gotParriedTimer = 2.0f;
     private bool attacked = false, parried = false, isParried = false;
@@ -55,13 +55,12 @@ public class PlayerData : MonoBehaviour
         {
             //run the timer for the attack
             AttackTimer -= Time.deltaTime;
-            if (AttackTimer <= 0)
+            if (/*AttackTimer <= 0 && */animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
                 //turn off attack and reset timer
                 swordCollider.enabled = false;
                 attacked = false;
-                AttackTimer = 0.5f;
-                animator.SetInteger("Anim", 0);
+                AttackTimer = 1.2f;
             }
         }
 
@@ -75,7 +74,6 @@ public class PlayerData : MonoBehaviour
                 swordCollider.enabled = false;
                 parried = false;
                 ParryTimer = 0.5f;
-                animator.SetInteger("Anim", 0);
             }
         }
 
@@ -98,6 +96,7 @@ public class PlayerData : MonoBehaviour
         {
             return;
         }
+        animator.SetInteger("Anim", 1);
         swordCollider.enabled = true;
         attacked = true;
     }
@@ -105,7 +104,7 @@ public class PlayerData : MonoBehaviour
     public void Parry()
     {
         attacked = false;
-        AttackTimer = 0.5f;
+        AttackTimer = 1.2f;
         if (parried)
         {
             return;
@@ -116,7 +115,7 @@ public class PlayerData : MonoBehaviour
 
     public void Parried()
     {
-        Instantiate(particles, transform.position,Quaternion.Euler(transform.up));
+        Instantiate(particles, transform.position, Quaternion.Euler(transform.up));
         animator.SetInteger("Anim", 0);
     }
 
@@ -138,7 +137,7 @@ public class PlayerData : MonoBehaviour
     {
         return (originalHealth);
     }
-    public void setDamage(int value,int backValue,int ripValue)
+    public void setDamage(int value, int backValue, int ripValue)
     {
         damage = value;
         backstabDamage = backValue;
@@ -155,6 +154,10 @@ public class PlayerData : MonoBehaviour
     public bool getIsParried()
     {
         return (isParried);
+    }
+    public bool getAttacked()
+    {
+        return (attacked);
     }
 
     private void Respawn()
@@ -178,17 +181,17 @@ public class PlayerData : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        swordCollider.enabled = false;
         //caching these for readability
         PlayerData CollisionPlayerData = other.GetComponent<PlayerData>();
         Rigidbody CollisionRigidBody = other.GetComponent<Rigidbody>();
 
         if (attacked)
         {
-            swordCollider.enabled = false;
-
             //making sure you acually hit someone, and making sure you didn't hit yourself
             if (CollisionPlayerData != null && CollisionPlayerData != this)
             {
+                //animator.SetInteger("Anim", 0);
                 //hit their front during riposte
                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
                 {
@@ -213,7 +216,7 @@ public class PlayerData : MonoBehaviour
                             //reset their velocity so it doesn't add up after every hit
                             CollisionRigidBody.velocity = new Vector3(0, 0, 0);
                             //knockback isn't halved as you didn't hit their shield
-                            CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
+                            CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
                             //double damage if you hit their back
                             CollisionPlayerData.TakeDamage(backstabDamage);
                         }
@@ -221,14 +224,14 @@ public class PlayerData : MonoBehaviour
                         {
                             CollisionRigidBody.velocity = new Vector3(0, 0, 0);
                             //knockback is halved as you hit their shield
-                            CollisionRigidBody.AddForce((other.transform.position - transform.position) * (knockback * 0.5f), ForceMode.Impulse);
+                            CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * (knockback * 0.5f), ForceMode.Impulse);
                             CollisionPlayerData.TakeDamage(damage);
                         }
                     }
                     else //hit their shield
                     {
                         CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                        CollisionRigidBody.AddForce((other.transform.position - transform.position) * (knockback * 0.5f), ForceMode.Impulse);
+                        CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * (knockback * 0.5f), ForceMode.Impulse);
                     }
                     Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                 }
@@ -239,7 +242,7 @@ public class PlayerData : MonoBehaviour
                     if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
                     {
                         CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                        CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
                         CollisionPlayerData.TakeDamage(backstabDamage);
                         Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
 
@@ -247,7 +250,7 @@ public class PlayerData : MonoBehaviour
                     else // hit their side or front
                     {
                         CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                        CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
                         CollisionPlayerData.TakeDamage(damage);
                         Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                     }
@@ -255,6 +258,7 @@ public class PlayerData : MonoBehaviour
             }
             else
             {
+                animator.SetInteger("Anim", 1);
                 return;
             }
             //check if you killed them and add points if so
