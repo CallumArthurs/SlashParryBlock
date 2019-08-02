@@ -68,15 +68,15 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (!players[i].getIsParried())
             {
-                //if (i == 1)
-                //{
-                //    players[i].Attack();
-                //    playersAni[i].SetInteger("Anim", (int)AnimSelector.Attack);
-                //}
+                if (i == 1)
+                {
+                    players[i].Attack();
+                }
 
                 //for player1 this will evaluate to "HorizontalP1"
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0)
                 {
+                    //playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * Time.deltaTime * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * Time.deltaTime * speed), ForceMode.VelocityChange);
                     playersRB[i].MovePosition(playersRB[i].position + new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * Time.deltaTime * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * Time.deltaTime * speed));
                 }
 
@@ -93,7 +93,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 else
                 {
                     players[i].blocking = false;
-                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
+                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0)
                     {
                         players[i].Attack();
                     }
