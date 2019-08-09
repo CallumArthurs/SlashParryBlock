@@ -68,10 +68,10 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (!players[i].getIsParried())
             {
-                if (i == 1)
-                {
-                    players[i].Attack();
-                }
+                //if (i == 1)
+                //{
+                //    players[i].Attack();
+                //}
 
                 //for player1 this will evaluate to "HorizontalP1"
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0)
