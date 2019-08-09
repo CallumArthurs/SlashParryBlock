@@ -9,7 +9,8 @@ public class CharacterMovmentScript : MonoBehaviour
     {
         Attack = 1,
         Block,
-        Parry
+        Parry,
+        Run
     }
 
     //this sets the default values for the players at game start
@@ -78,6 +79,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 {
                     //playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * Time.deltaTime * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * Time.deltaTime * speed), ForceMode.VelocityChange);
                     playersRB[i].MovePosition(playersRB[i].position + new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * Time.deltaTime * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * Time.deltaTime * speed));
+                    playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                 }
 
                 if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
@@ -130,7 +132,7 @@ public class CharacterMovmentScript : MonoBehaviour
             }
 
             //updating the ui on game loop
-            healthText[i].text = players[i].getHealth().ToString();
+            //healthText[i].text = players[i].getHealth().ToString();
             scoreText[i].text = players[i].score.ToString();
         }
     }
