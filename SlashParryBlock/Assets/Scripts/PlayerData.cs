@@ -12,6 +12,13 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints = new List<RespawnPoints>();
 
+    class HitPlayers
+    {
+        public PlayerData hitPlayerData = new PlayerData();
+        public Rigidbody HitPlayersRB = new Rigidbody();
+        public bool BackStab = false, Riposte = false, Normal = false;
+    }
+
     //original health is their spawned health 
     private int originalHealth, health;
     private int damage, backstabDamage, RiposteDamage;
@@ -19,10 +26,12 @@ public class PlayerData : MonoBehaviour
     private BoxCollider swordCollider;
     private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
-    private float AttackTimer = 0.8f;
+    private float AttackTimer = 0.6f;
     private float ParryTimer = 0.5f;
     private float gotParriedTimer = 2.0f;
     private bool attacked = false, parried = false, isParried = false;
+
+    private List<HitPlayers> playersHit = new List<HitPlayers>();
 
     public GameObject particles;
     public GameObject AttackParticles;
@@ -59,9 +68,35 @@ public class PlayerData : MonoBehaviour
             {
                 animator.ResetTrigger("Attack");
                 //turn off attack and reset timer
-                swordCollider.enabled = false;
                 attacked = false;
-                AttackTimer = 0.8f;
+                AttackTimer = 0.6f;
+
+                if (!isParried)
+                {
+                    for (int i = 0; i < playersHit.Count; i++)
+                    {
+                        if (playersHit[i].Normal)
+                        {
+                            playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
+                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
+                            playersHit[i].hitPlayerData.TakeDamage(damage);
+                        }
+                        else if (playersHit[i].BackStab)
+                        {
+                            playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
+                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
+                            playersHit[i].hitPlayerData.TakeDamage(backstabDamage);
+
+                        }
+                        else if (playersHit[i].Riposte)
+                        {
+                            playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
+                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
+                            playersHit[i].hitPlayerData.TakeDamage(RiposteDamage);
+
+                        }
+                    }
+                }
             }
         }
 
@@ -108,6 +143,7 @@ public class PlayerData : MonoBehaviour
 
         if (hits.Length > 0)
         {
+            playersHit.Clear();
             foreach (Collider other in hits)
             {
                 //caching these for readability
@@ -120,6 +156,10 @@ public class PlayerData : MonoBehaviour
 
                 if (attacked)
                 {
+                    playersHit.Add(new HitPlayers());
+                    playersHit[0].hitPlayerData = new PlayerData();
+                    playersHit[0].hitPlayerData = CollisionPlayerData;
+                    playersHit[0].HitPlayersRB = CollisionRigidBody;
                     HitSomeone = true;
                     //making sure you acually hit someone, and making sure you didn't hit yourself
                     if (CollisionPlayerData != null && CollisionPlayerData != this)
@@ -127,13 +167,10 @@ public class PlayerData : MonoBehaviour
                         //hit their front during riposte
                         if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
                         {
-                            CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                            CollisionRigidBody.AddForce((other.transform.position - transform.position) * knockback, ForceMode.Impulse);
-                            CollisionPlayerData.TakeDamage(RiposteDamage);
                             CollisionPlayerData.gotParriedTimer = 2.0f;
                             CollisionPlayerData.isParried = false;
-                            animator.ResetTrigger("Attack");
                             animator.SetTrigger("Riposte");
+                            playersHit[0].Riposte = true;
                             Debug.Log(gameObject.name + " Riposte");
                         }
                         else if (CollisionPlayerData.blocking)
@@ -147,19 +184,11 @@ public class PlayerData : MonoBehaviour
                             {
                                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back with shield up
                                 {
-                                    //reset their velocity so it doesn't add up after every hit
-                                    CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                                    //knockback isn't halved as you didn't hit their shield
-                                    CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
-                                    //double damage if you hit their back
-                                    CollisionPlayerData.TakeDamage(backstabDamage);
+                                    playersHit[0].BackStab = true;
                                 }
                                 else // hit their side with shield up
                                 {
-                                    CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                                    //knockback is halved as you hit their shield
-                                    CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * (knockback * 0.5f), ForceMode.Impulse);
-                                    CollisionPlayerData.TakeDamage(damage);
+                                    playersHit[0].Normal = true;
                                 }
                             }
                             else //hit their shield
@@ -175,17 +204,13 @@ public class PlayerData : MonoBehaviour
 
                             if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
                             {
-                                CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                                CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
-                                CollisionPlayerData.TakeDamage(backstabDamage);
+                                playersHit[0].BackStab = true;
                                 Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
 
                             }
                             else // hit their side or front
                             {
-                                CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                                CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
-                                CollisionPlayerData.TakeDamage(damage);
+                                playersHit[0].Normal = true;
                                 Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                             }
                         }
