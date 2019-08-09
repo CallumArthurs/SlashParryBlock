@@ -19,10 +19,10 @@ public class PlayerData : MonoBehaviour
     private BoxCollider swordCollider;
     private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
-    private float AttackTimer = 1.2f;
+    private float AttackTimer = 0.8f;
     private float ParryTimer = 0.5f;
     private float gotParriedTimer = 2.0f;
-    private bool attacked = false, parried = false, isParried = false, alreadyAttacked = false;
+    private bool attacked = false, parried = false, isParried = false;
 
     public GameObject particles;
     public GameObject AttackParticles;
@@ -55,14 +55,16 @@ public class PlayerData : MonoBehaviour
         {
             //run the timer for the attack
             AttackTimer -= Time.deltaTime;
-
-            if (animator.GetInteger("Anim") == 0)
+            if (AttackTimer <= 0.0f)
             {
+
+                Debug.Log("Reset Attack");
+
+                animator.ResetTrigger("Attack");
                 //turn off attack and reset timer
                 swordCollider.enabled = false;
                 attacked = false;
-                AttackTimer = 1.2f;
-                alreadyAttacked = false;
+                AttackTimer = 0.8f;
             }
         }
 
@@ -136,7 +138,7 @@ public class PlayerData : MonoBehaviour
                         }
                         else if (CollisionPlayerData.blocking)
                         {
-                            animator.SetInteger("Anim", 1);
+                            animator.SetTrigger("Attack");
 
                             //dot product confirms which direction you hit the other player from
                             //1 = back
@@ -169,7 +171,7 @@ public class PlayerData : MonoBehaviour
                         }
                         else // no shield
                         {
-                            animator.SetInteger("Anim", 1);
+                            animator.SetTrigger("Attack");
 
                             if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
                             {
@@ -198,7 +200,7 @@ public class PlayerData : MonoBehaviour
             }
         }
 
-        animator.SetInteger("Anim", 1);
+        animator.SetTrigger("Attack");
 
         //swordCollider.enabled = true;
     }
