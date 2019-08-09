@@ -104,6 +104,7 @@ public class PlayerData : MonoBehaviour
 
         attacked = true;
 
+        bool HitSomeone = false;
 
         if (hits.Length > 0)
         {
@@ -119,6 +120,7 @@ public class PlayerData : MonoBehaviour
 
                 if (attacked)
                 {
+                    HitSomeone = true;
                     //making sure you acually hit someone, and making sure you didn't hit yourself
                     if (CollisionPlayerData != null && CollisionPlayerData != this)
                     {
@@ -130,6 +132,7 @@ public class PlayerData : MonoBehaviour
                             CollisionPlayerData.TakeDamage(RiposteDamage);
                             CollisionPlayerData.gotParriedTimer = 2.0f;
                             CollisionPlayerData.isParried = false;
+                            animator.ResetTrigger("Attack");
                             animator.SetTrigger("Riposte");
                             Debug.Log(gameObject.name + " Riposte");
                         }
@@ -197,9 +200,10 @@ public class PlayerData : MonoBehaviour
             }
         }
 
-        animator.SetTrigger("Attack");
-
-        //swordCollider.enabled = true;
+        if (!HitSomeone)
+        {
+            animator.SetTrigger("Attack");
+        }
     }
 
     public void Parry()
@@ -232,7 +236,6 @@ public class PlayerData : MonoBehaviour
 
                 if (parried)
                 {
-                    Debug.Log(CollisionPlayerData.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime);
                     if (CollisionPlayerData.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.5f && CollisionPlayerData.attacked)
                     {
                         CollisionPlayerData.isParried = true;
