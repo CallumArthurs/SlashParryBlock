@@ -99,10 +99,9 @@ public class CharacterMovmentScript : MonoBehaviour
                 else
                 {
                     players[i].blocking = false;
-                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0)
+                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
                     {
                         players[i].Attack();
-
                     }
                     else
                     {
