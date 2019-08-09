@@ -57,9 +57,6 @@ public class PlayerData : MonoBehaviour
             AttackTimer -= Time.deltaTime;
             if (AttackTimer <= 0.0f)
             {
-
-                Debug.Log("Reset Attack");
-
                 animator.ResetTrigger("Attack");
                 //turn off attack and reset timer
                 swordCollider.enabled = false;
