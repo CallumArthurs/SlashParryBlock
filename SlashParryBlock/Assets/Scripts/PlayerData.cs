@@ -5,6 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerData : MonoBehaviour
 {
+    public GameObject DizzySpinner;
+
+    private enum ClipSelector
+    {
+        attackMiss,
+        attackHit,
+        backstab,
+        parry,
+        riposte,
+        block,
+        death
+    }
+
     [HideInInspector]
     public int score;
     [HideInInspector]
@@ -19,9 +32,11 @@ public class PlayerData : MonoBehaviour
     private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
     private float AttackTimer = 0.6f;
-    private float ParryTimer = 0.5f;
+    private float ParryTimer = 0.6f;
     private float gotParriedTimer = 2.0f;
     private bool attacked = false, parried = false, isParried = false;
+    private List<AudioClip> PlayerSounds = new List<AudioClip>();
+    private AudioSource audioPlayer;
 
     private List<HitPlayers> playersHit = new List<HitPlayers>();
 
@@ -29,6 +44,8 @@ public class PlayerData : MonoBehaviour
     public GameObject AttackParticles;
     void Start()
     {
+        Random.InitState((int)Time.realtimeSinceStartup);
+
         //getting the collider that attacks people
 
         animator = gameObject.GetComponentInChildren<Animator>();
@@ -71,20 +88,20 @@ public class PlayerData : MonoBehaviour
                         if (playersHit[i].Normal)
                         {
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
+                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                             playersHit[i].hitPlayerData.TakeDamage(damage);
                         }
                         else if (playersHit[i].BackStab)
                         {
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
+                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                             playersHit[i].hitPlayerData.TakeDamage(backstabDamage);
 
                         }
                         else if (playersHit[i].Riposte)
                         {
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.Impulse);
+                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                             playersHit[i].hitPlayerData.TakeDamage(RiposteDamage);
 
                         }
@@ -102,7 +119,7 @@ public class PlayerData : MonoBehaviour
             {
                 //turn off attack and reset timer
                 parried = false;
-                ParryTimer = 0.5f;
+                ParryTimer = 0.6f;
             }
         }
 
@@ -110,11 +127,16 @@ public class PlayerData : MonoBehaviour
         {
             //run the timer for the attack
             gotParriedTimer -= Time.deltaTime;
+            DizzySpinner.transform.Rotate(Vector3.up, 1.0f, Space.World);
             if (gotParriedTimer <= 0)
             {
                 isParried = false;
                 gotParriedTimer = 2.0f;
             }
+        }
+        else
+        {
+            DizzySpinner.SetActive(false);
         }
     }
 
@@ -164,7 +186,7 @@ public class PlayerData : MonoBehaviour
                             CollisionPlayerData.isParried = false;
                             animator.SetTrigger("Riposte");
                             playersHit[0].Riposte = true;
-                            Debug.Log(gameObject.name + " Riposte");
+                            playClip(ClipSelector.riposte);
                         }
                         else if (CollisionPlayerData.blocking)
                         {
@@ -178,16 +200,19 @@ public class PlayerData : MonoBehaviour
                                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back with shield up
                                 {
                                     playersHit[0].BackStab = true;
+                                    playClip(ClipSelector.backstab);
                                 }
                                 else // hit their side with shield up
                                 {
                                     playersHit[0].Normal = true;
+                                    playClip(ClipSelector.attackHit);
                                 }
                             }
                             else //hit their shield
                             {
                                 CollisionRigidBody.velocity = new Vector3(0, 0, 0);
                                 CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * (knockback * 0.5f), ForceMode.Impulse);
+                                playClip(ClipSelector.block);
                             }
                             Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                         }
@@ -199,12 +224,13 @@ public class PlayerData : MonoBehaviour
                             {
                                 playersHit[0].BackStab = true;
                                 Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
-
+                                playClip(ClipSelector.backstab);
                             }
                             else // hit their side or front
                             {
                                 playersHit[0].Normal = true;
                                 Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
+                                playClip(ClipSelector.attackHit);
                             }
                         }
                     }
@@ -220,6 +246,7 @@ public class PlayerData : MonoBehaviour
 
         if (!HitSomeone)
         {
+            playClip(ClipSelector.attackMiss);
             animator.SetTrigger("Attack");
         }
     }
@@ -261,6 +288,7 @@ public class PlayerData : MonoBehaviour
                         CollisionPlayerData.Parried();
                         parried = false;
                         ParryTimer = 0.5f;
+                        playClip(ClipSelector.parry);
                     }
                 }
             }
@@ -269,6 +297,7 @@ public class PlayerData : MonoBehaviour
 
     public void Parried()
     {
+        DizzySpinner.SetActive(true);
         Instantiate(particles, transform.position, Quaternion.Euler(transform.up));
         animator.SetInteger("Anim", 0);
     }
@@ -313,23 +342,36 @@ public class PlayerData : MonoBehaviour
     {
         return (attacked);
     }
+    public void SetSounds(AudioSource player,List<AudioClip> sounds)
+    {
+        audioPlayer = player;
+        PlayerSounds = sounds;
+    }
 
+
+    private void playClip(ClipSelector clip)
+    {
+        audioPlayer.clip = PlayerSounds[(int)clip];
+        audioPlayer.Play();
+    }
     private void Respawn()
     {
+        playClip(ClipSelector.death);
         //reset health
         health = originalHealth;
         //sleep the rigidbody because velocity doesn't update properly
         GetComponent<Rigidbody>().Sleep();
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 
+        List<Transform> GoodSpawns = new List<Transform>();
+
         for (int i = 0; i < spawnpoints.Count; i++)
         {
-            RespawnPoints PotentialSpawn = spawnpoints[i];
-            if (PotentialSpawn.spawnCheck())
+            if (spawnpoints[i].spawnCheck())
             {
-                GetComponent<Rigidbody>().position = PotentialSpawn.transform.position;
-                break;
+                GoodSpawns.Add(spawnpoints[i].transform);
             }
         }
+        GetComponent<Rigidbody>().position = GoodSpawns[Random.Range(0, GoodSpawns.Count)].position;
     }
 }

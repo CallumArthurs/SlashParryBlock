@@ -19,6 +19,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public int playerDamage,backstabDamage,riposteDamage;
     [Tooltip("this is a multiplier on knockback hit, halved for the shield")]
     public float playerKnockback;
+    public List<AudioClip> playerClips;
 
     [Header("CharacterMovementScript values")]
     public float speed;
@@ -31,16 +32,25 @@ public class CharacterMovmentScript : MonoBehaviour
 
     public Sprite emptyHeart, halfHeart, fullHeart;
 
+    private List<AudioSource> soundPlayers = new List<AudioSource>();
     private List<Rigidbody> playersRB = new List<Rigidbody>();
     private List<Animator> playersAni = new List<Animator>();
     void Start()
     {
+        AudioSource[] tmpSources = GetComponentsInChildren<AudioSource>();
+
+        for (int i = 0; i < tmpSources.Length; i++)
+        {
+            soundPlayers.Add(tmpSources[i]);
+        }
+
         //setting the values of the players
         for (int i = 0; i < players.Length; i++)
         {
             players[i].setHealth(playerHealth);
             players[i].setDamage(playerDamage, backstabDamage, riposteDamage);
             players[i].setKnockback(playerKnockback);
+            players[i].SetSounds(soundPlayers[i],playerClips);
         }
 
         //getting the spawnpoint parent to find all the spawnpoints
@@ -64,7 +74,6 @@ public class CharacterMovmentScript : MonoBehaviour
 
     void Update()
     {
-
         //iterate through all the players
         for (int i = 0; i < playersRB.Count; i++)
         {
@@ -78,8 +87,18 @@ public class CharacterMovmentScript : MonoBehaviour
                 //for player1 this will evaluate to "HorizontalP1"
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0)
                 {
-                    playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.VelocityChange);
-                    //playersRB[i].MovePosition(playersRB[i].position + new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * Time.deltaTime * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * Time.deltaTime * speed));
+                    playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
+                    if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                    {
+                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), rotSpeed);
+
+                    }
+                    //else
+                    //{
+                    //    playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                    //}
+
+
                     if (playersRB[i].velocity.magnitude > maxSpeed)
                     {
                         playersRB[i].velocity = playersRB[i].velocity.normalized * maxSpeed;
@@ -88,16 +107,15 @@ public class CharacterMovmentScript : MonoBehaviour
                 }
                 else
                 {
-                    playersRB[i].velocity = new Vector3(0.0f,0.0f);
                     playersAni[i].SetInteger("Anim", 0);
                 }
 
-                if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
-                {
-                    playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), rotSpeed);
-                }
+                //if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                //{
+                //    playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                //}
 
-                if (Input.GetAxis("L_BumperP" + (i + 1)) > 0)
+                if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getParried())
                 {
                     players[i].blocking = true;
                     playersAni[i].SetInteger("Anim", (int)AnimSelector.Block);
@@ -105,13 +123,13 @@ public class CharacterMovmentScript : MonoBehaviour
                 else
                 {
                     players[i].blocking = false;
-                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
+                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked() && !players[i].getParried())
                     {
                         players[i].Attack();
                     }
                     else
                     {
-                        if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0)
+                        if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getParried())
                         {
                             playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
                             players[i].Parry();
