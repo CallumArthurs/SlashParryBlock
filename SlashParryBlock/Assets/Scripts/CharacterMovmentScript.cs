@@ -25,6 +25,8 @@ public class CharacterMovmentScript : MonoBehaviour
     public float speed;
     public float maxSpeed;
     public float rotSpeed;
+    public float blockSpeedMultiplier;
+    public float blockRotSpeedMultiplier;
     public PlayerData[] players;
     public List<PlayerHeartsContainer> playerHearts;
     public Text[] healthText;
@@ -32,7 +34,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     public Sprite emptyHeart, halfHeart, fullHeart;
 
-    private List<AudioSource> soundPlayers = new List<AudioSource>();
+    public List<AudioSource> soundPlayers = new List<AudioSource>();
     private List<Rigidbody> playersRB = new List<Rigidbody>();
     private List<Animator> playersAni = new List<Animator>();
     void Start()
@@ -77,7 +79,7 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < playersRB.Count; i++)
         {
-            if (!players[i].getIsParried())
+            if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
                 //if (i == 1)
                 //{
@@ -85,14 +87,26 @@ public class CharacterMovmentScript : MonoBehaviour
                 //}
 
                 //for player1 this will evaluate to "HorizontalP1"
-                if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0)
+                if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 || 
+                    Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
                 {
-                    playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
-                    if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                    if (!players[i].blocking)
                     {
-                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
+                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
 
                     }
+                    else
+                    {
+                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
+                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                    }
+
+                    //if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                    //{
+                    //    playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), rotSpeed);
+
+                    //}
                     //else
                     //{
                     //    playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);

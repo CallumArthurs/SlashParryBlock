@@ -34,7 +34,8 @@ public class PlayerData : MonoBehaviour
     private float AttackTimer = 0.6f;
     private float ParryTimer = 0.6f;
     private float gotParriedTimer = 2.0f;
-    private bool attacked = false, parried = false, isParried = false;
+    private float KnockbackTimer = 0.25f;
+    private bool attacked = false, parried = false, isParried = false, knockedback = false;
     private List<AudioClip> PlayerSounds = new List<AudioClip>();
     private AudioSource audioPlayer;
 
@@ -90,12 +91,14 @@ public class PlayerData : MonoBehaviour
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                             playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                             playersHit[i].hitPlayerData.TakeDamage(damage);
+                            playersHit[i].hitPlayerData.knockedback = true;
                         }
                         else if (playersHit[i].BackStab)
                         {
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                             playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                             playersHit[i].hitPlayerData.TakeDamage(backstabDamage);
+                            playersHit[i].hitPlayerData.knockedback = true;
 
                         }
                         else if (playersHit[i].Riposte)
@@ -103,7 +106,7 @@ public class PlayerData : MonoBehaviour
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                             playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                             playersHit[i].hitPlayerData.TakeDamage(RiposteDamage);
-
+                            playersHit[i].hitPlayerData.knockedback = true;
                         }
                     }
                     playersHit.Clear();
@@ -137,6 +140,17 @@ public class PlayerData : MonoBehaviour
         else
         {
             DizzySpinner.SetActive(false);
+        }
+
+        if (knockedback)
+        {
+            //run the timer for the attack
+            KnockbackTimer -= Time.deltaTime;
+            if (KnockbackTimer <= 0)
+            {
+                knockedback = false;
+                KnockbackTimer = 0.25f;
+            }
         }
     }
 
@@ -341,6 +355,14 @@ public class PlayerData : MonoBehaviour
     public bool getAttacked()
     {
         return (attacked);
+    }
+    public bool getBlocking()
+    {
+        return (blocking);
+    }
+    public bool getKnockedBack()
+    {
+        return knockedback;
     }
     public void SetSounds(AudioSource player,List<AudioClip> sounds)
     {
