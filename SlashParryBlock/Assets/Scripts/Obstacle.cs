@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    public int damage;
+    public float Knockback;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -22,9 +15,9 @@ public class Obstacle : MonoBehaviour
             //reset their velocity so it doesn't add up after every hit
             CollisionRigidBody.velocity = new Vector3(0, 0, 0);
             //knockback isn't halved as you didn't hit their shield
-            CollisionRigidBody.AddForce((collision.transform.position - transform.position) * 2.0f, ForceMode.Impulse);
+            CollisionRigidBody.AddForce((collision.transform.position - transform.position) * Knockback, ForceMode.Impulse);
             //double damage if you hit their back
-            collision.gameObject.GetComponent<PlayerData>().TakeDamage(10);
+            collision.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
         }
     }
 
