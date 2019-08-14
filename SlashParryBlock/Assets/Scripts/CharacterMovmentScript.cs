@@ -22,6 +22,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     [Header("CharacterMovementScript values")]
     public float speed;
+    public float maxSpeed;
     public float rotSpeed;
     public PlayerData[] players;
     public List<PlayerHeartsContainer> playerHearts;
@@ -77,12 +78,17 @@ public class CharacterMovmentScript : MonoBehaviour
                 //for player1 this will evaluate to "HorizontalP1"
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0)
                 {
-                    //playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * Time.deltaTime * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * Time.deltaTime * speed), ForceMode.VelocityChange);
-                    playersRB[i].MovePosition(playersRB[i].position + new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * Time.deltaTime * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * Time.deltaTime * speed));
+                    playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.VelocityChange);
+                    //playersRB[i].MovePosition(playersRB[i].position + new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * Time.deltaTime * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * Time.deltaTime * speed));
+                    if (playersRB[i].velocity.magnitude > maxSpeed)
+                    {
+                        playersRB[i].velocity = playersRB[i].velocity.normalized * maxSpeed;
+                    }
                     playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                 }
                 else
                 {
+                    playersRB[i].velocity = new Vector3(0.0f,0.0f);
                     playersAni[i].SetInteger("Anim", 0);
                 }
 

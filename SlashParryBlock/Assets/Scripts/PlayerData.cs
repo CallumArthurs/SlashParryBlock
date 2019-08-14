@@ -12,18 +12,10 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints = new List<RespawnPoints>();
 
-    class HitPlayers
-    {
-        public PlayerData hitPlayerData = new PlayerData();
-        public Rigidbody HitPlayersRB = new Rigidbody();
-        public bool BackStab = false, Riposte = false, Normal = false;
-    }
-
     //original health is their spawned health 
     private int originalHealth, health;
     private int damage, backstabDamage, RiposteDamage;
     private float knockback;
-    private BoxCollider swordCollider;
     private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
     private float AttackTimer = 0.6f;
@@ -38,7 +30,6 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         //getting the collider that attacks people
-        swordCollider = gameObject.GetComponentInChildren<BoxCollider>();
 
         animator = gameObject.GetComponentInChildren<Animator>();
     }
@@ -70,7 +61,9 @@ public class PlayerData : MonoBehaviour
                 //turn off attack and reset timer
                 attacked = false;
                 AttackTimer = 0.6f;
-
+            }
+            else if (AttackTimer <= 0.4f)
+            {
                 if (!isParried)
                 {
                     for (int i = 0; i < playersHit.Count; i++)
@@ -96,6 +89,7 @@ public class PlayerData : MonoBehaviour
 
                         }
                     }
+                    playersHit.Clear();
                 }
             }
         }
@@ -107,7 +101,6 @@ public class PlayerData : MonoBehaviour
             if (ParryTimer <= 0)
             {
                 //turn off attack and reset timer
-                swordCollider.enabled = false;
                 parried = false;
                 ParryTimer = 0.5f;
             }
