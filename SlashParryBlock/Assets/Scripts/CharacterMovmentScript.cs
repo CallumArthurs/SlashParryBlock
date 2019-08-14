@@ -87,7 +87,8 @@ public class CharacterMovmentScript : MonoBehaviour
                 //}
 
                 //for player1 this will evaluate to "HorizontalP1"
-                if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0)
+                if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 || 
+                    Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
                 {
                     if (!players[i].blocking)
                     {
