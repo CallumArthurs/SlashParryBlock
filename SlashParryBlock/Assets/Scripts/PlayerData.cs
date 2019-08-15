@@ -25,6 +25,8 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints = new List<RespawnPoints>();
 
+    public Animation AttackAnim;
+
     //original health is their spawned health 
     private int originalHealth, health,damage, backstabDamage, RiposteDamage;
     public int kills = 0,Deaths = 0,successfulParries = 0,damageDealt = 0,damageTaken = 0,killStreak = 0, killstreakTemp = 0;
@@ -227,6 +229,7 @@ public class PlayerData : MonoBehaviour
                         }
                         else if (CollisionPlayerData.blocking)
                         {
+
                             animator.SetTrigger("Attack");
 
                             //dot product confirms which direction you hit the other player from
@@ -393,6 +396,12 @@ public class PlayerData : MonoBehaviour
     {
         knockedback = value;
     }
+    public void setKnockedBack(bool value, float Timer)
+    {
+        knockedback = value;
+        KnockbackTimer = Timer;
+    }
+
     public void SetSounds(AudioSource player,List<AudioClip> sounds)
     {
         audioPlayer = player;
