@@ -112,7 +112,9 @@ public class CharacterMovmentScript : MonoBehaviour
                     //lowers your speed to your max speed
                     if (playersRB[i].velocity.magnitude > maxSpeed)
                     {
-                        playersRB[i].velocity = playersRB[i].velocity.normalized * maxSpeed;
+                        Vector3 VelNorm = playersRB[i].velocity.normalized;
+
+                        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
                     }
                 }
                 else
