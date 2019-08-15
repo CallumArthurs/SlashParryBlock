@@ -18,6 +18,7 @@ public class Obstacle : MonoBehaviour
             CollisionRigidBody.AddForce((collision.transform.position - transform.position) * Knockback, ForceMode.Impulse);
             //double damage if you hit their back
             collision.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
+            collision.gameObject.GetComponent<PlayerData>().setKnockedBack(true);
         }
     }
 
