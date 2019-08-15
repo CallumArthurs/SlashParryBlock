@@ -32,27 +32,27 @@ public class Obstacle : MonoBehaviour
             {
                 case 0://Any direction
                     {
-                        CollisionRigidBody.AddForce((collision.transform.position - transform.position) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce(collision.transform.position * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 1://PosX
                     {
-                        CollisionRigidBody.AddForce((new Vector3(1.0f,0.0f,0.0f) - transform.position) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce(new Vector3(1.0f,0.0f,0.0f) * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 2://NegX
                     {
-                        CollisionRigidBody.AddForce((new Vector3(-1.0f, 0.0f, 0.0f) - transform.position) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce(new Vector3(-1.0f, 0.0f, 0.0f) * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 3://PosZ
                     {
-                        CollisionRigidBody.AddForce((new Vector3(0.0f, 0.0f, 1.0f) - transform.position) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce(new Vector3(0.0f, 0.0f, 1.0f) * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 4://NegZ
                     {
-                        CollisionRigidBody.AddForce((new Vector3(0.0f, 0.0f, -1.0f) - transform.position) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce(new Vector3(0.0f, 0.0f, -1.0f) * Knockback, ForceMode.Impulse);
                         break;
                     }
                 default:
