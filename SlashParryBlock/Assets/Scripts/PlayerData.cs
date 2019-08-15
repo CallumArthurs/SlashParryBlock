@@ -45,30 +45,31 @@ public class PlayerData : MonoBehaviour
     public GameObject AttackParticles;
     void Start()
     {
+        //intialize the random num gen
         Random.InitState((int)Time.realtimeSinceStartup);
-
-        //getting the collider that attacks people
 
         animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
+        //dead
         if (health <= 0)
         {
             Respawn();
         }
-
+        //check if you fell out of the map
         if (transform.position.y <= -5.0f)
         {
             health = 0;
         }
-
+        //if not blocking reset the animator
         if (animator.GetInteger("Anim") == 2 && !blocking)
         {
             animator.SetInteger("Anim", 0);
         }
 
+        //runs the attack timer and the damage output
         if (attacked)
         {
             //run the timer for the attack
@@ -79,9 +80,10 @@ public class PlayerData : MonoBehaviour
                 //turn off attack and reset timer
                 attacked = false;
                 AttackTimer = 0.6f;
-            }
+            }//this is the end parry opportunity
             else if (AttackTimer <= 0.4f)
             {
+                //this stops you hitting people if you've been parried
                 if (!isParried)
                 {
                     for (int i = 0; i < playersHit.Count; i++)
@@ -109,11 +111,13 @@ public class PlayerData : MonoBehaviour
                             playersHit[i].hitPlayerData.knockedback = true;
                         }
                     }
+                    //clear list so you don't hit them again
                     playersHit.Clear();
                 }
             }
         }
 
+        //makes sure you can't parry multiple times during the animation
         if (parried)
         {
             //run the timer for the attack
@@ -126,6 +130,7 @@ public class PlayerData : MonoBehaviour
             }
         }
 
+        //stops you being stunned after being parried and if you're not parried turns off your dizzy spinner
         if (isParried)
         {
             //run the timer for the attack
@@ -142,6 +147,7 @@ public class PlayerData : MonoBehaviour
             DizzySpinner.SetActive(false);
         }
 
+        //essentially the same as the parry stun except no spinner and different timer
         if (knockedback)
         {
             //run the timer for the attack
@@ -172,23 +178,24 @@ public class PlayerData : MonoBehaviour
 
         if (hits.Length > 0)
         {
+            //clears the list just in case
             playersHit.Clear();
             foreach (Collider other in hits)
             {
                 //caching these for readability
                 PlayerData CollisionPlayerData = other.GetComponent<PlayerData>();
                 Rigidbody CollisionRigidBody = other.GetComponent<Rigidbody>();
+                //checks if you acutally have the playerdata component and makes sure you aren't colliding with yourself
                 if (CollisionPlayerData == null || CollisionPlayerData == this)
                 {
+                    //skips to the next collider
                     continue;
                 }
 
                 if (attacked)
                 {
-                    playersHit.Add(new HitPlayers());
-                    playersHit[0].hitPlayerData = new PlayerData();
-                    playersHit[0].hitPlayerData = CollisionPlayerData;
-                    playersHit[0].HitPlayersRB = CollisionRigidBody;
+                    //adds a new HitPlayers class and hands over the data
+                    playersHit.Add(new HitPlayers(CollisionPlayerData, CollisionRigidBody));
                     HitSomeone = true;
                     //making sure you acually hit someone, and making sure you didn't hit yourself
                     if (CollisionPlayerData != null && CollisionPlayerData != this)
@@ -196,8 +203,8 @@ public class PlayerData : MonoBehaviour
                         //hit their front during riposte
                         if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
                         {
-                            CollisionPlayerData.gotParriedTimer = 2.0f;
-                            CollisionPlayerData.isParried = false;
+                            //reset their parry timer
+                            CollisionPlayerData.gotParriedTimer = 0.2f;
                             animator.SetTrigger("Riposte");
                             playersHit[0].Riposte = true;
                             playClip(ClipSelector.riposte);
@@ -363,6 +370,10 @@ public class PlayerData : MonoBehaviour
     public bool getKnockedBack()
     {
         return knockedback;
+    }
+    public void setKnockedBack(bool value)
+    {
+        knockedback = value;
     }
     public void SetSounds(AudioSource player,List<AudioClip> sounds)
     {
