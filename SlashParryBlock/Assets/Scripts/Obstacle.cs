@@ -14,7 +14,7 @@ public class Obstacle : MonoBehaviour
     }
 
     public int damage;
-    public float Knockback;
+    public float Knockback, Timer;
     public Direction direction;
 
     private void OnCollisionEnter(Collision collision)
@@ -26,7 +26,8 @@ public class Obstacle : MonoBehaviour
             CollisionRigidBody.velocity = new Vector3(0, 0, 0);
             //double damage if you hit their back
             collision.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
-            collision.gameObject.GetComponent<PlayerData>().setKnockedBack(true);
+
+            collision.gameObject.GetComponent<PlayerData>().setKnockedBack(true,Timer);
 
             switch ((int)direction)
             {
