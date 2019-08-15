@@ -96,6 +96,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     {
                         playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
                         playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                        Debug.Log("running normal");
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
                     else if (players[i].blocking)
@@ -106,14 +107,25 @@ public class CharacterMovmentScript : MonoBehaviour
                         {
                             playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
                         }
+                        Debug.Log("running block");
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
+                    }
+                    else
+                    {
+                        if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) == 0 || Input.GetAxis("VerticalP" + (i + 1)) == 0))
+                        {
+                            playersAni[i].SetInteger("Anim", 0);
+                        }
                     }
 
                     //lowers your speed to your max speed
                     if (playersRB[i].velocity.magnitude > maxSpeed)
                     {
-                        playersRB[i].velocity = playersRB[i].velocity.normalized * maxSpeed;
+                        Vector3 VelNorm = playersRB[i].velocity.normalized;
+
+                        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
                     }
+
                 }
                 else
                 {

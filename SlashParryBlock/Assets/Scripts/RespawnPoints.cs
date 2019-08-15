@@ -15,7 +15,7 @@ public class RespawnPoints : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            if ((players[i].gameObject.transform.position - transform.position).magnitude < 3.0f)
+            if ((players[i].gameObject.transform.position - transform.position).magnitude < 1.0f)
             {
                 Debug.Log("false");
                 return false;
