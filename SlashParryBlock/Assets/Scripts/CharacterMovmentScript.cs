@@ -34,7 +34,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     public Sprite emptyHeart, halfHeart, fullHeart;
 
-    public List<AudioSource> soundPlayers = new List<AudioSource>();
+    private List<AudioSource> soundPlayers = new List<AudioSource>();
     private List<Rigidbody> playersRB = new List<Rigidbody>();
     private List<Animator> playersAni = new List<Animator>();
     void Start()
@@ -79,6 +79,7 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < playersRB.Count; i++)
         {
+            //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
                 //if (i == 1)
@@ -90,29 +91,23 @@ public class CharacterMovmentScript : MonoBehaviour
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 || 
                     Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
                 {
+                    //left stick for rotating if not blocking
                     if (!players[i].blocking)
                     {
                         playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
                         playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
-
                     }
                     else
                     {
                         playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
-                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                        //only rotate if you have a value to rotate to
+                        if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                        {
+                            playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                        }
                     }
 
-                    //if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
-                    //{
-                    //    playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), rotSpeed);
-
-                    //}
-                    //else
-                    //{
-                    //    playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
-                    //}
-
-
+                    //lowers your speed to your max speed
                     if (playersRB[i].velocity.magnitude > maxSpeed)
                     {
                         playersRB[i].velocity = playersRB[i].velocity.normalized * maxSpeed;
@@ -121,15 +116,11 @@ public class CharacterMovmentScript : MonoBehaviour
                 }
                 else
                 {
+                    //play Idle animation
                     playersAni[i].SetInteger("Anim", 0);
                 }
 
-                //if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
-                //{
-                //    playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), rotSpeed);
-                //}
-
-                if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getParried())
+                if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
                 {
                     players[i].blocking = true;
                     playersAni[i].SetInteger("Anim", (int)AnimSelector.Block);
@@ -137,46 +128,39 @@ public class CharacterMovmentScript : MonoBehaviour
                 else
                 {
                     players[i].blocking = false;
-                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked() && !players[i].getParried())
+                    //you can't attack if you just did
+                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
                     {
                         players[i].Attack();
                     }
-                    else
+                    else if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getAttacked())
                     {
-                        if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getParried())
-                        {
-                            playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
-                            players[i].Parry();
-                        }
-
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
+                        players[i].Parry();
                     }
                 }
             }
-
+            // caching the health values
             float playerHealth = players[i].getHealth();
             float fullHeartAmount = players[i].getOriginalHealth() / 5;
-
             for (int j = 0; j < playerHearts[i].hearts.Count; j++)
             {
+                //check if you can fill a full heart and take it away from the amount you have
                 if (playerHealth - fullHeartAmount >= 0)
                 {
                     playerHearts[i].hearts[j].sprite = fullHeart;
                     playerHealth -= fullHeartAmount;
-                }
+                }//check if you can fill half a heart
                 else if (playerHealth - (fullHeartAmount / 2) >= 0)
                 {
                     playerHearts[i].hearts[j].sprite = halfHeart;
                     playerHealth = 0;
-                }
+                }//otherwise you have no heart
                 else
                 {
                     playerHearts[i].hearts[j].sprite = emptyHeart;
                 }
             }
-
-            //updating the ui on game loop
-            //healthText[i].text = players[i].getHealth().ToString();
-            //scoreText[i].text = players[i].score.ToString();
         }
     }
 }
