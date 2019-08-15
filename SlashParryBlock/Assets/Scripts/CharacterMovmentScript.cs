@@ -92,12 +92,13 @@ public class CharacterMovmentScript : MonoBehaviour
                     Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
                 {
                     //left stick for rotating if not blocking
-                    if (!players[i].blocking)
+                    if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0))
                     {
                         playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
                         playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
-                    else
+                    else if (players[i].blocking)
                     {
                         playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
                         //only rotate if you have a value to rotate to
@@ -105,14 +106,16 @@ public class CharacterMovmentScript : MonoBehaviour
                         {
                             playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
                         }
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
 
                     //lowers your speed to your max speed
                     if (playersRB[i].velocity.magnitude > maxSpeed)
                     {
-                        playersRB[i].velocity = playersRB[i].velocity.normalized * maxSpeed;
+                        Vector3 VelNorm = playersRB[i].velocity.normalized;
+
+                        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
                     }
-                    playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                 }
                 else
                 {
