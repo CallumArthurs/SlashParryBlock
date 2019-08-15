@@ -25,9 +25,11 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints = new List<RespawnPoints>();
 
+    public Animation AttackAnim;
+
     //original health is their spawned health 
-    private int originalHealth, health;
-    private int damage, backstabDamage, RiposteDamage;
+    private int originalHealth, health,damage, backstabDamage, RiposteDamage;
+    public int kills = 0,Deaths = 0,successfulParries = 0,damageDealt = 0,damageTaken = 0,killStreak = 0, killstreakTemp = 0;
     private float knockback;
     private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
@@ -36,6 +38,7 @@ public class PlayerData : MonoBehaviour
     private float gotParriedTimer = 2.0f;
     private float KnockbackTimer = 0.25f;
     private bool attacked = false, parried = false, isParried = false, knockedback = false;
+    private PlayerData playerLastHit;
     private List<AudioClip> PlayerSounds = new List<AudioClip>();
     private AudioSource audioPlayer;
 
@@ -47,7 +50,7 @@ public class PlayerData : MonoBehaviour
     {
         //intialize the random num gen
         Random.InitState((int)Time.realtimeSinceStartup);
-
+        health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
     }
 
@@ -56,6 +59,18 @@ public class PlayerData : MonoBehaviour
         //dead
         if (health <= 0)
         {
+            health = originalHealth;
+            if (killstreakTemp > killStreak)
+            {
+                killStreak = killstreakTemp;
+            }
+            killstreakTemp = 0;
+            if (playerLastHit != null)
+            {
+                playerLastHit.kills++;
+                playerLastHit.killstreakTemp++;
+                playerLastHit = null;
+            }
             Respawn();
         }
         //check if you fell out of the map
@@ -92,14 +107,16 @@ public class PlayerData : MonoBehaviour
                         {
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                             playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                            playersHit[i].hitPlayerData.TakeDamage(damage);
+                            playersHit[i].hitPlayerData.TakeDamage(damage,this);
+                            damageDealt += damage;
                             playersHit[i].hitPlayerData.knockedback = true;
                         }
                         else if (playersHit[i].BackStab)
                         {
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                             playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                            playersHit[i].hitPlayerData.TakeDamage(backstabDamage);
+                            playersHit[i].hitPlayerData.TakeDamage(backstabDamage,this);
+                            damageDealt += backstabDamage;
                             playersHit[i].hitPlayerData.knockedback = true;
 
                         }
@@ -107,7 +124,8 @@ public class PlayerData : MonoBehaviour
                         {
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                             playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                            playersHit[i].hitPlayerData.TakeDamage(RiposteDamage);
+                            playersHit[i].hitPlayerData.TakeDamage(RiposteDamage,this);
+                            damageDealt += RiposteDamage;
                             playersHit[i].hitPlayerData.knockedback = true;
                         }
                     }
@@ -211,6 +229,7 @@ public class PlayerData : MonoBehaviour
                         }
                         else if (CollisionPlayerData.blocking)
                         {
+
                             animator.SetTrigger("Attack");
 
                             //dot product confirms which direction you hit the other player from
@@ -254,12 +273,6 @@ public class PlayerData : MonoBehaviour
                                 playClip(ClipSelector.attackHit);
                             }
                         }
-                    }
-                    
-                    //check if you killed them and add points if so
-                    if (CollisionPlayerData.health <= 0)
-                    {
-                        score++;
                     }
                 }
             }
@@ -308,6 +321,7 @@ public class PlayerData : MonoBehaviour
                         CollisionPlayerData.attacked = false;
                         CollisionPlayerData.Parried();
                         parried = false;
+                        successfulParries++;
                         ParryTimer = 0.5f;
                         playClip(ClipSelector.parry);
                     }
@@ -325,7 +339,14 @@ public class PlayerData : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        damageTaken += damage;
         health -= damage;
+    }
+    public void TakeDamage(int damage, PlayerData player)
+    {
+        damageTaken += damage;
+        health -= damage;
+        playerLastHit = player;
     }
 
     public void setHealth(int value)
@@ -375,6 +396,12 @@ public class PlayerData : MonoBehaviour
     {
         knockedback = value;
     }
+    public void setKnockedBack(bool value, float Timer)
+    {
+        knockedback = value;
+        KnockbackTimer = Timer;
+    }
+
     public void SetSounds(AudioSource player,List<AudioClip> sounds)
     {
         audioPlayer = player;
@@ -389,9 +416,8 @@ public class PlayerData : MonoBehaviour
     }
     private void Respawn()
     {
+        Deaths++;
         playClip(ClipSelector.death);
-        //reset health
-        health = originalHealth;
         //sleep the rigidbody because velocity doesn't update properly
         GetComponent<Rigidbody>().Sleep();
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
@@ -405,6 +431,14 @@ public class PlayerData : MonoBehaviour
                 GoodSpawns.Add(spawnpoints[i].transform);
             }
         }
-        GetComponent<Rigidbody>().position = GoodSpawns[Random.Range(0, GoodSpawns.Count)].position;
+
+        if (GoodSpawns.Count > 0)
+        {
+            GetComponent<Rigidbody>().position = GoodSpawns[Random.Range(0, GoodSpawns.Count)].position;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().position = new Vector3(0, 0, 0);
+        }
     }
 }
