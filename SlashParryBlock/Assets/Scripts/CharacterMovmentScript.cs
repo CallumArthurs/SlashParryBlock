@@ -95,7 +95,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     }
                     else if (players[i].blocking)
                     {
-                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
+                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass), 0, -Input.GetAxis("VerticalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass)), ForceMode.Impulse);
                         //only rotate if you have a value to rotate to
                         if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
                         {
@@ -128,21 +128,27 @@ public class CharacterMovmentScript : MonoBehaviour
 
                 if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
                 {
+                    playersRB[i].mass = 50.0f;
                     players[i].blocking = true;
                     playersAni[i].SetInteger("Anim", (int)AnimSelector.Block);
                 }
                 else
                 {
+                    playersRB[i].mass = 1.0f;
                     players[i].blocking = false;
                     //you can't attack if you just did
                     if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
                     {
-                        players[i].Attack();
+                        players[i].Attack(1);
                     }
                     else if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getAttacked())
                     {
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
                         players[i].Parry();
+                    }
+                    else if (Input.GetAxis("R_TriggerP" + (i + 1)) > 0 && !players[i].getAttacked())
+                    {
+                        players[i].Attack(2);
                     }
                 }
             }
