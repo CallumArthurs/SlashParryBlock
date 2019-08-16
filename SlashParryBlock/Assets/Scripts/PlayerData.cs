@@ -303,7 +303,7 @@ public class PlayerData : MonoBehaviour
             }
         }
 
-        AttackAnim = animator.GetCurrentAnimatorClipInfo(0);
+        AttackAnim = animator.GetCurrentAnimatorClipInfo(1);
 
         AttackTimer = AttackAnim[0].clip.length;
         AttackOriginalTime = AttackTimer;
