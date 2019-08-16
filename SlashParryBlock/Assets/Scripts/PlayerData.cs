@@ -25,7 +25,7 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints = new List<RespawnPoints>();
 
-    public Animation AttackAnim;
+    public Transform Spine;
 
     //original health is their spawned health 
     private int originalHealth, health,damage, backstabDamage, RiposteDamage;
@@ -33,7 +33,7 @@ public class PlayerData : MonoBehaviour
     private float knockback;
     private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
-    private float AttackTimer = 0.6f;
+    private float AttackTimer, AttackOriginalTime;
     private float ParryTimer = 0.6f;
     private float gotParriedTimer = 2.0f;
     private float KnockbackTimer = 0.25f;
@@ -43,6 +43,8 @@ public class PlayerData : MonoBehaviour
     private AudioSource audioPlayer;
 
     private List<HitPlayers> playersHit = new List<HitPlayers>();
+    private AnimatorClipInfo[] AttackAnim;
+    private float radius = 1;
 
     public GameObject particles;
     public GameObject AttackParticles;
@@ -52,6 +54,7 @@ public class PlayerData : MonoBehaviour
         Random.InitState((int)Time.realtimeSinceStartup);
         health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
+
     }
 
     void Update()
@@ -83,7 +86,6 @@ public class PlayerData : MonoBehaviour
         {
             animator.SetInteger("Anim", 0);
         }
-
         //runs the attack timer and the damage output
         if (attacked)
         {
@@ -94,15 +96,17 @@ public class PlayerData : MonoBehaviour
                 animator.ResetTrigger("Attack");
                 //turn off attack and reset timer
                 attacked = false;
-                AttackTimer = 0.6f;
+                AttackTimer = AttackOriginalTime;
             }//this is the end parry opportunity
-            else if (AttackTimer <= 0.4f)
+            else if (AttackTimer <= AttackOriginalTime - 0.2f)
             {
                 //this stops you hitting people if you've been parried
                 if (!isParried)
                 {
                     for (int i = 0; i < playersHit.Count; i++)
                     {
+                        Instantiate(AttackParticles, playersHit[i].ParticlePos, Quaternion.Euler(playersHit[i].hitPlayerData.gameObject.transform.position - transform.position));
+
                         if (playersHit[i].Normal)
                         {
                             playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
@@ -186,7 +190,6 @@ public class PlayerData : MonoBehaviour
             return;
         }
 
-        float radius = 1;
 
         Collider[] hits = Physics.OverlapSphere(transform.position + (transform.forward * radius), radius);
 
@@ -213,7 +216,7 @@ public class PlayerData : MonoBehaviour
                 if (attacked)
                 {
                     //adds a new HitPlayers class and hands over the data
-                    playersHit.Add(new HitPlayers(CollisionPlayerData, CollisionRigidBody));
+                    playersHit.Add(new HitPlayers(CollisionPlayerData, CollisionRigidBody, other.ClosestPoint(other.transform.position)));
                     HitSomeone = true;
                     //making sure you acually hit someone, and making sure you didn't hit yourself
                     if (CollisionPlayerData != null && CollisionPlayerData != this)
@@ -254,7 +257,6 @@ public class PlayerData : MonoBehaviour
                                 CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * (knockback * 0.5f), ForceMode.Impulse);
                                 playClip(ClipSelector.block);
                             }
-                            Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                         }
                         else // no shield
                         {
@@ -263,13 +265,11 @@ public class PlayerData : MonoBehaviour
                             if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
                             {
                                 playersHit[0].BackStab = true;
-                                Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                                 playClip(ClipSelector.backstab);
                             }
                             else // hit their side or front
                             {
                                 playersHit[0].Normal = true;
-                                Instantiate(AttackParticles, other.ClosestPoint(other.transform.position), Quaternion.Euler(other.transform.position - transform.position));
                                 playClip(ClipSelector.attackHit);
                             }
                         }
@@ -283,6 +283,12 @@ public class PlayerData : MonoBehaviour
             playClip(ClipSelector.attackMiss);
             animator.SetTrigger("Attack");
         }
+
+        AttackAnim = animator.GetCurrentAnimatorClipInfo(0);
+
+        AttackTimer = AttackAnim[0].clip.length;
+        AttackOriginalTime = AttackTimer;
+
     }
 
     public void Parry()
@@ -440,5 +446,10 @@ public class PlayerData : MonoBehaviour
         {
             GetComponent<Rigidbody>().position = new Vector3(0, 0, 0);
         }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position + (transform.forward * radius), radius);
     }
 }
