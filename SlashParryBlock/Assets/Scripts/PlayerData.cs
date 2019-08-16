@@ -123,7 +123,6 @@ public class PlayerData : MonoBehaviour
                             playersHit[i].hitPlayerData.TakeDamage(backstabDamage,this);
                             damageDealt += backstabDamage;
                             playersHit[i].hitPlayerData.knockedback = true;
-
                         }
                         else if (playersHit[i].Riposte)
                         {
@@ -303,11 +302,13 @@ public class PlayerData : MonoBehaviour
             }
         }
 
-        AttackAnim = animator.GetCurrentAnimatorClipInfo(1);
+        if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Default"))
+        {
+            AttackAnim = animator.GetCurrentAnimatorClipInfo(1);
 
-        AttackTimer = AttackAnim[0].clip.length;
-        AttackOriginalTime = AttackTimer;
-
+            AttackTimer = AttackAnim[0].clip.length;
+            AttackOriginalTime = AttackTimer;
+        }
     }
 
     public void Parry()

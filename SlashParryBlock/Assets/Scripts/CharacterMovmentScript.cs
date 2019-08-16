@@ -29,8 +29,6 @@ public class CharacterMovmentScript : MonoBehaviour
     public float blockRotSpeedMultiplier;
     public PlayerData[] players;
     public List<PlayerHeartsContainer> playerHearts;
-    public Text[] healthText;
-    public Text[] scoreText;
 
     public Sprite emptyHeart, halfHeart, fullHeart;
 
@@ -73,7 +71,6 @@ public class CharacterMovmentScript : MonoBehaviour
             playersAni.Add(players[i].gameObject.GetComponentInChildren<Animator>());
         }
     }
-
     void Update()
     {
         //iterate through all the players
