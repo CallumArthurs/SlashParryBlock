@@ -94,6 +94,7 @@ public class PlayerData : MonoBehaviour
             if (AttackTimer <= 0.0f)
             {
                 animator.ResetTrigger("Attack");
+                animator.ResetTrigger("HoriAttack");
                 //turn off attack and reset timer
                 attacked = false;
                 AttackTimer = AttackOriginalTime;
@@ -182,14 +183,13 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public void Attack(int AttackNum)
     {
         //makes sure you can't reset the timer
         if (attacked || parried)
         {
             return;
         }
-
 
         Collider[] hits = Physics.OverlapSphere(transform.position + (transform.forward * radius), radius);
 
@@ -232,7 +232,14 @@ public class PlayerData : MonoBehaviour
                         }
                         else if (CollisionPlayerData.blocking)
                         {
-                            animator.SetTrigger("Attack");
+                            if (AttackNum == 1)
+                            {
+                                animator.SetTrigger("Attack");
+                            }
+                            else
+                            {
+                                animator.SetTrigger("HoriAttack");
+                            }
                             //dot product confirms which direction you hit the other player from
                             //1 = back
                             //-1 = front
@@ -252,13 +259,20 @@ public class PlayerData : MonoBehaviour
                             else //hit their shield
                             {
                                 CollisionRigidBody.velocity = new Vector3(0, 0, 0);
-                                CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * (knockback * 0.5f), ForceMode.Impulse);
+                                CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * ((knockback * 0.5f) * CollisionRigidBody.mass), ForceMode.Impulse);
                                 playClip(ClipSelector.block);
                             }
                         }
                         else // no shield
                         {
-                            animator.SetTrigger("Attack");
+                            if (AttackNum == 1)
+                            {
+                                animator.SetTrigger("Attack");
+                            }
+                            else
+                            {
+                                animator.SetTrigger("HoriAttack");
+                            }
 
                             if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
                             {
@@ -279,10 +293,17 @@ public class PlayerData : MonoBehaviour
         if (!HitSomeone)
         {
             playClip(ClipSelector.attackMiss);
-            animator.SetTrigger("Attack");
+            if (AttackNum == 1)
+            {
+                animator.SetTrigger("Attack");
+            }
+            else
+            {
+                animator.SetTrigger("HoriAttack");
+            }
         }
 
-        AttackAnim = animator.GetCurrentAnimatorClipInfo(0);
+        AttackAnim = animator.GetCurrentAnimatorClipInfo(1);
 
         AttackTimer = AttackAnim[0].clip.length;
         AttackOriginalTime = AttackTimer;
