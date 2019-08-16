@@ -82,11 +82,6 @@ public class CharacterMovmentScript : MonoBehaviour
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
-                //if (i == 1)
-                //{
-                //    players[i].Attack();
-                //}
-
                 //for player1 this will evaluate to "HorizontalP1"
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 || 
                     Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
@@ -96,7 +91,6 @@ public class CharacterMovmentScript : MonoBehaviour
                     {
                         playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
                         playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
-                        Debug.Log("running normal");
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
                     else if (players[i].blocking)
@@ -107,7 +101,6 @@ public class CharacterMovmentScript : MonoBehaviour
                         {
                             playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
                         }
-                        Debug.Log("running block");
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
                     else
