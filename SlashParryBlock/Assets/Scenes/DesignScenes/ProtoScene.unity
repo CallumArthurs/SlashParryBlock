@@ -22091,6 +22091,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &1269210943 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 791592966102004925, guid: 299b24f75e828d04694ba725d6ca4619,
+    type: 3}
+  m_PrefabInstance: {fileID: 1909498443221032150}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1270703755
 GameObject:
   m_ObjectHideFlags: 0
@@ -37103,12 +37109,24 @@ PrefabInstance:
       propertyPath: AttackAnim
       value: 
       objectReference: {fileID: 7400000, guid: a5124000638fa2b459dc94102c59e9f0, type: 3}
+    - target: {fileID: 7729246595114027228, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: attackAnim
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7729246595114027228, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: Spine
+      value: 
+      objectReference: {fileID: 1269210943}
     - target: {fileID: 8211183973308581484, guid: 299b24f75e828d04694ba725d6ca4619,
         type: 3}
       propertyPath: AttackAnim
       value: 
       objectReference: {fileID: 7400000, guid: a5124000638fa2b459dc94102c59e9f0, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 533474493857292954, guid: 299b24f75e828d04694ba725d6ca4619, type: 3}
+    - {fileID: 8058147197611180281, guid: 299b24f75e828d04694ba725d6ca4619, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 299b24f75e828d04694ba725d6ca4619, type: 3}
 --- !u!1001 &2130204389385402552
 PrefabInstance:

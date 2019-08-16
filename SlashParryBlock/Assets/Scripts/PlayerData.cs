@@ -44,7 +44,7 @@ public class PlayerData : MonoBehaviour
 
     private List<HitPlayers> playersHit = new List<HitPlayers>();
     private AnimatorClipInfo[] AttackAnim;
-    private float radius = 1;
+    private float radius = 0.6f;
 
     public GameObject particles;
     public GameObject AttackParticles;
@@ -232,9 +232,7 @@ public class PlayerData : MonoBehaviour
                         }
                         else if (CollisionPlayerData.blocking)
                         {
-
                             animator.SetTrigger("Attack");
-
                             //dot product confirms which direction you hit the other player from
                             //1 = back
                             //-1 = front
