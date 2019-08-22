@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneSelector : MonoBehaviour
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SpawnManagerScriptableObject", order = 1)]
+public class SceneSelector : ScriptableObject
 {
     public enum SceneSelecter
     {
@@ -14,8 +15,17 @@ public class SceneSelector : MonoBehaviour
         Game
     }
 
-    public static void SceneLoader(SceneSelecter scene)
+    public void SceneLoader(SceneSelecter scene)
     {
         SceneManager.LoadScene((int)scene);
+    }
+    public void SceneLoader(int scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

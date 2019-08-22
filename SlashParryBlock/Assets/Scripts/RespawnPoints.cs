@@ -5,9 +5,13 @@ using UnityEngine;
 public class RespawnPoints : MonoBehaviour
 {
     private PlayerData[] players;
-    public CharacterMovmentScript CharacterMovmentScript;
-    void Start()
+    public CharacterMovmentScript CharacterMovmentScript = new CharacterMovmentScript();
+    public bool Validated = true;
+
+    public void Setup(CharacterMovmentScript CMS)
     {
+        CharacterMovmentScript = CMS;
+        Validated = true;
         players = CharacterMovmentScript.players;
     }
 
@@ -15,13 +19,17 @@ public class RespawnPoints : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            if ((players[i].gameObject.transform.position - transform.position).magnitude < 1.0f)
+            if ((players[i].gameObject.transform.position - transform.position).magnitude < 3.0f)
             {
-                Debug.Log("false");
                 return false;
             }
         }
-        Debug.Log("true");
         return true;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + (transform.forward * 1), 1);
     }
 }

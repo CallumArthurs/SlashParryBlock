@@ -31,13 +31,14 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<PlayerHeartsContainer> playerHearts;
 
     public Sprite emptyHeart, halfHeart, fullHeart;
-
+    private List<RespawnPoints> SpawnPoints = new List<RespawnPoints>();
     private List<AudioSource> soundPlayers = new List<AudioSource>();
     private List<Rigidbody> playersRB = new List<Rigidbody>();
     private List<Animator> playersAni = new List<Animator>();
     void Start()
     {
         AudioSource[] tmpSources = GetComponentsInChildren<AudioSource>();
+        Random.InitState((int)Time.realtimeSinceStartup);
 
         for (int i = 0; i < tmpSources.Length; i++)
         {
@@ -54,14 +55,19 @@ public class CharacterMovmentScript : MonoBehaviour
         }
 
         //getting the spawnpoint parent to find all the spawnpoints
-        RespawnPoints[] tempobj = GameObject.FindGameObjectWithTag("SpawnPoints").GetComponentsInChildren<RespawnPoints>();
+        Transform[] tempTransform = GameObject.FindGameObjectWithTag("SpawnPoints").GetComponentsInChildren<Transform>();
+        for (int i = 1; i < tempTransform.Length; i++)
+        {
+            SpawnPoints.Add(tempTransform[i].gameObject.AddComponent<RespawnPoints>());
+            SpawnPoints[i - 1].Setup(this);
+        }
 
         //starting at 1 to skip the parent
-        for (int i = 0; i < tempobj.Length; i++)
+        for (int i = 0; i < SpawnPoints.Count; i++)
         {
             for (int k = 0; k < players.Length; k++)
             {
-                players[k].spawnpoints.Add(tempobj[i]);
+                players[k].spawnpoints.Add(SpawnPoints[i]);
             }
         }
         //getting a reference to all the player's rigidbodies
@@ -71,6 +77,7 @@ public class CharacterMovmentScript : MonoBehaviour
             playersAni.Add(players[i].gameObject.GetComponentInChildren<Animator>());
         }
     }
+
     void Update()
     {
         //iterate through all the players
@@ -170,6 +177,36 @@ public class CharacterMovmentScript : MonoBehaviour
                     playerHearts[i].hearts[j].sprite = emptyHeart;
                 }
             }
+        }
+    }
+
+    public Vector3 SpawnPlayer()
+    {
+        List<Transform> GoodSpawns = new List<Transform>();
+
+        for (int i = 0; i < SpawnPoints.Count; i++)
+        {
+            if (SpawnPoints[i].Validated)
+            {
+                if (SpawnPoints[i].spawnCheck())
+                {
+                    GoodSpawns.Add(SpawnPoints[i].transform);
+                }
+            }
+            else
+            {
+                SpawnPoints[i].Validated = true;
+            }
+        }
+        if (GoodSpawns.Count > 0)
+        {
+            int TempRandom = Random.Range(0, GoodSpawns.Count);
+            GoodSpawns[TempRandom].GetComponent<RespawnPoints>().Validated = false;
+            return (GoodSpawns[TempRandom].position);
+        }
+        else
+        {
+            return new Vector3(0, 5.0f, 0);
         }
     }
 }

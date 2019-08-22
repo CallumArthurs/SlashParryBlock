@@ -41,143 +41,151 @@ public class PlayerData : MonoBehaviour
     private PlayerData playerLastHit;
     private List<AudioClip> PlayerSounds = new List<AudioClip>();
     private AudioSource audioPlayer;
-
+    private Vector3 OriginalPos;
     private List<HitPlayers> playersHit = new List<HitPlayers>();
     private AnimatorClipInfo[] AttackAnim;
     private float radius = 0.6f;
+    private bool NoStock = false;
+    private CharacterMovmentScript charMovScript;
 
     public GameObject particles;
     public GameObject AttackParticles;
     void Start()
     {
         //intialize the random num gen
-        Random.InitState((int)Time.realtimeSinceStartup);
         health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
-
+        OriginalPos = transform.position;
+        charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
     }
 
     void Update()
     {
-        //dead
-        if (health <= 0)
+        if (!NoStock)
         {
-            health = originalHealth;
-            if (killstreakTemp > killStreak)
+            //dead
+            if (health <= 0)
             {
-                killStreak = killstreakTemp;
-            }
-            killstreakTemp = 0;
-            if (playerLastHit != null)
-            {
-                playerLastHit.kills++;
-                playerLastHit.killstreakTemp++;
-                playerLastHit = null;
-            }
-            Respawn();
-        }
-        //check if you fell out of the map
-        if (transform.position.y <= -5.0f)
-        {
-            health = 0;
-        }
-        //if not blocking reset the animator
-        if (animator.GetInteger("Anim") == 2 && !blocking)
-        {
-            animator.SetInteger("Anim", 0);
-        }
-        //runs the attack timer and the damage output
-        if (attacked)
-        {
-            //run the timer for the attack
-            AttackTimer -= Time.deltaTime;
-            if (AttackTimer <= 0.0f)
-            {
-                animator.ResetTrigger("Attack");
-                animator.ResetTrigger("HoriAttack");
-                //turn off attack and reset timer
-                attacked = false;
-                AttackTimer = AttackOriginalTime;
-            }//this is the end parry opportunity
-            else if (AttackTimer <= AttackOriginalTime - 0.2f)
-            {
-                //this stops you hitting people if you've been parried
-                if (!isParried)
+                health = originalHealth;
+                if (killstreakTemp > killStreak)
                 {
-                    for (int i = 0; i < playersHit.Count; i++)
-                    {
-                        Instantiate(AttackParticles, playersHit[i].ParticlePos, Quaternion.Euler(playersHit[i].hitPlayerData.gameObject.transform.position - transform.position));
+                    killStreak = killstreakTemp;
+                }
+                killstreakTemp = 0;
+                if (playerLastHit != null)
+                {
+                    playerLastHit.kills++;
+                    playerLastHit.killstreakTemp++;
+                    playerLastHit = null;
+                }
+                Respawn();
+            }//check if you fell out of the map
+            else if (transform.position.y <= -5.0f)
+            {
+                health = 0;
+            }
 
-                        if (playersHit[i].Normal)
+
+
+            //if not blocking reset the animator
+            if (animator.GetInteger("Anim") == 2 && !blocking)
+            {
+                animator.SetInteger("Anim", 0);
+            }
+
+            //runs the attack timer and the damage output
+            if (attacked)
+            {
+                //run the timer for the attack
+                AttackTimer -= Time.deltaTime;
+                if (AttackTimer <= 0.0f)
+                {
+                    animator.ResetTrigger("Attack");
+                    animator.ResetTrigger("HoriAttack");
+                    //turn off attack and reset timer
+                    attacked = false;
+                    AttackTimer = AttackOriginalTime;
+                }//this is the end parry opportunity
+                else if (AttackTimer <= AttackOriginalTime - 0.2f)
+                {
+                    //this stops you hitting people if you've been parried
+                    if (!isParried)
+                    {
+                        for (int i = 0; i < playersHit.Count; i++)
                         {
-                            playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                            playersHit[i].hitPlayerData.TakeDamage(damage,this);
-                            damageDealt += damage;
-                            playersHit[i].hitPlayerData.knockedback = true;
+                            Instantiate(AttackParticles, playersHit[i].ParticlePos, Quaternion.Euler(playersHit[i].hitPlayerData.gameObject.transform.position - transform.position));
+
+                            if (playersHit[i].Normal)
+                            {
+                                playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
+                                playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
+                                playersHit[i].hitPlayerData.TakeDamage(damage, this);
+                                damageDealt += damage;
+                                playersHit[i].hitPlayerData.knockedback = true;
+                            }
+                            else if (playersHit[i].BackStab)
+                            {
+                                playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
+                                playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
+                                playersHit[i].hitPlayerData.TakeDamage(backstabDamage, this);
+                                damageDealt += backstabDamage;
+                                playersHit[i].hitPlayerData.knockedback = true;
+                            }
+                            else if (playersHit[i].Riposte)
+                            {
+                                playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
+                                playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
+                                playersHit[i].hitPlayerData.TakeDamage(RiposteDamage, this);
+                                damageDealt += RiposteDamage;
+                                playersHit[i].hitPlayerData.knockedback = true;
+                            }
                         }
-                        else if (playersHit[i].BackStab)
-                        {
-                            playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                            playersHit[i].hitPlayerData.TakeDamage(backstabDamage,this);
-                            damageDealt += backstabDamage;
-                            playersHit[i].hitPlayerData.knockedback = true;
-                        }
-                        else if (playersHit[i].Riposte)
-                        {
-                            playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                            playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                            playersHit[i].hitPlayerData.TakeDamage(RiposteDamage,this);
-                            damageDealt += RiposteDamage;
-                            playersHit[i].hitPlayerData.knockedback = true;
-                        }
+                        //clear list so you don't hit them again
+                        playersHit.Clear();
                     }
-                    //clear list so you don't hit them again
-                    playersHit.Clear();
                 }
             }
-        }
 
-        //makes sure you can't parry multiple times during the animation
-        if (parried)
-        {
-            //run the timer for the attack
-            ParryTimer -= Time.deltaTime;
-            if (ParryTimer <= 0)
+            //makes sure you can't parry multiple times during the animation
+            if (parried)
             {
-                //turn off attack and reset timer
-                parried = false;
-                ParryTimer = 0.6f;
+                //run the timer for the attack
+                ParryTimer -= Time.deltaTime;
+                if (ParryTimer <= 0)
+                {
+                    //turn off attack and reset timer
+                    parried = false;
+                    ParryTimer = 0.6f;
+                }
             }
-        }
 
-        //stops you being stunned after being parried and if you're not parried turns off your dizzy spinner
-        if (isParried)
-        {
-            //run the timer for the attack
-            gotParriedTimer -= Time.deltaTime;
-            DizzySpinner.transform.Rotate(Vector3.up, 1.0f, Space.World);
-            if (gotParriedTimer <= 0)
+            //stops you being stunned after being parried and if you're not parried turns off your dizzy spinner
+            if (isParried)
             {
-                isParried = false;
-                gotParriedTimer = 2.0f;
+                //run the timer for the attack
+                gotParriedTimer -= Time.deltaTime;
+                DizzySpinner.transform.Rotate(Vector3.up, 1.0f, Space.World);
+                if (gotParriedTimer <= 0)
+                {
+                    isParried = false;
+                    gotParriedTimer = 2.0f;
+                }
             }
-        }
-        else
-        {
-            DizzySpinner.SetActive(false);
-        }
-
-        //essentially the same as the parry stun except no spinner and different timer
-        if (knockedback)
-        {
-            //run the timer for the attack
-            KnockbackTimer -= Time.deltaTime;
-            if (KnockbackTimer <= 0)
+            else
             {
-                knockedback = false;
-                KnockbackTimer = 0.25f;
+                DizzySpinner.SetActive(false);
+            }
+
+            //essentially the same as the parry stun except no spinner and different timer
+            if (knockedback)
+            {
+                //run the timer for the attack
+                KnockbackTimer -= Time.deltaTime;
+                if (KnockbackTimer <= 0)
+                {
+                    knockedback = false;
+                    KnockbackTimer = 0.25f;
+                }
             }
         }
     }
@@ -240,8 +248,7 @@ public class PlayerData : MonoBehaviour
                                 animator.SetTrigger("HoriAttack");
                             }
                             //dot product confirms which direction you hit the other player from
-                            //1 = back
-                            //-1 = front
+                            //1 = back, -1 = front
                             if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.0f)
                             {
                                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back with shield up
@@ -434,7 +441,6 @@ public class PlayerData : MonoBehaviour
         PlayerSounds = sounds;
     }
 
-
     private void playClip(ClipSelector clip)
     {
         audioPlayer.clip = PlayerSounds[(int)clip];
@@ -442,30 +448,35 @@ public class PlayerData : MonoBehaviour
     }
     private void Respawn()
     {
+        attacked = false;
+        parried = false;
+        isParried = false;
+        knockedback = false;
         Deaths++;
         playClip(ClipSelector.death);
         //sleep the rigidbody because velocity doesn't update properly
         GetComponent<Rigidbody>().Sleep();
-        GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        GetComponent<Rigidbody>().velocity  = new Vector3(0, 0, 0);
 
-        List<Transform> GoodSpawns = new List<Transform>();
-
-        for (int i = 0; i < spawnpoints.Count; i++)
-        {
-            if (spawnpoints[i].spawnCheck())
-            {
-                GoodSpawns.Add(spawnpoints[i].transform);
-            }
-        }
-
-        if (GoodSpawns.Count > 0)
-        {
-            GetComponent<Rigidbody>().position = GoodSpawns[Random.Range(0, GoodSpawns.Count)].position;
-        }
-        else
-        {
-            GetComponent<Rigidbody>().position = new Vector3(0, 0, 0);
-        }
+        GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
+    }
+    public void SetStock(bool Nostock)
+    {
+        NoStock = Nostock;
+        gameObject.SetActive(!NoStock);
+    }
+    public void ResetPlayer()
+    {
+        gameObject.transform.position = OriginalPos;
+        Deaths = 0;
+        kills = 0;
+        killStreak = 0;
+        killstreakTemp = 0;
+        successfulParries = 0;
+        damageDealt = 0;
+        damageTaken = 0;
+        health = originalHealth;
+        SetStock(false);
     }
     private void OnDrawGizmosSelected()
     {
