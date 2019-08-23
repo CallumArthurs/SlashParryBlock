@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitPlayers
+public class HitPlayers : MonoBehaviour
 {
-
     public PlayerData hitPlayerData = new PlayerData();
     public Rigidbody HitPlayersRB = new Rigidbody();
     public Vector3 ParticlePos;
@@ -16,5 +15,4 @@ public class HitPlayers
         HitPlayersRB = playerRB;
         ParticlePos = PartPos;
     }
-    
 }

@@ -148,6 +148,7 @@ public class PlayerData : MonoBehaviour
                             }
                         }
                         //clear list so you don't hit them again
+
                         playersHit.Clear();
                     }
                 }
@@ -234,7 +235,11 @@ public class PlayerData : MonoBehaviour
                 if (attacked)
                 {
                     //adds a new HitPlayers class and hands over the data
-                    playersHit.Add(new HitPlayers(CollisionPlayerData, CollisionRigidBody, other.ClosestPoint(other.transform.position)));
+                    HitPlayers tmpobj = gameObject.AddComponent<HitPlayers>();
+                    tmpobj.hitPlayerData = CollisionPlayerData;
+                    tmpobj.HitPlayersRB = CollisionRigidBody;
+                    tmpobj.ParticlePos = other.ClosestPoint(other.transform.position);
+                    playersHit.Add(tmpobj);
                     HitSomeone = true;
                     //making sure you acually hit someone, and making sure you didn't hit yourself
                     if (CollisionPlayerData != null && CollisionPlayerData != this)
