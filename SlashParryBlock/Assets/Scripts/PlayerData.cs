@@ -26,7 +26,7 @@ public class PlayerData : MonoBehaviour
     public List<RespawnPoints> spawnpoints = new List<RespawnPoints>();
 
     public Transform Spine;
-
+    public bool AttackAxisUsed = false, ParryAxisUsed = false;
     //original health is their spawned health 
     private int originalHealth, health,damage, backstabDamage, RiposteDamage;
     public int kills = 0,Deaths = 0,successfulParries = 0,damageDealt = 0,damageTaken = 0,killStreak = 0, killstreakTemp = 0;

@@ -122,7 +122,6 @@ public class CharacterMovmentScript : MonoBehaviour
 
                         playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
                     }
-
                 }
                 else
                 {
@@ -141,19 +140,32 @@ public class CharacterMovmentScript : MonoBehaviour
                     playersRB[i].mass = 1.0f;
                     players[i].blocking = false;
                     //you can't attack if you just did
-                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
+                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed)
                     {
                         players[i].Attack(1);
+                        players[i].AttackAxisUsed = true;
                     }
-                    else if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getAttacked())
+                    else if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getAttacked() && !players[i].ParryAxisUsed)
                     {
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
                         players[i].Parry();
+                        players[i].ParryAxisUsed = true;
                     }
-                    else if (Input.GetAxis("R_TriggerP" + (i + 1)) > 0 && !players[i].getAttacked())
+                    else if (Input.GetAxis("R_TriggerP" + (i + 1)) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed)
                     {
                         players[i].Attack(2);
+                        players[i].AttackAxisUsed = true;
                     }
+                    
+                    if(Input.GetAxis("R_BumperP" + (i + 1)) == 0)
+                    {
+                        players[i].AttackAxisUsed = false;
+                    }
+                    if (Input.GetAxis("L_TriggerP" + (i + 1)) == 0)
+                    {
+                        players[i].ParryAxisUsed = false;
+                    }
+
                 }
             }
             // caching the health values
