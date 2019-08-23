@@ -32,12 +32,17 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<string> joystickCharInputs;
 
     public Sprite emptyHeart, halfHeart, fullHeart;
-    private List<RespawnPoints> SpawnPoints = new List<RespawnPoints>();
-    private List<AudioSource> soundPlayers = new List<AudioSource>();
-    private List<Rigidbody> playersRB = new List<Rigidbody>();
-    private List<Animator> playersAni = new List<Animator>();
+    private List<RespawnPoints> SpawnPoints;
+    private List<AudioSource> soundPlayers;
+    private List<Rigidbody> playersRB;
+    private List<Animator> playersAni;
     void Start()
     {
+        playersAni = new List<Animator>();
+        playersRB = new List<Rigidbody>();
+        soundPlayers = new List<AudioSource>();
+        SpawnPoints = new List<RespawnPoints>();
+
         AudioSource[] tmpSources = GetComponentsInChildren<AudioSource>();
         Random.InitState((int)Time.realtimeSinceStartup);
 
@@ -87,48 +92,50 @@ public class CharacterMovmentScript : MonoBehaviour
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
+                #region moved to fixedUpdate()
                 //for player1 this will evaluate to "HorizontalP1"
-                if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 || 
-                    Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
-                {
-                    //left stick for rotating if not blocking
-                    if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0))
-                    {
-                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
-                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
-                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
-                    }
-                    else if (players[i].blocking)
-                    {
-                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass), 0, -Input.GetAxis("VerticalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass)), ForceMode.Impulse);
-                        //only rotate if you have a value to rotate to
-                        if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
-                        {
-                            playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
-                        }
-                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
-                    }
-                    else
-                    {
-                        if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) == 0 || Input.GetAxis("VerticalP" + (i + 1)) == 0))
-                        {
-                            playersAni[i].SetInteger("Anim", 0);
-                        }
-                    }
-
-                    //lowers your speed to your max speed
-                    if (playersRB[i].velocity.magnitude > maxSpeed)
-                    {
-                        Vector3 VelNorm = playersRB[i].velocity.normalized;
-
-                        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
-                    }
-                }
-                else
-                {
-                    //play Idle animation
-                    playersAni[i].SetInteger("Anim", 0);
-                }
+                //if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 || 
+                //    Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                //{
+                //    //left stick for rotating if not blocking
+                //    if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0))
+                //    {
+                //        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
+                //        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                //        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
+                //    }
+                //    else if (players[i].blocking)
+                //    {
+                //        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass), 0, -Input.GetAxis("VerticalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass)), ForceMode.Impulse);
+                //        //only rotate if you have a value to rotate to
+                //        if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                //        {
+                //            playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                //        }
+                //        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
+                //    }
+                //    else
+                //    {
+                //        if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) == 0 || Input.GetAxis("VerticalP" + (i + 1)) == 0))
+                //        {
+                //            playersAni[i].SetInteger("Anim", 0);
+                //        }
+                //    }
+                //
+                //    //lowers your speed to your max speed
+                //    if (playersRB[i].velocity.magnitude > maxSpeed)
+                //    {
+                //        Vector3 VelNorm = playersRB[i].velocity.normalized;
+                //
+                //        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
+                //    }
+                //}
+                //else
+                //{
+                //    //play Idle animation
+                //    playersAni[i].SetInteger("Anim", 0);
+                //}
+                #endregion
 
                 if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
                 {
@@ -220,6 +227,58 @@ public class CharacterMovmentScript : MonoBehaviour
         else
         {
             return new Vector3(0, 5.0f, 0);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        for (int i = 0; i < playersRB.Count; i++)
+        {
+            if (!players[i].getIsParried() && !players[i].getKnockedBack())
+            {
+                //for player1 this will evaluate to "HorizontalP1"
+                if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 ||
+                    Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                {
+                    //left stick for rotating if not blocking
+                    if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0))
+                    {
+                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
+                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
+                    }
+                    else if (players[i].blocking)
+                    {
+                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass), 0, -Input.GetAxis("VerticalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass)), ForceMode.Impulse);
+                        //only rotate if you have a value to rotate to
+                        if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                        {
+                            playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                        }
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
+                    }
+                    else
+                    {
+                        if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) == 0 || Input.GetAxis("VerticalP" + (i + 1)) == 0))
+                        {
+                            playersAni[i].SetInteger("Anim", 0);
+                        }
+                    }
+
+                    //lowers your speed to your max speed
+                    if (playersRB[i].velocity.magnitude > maxSpeed)
+                    {
+                        Vector3 VelNorm = playersRB[i].velocity.normalized;
+
+                        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
+                    }
+                }
+                else
+                {
+                    //play Idle animation
+                    playersAni[i].SetInteger("Anim", 0);
+                }
+            }
         }
     }
 }

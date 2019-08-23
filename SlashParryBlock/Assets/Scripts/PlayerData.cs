@@ -23,7 +23,7 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public bool blocking;
     [HideInInspector]
-    public List<RespawnPoints> spawnpoints = new List<RespawnPoints>();
+    public List<RespawnPoints> spawnpoints;
 
     public Transform Spine;
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
@@ -39,10 +39,10 @@ public class PlayerData : MonoBehaviour
     private float KnockbackTimer = 0.25f;
     private bool attacked = false, parried = false, isParried = false, knockedback = false;
     private PlayerData playerLastHit;
-    private List<AudioClip> PlayerSounds = new List<AudioClip>();
+    private List<AudioClip> PlayerSounds;
     private AudioSource audioPlayer;
     private Vector3 OriginalPos;
-    private List<HitPlayers> playersHit = new List<HitPlayers>();
+    private List<HitPlayers> playersHit;
     private AnimatorClipInfo[] AttackAnim;
     private float radius = 0.6f;
     private bool NoStock = false;
@@ -52,8 +52,15 @@ public class PlayerData : MonoBehaviour
     public GameObject AttackParticles;
     void Start()
     {
-        //intialize the random num gen
-        health = originalHealth;
+
+        //playersHit = new List<HitPlayers>();
+        PlayerSounds = new List<AudioClip>();
+        spawnpoints = new List<RespawnPoints>();
+        playersHit = new List<HitPlayers>();
+
+
+    //intialize the random num gen
+    health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
         OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
@@ -207,7 +214,11 @@ public class PlayerData : MonoBehaviour
         if (hits.Length > 0)
         {
             //clears the list just in case
-            playersHit.Clear();
+            if (playersHit.Count != 0)
+            {
+                playersHit.Clear();
+            }
+
             foreach (Collider other in hits)
             {
                 //caching these for readability

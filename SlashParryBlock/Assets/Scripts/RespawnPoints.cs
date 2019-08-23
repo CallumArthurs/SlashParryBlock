@@ -5,8 +5,13 @@ using UnityEngine;
 public class RespawnPoints : MonoBehaviour
 {
     private PlayerData[] players;
-    public CharacterMovmentScript CharacterMovmentScript = new CharacterMovmentScript();
+    public CharacterMovmentScript CharacterMovmentScript;
     public bool Validated = true;
+
+    private void Start()
+    {
+
+    }
 
     public void Setup(CharacterMovmentScript CMS)
     {
