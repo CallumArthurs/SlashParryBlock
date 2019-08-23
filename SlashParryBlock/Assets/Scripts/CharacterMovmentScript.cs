@@ -29,6 +29,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public float blockRotSpeedMultiplier;
     public PlayerData[] players;
     public List<PlayerHeartsContainer> playerHearts;
+    public List<string> joystickCharInputs;
 
     public Sprite emptyHeart, halfHeart, fullHeart;
     private List<RespawnPoints> SpawnPoints = new List<RespawnPoints>();
