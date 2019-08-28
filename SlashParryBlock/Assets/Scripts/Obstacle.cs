@@ -7,7 +7,7 @@ public class Obstacle : MonoBehaviour
     public enum Direction
     {
         AnyDirection,
-        PosX,
+        forward,
         NegX,
         PosZ,
         NegZ
@@ -36,9 +36,9 @@ public class Obstacle : MonoBehaviour
                         CollisionRigidBody.AddForce(collision.transform.position * Knockback, ForceMode.Impulse);
                         break;
                     }
-                case 1://PosX
+                case 1://forward
                     {
-                        CollisionRigidBody.AddForce(new Vector3(1.0f,0.0f,0.0f) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce(transform.forward * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 2://NegX
