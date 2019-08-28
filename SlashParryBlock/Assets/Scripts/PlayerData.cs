@@ -1,10 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerData : MonoBehaviour
 {
+    //struct because scripts have to be attached to a game object
+    struct HitPlayersStruct
+    {
+        public PlayerData hitPlayerData;
+        public Rigidbody HitPlayersRB;
+        public Vector3 ParticlePos;
+        public bool BackStab, Riposte, Normal;
+
+        public HitPlayersStruct(PlayerData playerData, Rigidbody playerRB, Vector3 PartPos, bool normal,bool back, bool rip)
+        {
+            hitPlayerData = playerData;
+            HitPlayersRB = playerRB;
+            ParticlePos = PartPos;
+            Riposte = rip;
+            Normal = normal;
+            BackStab = back;
+        }
+
+        public void Setup(PlayerData playerData, Rigidbody playerRB, Vector3 PartPos)
+        {
+            hitPlayerData = playerData;
+            HitPlayersRB = playerRB;
+            ParticlePos = PartPos;
+        }
+    }
+
     public GameObject DizzySpinner;
 
     private enum ClipSelector
@@ -25,7 +52,6 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints;
 
-    public Transform Spine;
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
     //original health is their spawned health 
     private int originalHealth, health,damage, backstabDamage, RiposteDamage;
@@ -39,28 +65,24 @@ public class PlayerData : MonoBehaviour
     private float KnockbackTimer = 0.25f;
     private bool attacked = false, parried = false, isParried = false, knockedback = false;
     private PlayerData playerLastHit;
-    private List<AudioClip> PlayerSounds;
+    private List<AudioClip> PlayerSounds = new List<AudioClip>();
     private AudioSource audioPlayer;
     private Vector3 OriginalPos;
     private List<HitPlayers> playersHit;
     private AnimatorClipInfo[] AttackAnim;
     private float radius = 0.6f;
-    private bool NoStock = false;
+    private bool NoStock = false, attackComplete = false;
     private CharacterMovmentScript charMovScript;
 
     public GameObject particles;
     public GameObject AttackParticles;
     void Start()
     {
-
-        //playersHit = new List<HitPlayers>();
-        PlayerSounds = new List<AudioClip>();
         spawnpoints = new List<RespawnPoints>();
         playersHit = new List<HitPlayers>();
 
-
-    //intialize the random num gen
-    health = originalHealth;
+        //intialize the random num gen
+        health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
         OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
@@ -68,6 +90,7 @@ public class PlayerData : MonoBehaviour
 
     void Update()
     {
+
         if (!NoStock)
         {
             //dead
@@ -92,8 +115,6 @@ public class PlayerData : MonoBehaviour
                 health = 0;
             }
 
-
-
             //if not blocking reset the animator
             if (animator.GetInteger("Anim") == 2 && !blocking)
             {
@@ -111,13 +132,15 @@ public class PlayerData : MonoBehaviour
                     animator.ResetTrigger("HoriAttack");
                     //turn off attack and reset timer
                     attacked = false;
+                    attackComplete = false;
                     AttackTimer = AttackOriginalTime;
                 }//this is the end parry opportunity
                 else if (AttackTimer <= AttackOriginalTime - 0.2f)
                 {
                     //this stops you hitting people if you've been parried
-                    if (!isParried)
+                    if (!isParried && !attackComplete)
                     {
+                        attackComplete = true;
                         for (int i = 0; i < playersHit.Count; i++)
                         {
                             Instantiate(AttackParticles, playersHit[i].ParticlePos, Quaternion.Euler(playersHit[i].hitPlayerData.gameObject.transform.position - transform.position));
@@ -147,9 +170,6 @@ public class PlayerData : MonoBehaviour
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
                         }
-                        //clear list so you don't hit them again
-
-                        playersHit.Clear();
                     }
                 }
             }
@@ -211,20 +231,19 @@ public class PlayerData : MonoBehaviour
         attacked = true;
 
         bool HitSomeone = false;
-
         if (hits.Length > 0)
         {
-            //clears the list just in case
-            if (playersHit.Count != 0)
+            if (playersHit.Count > 0)
             {
                 playersHit.Clear();
             }
-
             foreach (Collider other in hits)
             {
                 //caching these for readability
                 PlayerData CollisionPlayerData = other.GetComponent<PlayerData>();
                 Rigidbody CollisionRigidBody = other.GetComponent<Rigidbody>();
+
+
                 //checks if you acutally have the playerdata component and makes sure you aren't colliding with yourself
                 if (CollisionPlayerData == null || CollisionPlayerData == this)
                 {
@@ -235,11 +254,8 @@ public class PlayerData : MonoBehaviour
                 if (attacked)
                 {
                     //adds a new HitPlayers class and hands over the data
-                    HitPlayers tmpobj = gameObject.AddComponent<HitPlayers>();
-                    tmpobj.hitPlayerData = CollisionPlayerData;
-                    tmpobj.HitPlayersRB = CollisionRigidBody;
-                    tmpobj.ParticlePos = other.ClosestPoint(other.transform.position);
-                    playersHit.Add(tmpobj);
+                    playersHit.Add(new HitPlayers());
+                    playersHit[0].SetupData(CollisionPlayerData,CollisionRigidBody, other.ClosestPoint(other.transform.position));
                     HitSomeone = true;
                     //making sure you acually hit someone, and making sure you didn't hit yourself
                     if (CollisionPlayerData != null && CollisionPlayerData != this)
@@ -270,11 +286,13 @@ public class PlayerData : MonoBehaviour
                                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back with shield up
                                 {
                                     playersHit[0].BackStab = true;
+                                    animator.SetTrigger("Attack");
                                     playClip(ClipSelector.backstab);
                                 }
                                 else // hit their side with shield up
                                 {
                                     playersHit[0].Normal = true;
+                                    animator.SetTrigger("Attack");
                                     playClip(ClipSelector.attackHit);
                                 }
                             }
@@ -283,6 +301,7 @@ public class PlayerData : MonoBehaviour
                                 CollisionRigidBody.velocity = new Vector3(0, 0, 0);
                                 CollisionRigidBody.AddForce((other.transform.position - transform.position).normalized * ((knockback * 0.5f) * CollisionRigidBody.mass), ForceMode.Impulse);
                                 playClip(ClipSelector.block);
+                                animator.SetTrigger("Attack");
                             }
                         }
                         else // no shield
@@ -300,11 +319,15 @@ public class PlayerData : MonoBehaviour
                             {
                                 playersHit[0].BackStab = true;
                                 playClip(ClipSelector.backstab);
+                                animator.SetTrigger("Attack");
+
                             }
                             else // hit their side or front
                             {
                                 playersHit[0].Normal = true;
                                 playClip(ClipSelector.attackHit);
+                                animator.SetTrigger("Attack");
+
                             }
                         }
                     }
@@ -314,6 +337,7 @@ public class PlayerData : MonoBehaviour
 
         if (!HitSomeone)
         {
+
             playClip(ClipSelector.attackMiss);
             if (AttackNum == 1)
             {
@@ -325,12 +349,19 @@ public class PlayerData : MonoBehaviour
             }
         }
 
+
         if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Default"))
         {
             AttackAnim = animator.GetCurrentAnimatorClipInfo(1);
 
-            AttackTimer = AttackAnim[0].clip.length;
-            AttackOriginalTime = AttackTimer;
+            AttackOriginalTime = AttackAnim[0].clip.length;
+            AttackTimer = AttackOriginalTime;
+        }
+        else
+        {
+            AttackOriginalTime = 0.3f;
+            AttackTimer = AttackOriginalTime;
+
         }
     }
 
@@ -343,7 +374,6 @@ public class PlayerData : MonoBehaviour
         }
 
         parried = true;
-
 
         float radius = 1;
 
@@ -450,7 +480,6 @@ public class PlayerData : MonoBehaviour
         knockedback = value;
         KnockbackTimer = Timer;
     }
-
     public void SetSounds(AudioSource player,List<AudioClip> sounds)
     {
         audioPlayer = player;
@@ -473,7 +502,6 @@ public class PlayerData : MonoBehaviour
         //sleep the rigidbody because velocity doesn't update properly
         GetComponent<Rigidbody>().Sleep();
         GetComponent<Rigidbody>().velocity  = new Vector3(0, 0, 0);
-
         GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
     }
     public void SetStock(bool Nostock)
