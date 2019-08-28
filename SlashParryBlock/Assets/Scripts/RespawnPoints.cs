@@ -8,11 +8,6 @@ public class RespawnPoints : MonoBehaviour
     public CharacterMovmentScript CharacterMovmentScript;
     public bool Validated = true;
 
-    private void Start()
-    {
-
-    }
-
     public void Setup(CharacterMovmentScript CMS)
     {
         CharacterMovmentScript = CMS;
@@ -35,6 +30,6 @@ public class RespawnPoints : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + (transform.forward * 1), 1);
+        Gizmos.DrawWireSphere(transform.position + (transform.forward * 1), 3);
     }
 }
