@@ -9,17 +9,23 @@ public class DynamicCamera : MonoBehaviour
         
     }
     public CharacterMovmentScript charMovScript;
-    public float ZOffset, camSpeed;
+    public float ZOffset,YOffset, camSpeed;
     private Vector3 Averagepos;
 
     void Update()
     {
         Averagepos = new Vector3(0, 0, 0);
+        float lowestX = 0;
+        float highestX = 0;
         for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < 3; j++)
+            if(charMovScript.players[i].transform.position.x > highestX)
             {
-                
+                highestX = charMovScript.players[i].transform.position.x;
+            }
+            else if(charMovScript.players[i].transform.position.x < lowestX)
+            {
+                lowestX = charMovScript.players[i].transform.position.x;
             }
         }
 
@@ -28,7 +34,6 @@ public class DynamicCamera : MonoBehaviour
             Averagepos += new Vector3(charMovScript.players[i].transform.position.x,0,charMovScript.players[i].transform.position.z);
         }
         Averagepos /= charMovScript.players.Length;
-
-        transform.Translate((transform.position - new Vector3(Averagepos.x, transform.position.y, Averagepos.z + ZOffset)) * Time.deltaTime * camSpeed);
+        transform.Translate((new Vector3(transform.position.x - Averagepos.x,(highestX - lowestX + YOffset) - transform.position.y , transform.position.z - (Averagepos.z + ZOffset))) * Time.deltaTime * camSpeed);
     }
 }

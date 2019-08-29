@@ -116,10 +116,11 @@ public class PlayerData : MonoBehaviour
                 }//this is the end parry opportunity
                 else if (AttackTimer <= AttackOriginalTime - 0.2f)
                 {
-                    //this stops you hitting people if you've been parried
-                    if (!isParried)
+
+                    for (int i = 0; i < playersHit.Count; i++)
                     {
-                        for (int i = 0; i < playersHit.Count; i++)
+                        //this stops you hitting people if you've been parried
+                        if (!isParried)
                         {
                             Instantiate(AttackParticles, playersHit[i].ParticlePos, Quaternion.Euler(playersHit[i].hitPlayerData.gameObject.transform.position - transform.position));
 
@@ -147,11 +148,12 @@ public class PlayerData : MonoBehaviour
                                 damageDealt += RiposteDamage;
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
-                            Destroy(playersHit[i]);
+
                         }
-                        //clear list so you don't hit them again
-                        playersHit.Clear();
+                        Destroy(playersHit[i]);
                     }
+                    //clear list so you don't hit them again
+                    playersHit.Clear();
                 }
             }
 
@@ -376,6 +378,8 @@ public class PlayerData : MonoBehaviour
     public void Parry()
     {
         attacked = false;
+
+
         if (parried)
         {
             return;
@@ -423,6 +427,11 @@ public class PlayerData : MonoBehaviour
         DizzySpinner.SetActive(true);
         Instantiate(particles, transform.position, Quaternion.Euler(transform.up));
         animator.SetInteger("Anim", 0);
+        for (int i = 0; i < playersHit.Count; i++)
+        {
+            Destroy(playersHit[i]);
+        }
+        playersHit.Clear();
     }
 
     public void TakeDamage(int damage)
