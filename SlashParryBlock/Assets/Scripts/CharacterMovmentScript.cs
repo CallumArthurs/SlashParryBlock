@@ -22,7 +22,8 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<AudioClip> playerClips;
 
     [Header("CharacterMovementScript values")]
-    public float speed;
+    public float AirControlSpeed;
+    public float speed, originalSpeed;
     public float maxSpeed;
     private float originalMaxSpeed;
     public float rotSpeed;
@@ -44,7 +45,7 @@ public class CharacterMovmentScript : MonoBehaviour
         playersRB = new List<Rigidbody>();
         soundPlayers = new List<AudioSource>();
         SpawnPoints = new List<RespawnPoints>();
-
+        originalSpeed = speed;
         AudioSource[] tmpSources = GetComponentsInChildren<AudioSource>();
         Random.InitState((int)Time.realtimeSinceStartup);
 
@@ -156,6 +157,11 @@ public class CharacterMovmentScript : MonoBehaviour
                         players[i].Attack(1);
                         players[i].AttackAxisUsed = true;
                     }
+                    //else if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].AttackAxisUsed)
+                    //{
+                    //    players[i].ComboAttack = true;
+                    //    players[i].AttackAxisUsed = true;
+                    //}
                     else if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getAttacked() && !players[i].ParryAxisUsed)
                     {
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
@@ -240,13 +246,14 @@ public class CharacterMovmentScript : MonoBehaviour
             Debug.DrawRay(players[i].transform.position, Vector3.down,Color.red);
             if (Physics.Raycast(players[i].transform.position, Vector3.down, 2, floor))
             {
+                speed = originalSpeed;
                 maxSpeed = originalMaxSpeed;
             }
             else
             {
-                maxSpeed = originalMaxSpeed * 2;
+                speed = AirControlSpeed;
+                maxSpeed = Mathf.Infinity;
             }
-
             if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
                 //for player1 this will evaluate to "HorizontalP1"
@@ -284,7 +291,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     if (playersRB[i].velocity.magnitude > maxSpeed)
                     {
                         Vector3 VelNorm = playersRB[i].velocity.normalized;
-
+                    
                         playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
                     }
                 }
