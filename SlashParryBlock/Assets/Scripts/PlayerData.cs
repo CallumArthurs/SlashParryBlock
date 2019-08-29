@@ -25,8 +25,12 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints;
 
+    public AnimationClip attackAnimation;
+
+    public Vector3 ExternalForce;
     public Transform Spine;
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
+    public bool ComboAttack = false;
     //original health is their spawned health 
     private int originalHealth, health,damage, backstabDamage, RiposteDamage;
     public int kills = 0,Deaths = 0,successfulParries = 0,damageDealt = 0,damageTaken = 0,killStreak = 0, killstreakTemp = 0;
@@ -52,15 +56,14 @@ public class PlayerData : MonoBehaviour
     public GameObject AttackParticles;
     void Start()
     {
-
         //playersHit = new List<HitPlayers>();
         PlayerSounds = new List<AudioClip>();
         spawnpoints = new List<RespawnPoints>();
         playersHit = new List<HitPlayers>();
 
-
-    //intialize the random num gen
-    health = originalHealth;
+        AttackOriginalTime = attackAnimation.length;
+        //intialize the random num gen
+        health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
         OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
@@ -92,22 +95,20 @@ public class PlayerData : MonoBehaviour
                 health = 0;
             }
 
-
-
             //if not blocking reset the animator
             if (animator.GetInteger("Anim") == 2 && !blocking)
             {
                 animator.SetInteger("Anim", 0);
             }
 
+            //run the timer for the attack
+            AttackTimer -= Time.deltaTime;
             //runs the attack timer and the damage output
             if (attacked)
             {
-                //run the timer for the attack
-                AttackTimer -= Time.deltaTime;
                 if (AttackTimer <= 0.0f)
                 {
-                    animator.ResetTrigger("Attack");
+                    //animator.ResetTrigger("Attack");
                     animator.ResetTrigger("HoriAttack");
                     //turn off attack and reset timer
                     attacked = false;
@@ -146,9 +147,9 @@ public class PlayerData : MonoBehaviour
                                 damageDealt += RiposteDamage;
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
+                            Destroy(playersHit[i]);
                         }
                         //clear list so you don't hit them again
-
                         playersHit.Clear();
                     }
                 }
@@ -257,7 +258,16 @@ public class PlayerData : MonoBehaviour
                         {
                             if (AttackNum == 1)
                             {
-                                animator.SetTrigger("Attack");
+                                if (AttackTimer > -0.2f && ComboAttack)
+                                {
+                                    ComboAttack = false;
+                                    animator.SetTrigger("ComboAttack");
+                                }
+                                else
+                                {
+                                    ComboAttack = true;
+                                    animator.SetTrigger("Attack");
+                                }
                             }
                             else
                             {
@@ -289,7 +299,16 @@ public class PlayerData : MonoBehaviour
                         {
                             if (AttackNum == 1)
                             {
-                                animator.SetTrigger("Attack");
+                                if (AttackTimer > -0.2f && ComboAttack)
+                                {
+                                    animator.SetTrigger("ComboAttack");
+                                    ComboAttack = false;
+                                }
+                                else
+                                {
+                                    ComboAttack = true;
+                                    animator.SetTrigger("Attack");
+                                }
                             }
                             else
                             {
@@ -317,7 +336,16 @@ public class PlayerData : MonoBehaviour
             playClip(ClipSelector.attackMiss);
             if (AttackNum == 1)
             {
-                animator.SetTrigger("Attack");
+                if (AttackTimer > -0.2f && ComboAttack)
+                {
+                    animator.SetTrigger("ComboAttack");
+                    ComboAttack = false;
+                }
+                else
+                {
+                    ComboAttack = true;
+                    animator.SetTrigger("Attack");
+                }
             }
             else
             {
@@ -325,15 +353,26 @@ public class PlayerData : MonoBehaviour
             }
         }
 
-        if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Default"))
-        {
-            AttackAnim = animator.GetCurrentAnimatorClipInfo(1);
+        AttackTimer = AttackOriginalTime;
 
-            AttackTimer = AttackAnim[0].clip.length;
-            AttackOriginalTime = AttackTimer;
-        }
+        //if (animator.GetCurrentAnimatorStateInfo(1).IsName("VertAttack"))
+        //{
+        //    AttackAnim = animator.GetCurrentAnimatorClipInfo(1);
+        //    AttackTimer = AttackAnim[0].clip.length;
+        //    AttackOriginalTime = AttackTimer;
+        //    Debug.Log(animator.GetNextAnimatorClipInfo(1)[0].clip);
+        //}
+        //else
+        //{
+        //    Debug.Log("used default time");
+        //    AttackTimer = 0.5f;
+        //    AttackOriginalTime = AttackTimer;
+        //}
     }
-
+    public void ApplyExternalForce(Vector3 force)
+    {
+        ExternalForce = force;
+    }
     public void Parry()
     {
         attacked = false;
@@ -343,7 +382,7 @@ public class PlayerData : MonoBehaviour
         }
 
         parried = true;
-
+        
 
         float radius = 1;
 
@@ -364,7 +403,7 @@ public class PlayerData : MonoBehaviour
 
                 if (parried)
                 {
-                    if (CollisionPlayerData.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.5f && CollisionPlayerData.attacked)
+                    if (CollisionPlayerData.AttackTimer > CollisionPlayerData.AttackOriginalTime - 0.2f && CollisionPlayerData.attacked)
                     {
                         CollisionPlayerData.isParried = true;
                         CollisionPlayerData.attacked = false;
