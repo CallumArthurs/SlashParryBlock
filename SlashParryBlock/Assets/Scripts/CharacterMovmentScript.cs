@@ -157,11 +157,6 @@ public class CharacterMovmentScript : MonoBehaviour
                         players[i].Attack(1);
                         players[i].AttackAxisUsed = true;
                     }
-                    //else if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].AttackAxisUsed)
-                    //{
-                    //    players[i].ComboAttack = true;
-                    //    players[i].AttackAxisUsed = true;
-                    //}
                     else if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getAttacked() && !players[i].ParryAxisUsed)
                     {
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);

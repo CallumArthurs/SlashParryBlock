@@ -37,11 +37,12 @@ public class MatchGameplay : MonoBehaviour
             playerStatsTotal.Add(new PlayerStats());
             playerStatsCurRound.Add(new PlayerStats());
         }
+        RoundStatsUI.SetActive(true);
 
-        player1Statstxt = (GameObject.FindGameObjectWithTag("Player1Stats").GetComponentsInChildren<Text>());
-        player2Statstxt = (GameObject.FindGameObjectWithTag("Player2Stats").GetComponentsInChildren<Text>());
-        player3Statstxt = (GameObject.FindGameObjectWithTag("Player3Stats").GetComponentsInChildren<Text>());
-        player4Statstxt = (GameObject.FindGameObjectWithTag("Player4Stats").GetComponentsInChildren<Text>());
+        player1Statstxt = GameObject.FindGameObjectWithTag("Player1Stats").GetComponentsInChildren<Text>();
+        player2Statstxt = GameObject.FindGameObjectWithTag("Player2Stats").GetComponentsInChildren<Text>();
+        player3Statstxt = GameObject.FindGameObjectWithTag("Player3Stats").GetComponentsInChildren<Text>();
+        player4Statstxt = GameObject.FindGameObjectWithTag("Player4Stats").GetComponentsInChildren<Text>();
 
 
         RoundTimer = RoundLength;
