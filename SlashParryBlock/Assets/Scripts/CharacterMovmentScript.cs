@@ -24,6 +24,7 @@ public class CharacterMovmentScript : MonoBehaviour
     [Header("CharacterMovementScript values")]
     public float speed;
     public float maxSpeed;
+    private float originalMaxSpeed;
     public float rotSpeed;
     public float blockSpeedMultiplier;
     public float blockRotSpeedMultiplier;
@@ -36,6 +37,7 @@ public class CharacterMovmentScript : MonoBehaviour
     private List<AudioSource> soundPlayers;
     private List<Rigidbody> playersRB;
     private List<Animator> playersAni;
+    private LayerMask floor;
     void Start()
     {
         playersAni = new List<Animator>();
@@ -46,6 +48,8 @@ public class CharacterMovmentScript : MonoBehaviour
         AudioSource[] tmpSources = GetComponentsInChildren<AudioSource>();
         Random.InitState((int)Time.realtimeSinceStartup);
 
+        floor = LayerMask.GetMask("Floor");
+        originalMaxSpeed = maxSpeed;
         for (int i = 0; i < tmpSources.Length; i++)
         {
             soundPlayers.Add(tmpSources[i]);
@@ -141,7 +145,6 @@ public class CharacterMovmentScript : MonoBehaviour
                 {
                     playersRB[i].mass = 50.0f;
                     players[i].blocking = true;
-                    playersAni[i].SetInteger("Anim", (int)AnimSelector.Block);
                 }
                 else
                 {
@@ -173,8 +176,8 @@ public class CharacterMovmentScript : MonoBehaviour
                     {
                         players[i].ParryAxisUsed = false;
                     }
-
                 }
+                playersAni[i].SetBool("Blocking", players[i].blocking);
             }
             // caching the health values
             float playerHealth = players[i].getHealth();
@@ -234,6 +237,16 @@ public class CharacterMovmentScript : MonoBehaviour
     {
         for (int i = 0; i < playersRB.Count; i++)
         {
+            Debug.DrawRay(players[i].transform.position, Vector3.down,Color.red);
+            if (Physics.Raycast(players[i].transform.position, Vector3.down, 2, floor))
+            {
+                maxSpeed = originalMaxSpeed;
+            }
+            else
+            {
+                maxSpeed = originalMaxSpeed * 2;
+            }
+
             if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
                 //for player1 this will evaluate to "HorizontalP1"
@@ -250,9 +263,11 @@ public class CharacterMovmentScript : MonoBehaviour
                     else if (players[i].blocking)
                     {
                         playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass), 0, -Input.GetAxis("VerticalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass)), ForceMode.Impulse);
+                        playersAni[i].SetFloat("BlockMovVecX", Input.GetAxis("HorizontalP" + (i + 1)));
                         //only rotate if you have a value to rotate to
                         if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
                         {
+                            playersAni[i].SetFloat("BlockMovVecY", Input.GetAxis("R_StickHorizontalP" + (i + 1)));
                             playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
                         }
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
@@ -279,6 +294,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     playersAni[i].SetInteger("Anim", 0);
                 }
             }
+
         }
     }
 }
