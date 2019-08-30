@@ -16,24 +16,23 @@ public class Obstacle : MonoBehaviour
     public int damage;
     public float Knockback, Timer;
     public Direction direction;
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Rigidbody CollisionRigidBody = collision.gameObject.GetComponent<Rigidbody>();
-        if (collision.gameObject.GetComponent<PlayerData>() != null)
+        Rigidbody CollisionRigidBody = other.gameObject.GetComponent<Rigidbody>();
+        if (other.gameObject.GetComponent<PlayerData>() != null)
         {
             //reset their velocity so it doesn't add up after every hit
             CollisionRigidBody.velocity = new Vector3(0, 0, 0);
             //double damage if you hit their back
-            collision.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
+            other.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
 
-            collision.gameObject.GetComponent<PlayerData>().setKnockedBack(true,Timer);
+            other.gameObject.GetComponent<PlayerData>().setKnockedBack(true,Timer);
 
             switch ((int)direction)
             {
                 case 0://Any direction
                     {
-                        CollisionRigidBody.AddForce(collision.transform.position * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce(other.transform.position * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 1://forward
