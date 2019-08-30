@@ -65,7 +65,6 @@ public class PlayerData : MonoBehaviour
         OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
         trailEffect.SetActive(false);
-
     }
 
     void Update()
