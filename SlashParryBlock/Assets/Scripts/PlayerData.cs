@@ -357,20 +357,6 @@ public class PlayerData : MonoBehaviour
         trailEffect.SetActive(true);
         AttackOriginalTime = 0.3f;
         AttackTimer = AttackOriginalTime;
-
-        //if (animator.GetCurrentAnimatorStateInfo(1).IsName("VertAttack"))
-        //{
-        //    AttackAnim = animator.GetCurrentAnimatorClipInfo(1);
-        //    AttackTimer = AttackAnim[0].clip.length;
-        //    AttackOriginalTime = AttackTimer;
-        //    Debug.Log(animator.GetNextAnimatorClipInfo(1)[0].clip);
-        //}
-        //else
-        //{
-        //    Debug.Log("used default time");
-        //    AttackTimer = 0.5f;
-        //    AttackOriginalTime = AttackTimer;
-        //}
     }
     public void Parry()
     {
