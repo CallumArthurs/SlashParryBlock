@@ -38,6 +38,7 @@ public class Obstacle : MonoBehaviour
                 case 1://forward
                     {
                         CollisionRigidBody.AddForce(transform.forward * Knockback, ForceMode.Impulse);
+                        gameObject.GetComponentInChildren<Animator>().SetTrigger("Spring");
                         break;
                     }
                 case 2://NegX
