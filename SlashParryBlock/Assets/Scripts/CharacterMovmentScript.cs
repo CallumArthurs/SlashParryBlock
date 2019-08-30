@@ -23,15 +23,17 @@ public class CharacterMovmentScript : MonoBehaviour
 
     [Header("CharacterMovementScript values")]
     public float AirControlSpeed;
-    public float speed, originalSpeed;
+    public float speed;
     public float maxSpeed;
-    private float originalMaxSpeed;
+    private float originalMaxSpeed, originalSpeed;
     public float rotSpeed;
     public float blockSpeedMultiplier;
     public float blockRotSpeedMultiplier;
     public PlayerData[] players;
     public List<PlayerHeartsContainer> playerHearts;
     public List<string> joystickCharInputs;
+
+    public GameObject P1PlayerCollider,P2PlayerCollider,P3PlayerCollider,P4PlayerCollider;
 
     public Sprite emptyHeart, halfHeart, fullHeart;
     private List<RespawnPoints> SpawnPoints;
@@ -238,8 +240,7 @@ public class CharacterMovmentScript : MonoBehaviour
     {
         for (int i = 0; i < playersRB.Count; i++)
         {
-            Debug.DrawRay(players[i].transform.position, Vector3.down,Color.red);
-            if (Physics.Raycast(players[i].transform.position, Vector3.down, 2, floor))
+            if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor))
             {
                 speed = originalSpeed;
                 maxSpeed = originalMaxSpeed;
@@ -264,7 +265,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     }
                     else if (players[i].blocking)
                     {
-                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass), 0, -Input.GetAxis("VerticalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass)), ForceMode.Impulse);
+                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
                         playersAni[i].SetFloat("BlockMovVecX", Input.GetAxis("HorizontalP" + (i + 1)));
                         //only rotate if you have a value to rotate to
                         if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
@@ -298,5 +299,10 @@ public class CharacterMovmentScript : MonoBehaviour
             }
 
         }
+
+        P1PlayerCollider.transform.position = players[0].transform.position;
+        P2PlayerCollider.transform.position = players[1].transform.position;
+        P3PlayerCollider.transform.position = players[2].transform.position;
+        P4PlayerCollider.transform.position = players[3].transform.position;
     }
 }
