@@ -34,11 +34,17 @@ public class RingsLevel : MonoBehaviour
     {
         StartCoroutine(TimerRoutine());
         StartLevel();
+
+        if (WarningTime <= 0)
+        { WarningTime = 2; }
+
+        if (RespawnDelay <=0)
+        { RespawnDelay = 2; }
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   //If CurrentTime = the randomly generated fall time, choose a ring randomly and initialise the Fall method
         if (CurrentTime == ChosenFallTime && !RingChosen)
         {
             
