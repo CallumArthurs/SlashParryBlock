@@ -27,7 +27,7 @@ public class PlayerData : MonoBehaviour
 
     public AnimationClip attackAnimation;
 
-    public Vector3 ExternalForce;
+    public GameObject trailEffect;
     public Transform Spine;
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
     public bool ComboAttack = false;
@@ -67,6 +67,8 @@ public class PlayerData : MonoBehaviour
         animator = gameObject.GetComponentInChildren<Animator>();
         OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
+        trailEffect.SetActive(false);
+
     }
 
     void Update()
@@ -112,7 +114,8 @@ public class PlayerData : MonoBehaviour
                     animator.ResetTrigger("HoriAttack");
                     //turn off attack and reset timer
                     attacked = false;
-                    AttackTimer = AttackOriginalTime;
+                    trailEffect.SetActive(false);
+                    //AttackTimer = AttackOriginalTime;
                 }//this is the end parry opportunity
                 else if (AttackTimer <= AttackOriginalTime - 0.2f)
                 {
@@ -354,7 +357,7 @@ public class PlayerData : MonoBehaviour
                 animator.SetTrigger("HoriAttack");
             }
         }
-
+        trailEffect.SetActive(true);
         AttackTimer = AttackOriginalTime;
 
         //if (animator.GetCurrentAnimatorStateInfo(1).IsName("VertAttack"))
@@ -370,10 +373,6 @@ public class PlayerData : MonoBehaviour
         //    AttackTimer = 0.5f;
         //    AttackOriginalTime = AttackTimer;
         //}
-    }
-    public void ApplyExternalForce(Vector3 force)
-    {
-        ExternalForce = force;
     }
     public void Parry()
     {
@@ -546,5 +545,7 @@ public class PlayerData : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position + (transform.forward * radius), radius);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), 0.5f);
     }
 }
