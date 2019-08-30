@@ -146,12 +146,12 @@ public class CharacterMovmentScript : MonoBehaviour
 
                 if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
                 {
-                    playersRB[i].mass = 50.0f;
+                    //playersRB[i].mass = 50.0f;
                     players[i].blocking = true;
                 }
                 else
                 {
-                    playersRB[i].mass = 1.0f;
+                    //playersRB[i].mass = 1.0f;
                     players[i].blocking = false;
                     //you can't attack if you just did
                     if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed)
