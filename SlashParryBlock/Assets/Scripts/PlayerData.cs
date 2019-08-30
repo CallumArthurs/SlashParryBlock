@@ -25,8 +25,6 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints;
 
-    public AnimationClip attackAnimation;
-
     public GameObject trailEffect;
     public Transform Spine;
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
@@ -61,7 +59,6 @@ public class PlayerData : MonoBehaviour
         spawnpoints = new List<RespawnPoints>();
         playersHit = new List<HitPlayers>();
 
-        AttackOriginalTime = attackAnimation.length;
         //intialize the random num gen
         health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
@@ -358,6 +355,7 @@ public class PlayerData : MonoBehaviour
             }
         }
         trailEffect.SetActive(true);
+        AttackOriginalTime = 0.3f;
         AttackTimer = AttackOriginalTime;
 
         //if (animator.GetCurrentAnimatorStateInfo(1).IsName("VertAttack"))
@@ -497,7 +495,11 @@ public class PlayerData : MonoBehaviour
         knockedback = value;
         KnockbackTimer = Timer;
     }
-
+    public void setAttackTimer(float length)
+    {
+        AttackOriginalTime = length;
+        AttackTimer = length;
+    }
     public void SetSounds(AudioSource player,List<AudioClip> sounds)
     {
         audioPlayer = player;
