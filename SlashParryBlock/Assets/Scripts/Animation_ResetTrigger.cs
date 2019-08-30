@@ -11,9 +11,15 @@ public class Animation_ResetTrigger : StateMachineBehaviour
         {
             animator.ResetTrigger("Attack");
         }
-        else
+
+        if (stateInfo.IsName("ComboAttack"))
         {
             animator.ResetTrigger("ComboAttack");
+        }
+
+        if (stateInfo.IsName("Spring"))
+        {
+            animator.ResetTrigger("Spring");
         }
     }
 
