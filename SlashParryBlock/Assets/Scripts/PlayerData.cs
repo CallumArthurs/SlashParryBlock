@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerData : MonoBehaviour
 {
-    public GameObject DizzySpinner;
 
     private enum ClipSelector
     {
@@ -17,7 +16,7 @@ public class PlayerData : MonoBehaviour
         block,
         death
     }
-
+    #region variables
     [HideInInspector]
     public int score;
     [HideInInspector]
@@ -25,45 +24,57 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints;
 
+    public GameObject DizzySpinner;
     public GameObject ExcaliburObj;
     public GameObject trailEffect;
+    public GameObject particles;
+    public GameObject AttackParticles;
+
+
+    public float ExcaliburKnockbackModifier;
+    public float ExcaliburDamageModifier;
+
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
     public bool ComboAttack = false;
+
+    public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
+
+    public float damageTaken = 0, damageDealt = 0;
+
     //original health is their spawned health 
     private int originalHealth, backstabDamage, RiposteDamage;
-    private float health, damage;
-    public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
-    public float damageTaken = 0, damageDealt = 0;
-    private float knockback;
-    private Animator animator;
+
     //how long an attack goes for this is temp fix waitng for animation
     private float AttackTimer, AttackOriginalTime;
     private float ParryTimer = 0.6f;
     private float gotParriedTimer = 2.0f;
     private float KnockbackTimer = 0.25f;
-    private bool attacked = false, parried = false, isParried = false, knockedback = false;
+    private float radius = 0.6f;
+    private float knockback;
+    private float health, damage;
+
     private PlayerData playerLastHit;
     private List<AudioClip> PlayerSounds;
     private AudioSource audioPlayer;
     private Vector3 OriginalPos;
     private List<HitPlayers> playersHit;
+    private List<PlayerData> invinciblePlayers;
     private AnimatorClipInfo[] AttackAnim;
-    private float radius = 0.6f;
-    private bool NoStock = false;
     private CharacterMovmentScript charMovScript;
-    private bool HasExcalibur = false;
+    private Animator animator;
 
-    public float ExcaliburKnockbackModifier;
-    public float ExcaliburDamageModifier;
-    public GameObject particles;
-    public GameObject AttackParticles;
+    private bool attacked = false, parried = false, isParried = false, knockedback = false;
+    private bool NoStock = false;
+    private bool HasExcalibur = false;
+    #endregion
+
     void Start()
     {
         //playersHit = new List<HitPlayers>();
         PlayerSounds = new List<AudioClip>();
         spawnpoints = new List<RespawnPoints>();
         playersHit = new List<HitPlayers>();
-
+        invinciblePlayers = new List<PlayerData>();
         //intialize the random num gen
         health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
@@ -118,10 +129,87 @@ public class PlayerData : MonoBehaviour
                     //turn off attack and reset timer
                     attacked = false;
                     trailEffect.SetActive(false);
+                    invinciblePlayers.Clear();
                     //AttackTimer = AttackOriginalTime;
                 }//this is the end parry opportunity
                 else if (AttackTimer <= AttackOriginalTime - 0.2f)
                 {
+                    Collider[] hits = Physics.OverlapSphere(transform.position + (transform.forward * radius), radius);
+
+                    foreach (Collider other in hits)
+                    {
+                        //caching these for readability
+                        PlayerData CollisionPlayerData = other.GetComponent<PlayerData>();
+                        Rigidbody CollisionRigidBody = other.GetComponent<Rigidbody>();
+                        //checks if you acutally have the playerdata component and makes sure you aren't colliding with yourself
+                        if (CollisionPlayerData == null || CollisionPlayerData == this)
+                        {
+                            //skips to the next collider
+                            continue;
+                        }
+
+                        if (invinciblePlayers.Count > 0)
+                        {
+                            bool skip = false;
+                            for (int i = 0; i < invinciblePlayers.Count; i++)
+                            {
+                                if (invinciblePlayers[i] == CollisionPlayerData)
+                                {
+                                    skip = true;
+                                }
+                            }
+
+                            if (skip)
+                            {
+                                continue;
+                            }
+                        }
+
+                        //adds a new HitPlayers class and hands over the data
+                        HitPlayers tmpobj = gameObject.AddComponent<HitPlayers>();
+                        tmpobj.hitPlayerData = CollisionPlayerData;
+                        tmpobj.HitPlayersRB = CollisionRigidBody;
+                        tmpobj.ParticlePos = other.ClosestPoint(other.transform.position);
+                        invinciblePlayers.Add(CollisionPlayerData);
+                        playersHit.Add(tmpobj);
+
+                        if (CollisionPlayerData != null && CollisionPlayerData != this)
+                        {
+                            //hit their front during riposte
+                            if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
+                            {
+                                //reset their parry timer
+                                playersHit[0].Riposte = true;
+                            }
+                            else if (CollisionPlayerData.blocking)
+                            {                               
+                                //dot product confirms which direction you hit the other player from
+                                //1 = back, -1 = front
+                                if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.0f)
+                                {
+                                    if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back with shield up
+                                    {
+                                        playersHit[0].BackStab = true;
+                                    }
+                                    else // hit their side with shield up
+                                    {
+                                        playersHit[0].Normal = true;
+                                    }
+                                }
+                            }
+                            else // no shield
+                            {
+                                if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
+                                {
+                                    playersHit[0].BackStab = true;
+                                }
+                                else // hit their side or front
+                                {
+                                    playersHit[0].Normal = true;
+                                }
+                            }
+                        }
+                    }
 
                     for (int i = 0; i < playersHit.Count; i++)
                     {
@@ -269,12 +357,6 @@ public class PlayerData : MonoBehaviour
 
                 if (attacked)
                 {
-                    //adds a new HitPlayers class and hands over the data
-                    HitPlayers tmpobj = gameObject.AddComponent<HitPlayers>();
-                    tmpobj.hitPlayerData = CollisionPlayerData;
-                    tmpobj.HitPlayersRB = CollisionRigidBody;
-                    tmpobj.ParticlePos = other.ClosestPoint(other.transform.position);
-                    playersHit.Add(tmpobj);
                     HitSomeone = true;
                     //making sure you acually hit someone, and making sure you didn't hit yourself
                     if (CollisionPlayerData != null && CollisionPlayerData != this)
@@ -285,7 +367,7 @@ public class PlayerData : MonoBehaviour
                             //reset their parry timer
                             CollisionPlayerData.gotParriedTimer = 0.2f;
                             animator.SetTrigger("Riposte");
-                            playersHit[0].Riposte = true;
+                            //playersHit[0].Riposte = true;
                             playClip(ClipSelector.riposte);
                         }
                         else if (CollisionPlayerData.blocking)
@@ -313,12 +395,12 @@ public class PlayerData : MonoBehaviour
                             {
                                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back with shield up
                                 {
-                                    playersHit[0].BackStab = true;
+                                    //playersHit[0].BackStab = true;
                                     playClip(ClipSelector.backstab);
                                 }
                                 else // hit their side with shield up
                                 {
-                                    playersHit[0].Normal = true;
+                                    //playersHit[0].Normal = true;
                                     playClip(ClipSelector.attackHit);
                                 }
                             }
@@ -351,12 +433,12 @@ public class PlayerData : MonoBehaviour
 
                             if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
                             {
-                                playersHit[0].BackStab = true;
+                                //playersHit[0].BackStab = true;
                                 playClip(ClipSelector.backstab);
                             }
                             else // hit their side or front
                             {
-                                playersHit[0].Normal = true;
+                                //playersHit[0].Normal = true;
                                 playClip(ClipSelector.attackHit);
                             }
                         }
@@ -574,8 +656,10 @@ public class PlayerData : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
+        //attack hitbox
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position + (transform.forward * radius), radius);
+
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), 0.5f);
     }
