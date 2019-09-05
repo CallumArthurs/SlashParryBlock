@@ -41,12 +41,34 @@ public class CharacterMovmentScript : MonoBehaviour
     private List<Rigidbody> playersRB;
     private List<Animator> playersAni;
     private LayerMask floor;
+
+    private void Awake()
+    {
+        SpawnPoints = new List<RespawnPoints>();
+
+        //getting the spawnpoint parent to find all the spawnpoints
+        Transform[] tempTransform = GameObject.FindGameObjectWithTag("SpawnPoints").GetComponentsInChildren<Transform>();
+        for (int i = 1; i < tempTransform.Length; i++)
+        {
+            SpawnPoints.Add(tempTransform[i].gameObject.AddComponent<RespawnPoints>());
+            SpawnPoints[i - 1].Setup(this);
+        }
+
+        //starting at 1 to skip the parent
+        for (int i = 0; i < SpawnPoints.Count; i++)
+        {
+            for (int k = 0; k < players.Length; k++)
+            {
+                players[k].spawnpoints.Add(SpawnPoints[i]);
+            }
+        }
+    }
+
     void Start()
     {
         playersAni = new List<Animator>();
         playersRB = new List<Rigidbody>();
         soundPlayers = new List<AudioSource>();
-        SpawnPoints = new List<RespawnPoints>();
         originalSpeed = speed;
         AudioSource[] tmpSources = GetComponentsInChildren<AudioSource>();
         Random.InitState((int)Time.realtimeSinceStartup);
@@ -67,22 +89,7 @@ public class CharacterMovmentScript : MonoBehaviour
             players[i].SetSounds(soundPlayers[i],playerClips);
         }
 
-        //getting the spawnpoint parent to find all the spawnpoints
-        Transform[] tempTransform = GameObject.FindGameObjectWithTag("SpawnPoints").GetComponentsInChildren<Transform>();
-        for (int i = 1; i < tempTransform.Length; i++)
-        {
-            SpawnPoints.Add(tempTransform[i].gameObject.AddComponent<RespawnPoints>());
-            SpawnPoints[i - 1].Setup(this);
-        }
-
-        //starting at 1 to skip the parent
-        for (int i = 0; i < SpawnPoints.Count; i++)
-        {
-            for (int k = 0; k < players.Length; k++)
-            {
-                players[k].spawnpoints.Add(SpawnPoints[i]);
-            }
-        }
+        
         //getting a reference to all the player's rigidbodies
         for (int i = 0; i < players.Length; i++)
         {
@@ -256,22 +263,37 @@ public class CharacterMovmentScript : MonoBehaviour
                 if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 ||
                     Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
                 {
+                    float HoriInput = Input.GetAxis("HorizontalP" + (i + 1));
+                    float VertInput = Input.GetAxis("VerticalP" + (i + 1));
                     //left stick for rotating if not blocking
-                    if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0))
+                    if (!players[i].blocking && (HoriInput != 0 || VertInput != 0))
                     {
-                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
-                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                        playersRB[i].AddForce(new Vector3(HoriInput * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
+                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(HoriInput, 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
                     else if (players[i].blocking)
                     {
-                        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
-                        playersAni[i].SetFloat("BlockMovVecX", Input.GetAxis("HorizontalP" + (i + 1)));
+                        playersRB[i].AddForce(new Vector3(HoriInput * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
+                        playersAni[i].SetFloat("BlockMovVecX", HoriInput);
                         //only rotate if you have a value to rotate to
                         if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
                         {
-                            playersAni[i].SetFloat("BlockMovVecY", Input.GetAxis("R_StickHorizontalP" + (i + 1)));
-                            playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                            Quaternion RotateTo = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                            float tmpRotDir = RotateTo.eulerAngles.y - playersRB[i].rotation.eulerAngles.y;
+
+                            if (tmpRotDir < 0.2f && tmpRotDir > -0.2f)
+                            {
+                                Debug.Log("Hit");
+                                playersAni[i].SetFloat("BlockMovVecY", 0.0f, 0.2f,Time.deltaTime);
+                            }
+                            else
+                            {
+                                Debug.Log("Hit too");
+                                playersAni[i].SetFloat("BlockMovVecY", tmpRotDir, 0.5f, Time.deltaTime);
+                            }
+
+                            playersRB[i].rotation = RotateTo;
                         }
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
@@ -294,6 +316,9 @@ public class CharacterMovmentScript : MonoBehaviour
                 else
                 {
                     //play Idle animation
+                    playersAni[i].SetFloat("BlockMovVecY", 0.0f, 0.2f, Time.deltaTime);
+                    playersAni[i].SetFloat("BlockMovVecX", 0.0f, 0.2f, Time.deltaTime);
+
                     playersAni[i].SetInteger("Anim", 0);
                 }
             }

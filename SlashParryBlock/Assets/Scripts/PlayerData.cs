@@ -26,7 +26,6 @@ public class PlayerData : MonoBehaviour
     public List<RespawnPoints> spawnpoints;
 
     public GameObject trailEffect;
-    public Transform Spine;
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
     public bool ComboAttack = false;
     //original health is their spawned health 
@@ -65,6 +64,8 @@ public class PlayerData : MonoBehaviour
         OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
         trailEffect.SetActive(false);
+
+        GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
     }
 
     void Update()
