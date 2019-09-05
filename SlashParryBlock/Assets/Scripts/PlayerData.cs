@@ -536,17 +536,19 @@ public class PlayerData : MonoBehaviour
         parried = false;
         isParried = false;
         knockedback = false;
-        HasExcalibur = false;
         Vector3 excaliburSpawn = GetComponent<Rigidbody>().position;
         Deaths++;
         playClip(ClipSelector.death);
         //sleep the rigidbody because velocity doesn't update properly
         GetComponent<Rigidbody>().Sleep();
         GetComponent<Rigidbody>().velocity  = new Vector3(0, 0, 0);
-
+        if (HasExcalibur)
+        {
+            ExcaliburObj.SetActive(false);
+            Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), excaliburSpawn, Quaternion.identity);
+            HasExcalibur = false;
+        }
         GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
-        ExcaliburObj.SetActive(false);
-        Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), excaliburSpawn, Quaternion.identity);
     }
     public void SetStock(bool Nostock)
     {
