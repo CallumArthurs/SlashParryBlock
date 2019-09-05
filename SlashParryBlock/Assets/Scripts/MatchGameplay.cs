@@ -133,7 +133,7 @@ public class MatchGameplay : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             playerStatsCurRound.Add(new PlayerStats(CharMovScript.players[i].kills, CharMovScript.players[i].Deaths, CharMovScript.players[i].successfulParries,
-                                                    CharMovScript.players[i].damageDealt, CharMovScript.players[i].damageTaken, CharMovScript.players[i].killStreak));
+                                                    (int)CharMovScript.players[i].damageDealt, (int)CharMovScript.players[i].damageTaken, CharMovScript.players[i].killStreak));
 
 
             playerStatsTotal[i].kills += playerStatsCurRound[i].kills;

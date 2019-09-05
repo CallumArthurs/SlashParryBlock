@@ -25,12 +25,15 @@ public class PlayerData : MonoBehaviour
     [HideInInspector]
     public List<RespawnPoints> spawnpoints;
 
+    public GameObject ExcaliburObj;
     public GameObject trailEffect;
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
     public bool ComboAttack = false;
     //original health is their spawned health 
-    private int originalHealth, health,damage, backstabDamage, RiposteDamage;
-    public int kills = 0,Deaths = 0,successfulParries = 0,damageDealt = 0,damageTaken = 0,killStreak = 0, killstreakTemp = 0;
+    private int originalHealth, backstabDamage, RiposteDamage;
+    private float health, damage;
+    public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
+    public float damageTaken = 0, damageDealt = 0;
     private float knockback;
     private Animator animator;
     //how long an attack goes for this is temp fix waitng for animation
@@ -48,7 +51,9 @@ public class PlayerData : MonoBehaviour
     private float radius = 0.6f;
     private bool NoStock = false;
     private CharacterMovmentScript charMovScript;
+    private bool HasExcalibur = false;
 
+    public float ExcaliburDamageModifier;
     public GameObject particles;
     public GameObject AttackParticles;
     void Start()
@@ -128,27 +133,50 @@ public class PlayerData : MonoBehaviour
                             {
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                                 playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                                playersHit[i].hitPlayerData.TakeDamage(damage, this);
-                                damageDealt += damage;
+                                if (HasExcalibur)
+                                {
+                                    playersHit[i].hitPlayerData.TakeDamage(damage * (ExcaliburDamageModifier / 100), this);
+                                    damageDealt += damage * (ExcaliburDamageModifier / 100);
+                                }
+                                else
+                                {
+                                    playersHit[i].hitPlayerData.TakeDamage(damage, this);
+                                    damageDealt += damage;
+                                }
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
                             else if (playersHit[i].BackStab)
                             {
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                                 playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                                playersHit[i].hitPlayerData.TakeDamage(backstabDamage, this);
-                                damageDealt += backstabDamage;
+                                if (HasExcalibur)
+                                {
+                                    playersHit[i].hitPlayerData.TakeDamage(backstabDamage * (ExcaliburDamageModifier / 100), this);
+                                    damageDealt += backstabDamage * (ExcaliburDamageModifier / 100);
+                                }
+                                else
+                                {
+                                    playersHit[i].hitPlayerData.TakeDamage(backstabDamage, this);
+                                    damageDealt += backstabDamage;
+                                }
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
                             else if (playersHit[i].Riposte)
                             {
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                                 playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
-                                playersHit[i].hitPlayerData.TakeDamage(RiposteDamage, this);
-                                damageDealt += RiposteDamage;
+                                if (HasExcalibur)
+                                {
+                                    playersHit[i].hitPlayerData.TakeDamage(RiposteDamage * (ExcaliburDamageModifier / 100), this);
+                                    damageDealt += RiposteDamage * (ExcaliburDamageModifier / 100);
+                                }
+                                else
+                                {
+                                    playersHit[i].hitPlayerData.TakeDamage(RiposteDamage, this);
+                                    damageDealt += RiposteDamage;
+                                }
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
-
                         }
                         Destroy(playersHit[i]);
                     }
@@ -417,12 +445,12 @@ public class PlayerData : MonoBehaviour
         playersHit.Clear();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         damageTaken += damage;
         health -= damage;
     }
-    public void TakeDamage(int damage, PlayerData player)
+    public void TakeDamage(float damage, PlayerData player)
     {
         damageTaken += damage;
         health -= damage;
@@ -434,7 +462,7 @@ public class PlayerData : MonoBehaviour
         originalHealth = value;
         health = value;
     }
-    public int getHealth()
+    public float getHealth()
     {
         return (health);
     }
@@ -491,6 +519,11 @@ public class PlayerData : MonoBehaviour
         audioPlayer = player;
         PlayerSounds = sounds;
     }
+    public void SetExcalibur(bool value)
+    {
+        HasExcalibur = value;
+        ExcaliburObj.SetActive(true);
+    }
 
     private void playClip(ClipSelector clip)
     {
@@ -503,6 +536,8 @@ public class PlayerData : MonoBehaviour
         parried = false;
         isParried = false;
         knockedback = false;
+        HasExcalibur = false;
+        Vector3 excaliburSpawn = GetComponent<Rigidbody>().position;
         Deaths++;
         playClip(ClipSelector.death);
         //sleep the rigidbody because velocity doesn't update properly
@@ -510,6 +545,8 @@ public class PlayerData : MonoBehaviour
         GetComponent<Rigidbody>().velocity  = new Vector3(0, 0, 0);
 
         GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
+        ExcaliburObj.SetActive(false);
+        Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), excaliburSpawn, Quaternion.identity);
     }
     public void SetStock(bool Nostock)
     {
