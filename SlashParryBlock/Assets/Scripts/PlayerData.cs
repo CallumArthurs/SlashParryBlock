@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerData : MonoBehaviour
 {
-
     private enum ClipSelector
     {
         attackMiss,
@@ -16,6 +15,7 @@ public class PlayerData : MonoBehaviour
         block,
         death
     }
+
     #region variables
     [HideInInspector]
     public int score;
@@ -29,7 +29,7 @@ public class PlayerData : MonoBehaviour
     public GameObject trailEffect;
     public GameObject particles;
     public GameObject AttackParticles;
-
+    public Behaviour halo;
 
     public float ExcaliburKnockbackModifier;
     public float ExcaliburDamageModifier;
@@ -54,14 +54,15 @@ public class PlayerData : MonoBehaviour
     private float health, damage;
 
     private PlayerData playerLastHit;
-    private List<AudioClip> PlayerSounds;
     private AudioSource audioPlayer;
     private Vector3 OriginalPos;
-    private List<HitPlayers> playersHit;
-    private List<PlayerData> invinciblePlayers;
-    private AnimatorClipInfo[] AttackAnim;
     private CharacterMovmentScript charMovScript;
     private Animator animator;
+
+    private AnimatorClipInfo[] AttackAnim;
+    private List<AudioClip> PlayerSounds;
+    private List<HitPlayers> playersHit;
+    private List<PlayerData> invinciblePlayers;
 
     private bool attacked = false, parried = false, isParried = false, knockedback = false;
     private bool NoStock = false;
@@ -80,6 +81,7 @@ public class PlayerData : MonoBehaviour
         animator = gameObject.GetComponentInChildren<Animator>();
         OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
+
         trailEffect.SetActive(false);
 
         transform.position = charMovScript.SpawnPlayer();
@@ -608,7 +610,8 @@ public class PlayerData : MonoBehaviour
     public void SetExcalibur(bool value)
     {
         HasExcalibur = value;
-        ExcaliburObj.SetActive(true);
+        halo.enabled = value;
+        ExcaliburObj.SetActive(value);
     }
 
     private void playClip(ClipSelector clip)
@@ -630,9 +633,8 @@ public class PlayerData : MonoBehaviour
         GetComponent<Rigidbody>().velocity  = new Vector3(0, 0, 0);
         if (HasExcalibur)
         {
-            ExcaliburObj.SetActive(false);
+            SetExcalibur(false);
             Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), excaliburSpawn, Quaternion.identity);
-            HasExcalibur = false;
         }
         GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
     }
