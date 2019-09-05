@@ -53,6 +53,7 @@ public class PlayerData : MonoBehaviour
     private CharacterMovmentScript charMovScript;
     private bool HasExcalibur = false;
 
+    public float ExcaliburKnockbackModifier;
     public float ExcaliburDamageModifier;
     public GameObject particles;
     public GameObject AttackParticles;
@@ -70,7 +71,7 @@ public class PlayerData : MonoBehaviour
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
         trailEffect.SetActive(false);
 
-        GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
+        transform.position = charMovScript.SpawnPlayer();
     }
 
     void Update()
@@ -132,14 +133,15 @@ public class PlayerData : MonoBehaviour
                             if (playersHit[i].Normal)
                             {
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                                playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                 if (HasExcalibur)
                                 {
+                                    playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(damage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += damage * (ExcaliburDamageModifier / 100);
                                 }
                                 else
                                 {
+                                    playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(damage, this);
                                     damageDealt += damage;
                                 }
@@ -148,14 +150,15 @@ public class PlayerData : MonoBehaviour
                             else if (playersHit[i].BackStab)
                             {
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                                playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                 if (HasExcalibur)
                                 {
+                                    playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(backstabDamage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += backstabDamage * (ExcaliburDamageModifier / 100);
                                 }
                                 else
                                 {
+                                    playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(backstabDamage, this);
                                     damageDealt += backstabDamage;
                                 }
@@ -164,14 +167,15 @@ public class PlayerData : MonoBehaviour
                             else if (playersHit[i].Riposte)
                             {
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
-                                playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                 if (HasExcalibur)
                                 {
+                                    playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(RiposteDamage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += RiposteDamage * (ExcaliburDamageModifier / 100);
                                 }
                                 else
                                 {
+                                    playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(RiposteDamage, this);
                                     damageDealt += RiposteDamage;
                                 }
