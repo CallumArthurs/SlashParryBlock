@@ -29,7 +29,8 @@ public class PlayerData : MonoBehaviour
     public GameObject trailEffect;
     public GameObject particles;
     public GameObject AttackParticles;
-    public Behaviour halo;
+
+    private Behaviour halo;
 
     public float ExcaliburKnockbackModifier;
     public float ExcaliburDamageModifier;
@@ -81,6 +82,7 @@ public class PlayerData : MonoBehaviour
         animator = gameObject.GetComponentInChildren<Animator>();
         OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
+        halo = (Behaviour)GetComponent("Halo");
 
         trailEffect.SetActive(false);
 
