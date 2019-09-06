@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class DynamicCamera : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
     public CharacterMovmentScript charMovScript;
     public float ZOffset,YOffset, camSpeed, sensitivity;
     private Vector3 Averagepos;

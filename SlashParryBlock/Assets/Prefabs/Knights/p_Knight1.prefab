@@ -6960,9 +6960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8586612797040604231}
   - component: {fileID: 8586612797040604228}
-  - component: {fileID: 5493310882863006154}
   - component: {fileID: 4304441879319668596}
-  - component: {fileID: 1189784514082462442}
   m_Layer: 0
   m_Name: p_Knight1
   m_TagString: Untagged
@@ -6999,26 +6997,6 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.85, z: -0}
---- !u!114 &5493310882863006154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8586612797040604227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3f42b9715c4a44d9f706e7bb295552, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DizzySpinner: {fileID: 0}
-  score: 0
-  blocking: 0
-  spawnpoints: []
-  particles: {fileID: 3623630282080540649, guid: fc9683958652a034687d8070822b8a40,
-    type: 3}
-  AttackParticles: {fileID: 3623630282080540649, guid: 2b8f3f873f24f0844ab1916a5d6e8e2b,
-    type: 3}
 --- !u!54 &4304441879319668596
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7035,19 +7013,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &1189784514082462442
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8586612797040604227}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.33613777, z: 1.0049348}
-  m_Center: {x: 0, y: 0.5, z: 0.6}
 --- !u!1001 &7183229253045140419
 PrefabInstance:
   m_ObjectHideFlags: 0

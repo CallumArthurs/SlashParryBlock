@@ -33,6 +33,8 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<PlayerHeartsContainer> playerHearts;
     public List<string> joystickCharInputs;
 
+    public KnightMeshRenderer KnightMeshRenderer;
+
     public GameObject P1PlayerCollider,P2PlayerCollider,P3PlayerCollider,P4PlayerCollider;
 
     public Sprite emptyHeart, halfHeart, fullHeart;
@@ -44,6 +46,14 @@ public class CharacterMovmentScript : MonoBehaviour
 
     private void Awake()
     {
+        levelLoadInfo levelDatatmp = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
+        joystickCharInputs = levelDatatmp.joystickCharInputs;
+
+        List<SkinnedMeshRenderer> skinnedMeshRenderers = new List<SkinnedMeshRenderer>();
+        skinnedMeshRenderers.AddRange(players[0].GetComponentsInChildren<SkinnedMeshRenderer>());
+
+        KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.MeshSelected);
+
         SpawnPoints = new List<RespawnPoints>();
 
         //getting the spawnpoint parent to find all the spawnpoints
@@ -62,10 +72,12 @@ public class CharacterMovmentScript : MonoBehaviour
                 players[k].spawnpoints.Add(SpawnPoints[i]);
             }
         }
+
     }
 
     void Start()
     {
+
         playersAni = new List<Animator>();
         playersRB = new List<Rigidbody>();
         soundPlayers = new List<AudioSource>();
@@ -88,7 +100,6 @@ public class CharacterMovmentScript : MonoBehaviour
             players[i].setKnockback(playerKnockback);
             players[i].SetSounds(soundPlayers[i],playerClips);
         }
-
         
         //getting a reference to all the player's rigidbodies
         for (int i = 0; i < players.Length; i++)
@@ -101,8 +112,9 @@ public class CharacterMovmentScript : MonoBehaviour
     void Update()
     {
         //iterate through all the players
-        for (int i = 0; i < playersRB.Count; i++)
+        for (int i = 0; i < joystickCharInputs.Count; i++)
         {
+            Debug.Log(joystickCharInputs[i]);
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
@@ -151,38 +163,36 @@ public class CharacterMovmentScript : MonoBehaviour
                 //}
                 #endregion
 
-                if (Input.GetAxis("L_BumperP" + (i + 1)) > 0 && !players[i].getAttacked())
+                if (Input.GetAxis("L_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked())
                 {
-                    //playersRB[i].mass = 50.0f;
                     players[i].blocking = true;
                 }
                 else
                 {
-                    //playersRB[i].mass = 1.0f;
                     players[i].blocking = false;
                     //you can't attack if you just did
-                    if (Input.GetAxis("R_BumperP" + (i + 1)) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed)
+                    if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed)
                     {
                         players[i].Attack(1);
                         players[i].AttackAxisUsed = true;
                     }
-                    else if (Input.GetAxis("L_TriggerP" + (i + 1)) < 0 && !players[i].getAttacked() && !players[i].ParryAxisUsed)
+                    else if (Input.GetAxis("L_Trigger" + joystickCharInputs[i]) < 0 && !players[i].getAttacked() && !players[i].ParryAxisUsed)
                     {
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
                         players[i].Parry();
                         players[i].ParryAxisUsed = true;
                     }
-                    else if (Input.GetAxis("R_TriggerP" + (i + 1)) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed)
+                    else if (Input.GetAxis("R_Trigger" + joystickCharInputs[i]) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed)
                     {
                         players[i].Attack(2);
                         players[i].AttackAxisUsed = true;
                     }
                     
-                    if(Input.GetAxis("R_BumperP" + (i + 1)) == 0)
+                    if(Input.GetAxis("R_Bumper" + joystickCharInputs[i]) == 0)
                     {
                         players[i].AttackAxisUsed = false;
                     }
-                    if (Input.GetAxis("L_TriggerP" + (i + 1)) == 0)
+                    if (Input.GetAxis("L_Trigger" + joystickCharInputs[i]) == 0)
                     {
                         players[i].ParryAxisUsed = false;
                     }
@@ -245,7 +255,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        for (int i = 0; i < playersRB.Count; i++)
+        for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor))
             {
@@ -260,16 +270,16 @@ public class CharacterMovmentScript : MonoBehaviour
             if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
                 //for player1 this will evaluate to "HorizontalP1"
-                if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 ||
-                    Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                if (Input.GetAxis("Horizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) != 0 ||
+                    Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("R_StickVertical" + joystickCharInputs[i]) != 0)
                 {
-                    float HoriInput = Input.GetAxis("HorizontalP" + (i + 1));
-                    float VertInput = Input.GetAxis("VerticalP" + (i + 1));
+                    float HoriInput = Input.GetAxis("Horizontal" + joystickCharInputs[i]);
+                    float VertInput = Input.GetAxis("Vertical" + joystickCharInputs[i]);
                     //left stick for rotating if not blocking
                     if (!players[i].blocking && (HoriInput != 0 || VertInput != 0))
                     {
-                        playersRB[i].AddForce(new Vector3(HoriInput * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
-                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(HoriInput, 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
+                        playersRB[i].AddForce(new Vector3(HoriInput * speed, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i]) * speed), ForceMode.Impulse);
+                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(HoriInput, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i])), Vector3.up), rotSpeed);
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
                     else if (players[i].blocking)
@@ -277,9 +287,9 @@ public class CharacterMovmentScript : MonoBehaviour
                         playersRB[i].AddForce(new Vector3(HoriInput * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
                         playersAni[i].SetFloat("BlockMovVecX", HoriInput);
                         //only rotate if you have a value to rotate to
-                        if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
+                        if (Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("R_StickVerticalP" + joystickCharInputs[i]) != 0)
                         {
-                            Quaternion RotateTo = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                            Quaternion RotateTo = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + joystickCharInputs[i]), 0, -Input.GetAxis("R_StickVerticalP" + joystickCharInputs[i])), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
                             float tmpRotDir = RotateTo.eulerAngles.y - playersRB[i].rotation.eulerAngles.y;
 
                             if (tmpRotDir < 0.2f && tmpRotDir > -0.2f)
@@ -299,7 +309,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     }
                     else
                     {
-                        if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) == 0 || Input.GetAxis("VerticalP" + (i + 1)) == 0))
+                        if (!players[i].blocking && (Input.GetAxis("Horizontal" + joystickCharInputs[i]) == 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) == 0))
                         {
                             playersAni[i].SetInteger("Anim", 0);
                         }

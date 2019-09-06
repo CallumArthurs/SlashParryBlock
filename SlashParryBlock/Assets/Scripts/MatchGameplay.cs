@@ -57,15 +57,6 @@ public class MatchGameplay : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    playMatch = true;
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        CharMovScript.players[i].ResetPlayer();
-        //    }
-        //}
-
         if (playMatch)
         {
             RoundTimer -= Time.deltaTime;
