@@ -89,11 +89,11 @@ public class MatchGameplay : MonoBehaviour
         {
             if (Input.anyKeyDown)
             {
-                GameUI.SetActive(true);
-                if (Rounds == 0 && restartGame)
+                if (restartGame)
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    SceneManager.LoadScene(0);
                 }
+                GameUI.SetActive(true);
 
                 for (int i = 0; i < CharMovScript.players.Count; i++)
                 {
@@ -157,15 +157,13 @@ public class MatchGameplay : MonoBehaviour
         {
             MatchEnd();
         }
-
         Debug.Log("Round End");
     }
 
     void MatchEnd()
     {
-        playMatch = false;
         restartGame = true;
+        playMatch = false;
         Debug.Log("MatchEnd");
-        //move to stats screen
     }
 }
