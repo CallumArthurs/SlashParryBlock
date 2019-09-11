@@ -30,13 +30,13 @@ public class PlayerData : MonoBehaviour
     public GameObject particles;
     public GameObject AttackParticles;
 
-    private Behaviour halo;
 
     public float ExcaliburKnockbackModifier;
     public float ExcaliburDamageModifier;
 
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
     public bool ComboAttack = false;
+    public bool Respawning = false, invulnerable = false;
 
     public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
 
@@ -50,6 +50,7 @@ public class PlayerData : MonoBehaviour
     private float ParryTimer = 0.6f;
     private float gotParriedTimer = 2.0f;
     private float KnockbackTimer = 0.25f;
+    private float RespawnTimer = 2.0f, InvulnerabilityTimer = 4.0f;
     private float radius = 0.6f;
     private float knockback;
     private float health, damage;
@@ -59,6 +60,8 @@ public class PlayerData : MonoBehaviour
     private Vector3 OriginalPos;
     private CharacterMovmentScript charMovScript;
     private Animator animator;
+    private Behaviour halo;
+    private Material playerMaterial;
 
     private AnimatorClipInfo[] AttackAnim;
     private List<AudioClip> PlayerSounds;
@@ -68,6 +71,7 @@ public class PlayerData : MonoBehaviour
     private bool attacked = false, parried = false, isParried = false, knockedback = false;
     private bool NoStock = false;
     private bool HasExcalibur = false;
+    private bool GotoWhite;
     #endregion
 
     void Start()
@@ -84,7 +88,7 @@ public class PlayerData : MonoBehaviour
         halo = (Behaviour)GetComponent("Halo");
 
         trailEffect.SetActive(false);
-
+        playerMaterial = GetComponentInChildren<SkinnedMeshRenderer>().material;
         transform.position = charMovScript.SpawnPlayer();
         OriginalPos = transform.position;
     }
@@ -167,6 +171,11 @@ public class PlayerData : MonoBehaviour
                             {
                                 continue;
                             }
+                        }
+
+                        if (CollisionPlayerData.invulnerable)
+                        {
+                            continue;
                         }
 
                         //adds a new HitPlayers class and hands over the data
@@ -320,6 +329,49 @@ public class PlayerData : MonoBehaviour
                 {
                     knockedback = false;
                     KnockbackTimer = 0.25f;
+                }
+            }
+
+            if (Respawning)
+            {
+                RespawnTimer -= Time.deltaTime;
+
+                if (RespawnTimer <= 0.0f)
+                {
+                    Respawning = false;
+                    RespawnTimer = 2.0f;
+                }
+            }
+
+            if (invulnerable)
+            {
+                InvulnerabilityTimer -= Time.deltaTime;
+
+                if (InvulnerabilityTimer <= 0.0f)
+                {
+                    playerMaterial.color = Color.white;
+                    halo.enabled = false;
+                    invulnerable = false;
+                    InvulnerabilityTimer = 4.0f;
+                }
+                else if (InvulnerabilityTimer < 2.0f)
+                {
+                    if (!GotoWhite)
+                    {
+                        playerMaterial.color *= 0.8f;
+                        if (playerMaterial.color.r <= 155)
+                        {
+                            GotoWhite = true;
+                        }
+                    }
+                    else
+                    {
+                        playerMaterial.color *= 1.2f;
+                        if (playerMaterial.color.r >= 155)
+                        {
+                            GotoWhite = false;
+                        }
+                    }
                 }
             }
         }
@@ -621,8 +673,13 @@ public class PlayerData : MonoBehaviour
         audioPlayer.clip = PlayerSounds[(int)clip];
         audioPlayer.Play();
     }
+
     private void Respawn()
     {
+        Respawning = true;
+        invulnerable = true;
+        halo.enabled = true;
+
         attacked = false;
         parried = false;
         isParried = false;

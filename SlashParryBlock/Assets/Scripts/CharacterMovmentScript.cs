@@ -137,7 +137,7 @@ public class CharacterMovmentScript : MonoBehaviour
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             //no inputs taken if you have been knocked back
-            if (!players[i].getIsParried() && !players[i].getKnockedBack())
+            if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
             {
                 #region moved to fixedUpdate()
                 //for player1 this will evaluate to "HorizontalP1"
@@ -288,7 +288,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 speed = AirControlSpeed;
                 maxSpeed = Mathf.Infinity;
             }
-            if (!players[i].getIsParried() && !players[i].getKnockedBack())
+            if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
             {
                 //for player1 this will evaluate to "HorizontalP1"
                 if (Input.GetAxis("Horizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) != 0 ||

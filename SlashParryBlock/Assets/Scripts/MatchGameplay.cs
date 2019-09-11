@@ -93,7 +93,10 @@ public class MatchGameplay : MonoBehaviour
                 {
                     SceneManager.LoadScene(0);
                 }
-                GameUI.SetActive(true);
+                else
+                {
+                    GameUI.SetActive(true);
+                }
 
                 for (int i = 0; i < CharMovScript.players.Count; i++)
                 {

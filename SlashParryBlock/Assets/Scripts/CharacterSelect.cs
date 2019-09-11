@@ -129,7 +129,7 @@ public class CharacterSelect : MonoBehaviour
                     levelSelect.SetActive(true);
                     selectingLevel = true;
                 }
-            }            
+            }
         }
         else if (joystickCharInputs.Count > 0 && selectingLevel)
         {

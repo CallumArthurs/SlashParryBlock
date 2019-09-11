@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2848829209384447668}
   - component: {fileID: 5089145965695556278}
   m_Layer: 14
-  m_Name: Player1
+  m_Name: p_KnightSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,6 +78,8 @@ MonoBehaviour:
   AttackAxisUsed: 0
   ParryAxisUsed: 0
   ComboAttack: 0
+  Respawning: 0
+  invulnerable: 0
   kills: 0
   Deaths: 0
   successfulParries: 0
@@ -202,6 +204,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 04a675074a2996047acb8c5453f65b27, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 04a675074a2996047acb8c5453f65b27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100350, guid: 04a675074a2996047acb8c5453f65b27, type: 3}
       propertyPath: m_Layer
