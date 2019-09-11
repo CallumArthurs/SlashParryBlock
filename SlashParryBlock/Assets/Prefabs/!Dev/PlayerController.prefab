@@ -386,10 +386,6 @@ MonoBehaviour:
   - {fileID: 576111424}
   - {fileID: 1153777135}
   - {fileID: 1005106546}
-  P1PlayerCollider: {fileID: 607410986}
-  P2PlayerCollider: {fileID: 576111424}
-  P3PlayerCollider: {fileID: 1153777135}
-  P4PlayerCollider: {fileID: 1005106546}
   emptyHeart: {fileID: 21300000, guid: b79acf99a4e92564c97141a032e8cd2a, type: 3}
   halfHeart: {fileID: 21300000, guid: 1d005ccfe41524a429df707ba760beb1, type: 3}
   fullHeart: {fileID: 21300000, guid: a2aa26ee24bc6404690a14ed940604a5, type: 3}
@@ -1168,14 +1164,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909498444345586211}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1d2277304867e4419fcdc83c54ba10f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 1
   Rounds: 2
-  RoundLength: 120
+  RoundLength: 5
   PlayerLives: 3
   RoundStatsUI: {fileID: 0}
   GameUI: {fileID: 0}
@@ -4112,16 +4108,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1909498444345586209}
     m_Modifications:
-    - target: {fileID: 7718227340150029699, guid: b9d75bc5804800249b8cb219c2ea5993,
-        type: 3}
-      propertyPath: m_Name
-      value: Player1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718227340150029699, guid: b9d75bc5804800249b8cb219c2ea5993,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7718227340150029703, guid: b9d75bc5804800249b8cb219c2ea5993,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4175,6 +4161,16 @@ PrefabInstance:
     - target: {fileID: 7718227340150029703, guid: b9d75bc5804800249b8cb219c2ea5993,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718227340150029699, guid: b9d75bc5804800249b8cb219c2ea5993,
+        type: 3}
+      propertyPath: m_Name
+      value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718227340150029699, guid: b9d75bc5804800249b8cb219c2ea5993,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7718227339765961094, guid: b9d75bc5804800249b8cb219c2ea5993,
