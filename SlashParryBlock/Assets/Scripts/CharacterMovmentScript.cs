@@ -35,7 +35,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     public KnightMeshRenderer KnightMeshRenderer;
 
-    public GameObject P1PlayerCollider,P2PlayerCollider,P3PlayerCollider,P4PlayerCollider;
+    public List<GameObject> PlayerColliders;
 
     public Sprite emptyHeart, halfHeart, fullHeart;
     private List<RespawnPoints> SpawnPoints;
@@ -353,12 +353,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     playersAni[i].SetInteger("Anim", 0);
                 }
             }
-
+            PlayerColliders[i].transform.position = players[i].transform.position;
         }
-
-        P1PlayerCollider.transform.position = players[0].transform.position;
-        P2PlayerCollider.transform.position = players[1].transform.position;
-        //P3PlayerCollider.transform.position = players[2].transform.position;
-        //P4PlayerCollider.transform.position = players[3].transform.position;
     }
 }

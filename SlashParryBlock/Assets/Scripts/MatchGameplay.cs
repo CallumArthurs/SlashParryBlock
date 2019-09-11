@@ -24,10 +24,7 @@ public class MatchGameplay : MonoBehaviour
     private float RoundTimer;
     private List<PlayerStats> playerStatsCurRound = new List<PlayerStats>();
     private List<PlayerStats> playerStatsTotal = new List<PlayerStats>();
-    private Text[] player1Statstxt;
-    private Text[] player2Statstxt;
-    private Text[] player3Statstxt;
-    private Text[] player4Statstxt;
+    private List<Text[]> endScreenStats = new List<Text[]>();
 
     void Start()
     {
@@ -39,11 +36,10 @@ public class MatchGameplay : MonoBehaviour
         }
         RoundStatsUI.SetActive(true);
 
-        player1Statstxt = GameObject.FindGameObjectWithTag("Player1Stats").GetComponentsInChildren<Text>();
-        player2Statstxt = GameObject.FindGameObjectWithTag("Player2Stats").GetComponentsInChildren<Text>();
-        player3Statstxt = GameObject.FindGameObjectWithTag("Player3Stats").GetComponentsInChildren<Text>();
-        player4Statstxt = GameObject.FindGameObjectWithTag("Player4Stats").GetComponentsInChildren<Text>();
-
+        endScreenStats.Add(GameObject.FindGameObjectWithTag("Player1Stats").GetComponentsInChildren<Text>());
+        endScreenStats.Add(GameObject.FindGameObjectWithTag("Player2Stats").GetComponentsInChildren<Text>());
+        endScreenStats.Add(GameObject.FindGameObjectWithTag("Player3Stats").GetComponentsInChildren<Text>());
+        endScreenStats.Add(GameObject.FindGameObjectWithTag("Player4Stats").GetComponentsInChildren<Text>());
 
         RoundTimer = RoundLength;
         StartMatch();
@@ -65,7 +61,7 @@ public class MatchGameplay : MonoBehaviour
                 RoundEnd();
             }
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < CharMovScript.players.Count; i++)
             {
                 playerStatsCurRound[i].Deaths = CharMovScript.players[i].Deaths;
             }
@@ -78,7 +74,7 @@ public class MatchGameplay : MonoBehaviour
                     }
                 case Gamemode.Stock:
                     {
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < CharMovScript.players.Count; i++)
                         {
                             if ((PlayerLives - playerStatsCurRound[i].Deaths) <= 0)
                             {
@@ -99,7 +95,7 @@ public class MatchGameplay : MonoBehaviour
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < CharMovScript.players.Count; i++)
                 {
                     CharMovScript.players[i].ResetPlayer();
                 }
@@ -121,7 +117,7 @@ public class MatchGameplay : MonoBehaviour
         GameUI.SetActive(false);
         RoundStatsUI.SetActive(true);
         playerStatsCurRound.Clear();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < CharMovScript.players.Count; i++)
         {
             playerStatsCurRound.Add(new PlayerStats(CharMovScript.players[i].kills, CharMovScript.players[i].Deaths, CharMovScript.players[i].successfulParries,
                                                     (int)CharMovScript.players[i].damageDealt, (int)CharMovScript.players[i].damageTaken, CharMovScript.players[i].killStreak));
@@ -144,35 +140,15 @@ public class MatchGameplay : MonoBehaviour
             }
         }
 
-        #region disgusting
-        player1Statstxt[0].text = "Kills: " +       playerStatsCurRound[0].kills.ToString();
-        player1Statstxt[1].text = "Deaths: " +      playerStatsCurRound[0].Deaths.ToString();
-        player1Statstxt[2].text = "Parries: " +     playerStatsCurRound[0].successfulParries.ToString();
-        player1Statstxt[3].text = "Damage Dealt: " +playerStatsCurRound[0].damageDealt.ToString();
-        player1Statstxt[4].text = "Damage Taken: " +playerStatsCurRound[0].damageTaken.ToString();
-        player1Statstxt[5].text = "Kill Streak: " + playerStatsCurRound[0].killStreak.ToString();
-
-        player2Statstxt[0].text = "Kills: " +       playerStatsCurRound[1].kills.ToString();
-        player2Statstxt[1].text = "Deaths: " +      playerStatsCurRound[1].Deaths.ToString();
-        player2Statstxt[2].text = "Parries: " +     playerStatsCurRound[1].successfulParries.ToString();
-        player2Statstxt[3].text = "Damage Dealt: " +playerStatsCurRound[1].damageDealt.ToString();
-        player2Statstxt[4].text = "Damage Taken: " +playerStatsCurRound[1].damageTaken.ToString();
-        player2Statstxt[5].text = "Kill Streak: " + playerStatsCurRound[1].killStreak.ToString();
-
-        player3Statstxt[0].text = "Kills: " +       playerStatsCurRound[2].kills.ToString();
-        player3Statstxt[1].text = "Deaths: " +      playerStatsCurRound[2].Deaths.ToString();
-        player3Statstxt[2].text = "Parries: " +     playerStatsCurRound[2].successfulParries.ToString();
-        player3Statstxt[3].text = "Damage Dealt: " +playerStatsCurRound[2].damageDealt.ToString();
-        player3Statstxt[4].text = "Damage Taken: " +playerStatsCurRound[2].damageTaken.ToString();
-        player3Statstxt[5].text = "Kill Streak: " + playerStatsCurRound[2].killStreak.ToString();
-
-        player4Statstxt[0].text = "Kills: " +       playerStatsCurRound[3].kills.ToString();
-        player4Statstxt[1].text = "Deaths: " +      playerStatsCurRound[3].Deaths.ToString();
-        player4Statstxt[2].text = "Parries: " +     playerStatsCurRound[3].successfulParries.ToString();
-        player4Statstxt[3].text = "Damage Dealt: " +playerStatsCurRound[3].damageDealt.ToString();
-        player4Statstxt[4].text = "Damage Taken: " +playerStatsCurRound[3].damageTaken.ToString();
-        player4Statstxt[5].text = "Kill Streak: " + playerStatsCurRound[3].killStreak.ToString();
-        #endregion
+        for (int i = 0; i < endScreenStats.Count; i++)
+        {
+            endScreenStats[i][0].text = "Kills: " + playerStatsCurRound[i].kills.ToString();
+            endScreenStats[i][1].text = "Deaths: " + playerStatsCurRound[i].Deaths.ToString();
+            endScreenStats[i][2].text = "Parries: " + playerStatsCurRound[i].successfulParries.ToString();
+            endScreenStats[i][3].text = "Damage Dealt: " + playerStatsCurRound[i].damageDealt.ToString();
+            endScreenStats[i][4].text = "Damage Taken: " + playerStatsCurRound[i].damageTaken.ToString();
+            endScreenStats[i][5].text = "Kill Streak: " + playerStatsCurRound[i].killStreak.ToString();
+        }
 
         Rounds--;
 

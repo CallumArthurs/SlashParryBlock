@@ -73,20 +73,20 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         //playersHit = new List<HitPlayers>();
-        PlayerSounds = new List<AudioClip>();
+        //PlayerSounds = new List<AudioClip>();
         spawnpoints = new List<RespawnPoints>();
         playersHit = new List<HitPlayers>();
         invinciblePlayers = new List<PlayerData>();
-        //intialize the random num gen
+
         health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
-        OriginalPos = transform.position;
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
         halo = (Behaviour)GetComponent("Halo");
 
         trailEffect.SetActive(false);
 
         transform.position = charMovScript.SpawnPlayer();
+        OriginalPos = transform.position;
     }
 
     void Update()
@@ -618,8 +618,8 @@ public class PlayerData : MonoBehaviour
 
     private void playClip(ClipSelector clip)
     {
-        //audioPlayer.clip = PlayerSounds[(int)clip];
-        //audioPlayer.Play();
+        audioPlayer.clip = PlayerSounds[(int)clip];
+        audioPlayer.Play();
     }
     private void Respawn()
     {
