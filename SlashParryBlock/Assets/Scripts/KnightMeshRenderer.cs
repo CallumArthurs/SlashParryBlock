@@ -6,7 +6,7 @@ public class KnightMeshRenderer : MonoBehaviour
 {
     private List<List<SkinnedMeshRenderer>> KnightMeshes;
 
-    void Awake()
+    private void SetupMeshes()
     {
         KnightMeshes = new List<List<SkinnedMeshRenderer>>();
         int i = 1;
@@ -29,6 +29,10 @@ public class KnightMeshRenderer : MonoBehaviour
 
     public int LoadMesh (List<SkinnedMeshRenderer> TargetMesh, int KnightID)
     {
+        if (KnightMeshes == null)
+        {
+            SetupMeshes();
+        }
         if (KnightID >= KnightMeshes.Count)
         {
             KnightID = 0;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RespawnPoints : MonoBehaviour
 {
-    private PlayerData[] players;
+    private List<PlayerData> players;
     public CharacterMovmentScript CharacterMovmentScript;
     public bool Validated = true;
 
@@ -17,7 +17,7 @@ public class RespawnPoints : MonoBehaviour
 
     public bool spawnCheck()
     {
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < players.Count; i++)
         {
             if ((players[i].gameObject.transform.position - transform.position).magnitude < 3.0f)
             {

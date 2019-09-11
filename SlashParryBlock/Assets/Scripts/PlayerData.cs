@@ -618,8 +618,8 @@ public class PlayerData : MonoBehaviour
 
     private void playClip(ClipSelector clip)
     {
-        audioPlayer.clip = PlayerSounds[(int)clip];
-        audioPlayer.Play();
+        //audioPlayer.clip = PlayerSounds[(int)clip];
+        //audioPlayer.Play();
     }
     private void Respawn()
     {

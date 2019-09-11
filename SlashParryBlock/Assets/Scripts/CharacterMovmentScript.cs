@@ -29,7 +29,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public float rotSpeed;
     public float blockSpeedMultiplier;
     public float blockRotSpeedMultiplier;
-    public PlayerData[] players;
+    public List<PlayerData> players = new List<PlayerData>();
     public List<PlayerHeartsContainer> playerHearts;
     public List<string> joystickCharInputs;
 
@@ -48,11 +48,36 @@ public class CharacterMovmentScript : MonoBehaviour
     {
         levelLoadInfo levelDatatmp = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
         joystickCharInputs = levelDatatmp.joystickCharInputs;
+        KnightMeshRenderer = gameObject.GetComponent<KnightMeshRenderer>();
+        for (int j = 0; j < levelDatatmp.meshSelected.Count; j++)
+        {
+            players.Insert(players.Count, Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject,gameObject.transform).GetComponent<PlayerData>());
+            switch (j)
+            {
+                case 1:
+                    players[j].gameObject.layer = 15;
+                    break;
 
-        List<SkinnedMeshRenderer> skinnedMeshRenderers = new List<SkinnedMeshRenderer>();
-        skinnedMeshRenderers.AddRange(players[0].GetComponentsInChildren<SkinnedMeshRenderer>());
+                case 2:
+                    players[j].gameObject.layer = 16;
+                    break;
 
-        KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.MeshSelected);
+                case 3:
+                    players[j].gameObject.layer = 17;
+                    break;
+
+                default:
+                    break;
+            }
+            List<SkinnedMeshRenderer> skinnedMeshRenderers = new List<SkinnedMeshRenderer>();
+            skinnedMeshRenderers.AddRange(players[j].GetComponentsInChildren<SkinnedMeshRenderer>());
+            for (int i = 0; i < skinnedMeshRenderers.Count; i++)
+            {
+                KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.meshSelected[j]);
+                skinnedMeshRenderers.Clear();
+            }
+        }
+        //KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.MeshSelected);
 
         SpawnPoints = new List<RespawnPoints>();
 
@@ -67,7 +92,7 @@ public class CharacterMovmentScript : MonoBehaviour
         //starting at 1 to skip the parent
         for (int i = 0; i < SpawnPoints.Count; i++)
         {
-            for (int k = 0; k < players.Length; k++)
+            for (int k = 0; k < players.Count; k++)
             {
                 players[k].spawnpoints.Add(SpawnPoints[i]);
             }
@@ -92,18 +117,15 @@ public class CharacterMovmentScript : MonoBehaviour
             soundPlayers.Add(tmpSources[i]);
         }
 
-        //setting the values of the players
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < players.Count; i++)
         {
+            //setting the values of the players
             players[i].setHealth(playerHealth);
             players[i].setDamage(playerDamage, backstabDamage, riposteDamage);
             players[i].setKnockback(playerKnockback);
             players[i].SetSounds(soundPlayers[i],playerClips);
-        }
-        
-        //getting a reference to all the player's rigidbodies
-        for (int i = 0; i < players.Length; i++)
-        {
+
+            //getting a reference to all the player's rigidbodies
             playersRB.Add(players[i].gameObject.GetComponent<Rigidbody>());
             playersAni.Add(players[i].gameObject.GetComponentInChildren<Animator>());
         }
@@ -114,7 +136,6 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            Debug.Log(joystickCharInputs[i]);
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack())
             {
@@ -284,12 +305,12 @@ public class CharacterMovmentScript : MonoBehaviour
                     }
                     else if (players[i].blocking)
                     {
-                        playersRB[i].AddForce(new Vector3(HoriInput * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("VerticalP" + (i + 1)) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
+                        playersRB[i].AddForce(new Vector3(HoriInput * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("Vertical" + joystickCharInputs[i]) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
                         playersAni[i].SetFloat("BlockMovVecX", HoriInput);
                         //only rotate if you have a value to rotate to
-                        if (Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("R_StickVerticalP" + joystickCharInputs[i]) != 0)
+                        if (Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("R_StickVertical" + joystickCharInputs[i]) != 0)
                         {
-                            Quaternion RotateTo = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + joystickCharInputs[i]), 0, -Input.GetAxis("R_StickVerticalP" + joystickCharInputs[i])), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
+                            Quaternion RotateTo = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]), 0, -Input.GetAxis("R_StickVertical" + joystickCharInputs[i])), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
                             float tmpRotDir = RotateTo.eulerAngles.y - playersRB[i].rotation.eulerAngles.y;
 
                             if (tmpRotDir < 0.2f && tmpRotDir > -0.2f)
@@ -337,7 +358,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
         P1PlayerCollider.transform.position = players[0].transform.position;
         P2PlayerCollider.transform.position = players[1].transform.position;
-        P3PlayerCollider.transform.position = players[2].transform.position;
-        P4PlayerCollider.transform.position = players[3].transform.position;
+        //P3PlayerCollider.transform.position = players[2].transform.position;
+        //P4PlayerCollider.transform.position = players[3].transform.position;
     }
 }

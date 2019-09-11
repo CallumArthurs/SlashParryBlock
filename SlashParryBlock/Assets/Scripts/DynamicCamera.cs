@@ -40,7 +40,7 @@ public class DynamicCamera : MonoBehaviour
         {
             Averagepos += new Vector3(charMovScript.players[i].transform.position.x,0,charMovScript.players[i].transform.position.z);
         }
-        Averagepos /= charMovScript.players.Length;
+        Averagepos /= charMovScript.players.Count;
         transform.Translate((new Vector3(transform.position.x - (Averagepos.x * sensitivity), (highestX - lowestX + YOffset) * sensitivity - transform.position.y , transform.position.z - ((highestZ - lowestZ + ZOffset) * sensitivity))) * Time.deltaTime * camSpeed);
         //transform.LookAt(Averagepos);
     }

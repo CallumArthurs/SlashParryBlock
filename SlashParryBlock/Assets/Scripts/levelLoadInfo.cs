@@ -6,6 +6,6 @@ using UnityEngine;
 public class levelLoadInfo : MonoBehaviour
 {
     public List<List<SkinnedMeshRenderer>> knightMeshes = new List<List<SkinnedMeshRenderer>>();
-    public int MeshSelected;
+    public List<int> meshSelected;
     public List<string> joystickCharInputs;
 }
