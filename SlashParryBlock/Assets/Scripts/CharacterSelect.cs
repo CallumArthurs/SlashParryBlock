@@ -124,7 +124,7 @@ public class CharacterSelect : MonoBehaviour
                 {
                     if (ReadyplayerCount == joystickCharInputs.Count)
                     {
-                        GameObject levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject);
+                        //GameObject levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject);
                         levelData.GetComponent<levelLoadInfo>().joystickCharInputs = joystickCharInputs;
                         for (int j = 0; j < joystickCharInputs.Count; j++)
                         {
