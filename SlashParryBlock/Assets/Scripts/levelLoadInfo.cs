@@ -8,4 +8,8 @@ public class levelLoadInfo : MonoBehaviour
     public List<List<SkinnedMeshRenderer>> knightMeshes = new List<List<SkinnedMeshRenderer>>();
     public List<int> meshSelected;
     public List<string> joystickCharInputs;
+    public MatchGameplay.Gamemode gamemode;
+    public int rounds;
+    public int playerLives;
+    public float RoundLength;
 }

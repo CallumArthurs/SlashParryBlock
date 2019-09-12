@@ -14,7 +14,7 @@ public class MatchGameplay : MonoBehaviour
 
     public Gamemode gameMode;
     public int Rounds = 1;
-    public float RoundLength;
+    public float RoundLength = 15;
     public int PlayerLives = 1;
     public GameObject RoundStatsUI, GameUI;
 

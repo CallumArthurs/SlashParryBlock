@@ -43,32 +43,22 @@ public class CharacterMovmentScript : MonoBehaviour
     private List<Rigidbody> playersRB;
     private List<Animator> playersAni;
     private LayerMask floor;
+    private ConsoleCommand console;
+    private SceneSelector SceneSelector;
 
     private void Awake()
     {
         levelLoadInfo levelDatatmp = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
+        levelDatatmp.transform.parent = gameObject.transform;
         joystickCharInputs = levelDatatmp.joystickCharInputs;
         KnightMeshRenderer = gameObject.GetComponent<KnightMeshRenderer>();
+        console = gameObject.GetComponent<ConsoleCommand>();
+        console.enabled = false;
+        SceneSelector = SceneSelector.CreateInstance("SceneSelector") as SceneSelector;
         for (int j = 0; j < levelDatatmp.meshSelected.Count; j++)
         {
             players.Insert(players.Count, Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject,gameObject.transform).GetComponent<PlayerData>());
-            switch (j)
-            {
-                case 1:
-                    players[j].gameObject.layer = 15;
-                    break;
-
-                case 2:
-                    players[j].gameObject.layer = 16;
-                    break;
-
-                case 3:
-                    players[j].gameObject.layer = 17;
-                    break;
-
-                default:
-                    break;
-            }
+            players[j].gameObject.layer = 14 + j;
             List<SkinnedMeshRenderer> skinnedMeshRenderers = new List<SkinnedMeshRenderer>();
             skinnedMeshRenderers.AddRange(players[j].GetComponentsInChildren<SkinnedMeshRenderer>());
             for (int i = 0; i < skinnedMeshRenderers.Count; i++)
@@ -240,6 +230,37 @@ public class CharacterMovmentScript : MonoBehaviour
                 {
                     playerHearts[i].hearts[j].sprite = emptyHeart;
                 }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            if (console.enabled)
+            {
+                console.CommandInput = "InputCommand";
+                console.enabled = false;
+            }
+            else
+            {
+                console.enabled = true;
+            }
+        }
+
+        if (console.enabled)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                switch (console.CommandInput)
+                {
+                    case "Restart":
+                        SceneSelector.SceneLoader(SceneSelector.SceneSelecter.SplashScreen);
+                        break;
+                    default:
+                        console.CommandInput = "InvaildCommand";
+                        break;
+                }
+                console.CommandInput = "InputCommand";
+                console.enabled = false;
             }
         }
     }

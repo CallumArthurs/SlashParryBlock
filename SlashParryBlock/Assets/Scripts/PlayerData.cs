@@ -61,7 +61,7 @@ public class PlayerData : MonoBehaviour
     private CharacterMovmentScript charMovScript;
     private Animator animator;
     private Behaviour halo;
-    private Material playerMaterial;
+    private List<Material> playerMaterial = new List<Material>();
 
     private AnimatorClipInfo[] AttackAnim;
     private List<AudioClip> PlayerSounds;
@@ -88,7 +88,11 @@ public class PlayerData : MonoBehaviour
         halo = (Behaviour)GetComponent("Halo");
 
         trailEffect.SetActive(false);
-        playerMaterial = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        SkinnedMeshRenderer[] meshes = GetComponentsInChildren<SkinnedMeshRenderer>();
+        for (int i = 0; i < meshes.Length; i++)
+        {
+            playerMaterial.Add(meshes[i].material);
+        }
         transform.position = charMovScript.SpawnPlayer();
         OriginalPos = transform.position;
     }
@@ -349,25 +353,37 @@ public class PlayerData : MonoBehaviour
 
                 if (InvulnerabilityTimer <= 0.0f)
                 {
-                    playerMaterial.color = Color.white;
-                    halo.enabled = false;
+                    for (int i = 0; i < playerMaterial.Count; i++)
+                    {
+                        playerMaterial[i].color = Color.white;
+                    }
                     invulnerable = false;
                     InvulnerabilityTimer = 4.0f;
                 }
                 else if (InvulnerabilityTimer < 2.0f)
                 {
+                    halo.enabled = false;
                     if (!GotoWhite)
                     {
-                        playerMaterial.color *= 0.8f;
-                        if (playerMaterial.color.r <= 155)
+                        for (int i = 0; i < playerMaterial.Count; i++)
+                        {
+                            playerMaterial[i].color *= 0.95f;
+                        }
+
+                        if (playerMaterial[0].color.r <= 0.5f)
                         {
                             GotoWhite = true;
                         }
                     }
                     else
                     {
-                        playerMaterial.color *= 1.2f;
-                        if (playerMaterial.color.r >= 155)
+                        for (int i = 0; i < playerMaterial.Count; i++)
+                        {
+                            playerMaterial[i].color *= 1.05f;
+
+                        }
+
+                        if (playerMaterial[0].color.r >= 1)
                         {
                             GotoWhite = false;
                         }
