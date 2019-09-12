@@ -31,15 +31,17 @@ public class CharacterSelect : MonoBehaviour
     bool selectingLevel = false;
     int levelSelected = 1;
 
-    int[] MeshSelected = new int[4] { 0, 0, 0, 0 };
+    int[] MeshSelected = new int[4] { 2, 0, 0, 0 };
 
     public GameObject characterSelect, levelSelect, gameplaySelect;
+    public GameObject PlayerLivesLabels;
     public Image Arrow;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
+
     private GameObject levelData;
     private SceneSelector Scenechanger;
     public Text levelText;
-    private bool LoadingScene = false;
+    private bool LoadingScene = false, setupPlayerData = false;
     private delegate void MenuControls();
 
     MenuControls ControlHandler;
@@ -122,8 +124,9 @@ public class CharacterSelect : MonoBehaviour
 
                 if (joystickCharInputs.Count > 1)
                 {
-                    if (ReadyplayerCount == joystickCharInputs.Count)
+                    if (ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData)
                     {
+                        setupPlayerData = true;
                         //GameObject levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject);
                         levelData.GetComponent<levelLoadInfo>().joystickCharInputs = joystickCharInputs;
                         for (int j = 0; j < joystickCharInputs.Count; j++)
@@ -138,8 +141,9 @@ public class CharacterSelect : MonoBehaviour
                 }
 
                 //Dev controls
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) && !setupPlayerData)
                 {
+                    setupPlayerData = true;
                     levelData.GetComponent<levelLoadInfo>().joystickCharInputs = joystickCharInputs;
                     for (int j = 0; j < joystickCharInputs.Count; j++)
                     {
@@ -244,6 +248,15 @@ public class CharacterSelect : MonoBehaviour
                             levelData.GetComponent<levelLoadInfo>().gamemode = (MatchGameplay.Gamemode)1;
                         }
                     }
+
+                    if (levelData.GetComponent<levelLoadInfo>().gamemode == MatchGameplay.Gamemode.Stock)
+                    {
+                        PlayerLivesLabels.SetActive(true);
+                    }
+                    else
+                    {
+                        PlayerLivesLabels.SetActive(false);
+                    }
                     Arrow.transform.position = new Vector3(Arrow.transform.position.x, GamemodeSelect.transform.position.y, Arrow.transform.position.z);
                     break;
                 #endregion
@@ -286,19 +299,26 @@ public class CharacterSelect : MonoBehaviour
 
                 #region PlayerLives
                 case 3:
-                    if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f)
+                    if (levelData.GetComponent<levelLoadInfo>().gamemode == MatchGameplay.Gamemode.Stock)
                     {
-                        levelData.GetComponent<levelLoadInfo>().playerLives++;
-                    }
-                    else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f)
-                    {
-                        levelData.GetComponent<levelLoadInfo>().playerLives--;
-                        if (levelData.GetComponent<levelLoadInfo>().playerLives < 3)
+                        if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f)
                         {
-                            levelData.GetComponent<levelLoadInfo>().playerLives = 3;
+                            levelData.GetComponent<levelLoadInfo>().playerLives++;
                         }
+                        else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f)
+                        {
+                            levelData.GetComponent<levelLoadInfo>().playerLives--;
+                            if (levelData.GetComponent<levelLoadInfo>().playerLives < 3)
+                            {
+                                levelData.GetComponent<levelLoadInfo>().playerLives = 3;
+                            }
+                        }
+                        Arrow.transform.position = new Vector3(Arrow.transform.position.x, PlayerLivesSelect.transform.position.y, Arrow.transform.position.z);
                     }
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, PlayerLivesSelect.transform.position.y, Arrow.transform.position.z);
+                    else
+                    {
+                        gameplayChoice = 2;
+                    }
                     break;
                 #endregion
 

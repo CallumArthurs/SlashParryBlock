@@ -46,7 +46,18 @@ public class KnightMeshRenderer : MonoBehaviour
         {
             TargetMesh[i].sharedMesh = KnightMeshes[KnightID][i].sharedMesh;
             TargetMesh[i].sharedMaterial = KnightMeshes[KnightID][i].sharedMaterial;
+
+
+            //TargetMesh[i].bones = KnightMeshes[KnightID][i].bones;
+            if (i == 1)
+            {
+                foreach (Transform t in TargetMesh[i].bones)
+                {
+                    Debug.Log(t.gameObject.name);
+                }
+            }
         }
+
         return KnightID;
     }
 }

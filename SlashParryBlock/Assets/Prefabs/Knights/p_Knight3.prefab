@@ -97,10 +97,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8066599221501930455}
-  - component: {fileID: 8066599221501930440}
-  - component: {fileID: 2219847063210694028}
-  - component: {fileID: 775695933041450458}
-  - component: {fileID: 8280712129370996682}
   m_Layer: 0
   m_Name: p_Knight3
   m_TagString: Untagged
@@ -123,79 +119,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &8066599221501930440
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8066599221501930443}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.85, z: 0}
---- !u!114 &2219847063210694028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8066599221501930443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3f42b9715c4a44d9f706e7bb295552, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DizzySpinner: {fileID: 0}
-  score: 0
-  blocking: 0
-  spawnpoints: []
-  Spine: {fileID: 0}
-  AttackAxisUsed: 0
-  ParryAxisUsed: 0
-  kills: 0
-  Deaths: 0
-  successfulParries: 0
-  damageDealt: 0
-  damageTaken: 0
-  killStreak: 0
-  killstreakTemp: 0
-  particles: {fileID: 3623630282080540649, guid: fc9683958652a034687d8070822b8a40,
-    type: 3}
-  AttackParticles: {fileID: 3623630282080540649, guid: d147b56a2b0bacf45bc5ed8c8dc59123,
-    type: 3}
---- !u!54 &775695933041450458
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8066599221501930443}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!65 &8280712129370996682
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8066599221501930443}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.33613777, z: 1.0049348}
-  m_Center: {x: 0, y: 0.5, z: 0.6}
 --- !u!1 &9183396461080474753
 GameObject:
   m_ObjectHideFlags: 0
@@ -7070,6 +6993,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9183396461079980441}
     m_Modifications:
+    - target: {fileID: 4489662516641847228, guid: 0e14a7979b8f2e846bcf0db040eccd9e,
+        type: 3}
+      propertyPath: m_Name
+      value: p_DizzySpiral
+      objectReference: {fileID: 0}
     - target: {fileID: 4489662516642007964, guid: 0e14a7979b8f2e846bcf0db040eccd9e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7124,11 +7052,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4489662516641847228, guid: 0e14a7979b8f2e846bcf0db040eccd9e,
-        type: 3}
-      propertyPath: m_Name
-      value: p_DizzySpiral
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e14a7979b8f2e846bcf0db040eccd9e, type: 3}

@@ -9,7 +9,7 @@ public class levelLoadInfo : MonoBehaviour
     public List<int> meshSelected;
     public List<string> joystickCharInputs;
     public MatchGameplay.Gamemode gamemode;
-    public int rounds;
-    public int playerLives;
-    public float RoundLength;
+    public int rounds = 3;
+    public int playerLives = 1;
+    public float RoundLength = 120;
 }

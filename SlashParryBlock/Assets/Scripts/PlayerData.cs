@@ -60,7 +60,7 @@ public class PlayerData : MonoBehaviour
     private Vector3 OriginalPos;
     private CharacterMovmentScript charMovScript;
     private Animator animator;
-    private Behaviour halo;
+    private Light halo;
     private List<Material> playerMaterial = new List<Material>();
 
     private AnimatorClipInfo[] AttackAnim;
@@ -85,8 +85,8 @@ public class PlayerData : MonoBehaviour
         health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
-        halo = (Behaviour)GetComponent("Halo");
-
+        halo = gameObject.GetComponent<Light>();
+        halo.enabled = false;
         trailEffect.SetActive(false);
         SkinnedMeshRenderer[] meshes = GetComponentsInChildren<SkinnedMeshRenderer>();
         for (int i = 0; i < meshes.Length; i++)
@@ -339,9 +339,10 @@ public class PlayerData : MonoBehaviour
             if (Respawning)
             {
                 RespawnTimer -= Time.deltaTime;
-
+                halo.intensity -= Time.deltaTime / 2.0f;
                 if (RespawnTimer <= 0.0f)
                 {
+                    halo.intensity = 1.0f;
                     Respawning = false;
                     RespawnTimer = 2.0f;
                 }

@@ -10,11 +10,11 @@ public class MeshSelector : MonoBehaviour
     {
         KnightMeshRenderer = GameObject.FindGameObjectWithTag("knightMeshRendererTag").GetComponent<KnightMeshRenderer>();
         myMeshes.AddRange(gameObject.GetComponentsInChildren<SkinnedMeshRenderer>());
+        LoadMesh(0);
     }
-    
+
     public int LoadMesh(int KnightID)
     {
         return KnightMeshRenderer.LoadMesh(myMeshes, KnightID);
-
     }
 }

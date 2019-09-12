@@ -325,6 +325,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 if (Input.GetAxis("Horizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) != 0 ||
                     Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("R_StickVertical" + joystickCharInputs[i]) != 0)
                 {
+                    Debug.Log("Moving");
                     float HoriInput = Input.GetAxis("Horizontal" + joystickCharInputs[i]);
                     float VertInput = Input.GetAxis("Vertical" + joystickCharInputs[i]);
                     //left stick for rotating if not blocking
