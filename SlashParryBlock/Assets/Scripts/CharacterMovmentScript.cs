@@ -44,17 +44,27 @@ public class CharacterMovmentScript : MonoBehaviour
     private List<Animator> playersAni;
     private LayerMask floor;
     private ConsoleCommand console;
+    private MatchGameplay gameplay;
     private SceneSelector SceneSelector;
 
     private void Awake()
     {
         levelLoadInfo levelDatatmp = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
+        gameplay = gameObject.GetComponent<MatchGameplay>();
         levelDatatmp.transform.parent = gameObject.transform;
         joystickCharInputs = levelDatatmp.joystickCharInputs;
+
         KnightMeshRenderer = gameObject.GetComponent<KnightMeshRenderer>();
+
         console = gameObject.GetComponent<ConsoleCommand>();
         console.enabled = false;
         SceneSelector = SceneSelector.CreateInstance("SceneSelector") as SceneSelector;
+
+        gameplay.gameMode = levelDatatmp.gamemode;
+        gameplay.Rounds = levelDatatmp.rounds;
+        gameplay.RoundLength = levelDatatmp.RoundLength;
+        gameplay.PlayerLives = levelDatatmp.playerLives;
+
         for (int j = 0; j < levelDatatmp.meshSelected.Count; j++)
         {
             players.Insert(players.Count, Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject,gameObject.transform).GetComponent<PlayerData>());
