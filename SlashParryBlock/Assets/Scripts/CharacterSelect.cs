@@ -29,7 +29,7 @@ public class CharacterSelect : MonoBehaviour
     private bool[] LBAxisUsed = new bool[4] { false, false, false, false };
     private bool[] aAxisUsed = new bool[4] { false, false, false, false };
     private bool[] bAxisUsed = new bool[4] { false, false, false, false };
-
+    private bool[] ReservedMeshes = new bool[4] {false, false, false, false};
     bool selectingLevel = false;
     int levelSelected = 1;
 
