@@ -51,8 +51,8 @@ public class KnightMeshRenderer : MonoBehaviour
 
         for (int i = 0; i < TargetMesh.Count; i++)
         {
-            TargetMesh[i].sharedMesh = KnightMeshes[KnightID][i].sharedMesh;
-            TargetMesh[i].sharedMaterial = KnightMeshes[KnightID][i].sharedMaterial;
+            TargetMesh[i].sharedMesh = ReservedMeshes[KnightID][i].sharedMesh;
+            TargetMesh[i].sharedMaterial = ReservedMeshes[KnightID][i].sharedMaterial;
         }
 
         return KnightID;

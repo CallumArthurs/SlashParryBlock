@@ -320,7 +320,7 @@ public class PlayerData : MonoBehaviour
                 if (gotParriedTimer <= 0)
                 {
                     isParried = false;
-                    gotParriedTimer = 2.0f;
+                    gotParriedTimer = 0.2f;
                 }
             }
             else
