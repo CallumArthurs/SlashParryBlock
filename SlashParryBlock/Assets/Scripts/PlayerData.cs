@@ -29,7 +29,8 @@ public class PlayerData : MonoBehaviour
     public GameObject trailEffect;
     public GameObject particles;
     public GameObject AttackParticles;
-
+    public GameObject ShieldPos, SwordPos;
+    public GameObject Glint;
 
     public float ExcaliburKnockbackModifier;
     public float ExcaliburDamageModifier;
@@ -81,6 +82,8 @@ public class PlayerData : MonoBehaviour
         spawnpoints = new List<RespawnPoints>();
         playersHit = new List<HitPlayers>();
         invinciblePlayers = new List<PlayerData>();
+
+        trailEffect = GetComponentInChildren<TrailRenderer>().gameObject;
 
         health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
@@ -146,6 +149,7 @@ public class PlayerData : MonoBehaviour
                 }//this is the end parry opportunity
                 else if (AttackTimer <= AttackOriginalTime - 0.2f)
                 {
+                    Glint.SetActive(false);
                     Collider[] hits = Physics.OverlapSphere(transform.position + (transform.forward * radius), radius);
 
                     foreach (Collider other in hits)
@@ -396,6 +400,7 @@ public class PlayerData : MonoBehaviour
 
     public void Attack(int AttackNum)
     {
+        Glint.SetActive(true);
         //makes sure you can't reset the timer
         if (attacked || parried)
         {
@@ -438,7 +443,7 @@ public class PlayerData : MonoBehaviour
                         if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
                         {
                             //reset their parry timer
-                            CollisionPlayerData.gotParriedTimer = 0.2f;
+                            CollisionPlayerData.gotParriedTimer = 2.0f;
                             animator.SetTrigger("Riposte");
                             //playersHit[0].Riposte = true;
                             playClip(ClipSelector.riposte);
@@ -548,7 +553,7 @@ public class PlayerData : MonoBehaviour
     public void Parry()
     {
         attacked = false;
-
+        Glint.SetActive(false);
 
         if (parried)
         {
@@ -595,6 +600,7 @@ public class PlayerData : MonoBehaviour
     public void Parried()
     {
         DizzySpinner.SetActive(true);
+        Glint.SetActive(false);
         Instantiate(particles, transform.position, Quaternion.Euler(transform.up));
         animator.SetInteger("Anim", 0);
         for (int i = 0; i < playersHit.Count; i++)
@@ -696,6 +702,7 @@ public class PlayerData : MonoBehaviour
         Respawning = true;
         invulnerable = true;
         halo.enabled = true;
+        Glint.SetActive(false);
 
         attacked = false;
         parried = false;
@@ -704,6 +711,7 @@ public class PlayerData : MonoBehaviour
         Vector3 excaliburSpawn = GetComponent<Rigidbody>().position;
         Deaths++;
         playClip(ClipSelector.death);
+        animator.SetInteger("Anim", 0);
         //sleep the rigidbody because velocity doesn't update properly
         GetComponent<Rigidbody>().Sleep();
         GetComponent<Rigidbody>().velocity  = new Vector3(0, 0, 0);

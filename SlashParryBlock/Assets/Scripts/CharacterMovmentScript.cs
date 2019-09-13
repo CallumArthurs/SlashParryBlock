@@ -68,7 +68,12 @@ public class CharacterMovmentScript : MonoBehaviour
         for (int j = 0; j < levelDatatmp.meshSelected.Count; j++)
         {
             players.Insert(players.Count, Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject,gameObject.transform).GetComponent<PlayerData>());
+
+            Instantiate(levelDatatmp.KnightSwords[levelDatatmp.meshSelected[j]], players[j].SwordPos.transform);
+            Instantiate(levelDatatmp.KnightShields[levelDatatmp.meshSelected[j]], players[j].ShieldPos.transform);
+
             players[j].gameObject.layer = 14 + j;
+
             List<SkinnedMeshRenderer> skinnedMeshRenderers = new List<SkinnedMeshRenderer>();
             skinnedMeshRenderers.AddRange(players[j].GetComponentsInChildren<SkinnedMeshRenderer>());
             for (int i = 0; i < skinnedMeshRenderers.Count; i++)
@@ -192,7 +197,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 {
                     players[i].blocking = false;
                     //you can't attack if you just did
-                    if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed)
+                    if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed && !players[i].getParried())
                     {
                         players[i].Attack(1);
                         players[i].AttackAxisUsed = true;
@@ -247,12 +252,14 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (console.enabled)
             {
+                console.FocusConsoleToggle(false);
                 console.CommandInput = "InputCommand";
                 console.enabled = false;
             }
             else
             {
                 console.enabled = true;
+                console.FocusConsoleToggle(true);
             }
         }
 
@@ -260,6 +267,7 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                console.FocusConsoleToggle(false);
                 switch (console.CommandInput)
                 {
                     case "Restart":
@@ -325,7 +333,6 @@ public class CharacterMovmentScript : MonoBehaviour
                 if (Input.GetAxis("Horizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) != 0 ||
                     Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("R_StickVertical" + joystickCharInputs[i]) != 0)
                 {
-                    Debug.Log("Moving");
                     float HoriInput = Input.GetAxis("Horizontal" + joystickCharInputs[i]);
                     float VertInput = Input.GetAxis("Vertical" + joystickCharInputs[i]);
                     //left stick for rotating if not blocking
@@ -347,12 +354,10 @@ public class CharacterMovmentScript : MonoBehaviour
 
                             if (tmpRotDir < 0.2f && tmpRotDir > -0.2f)
                             {
-                                Debug.Log("Hit");
                                 playersAni[i].SetFloat("BlockMovVecY", 0.0f, 0.2f,Time.deltaTime);
                             }
                             else
                             {
-                                Debug.Log("Hit too");
                                 playersAni[i].SetFloat("BlockMovVecY", tmpRotDir, 0.5f, Time.deltaTime);
                             }
 

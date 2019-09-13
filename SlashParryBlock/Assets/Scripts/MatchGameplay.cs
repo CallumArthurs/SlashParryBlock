@@ -87,24 +87,28 @@ public class MatchGameplay : MonoBehaviour
         }
         else
         {
-            if (Input.anyKeyDown)
+            for (int i = 0; i < CharMovScript.players.Count; i++)
             {
-                if (restartGame)
+                if (Input.GetAxis("A_Button" + CharMovScript.joystickCharInputs[i]) > 0.0f)
                 {
-                    SceneManager.LoadScene(0);
-                }
-                else
-                {
-                    GameUI.SetActive(true);
+                    if (restartGame)
+                    {
+                        SceneManager.LoadScene(0);
+                    }
+                    else
+                    {
+                        GameUI.SetActive(true);
+                    }
+
+                    for (int j = 0; j < CharMovScript.players.Count; j++)
+                    {
+                        CharMovScript.players[j].ResetPlayer();
+                    }
+
+                    RoundTimer = RoundLength;
+                    StartMatch();
                 }
 
-                for (int i = 0; i < CharMovScript.players.Count; i++)
-                {
-                    CharMovScript.players[i].ResetPlayer();
-                }
-
-                RoundTimer = RoundLength;
-                StartMatch();
             }
         }
         UpdateUI();

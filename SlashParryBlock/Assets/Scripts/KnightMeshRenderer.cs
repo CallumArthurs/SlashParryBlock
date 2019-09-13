@@ -5,6 +5,7 @@ using UnityEngine;
 public class KnightMeshRenderer : MonoBehaviour
 {
     private List<List<SkinnedMeshRenderer>> KnightMeshes;
+    private List<List<SkinnedMeshRenderer>> ReservedMeshes = new List<List<SkinnedMeshRenderer>>();
 
     private void SetupMeshes()
     {
@@ -20,11 +21,17 @@ public class KnightMeshRenderer : MonoBehaviour
                 break;
             }
             List<SkinnedMeshRenderer> KnightMesh = new List<SkinnedMeshRenderer>();
+            List<SkinnedMeshRenderer> ReservedKnightMesh = new List<SkinnedMeshRenderer>();
+
             KnightMesh.AddRange(tmpKnight.GetComponentsInChildren<SkinnedMeshRenderer>());
+            ReservedKnightMesh.AddRange(tmpKnight.GetComponentsInChildren<SkinnedMeshRenderer>());
 
             KnightMeshes.Add(KnightMesh);
+            ReservedMeshes.Add(ReservedKnightMesh);
             i++;
         }
+
+        //ReservedMeshes = KnightMeshes;
     }
 
     public int LoadMesh (List<SkinnedMeshRenderer> TargetMesh, int KnightID)
@@ -46,18 +53,18 @@ public class KnightMeshRenderer : MonoBehaviour
         {
             TargetMesh[i].sharedMesh = KnightMeshes[KnightID][i].sharedMesh;
             TargetMesh[i].sharedMaterial = KnightMeshes[KnightID][i].sharedMaterial;
-
-
-            //TargetMesh[i].bones = KnightMeshes[KnightID][i].bones;
-            if (i == 1)
-            {
-                foreach (Transform t in TargetMesh[i].bones)
-                {
-                    Debug.Log(t.gameObject.name);
-                }
-            }
         }
 
         return KnightID;
     }
+
+    public void ReserveMesh(int SkinID)
+    {
+        KnightMeshes.RemoveAt(SkinID);
+    }
+    public void UnReserveMesh(int SkinID)
+    {
+        KnightMeshes.Insert(SkinID, ReservedMeshes[SkinID]);
+    }
+
 }

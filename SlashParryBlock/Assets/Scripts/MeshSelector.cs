@@ -17,4 +17,13 @@ public class MeshSelector : MonoBehaviour
     {
         return KnightMeshRenderer.LoadMesh(myMeshes, KnightID);
     }
+
+    public void ReserveMesh(int SkinID)
+    {
+        KnightMeshRenderer.ReserveMesh(SkinID);
+    }
+    public void UnReserveMesh(int SkinID)
+    {
+        KnightMeshRenderer.UnReserveMesh(SkinID);
+    }
 }

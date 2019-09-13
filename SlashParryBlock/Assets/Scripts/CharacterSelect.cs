@@ -27,11 +27,13 @@ public class CharacterSelect : MonoBehaviour
     private bool[] playersReady = new bool[4] { false, false, false, false };
     private bool[] RBAxisUsed = new bool[4] { false, false, false, false };
     private bool[] LBAxisUsed = new bool[4] { false, false, false, false };
+    private bool[] aAxisUsed = new bool[4] { false, false, false, false };
+    private bool[] bAxisUsed = new bool[4] { false, false, false, false };
 
     bool selectingLevel = false;
     int levelSelected = 1;
 
-    int[] MeshSelected = new int[4] { 2, 0, 0, 0 };
+    int[] MeshSelected = new int[4] { 0, 0, 0, 0 };
 
     public GameObject characterSelect, levelSelect, gameplaySelect;
     public GameObject PlayerLivesLabels;
@@ -63,11 +65,11 @@ public class CharacterSelect : MonoBehaviour
             {
                 if (Input.GetAxis("StartButtonP" + (i + 1)) > 0.0f)
                 {
+                    aAxisUsed[i] = true;
                     ConSelected[i] = true;
                     joystickCharInputs.Add("P" + (i + 1));
 
                     KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
-                    
                 }
             }
         }
@@ -83,21 +85,22 @@ public class CharacterSelect : MonoBehaviour
 
     void CharacterSelectControls()
     {
-        if (joystickCharInputs.Count > 0 && !selectingLevel)
+        Debug.Log("Char Cont");
+        Debug.Log(ReadyplayerCount);
+        if (joystickCharInputs.Count > 0)
         {
             //count = how many objects there are so if 1 connected, i will only go up to 0
             for (int i = 0; i < joystickCharInputs.Count; i++)
             {
                 //Cycles through the connected controllers
-                if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) > 0.0f && !RBAxisUsed[i])
+                if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) > 0.0f && !RBAxisUsed[i] && !playersReady[i])
                 {
                     //sets true now that they have
                     RBAxisUsed[i] = true;
                     MeshSelected[i]++;
                     MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(MeshSelected[i]);
-
                 }
-                else if (Input.GetAxis("L_Bumper" + joystickCharInputs[i]) > 0.0f && !LBAxisUsed[i])
+                else if (Input.GetAxis("L_Bumper" + joystickCharInputs[i]) > 0.0f && !LBAxisUsed[i] && !playersReady[i])
                 {
                     LBAxisUsed[i] = true;
                     MeshSelected[i]--;
@@ -113,15 +116,36 @@ public class CharacterSelect : MonoBehaviour
                     LBAxisUsed[i] = false;
                 }
 
-                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f)
+                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f && !aAxisUsed[i])
                 {
                     if (!playersReady[i])
                     {
+                        for (int j = 0; j < MeshSelected.Length; j++)
+                        {
+                            if (MeshSelected[j] == MeshSelected[i] && j != i)
+                            {
+                                MeshSelected[j]++;
+                                MeshSelected[j] = KnightMeshes[j].GetComponent<MeshSelector>().LoadMesh(MeshSelected[j]);
+                            }
+                        }
+
+                        KnightMeshes[i].GetComponent<MeshSelector>().ReserveMesh(MeshSelected[i]);
+                        aAxisUsed[i] = true;
                         ReadyplayerCount++;
                         playersReady[i] = true;
                     }
+                    else if (playersReady[i])
+                    {
+                        KnightMeshes[i].GetComponent<MeshSelector>().UnReserveMesh(MeshSelected[i]);
+                        aAxisUsed[i] = true;
+                        ReadyplayerCount--;
+                        playersReady[i] = false;
+                    }
                 }
-
+                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) == 0.0f)
+                {
+                    aAxisUsed[i] = false;
+                }
                 if (joystickCharInputs.Count > 1)
                 {
                     if (ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData)
@@ -136,7 +160,6 @@ public class CharacterSelect : MonoBehaviour
                         ControlHandler = LevelSelectControls;
                         characterSelect.SetActive(false);
                         levelSelect.SetActive(true);
-                        selectingLevel = true;
                     }
                 }
 
@@ -152,13 +175,18 @@ public class CharacterSelect : MonoBehaviour
                     ControlHandler = LevelSelectControls;
                     characterSelect.SetActive(false);
                     levelSelect.SetActive(true);
-                    selectingLevel = true;
+                }
+
+                if (Input.GetAxis("B_Button" + joystickCharInputs[i]) == 0.0f)
+                {
+                    bAxisUsed[i] = false;
                 }
             }
         }
     }
     void LevelSelectControls()
     {
+        Debug.Log("lev Cont");
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !RBAxisUsed[i])
@@ -188,17 +216,42 @@ public class CharacterSelect : MonoBehaviour
                 RBAxisUsed[i] = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && !LoadingScene)
+            if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f && !aAxisUsed[i])
             {
+                aAxisUsed[i] = true;
                 ControlHandler = GameplaySelectControls;
                 levelSelect.SetActive(false);
                 gameplaySelect.SetActive(true);
                 //StartCoroutine(Scenechanger.LoadSceneAsync(levelSelected));
             }
+            if (Input.GetAxis("A_Button" + joystickCharInputs[i]) == 0.0f)
+            {
+                aAxisUsed[i] = false;
+            }
+            if (Input.GetAxis("B_Button" + joystickCharInputs[i]) != 0.0f && !bAxisUsed[i])
+            {
+                for (int j = 0; j < playersReady.Length; j++)
+                {
+                    playersReady[j] = false;
+                }
+                ReadyplayerCount = 0;
+                bAxisUsed[i] = true;
+                ControlHandler = CharacterSelectControls;
+                levelSelect.SetActive(false);
+                characterSelect.SetActive(true);
+                levelData.GetComponent<levelLoadInfo>().meshSelected.Clear();
+                setupPlayerData = false;
+            }
+            if (Input.GetAxis("B_Button" + joystickCharInputs[i]) == 0.0f)
+            {
+                bAxisUsed[i] = false;
+            }
         }
     }
     void GameplaySelectControls()
     {
+        Debug.Log("Gamply Cont");
+
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) < 0.0f && !RBAxisUsed[i])
@@ -326,9 +379,26 @@ public class CharacterSelect : MonoBehaviour
                     break;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f && !aAxisUsed[i])
             {
+                aAxisUsed[i] = true;
                 LoadingScene = true;
+            }
+            if (Input.GetAxis("A_Button" + joystickCharInputs[i]) == 0.0f)
+            {
+                aAxisUsed[i] = false;
+            }
+            if (Input.GetAxis("B_Button" + joystickCharInputs[i]) != 0.0f && !bAxisUsed[i])
+            {
+                bAxisUsed[i] = true;
+                ControlHandler = LevelSelectControls;
+                gameplaySelect.SetActive(false);
+                levelSelect.SetActive(true);
+
+            }
+            if (Input.GetAxis("B_Button" + joystickCharInputs[i]) == 0.0f)
+            {
+                bAxisUsed[i] = false;
             }
 
             GamemodeSelect.text = levelData.GetComponent<levelLoadInfo>().gamemode.ToString();
