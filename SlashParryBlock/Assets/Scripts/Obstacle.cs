@@ -32,7 +32,7 @@ public class Obstacle : MonoBehaviour
             {
                 case 0://Any direction
                     {
-                        CollisionRigidBody.AddForce(other.transform.position * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce(other.transform.position.normalized * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 1://forward
