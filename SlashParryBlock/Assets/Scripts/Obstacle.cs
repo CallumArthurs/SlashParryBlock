@@ -24,12 +24,21 @@ public class Obstacle : MonoBehaviour
         if (other.gameObject.GetComponent<PlayerData>() != null)
         {
             //reset their velocity so it doesn't add up after every hit
-            CollisionRigidBody.velocity = new Vector3(0, 0, 0);
             //double damage if you hit their back
             other.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
             //Vector3 ClosestPoint = other.ClosestPoint(transform.position).normalized;
             ClosestPoint = gameObject.GetComponent<Collider>().ClosestPoint(other.transform.position);
             other.gameObject.GetComponent<PlayerData>().setKnockedBack(true,Timer);
+
+            if (ClosestPoint.y > transform.position.y)
+            {
+                CollisionRigidBody.velocity = new Vector3(CollisionRigidBody.velocity.x, 0, CollisionRigidBody.velocity.z);
+            }
+            else
+            {
+                CollisionRigidBody.velocity = new Vector3(0, 0, 0);
+            }
+
             switch ((int)direction)
             {
                 case 0://Any direction

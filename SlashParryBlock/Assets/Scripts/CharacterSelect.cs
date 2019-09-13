@@ -97,13 +97,54 @@ public class CharacterSelect : MonoBehaviour
                 {
                     //sets true now that they have
                     RBAxisUsed[i] = true;
+                    bool MeshFound = false;
                     MeshSelected[i]++;
+                    if (MeshSelected[i] > 3)
+                    {
+                        MeshSelected[i] = 0;
+                    }
+                    while (!MeshFound)
+                    {
+                        if (ReservedMeshes[MeshSelected[i]])
+                        {
+                            MeshSelected[i]++;
+                            if (MeshSelected[i] > 3)
+                            {
+                                MeshSelected[i] = 0;
+                            }
+                        }
+                        else
+                        {
+                            MeshFound = true;
+                        }
+                    }
                     MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(MeshSelected[i]);
                 }
                 else if (Input.GetAxis("L_Bumper" + joystickCharInputs[i]) > 0.0f && !LBAxisUsed[i] && !playersReady[i])
                 {
                     LBAxisUsed[i] = true;
                     MeshSelected[i]--;
+                    if (MeshSelected[i] < 0)
+                    {
+                        MeshSelected[i] = 3;
+                    }
+
+                    bool MeshFound = false;
+                    while (!MeshFound)
+                    {
+                        if (ReservedMeshes[MeshSelected[i]])
+                        {
+                            MeshSelected[i]--;
+                            if (MeshSelected[i] < 0)
+                            {
+                                MeshSelected[i] = 3;
+                            }
+                        }
+                        else
+                        {
+                            MeshFound = true;
+                        }
+                    }
                     MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(MeshSelected[i]);
                 }
 
@@ -124,19 +165,41 @@ public class CharacterSelect : MonoBehaviour
                         {
                             if (MeshSelected[j] == MeshSelected[i] && j != i)
                             {
-                                MeshSelected[j]++;
+                                MeshSelected[j]--;
+                                if (MeshSelected[j] < 0)
+                                {
+                                    MeshSelected[j] = 3;
+                                }
+                                bool MeshFound = false;
+                                while (!MeshFound)
+                                {
+                                    if (ReservedMeshes[MeshSelected[i]])
+                                    {
+                                        MeshSelected[j]--;
+                                        if (MeshSelected[j] < 0)
+                                        {
+                                            MeshSelected[j] = 3;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        MeshFound = true;
+                                    }
+                                }
+                                //MeshSelected[j]++;
                                 MeshSelected[j] = KnightMeshes[j].GetComponent<MeshSelector>().LoadMesh(MeshSelected[j]);
                             }
                         }
-
-                        KnightMeshes[i].GetComponent<MeshSelector>().ReserveMesh(MeshSelected[i]);
+                        ReservedMeshes[MeshSelected[i]] = true;
+                        //KnightMeshes[i].GetComponent<MeshSelector>().ReserveMesh(MeshSelected[i]);
                         aAxisUsed[i] = true;
                         ReadyplayerCount++;
                         playersReady[i] = true;
                     }
                     else if (playersReady[i])
                     {
-                        KnightMeshes[i].GetComponent<MeshSelector>().UnReserveMesh(MeshSelected[i]);
+                        //KnightMeshes[i].GetComponent<MeshSelector>().UnReserveMesh(MeshSelected[i]);
+                        ReservedMeshes[i] = false;
                         aAxisUsed[i] = true;
                         ReadyplayerCount--;
                         playersReady[i] = false;
