@@ -8,26 +8,28 @@ public class Obstacle : MonoBehaviour
     {
         AnyDirection,
         forward,
-        NegX,
-        PosZ,
-        NegZ
+        ClosestToPlayer,
+        DirectionPreset,
+        Bouncey
     }
 
     public int damage;
     public float Knockback, Timer;
     public Direction direction;
-    private void OnTriggerStay(Collider other)
+    public GameObject DirectionObj;
+    public Vector3 ClosestPoint;
+    private void OnTriggerEnter(Collider other)
     {
         Rigidbody CollisionRigidBody = other.gameObject.GetComponent<Rigidbody>();
         if (other.gameObject.GetComponent<PlayerData>() != null)
         {
             //reset their velocity so it doesn't add up after every hit
-            //CollisionRigidBody.velocity = new Vector3(0, 0, 0);
+            CollisionRigidBody.velocity = new Vector3(0, 0, 0);
             //double damage if you hit their back
             other.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
-
+            //Vector3 ClosestPoint = other.ClosestPoint(transform.position).normalized;
+            ClosestPoint = gameObject.GetComponent<Collider>().ClosestPoint(other.transform.position);
             other.gameObject.GetComponent<PlayerData>().setKnockedBack(true,Timer);
-
             switch ((int)direction)
             {
                 case 0://Any direction
@@ -43,17 +45,20 @@ public class Obstacle : MonoBehaviour
                     }
                 case 2://NegX
                     {
-                        CollisionRigidBody.AddForce(new Vector3(-1.0f, 0.0f, 0.0f) * Knockback, ForceMode.Impulse);
+                        //CollisionRigidBody.AddForce((-CollisionRigidBody.velocity) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce((other.transform.position - ClosestPoint) * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 3://PosZ
                     {
-                        CollisionRigidBody.AddForce(new Vector3(0.0f, 0.0f, 1.0f) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce((DirectionObj.transform.position - other.transform.position) * Knockback, ForceMode.Impulse);
+
+                        //CollisionRigidBody.AddForce(new Vector3(0.0f, 0.0f, 1.0f) * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 4://NegZ
                     {
-                        CollisionRigidBody.AddForce(new Vector3(0.0f, 0.0f, -1.0f) * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce( new Vector3(0.0f, 1.0f, 0.0f) * Knockback, ForceMode.Impulse);
                         break;
                     }
                 default:
@@ -65,5 +70,9 @@ public class Obstacle : MonoBehaviour
            
         }
     }
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(ClosestPoint, 0.5f);
+    }
 }
