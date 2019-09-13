@@ -16,7 +16,7 @@ public class Obstacle : MonoBehaviour
     public int damage;
     public float Knockback, Timer;
     public Direction direction;
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         Rigidbody CollisionRigidBody = other.gameObject.GetComponent<Rigidbody>();
         if (other.gameObject.GetComponent<PlayerData>() != null)
@@ -32,7 +32,7 @@ public class Obstacle : MonoBehaviour
             {
                 case 0://Any direction
                     {
-                        CollisionRigidBody.AddForce(other.transform.position.normalized * Knockback, ForceMode.Impulse);
+                        CollisionRigidBody.AddForce((other.transform.position - transform.position) * Knockback, ForceMode.Impulse);
                         break;
                     }
                 case 1://forward
