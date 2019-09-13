@@ -22,7 +22,7 @@ public class Obstacle : MonoBehaviour
         if (other.gameObject.GetComponent<PlayerData>() != null)
         {
             //reset their velocity so it doesn't add up after every hit
-            CollisionRigidBody.velocity = new Vector3(0, 0, 0);
+            //CollisionRigidBody.velocity = new Vector3(0, 0, 0);
             //double damage if you hit their back
             other.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
 
