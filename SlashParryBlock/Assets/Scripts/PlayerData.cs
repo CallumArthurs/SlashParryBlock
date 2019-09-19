@@ -96,8 +96,6 @@ public class PlayerData : MonoBehaviour
         {
             playerMaterial.Add(meshes[i].material);
         }
-        transform.position = charMovScript.SpawnPlayer();
-        OriginalPos = transform.position;
     }
 
     void Update()
@@ -445,7 +443,6 @@ public class PlayerData : MonoBehaviour
                             //reset their parry timer
                             CollisionPlayerData.gotParriedTimer = 0.2f;
                             animator.SetTrigger("Riposte");
-                            //playersHit[0].Riposte = true;
                             playClip(ClipSelector.riposte);
                         }
                         else if (CollisionPlayerData.blocking)
@@ -602,6 +599,7 @@ public class PlayerData : MonoBehaviour
         Glint.SetActive(false);
         Instantiate(particles, transform.position, Quaternion.Euler(transform.up));
         animator.SetInteger("Anim", 0);
+        animator.SetTrigger("Stunned");
         for (int i = 0; i < playersHit.Count; i++)
         {
             Destroy(playersHit[i]);
@@ -738,6 +736,11 @@ public class PlayerData : MonoBehaviour
         damageTaken = 0;
         health = originalHealth;
         SetStock(false);
+    }
+    public void GameStart()
+    {
+        transform.position = charMovScript.SpawnPlayer();
+        OriginalPos = transform.position;
     }
     private void OnDrawGizmosSelected()
     {
