@@ -85,8 +85,6 @@ public class CharacterSelect : MonoBehaviour
 
     void CharacterSelectControls()
     {
-        Debug.Log("Char Cont");
-        Debug.Log(ReadyplayerCount);
         if (joystickCharInputs.Count > 0)
         {
             //count = how many objects there are so if 1 connected, i will only go up to 0
@@ -254,7 +252,6 @@ public class CharacterSelect : MonoBehaviour
     }
     void LevelSelectControls()
     {
-        Debug.Log("lev Cont");
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !RBAxisUsed[i])
@@ -319,8 +316,6 @@ public class CharacterSelect : MonoBehaviour
     }
     void GameplaySelectControls()
     {
-        Debug.Log("Gamply Cont");
-
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) < 0.0f && !RBAxisUsed[i])
