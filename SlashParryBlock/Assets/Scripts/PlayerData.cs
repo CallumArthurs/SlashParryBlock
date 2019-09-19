@@ -320,7 +320,7 @@ public class PlayerData : MonoBehaviour
                 if (gotParriedTimer <= 0)
                 {
                     isParried = false;
-                    gotParriedTimer = 0.2f;
+                    gotParriedTimer = 2.0f;
                 }
             }
             else
@@ -443,7 +443,7 @@ public class PlayerData : MonoBehaviour
                         if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
                         {
                             //reset their parry timer
-                            CollisionPlayerData.gotParriedTimer = 2.0f;
+                            CollisionPlayerData.gotParriedTimer = 0.2f;
                             animator.SetTrigger("Riposte");
                             //playersHit[0].Riposte = true;
                             playClip(ClipSelector.riposte);
