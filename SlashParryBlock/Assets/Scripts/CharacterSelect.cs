@@ -15,7 +15,8 @@ public class CharacterSelect : MonoBehaviour
         Holeyheavens,
         LousyLogs,
         Rings,
-        SpikyHill
+        SpikyHill,
+        JoustingField
     }
 
     public List<GameObject> KnightMeshes;
@@ -30,7 +31,6 @@ public class CharacterSelect : MonoBehaviour
     private bool[] aAxisUsed = new bool[4] { false, false, false, false };
     private bool[] bAxisUsed = new bool[4] { false, false, false, false };
     private bool[] ReservedMeshes = new bool[4] {false, false, false, false};
-    bool selectingLevel = false;
     int levelSelected = 1;
 
     int[] MeshSelected = new int[4] { 0, 0, 0, 0 };
@@ -261,9 +261,9 @@ public class CharacterSelect : MonoBehaviour
             {
                 RBAxisUsed[i] = true;
                 levelSelected++;
-                if (levelSelected > 8)
+                if (levelSelected > 9)
                 {
-                    levelSelected = 8;
+                    levelSelected = 9;
                 }
 
                 levelText.text = ((levels)levelSelected).ToString();
