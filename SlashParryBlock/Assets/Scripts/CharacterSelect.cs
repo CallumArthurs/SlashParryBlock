@@ -97,25 +97,28 @@ public class CharacterSelect : MonoBehaviour
                 {
                     //sets true now that they have
                     RBAxisUsed[i] = true;
-                    bool MeshFound = false;
                     MeshSelected[i]++;
                     if (MeshSelected[i] > 3)
                     {
                         MeshSelected[i] = 0;
                     }
-                    while (!MeshFound)
+                    if (ReservedMeshes[MeshSelected[i]])
                     {
-                        if (ReservedMeshes[MeshSelected[i]])
+                        bool MeshFound = false;
+                        while (!MeshFound)
                         {
-                            MeshSelected[i]++;
-                            if (MeshSelected[i] > 3)
+                            if (ReservedMeshes[MeshSelected[i]])
                             {
-                                MeshSelected[i] = 0;
+                                MeshSelected[i]++;
+                                if (MeshSelected[i] > 3)
+                                {
+                                    MeshSelected[i] = 0;
+                                }
                             }
-                        }
-                        else
-                        {
-                            MeshFound = true;
+                            else
+                            {
+                                MeshFound = true;
+                            }
                         }
                     }
                     MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(MeshSelected[i]);
@@ -128,21 +131,23 @@ public class CharacterSelect : MonoBehaviour
                     {
                         MeshSelected[i] = 3;
                     }
-
-                    bool MeshFound = false;
-                    while (!MeshFound)
+                    if (ReservedMeshes[MeshSelected[i]])
                     {
-                        if (ReservedMeshes[MeshSelected[i]])
+                        bool MeshFound = false;
+                        while (!MeshFound)
                         {
-                            MeshSelected[i]--;
-                            if (MeshSelected[i] < 0)
+                            if (ReservedMeshes[MeshSelected[i]])
                             {
-                                MeshSelected[i] = 3;
+                                MeshSelected[i]--;
+                                if (MeshSelected[i] < 0)
+                                {
+                                    MeshSelected[i] = 3;
+                                }
                             }
-                        }
-                        else
-                        {
-                            MeshFound = true;
+                            else
+                            {
+                                MeshFound = true;
+                            }
                         }
                     }
                     MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(MeshSelected[i]);
@@ -173,7 +178,7 @@ public class CharacterSelect : MonoBehaviour
                                 bool MeshFound = false;
                                 while (!MeshFound)
                                 {
-                                    if (ReservedMeshes[MeshSelected[i]])
+                                    if (ReservedMeshes[MeshSelected[j]])
                                     {
                                         MeshSelected[j]--;
                                         if (MeshSelected[j] < 0)
@@ -199,7 +204,7 @@ public class CharacterSelect : MonoBehaviour
                     else if (playersReady[i])
                     {
                         //KnightMeshes[i].GetComponent<MeshSelector>().UnReserveMesh(MeshSelected[i]);
-                        ReservedMeshes[i] = false;
+                        ReservedMeshes[MeshSelected[i]] = false;
                         aAxisUsed[i] = true;
                         ReadyplayerCount--;
                         playersReady[i] = false;
@@ -296,6 +301,7 @@ public class CharacterSelect : MonoBehaviour
                 for (int j = 0; j < playersReady.Length; j++)
                 {
                     playersReady[j] = false;
+                    ReservedMeshes[j] = false;
                 }
                 ReadyplayerCount = 0;
                 bAxisUsed[i] = true;
