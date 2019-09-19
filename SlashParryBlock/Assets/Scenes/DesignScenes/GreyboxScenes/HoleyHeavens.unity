@@ -5760,6 +5760,7 @@ GameObject:
   - component: {fileID: 670833340}
   - component: {fileID: 670833339}
   - component: {fileID: 670833338}
+  - component: {fileID: 670833341}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5831,6 +5832,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 53.067, y: -180.00002, z: 0}
+--- !u!124 &670833341
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670833337}
+  m_Enabled: 1
 --- !u!1 &673226628
 GameObject:
   m_ObjectHideFlags: 0
@@ -15415,26 +15424,11 @@ PrefabInstance:
       propertyPath: Timer
       value: 
       objectReference: {fileID: 1419691596}
-    - target: {fileID: 2407747169625659660, guid: 299b24f75e828d04694ba725d6ca4619,
+    - target: {fileID: 1909498444681442951, guid: 299b24f75e828d04694ba725d6ca4619,
         type: 3}
-      propertyPath: attackAnimation
-      value: 
-      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
-    - target: {fileID: 126996498235237473, guid: 299b24f75e828d04694ba725d6ca4619,
-        type: 3}
-      propertyPath: attackAnimation
-      value: 
-      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
-    - target: {fileID: 7729246595114027228, guid: 299b24f75e828d04694ba725d6ca4619,
-        type: 3}
-      propertyPath: attackAnimation
-      value: 
-      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
-    - target: {fileID: 8211183973308581484, guid: 299b24f75e828d04694ba725d6ca4619,
-        type: 3}
-      propertyPath: attackAnimation
-      value: 
-      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.72
+      objectReference: {fileID: 0}
     - target: {fileID: 1909498443647593601, guid: 299b24f75e828d04694ba725d6ca4619,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15455,21 +15449,36 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 5.21
       objectReference: {fileID: 0}
-    - target: {fileID: 1909498444681442951, guid: 299b24f75e828d04694ba725d6ca4619,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.72
-      objectReference: {fileID: 0}
     - target: {fileID: 1909498444818793617, guid: 299b24f75e828d04694ba725d6ca4619,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.72
       objectReference: {fileID: 0}
+    - target: {fileID: 7729246595114027228, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: attackAnimation
+      value: 
+      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
+    - target: {fileID: 8211183973308581484, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: attackAnimation
+      value: 
+      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
     - target: {fileID: 1909498443647593605, guid: 299b24f75e828d04694ba725d6ca4619,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 126996498235237473, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: attackAnimation
+      value: 
+      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
+    - target: {fileID: 2407747169625659660, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: attackAnimation
+      value: 
+      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 299b24f75e828d04694ba725d6ca4619, type: 3}
 --- !u!1 &1942965731

@@ -3125,6 +3125,8 @@ MonoBehaviour:
   Knockback: 0.2
   Timer: 0.2
   direction: 0
+  DirectionObj: {fileID: 0}
+  ClosestPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &728731326
 GameObject:
   m_ObjectHideFlags: 0
@@ -4239,11 +4241,6 @@ PrefabInstance:
       propertyPath: Timer
       value: 
       objectReference: {fileID: 2020078853}
-    - target: {fileID: 1909498443647593605, guid: 299b24f75e828d04694ba725d6ca4619,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 607410986, guid: 299b24f75e828d04694ba725d6ca4619, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4252,7 +4249,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7729246595114027228, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: attackAnimation
+      value: 
+      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
+    - target: {fileID: 8211183973308581484, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: attackAnimation
+      value: 
+      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
     - target: {fileID: 1909498443358865016, guid: 299b24f75e828d04694ba725d6ca4619,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909498443647593605, guid: 299b24f75e828d04694ba725d6ca4619,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4263,16 +4275,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
     - target: {fileID: 2407747169625659660, guid: 299b24f75e828d04694ba725d6ca4619,
-        type: 3}
-      propertyPath: attackAnimation
-      value: 
-      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
-    - target: {fileID: 7729246595114027228, guid: 299b24f75e828d04694ba725d6ca4619,
-        type: 3}
-      propertyPath: attackAnimation
-      value: 
-      objectReference: {fileID: 7400000, guid: 7dc7a4cd77dc5fc419360cf333f8a704, type: 3}
-    - target: {fileID: 8211183973308581484, guid: 299b24f75e828d04694ba725d6ca4619,
         type: 3}
       propertyPath: attackAnimation
       value: 
@@ -5963,6 +5965,8 @@ MonoBehaviour:
   Knockback: 0.2
   Timer: 0.2
   direction: 0
+  DirectionObj: {fileID: 0}
+  ClosestPoint: {x: 0, y: 0, z: 0}
 --- !u!64 &1466156177
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6659,6 +6663,8 @@ MonoBehaviour:
   Knockback: 0.2
   Timer: 0.2
   direction: 0
+  DirectionObj: {fileID: 0}
+  ClosestPoint: {x: 0, y: 0, z: 0}
 --- !u!64 &1632981559
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7476,6 +7482,7 @@ GameObject:
   - component: {fileID: 1731374246}
   - component: {fileID: 1731374245}
   - component: {fileID: 1731374244}
+  - component: {fileID: 1731374247}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7547,6 +7554,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 63.850002, y: 180.00002, z: 0}
+--- !u!124 &1731374247
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731374243}
+  m_Enabled: 1
 --- !u!1 &1737755729
 GameObject:
   m_ObjectHideFlags: 0
@@ -9402,6 +9417,8 @@ MonoBehaviour:
   Knockback: 0.2
   Timer: 0.2
   direction: 0
+  DirectionObj: {fileID: 0}
+  ClosestPoint: {x: 0, y: 0, z: 0}
 --- !u!64 &2045855504
 MeshCollider:
   m_ObjectHideFlags: 0
