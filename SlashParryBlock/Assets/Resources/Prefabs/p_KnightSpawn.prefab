@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7231665732182974410}
   - component: {fileID: 9147441524666940350}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Glint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4711745689833668814}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: pos_Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,79 @@ Transform:
   m_Father: {fileID: 6533180403917160465}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -76, y: 76.263, z: -55.472004}
+--- !u!1 &3320603662788770399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3923344818187410023}
+  - component: {fileID: 5532560945408274776}
+  m_Layer: 18
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3923344818187410023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3320603662788770399}
+  m_LocalRotation: {x: -0, y: 0.9956067, z: -0.093633465, w: 0}
+  m_LocalPosition: {x: 0, y: 0.49, z: 2.287}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7718227340150029703}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 10.745001, y: 180.00002, z: 0}
+--- !u!20 &5532560945408274776
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3320603662788770399}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 0}
+  m_projectionMatrixMode: 1
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_GateFitMode: 2
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 262144
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: 1066a4b5e3b77e94a993bfbf2b64750e, type: 2}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &4866643931262996272
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2183169974334958962}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: pos_Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +212,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162273}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage6_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162275}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage5_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162277}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage7_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162279}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage6_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +336,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162281}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage8_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +367,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162283}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage7_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162285}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage_end_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162287}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage9_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162289}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Visor_end_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162291}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Visor_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917162293}
   - component: {fileID: 6533180403930468505}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: visor3_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +601,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917162295}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Visor_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,7 +633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917162297}
   - component: {fileID: 6533180403930468509}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Knight_front_cloth_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,7 +714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917162299}
   - component: {fileID: 6533180403930468511}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Knight_back_cloth_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -722,7 +795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160641}
   - component: {fileID: 6533180403930468507}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Plumage3_Vr2_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,7 +885,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160643}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Helmets_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -844,7 +917,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160645}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:joint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,7 +948,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160647}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:joint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,7 +979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160649}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:joint4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +1009,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160651}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:joint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,7 +1040,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160653}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage1_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -998,7 +1071,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160655}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage10_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1028,7 +1101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160657}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage2_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1059,7 +1132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160659}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage1_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1090,7 +1163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160661}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage3_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1121,7 +1194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160663}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage2_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1152,7 +1225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160665}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage4_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1183,7 +1256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160667}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage3_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1214,7 +1287,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160669}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage5_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1245,7 +1318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160671}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Plumage4_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1276,7 +1349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160481}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ling_end_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1306,7 +1379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160483}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ling3_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1337,7 +1410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160485}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle1_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1368,7 +1441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160487}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle1_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1399,7 +1472,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160489}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle1_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1430,7 +1503,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160491}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle1_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1461,7 +1534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160493}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle1_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1492,7 +1565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160495}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1523,7 +1596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160497}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle2_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1554,7 +1627,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160499}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle2_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1585,7 +1658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160501}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle2_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1616,7 +1689,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160503}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle2_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1647,7 +1720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160505}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle2_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1678,7 +1751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160507}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1709,7 +1782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160509}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle3_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1740,7 +1813,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160511}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle3_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1770,7 +1843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160897}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1801,7 +1874,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160899}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index2_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1832,7 +1905,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160901}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index3_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1863,7 +1936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160903}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index2_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1894,7 +1967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160905}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index3_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1924,7 +1997,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160907}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index3_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1955,7 +2028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160909}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index3_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1986,7 +2059,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160911}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index3_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2017,7 +2090,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160913}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index_end_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2047,7 +2120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160915}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index_3_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2077,7 +2150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160917}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Knee1_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2108,7 +2181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160919}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index_end_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2138,7 +2211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160921}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Knee2_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2169,7 +2242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160923}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Knee1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2200,7 +2273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160925}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ling2_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2231,7 +2304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160927}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Knee2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2262,7 +2335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160545}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky2_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2293,7 +2366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160547}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky2_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2324,7 +2397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160549}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky2_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2355,7 +2428,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160551}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky2_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2386,7 +2459,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160553}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky2_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2417,7 +2490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160555}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2448,7 +2521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160557}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky3_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2479,7 +2552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160559}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky3_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2509,7 +2582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160561}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky3_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2539,7 +2612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160563}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky3_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2570,7 +2643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160565}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky3_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2601,7 +2674,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160567}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky3_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2632,7 +2705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160569}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky_end_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2662,7 +2735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160571}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky_end_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2692,7 +2765,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160573}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring1_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2723,7 +2796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160575}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring1_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2754,7 +2827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160449}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle3_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2784,7 +2857,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160451}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle3_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2815,7 +2888,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160453}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle3_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2846,7 +2919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160455}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle3_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2877,7 +2950,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160457}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle_end_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2907,7 +2980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160459}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Middle_end_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2937,7 +3010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160461}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Neck_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2968,7 +3041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160463}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Neck_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2999,7 +3072,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160465}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Palm_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3035,7 +3108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160467}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Palm_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3071,7 +3144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160469}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky1_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3102,7 +3175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160471}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky1_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3133,7 +3206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160473}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky1_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3164,7 +3237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160475}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky1_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3195,7 +3268,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160477}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky1_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3226,7 +3299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160479}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Pinky1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3257,7 +3330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160609}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Root_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3288,7 +3361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160611}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Root_Ctrl_Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3319,7 +3392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160613}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Shoulder_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3350,7 +3423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160615}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Shoulder_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3381,7 +3454,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160617}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Shoulder_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3412,7 +3485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160619}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Shoulder_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3443,7 +3516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160621}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Shoulder_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3474,7 +3547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160623}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Shoulder_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3505,7 +3578,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160625}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Spine1_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3536,7 +3609,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160627}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Spine1_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3567,7 +3640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160629}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Spine2_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3598,7 +3671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160631}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Spine2_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3629,7 +3702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160633}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Spine3_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3662,7 +3735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160635}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Spine3_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3695,7 +3768,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160637}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb1_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3726,7 +3799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160639}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb1_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3757,7 +3830,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160513}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3788,7 +3861,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160515}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring1_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3819,7 +3892,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160517}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring2_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3850,7 +3923,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160519}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring1_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3881,7 +3954,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160521}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring2_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3912,7 +3985,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160523}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring2_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3943,7 +4016,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160525}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring2_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3974,7 +4047,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160527}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4005,7 +4078,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160529}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring3_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4036,7 +4109,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160531}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring3_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4066,7 +4139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160533}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring3_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4097,7 +4170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160535}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring3_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4127,7 +4200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160537}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring_end_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4157,7 +4230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160539}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring3_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4188,7 +4261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160541}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Root_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4219,7 +4292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160543}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ring_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4250,7 +4323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160673}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb_end_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4280,7 +4353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160675}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb_end_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4310,7 +4383,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160677}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Toe_end_JNT 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4340,7 +4413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160679}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Toe_end_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4370,7 +4443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160681}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Toe_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4401,7 +4474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160683}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Toe_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4432,7 +4505,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160685}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Wrist_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4463,7 +4536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160687}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Wrist_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4498,7 +4571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160689}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Wrist_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4533,7 +4606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160691}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Wrist_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4564,7 +4637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160693}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Wrist_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4595,7 +4668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160695}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Wrist_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4626,7 +4699,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160697}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: shoulderPads_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4659,7 +4732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160699}
   - component: {fileID: 6533180403930468503}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: shoes_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4749,7 +4822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160701}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: helmet3_Vr2_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4783,7 +4856,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160703}
   - component: {fileID: 6533180403930468501}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: helmet3_LP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4863,7 +4936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160577}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb1_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4894,7 +4967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160579}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb1_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4925,7 +4998,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160581}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb1_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4956,7 +5029,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160583}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4987,7 +5060,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160585}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb2_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5018,7 +5091,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160587}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb2_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5049,7 +5122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160589}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb2_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5080,7 +5153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160591}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb2_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5111,7 +5184,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160593}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb2_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5142,7 +5215,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160595}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5173,7 +5246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160597}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb3_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5204,7 +5277,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160599}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb3_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5234,7 +5307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160601}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb3_R_ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5264,7 +5337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160603}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb3_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5295,7 +5368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160605}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb3_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5326,7 +5399,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160607}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Thumb3_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5357,7 +5430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160865}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: armour_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5390,7 +5463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160867}
   - component: {fileID: 6533180403926199875}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Ani_Skeletalmesh_Knight3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5444,7 +5517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160869}
   - component: {fileID: 6533180403930468481}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: body_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5588,7 +5661,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160875}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Cloth_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5620,7 +5693,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160885}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: LegGuard_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5652,7 +5725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160887}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Knight_LP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5687,7 +5760,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160889}
   - component: {fileID: 6533180403930468493}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: polySurface2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5768,7 +5841,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160891}
   - component: {fileID: 6533180403930468495}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5849,7 +5922,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160893}
   - component: {fileID: 6533180403930468497}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: polySurface4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5930,7 +6003,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533180403917160895}
   - component: {fileID: 6533180403930468499}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: polySurface3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6010,7 +6083,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160929}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Head1_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6043,7 +6116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160931}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Elbow_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6074,7 +6147,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160933}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Head_end_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6104,7 +6177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160935}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Head_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6136,7 +6209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160937}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Hip_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6167,7 +6240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160939}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Hip_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6198,7 +6271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160941}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index1_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6229,7 +6302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160943}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Hips_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6260,7 +6333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160945}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index1_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6291,7 +6364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160947}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index1_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6322,7 +6395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160949}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6353,7 +6426,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160951}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index1_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6384,7 +6457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160953}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index2_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6415,7 +6488,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160955}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index1_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6446,7 +6519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160957}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index2_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6477,7 +6550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160959}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Index2_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6508,7 +6581,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160833}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ankle_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6539,7 +6612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160835}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Ankle_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6570,7 +6643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160837}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Clav1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6601,7 +6674,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160839}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Clav1_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6632,7 +6705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160841}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Clav2_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6663,7 +6736,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160843}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Clav2_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6694,7 +6767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160845}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Clav2_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6725,7 +6798,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160847}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Clav2_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6756,7 +6829,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160849}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Clav2_R_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6787,7 +6860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160851}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Clav2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6818,7 +6891,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160853}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Elbow_L_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6849,7 +6922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160855}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Cog_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6882,7 +6955,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160857}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Elbow_L_LOC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6913,7 +6986,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160859}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Elbow_L_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6944,7 +7017,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160861}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Elbow_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6975,7 +7048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533180403917160863}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Rig_KnightClean_Vr1:Elbow_R_Ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7010,7 +7083,7 @@ GameObject:
   - component: {fileID: 5767221214844176394}
   - component: {fileID: 2848829209384447668}
   - component: {fileID: 4538567116665664077}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: p_KnightSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7025,12 +7098,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7718227340150029699}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.253, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6533180403917160867}
   - {fileID: 5705282468232545622}
   - {fileID: 6811253125972255328}
+  - {fileID: 3923344818187410023}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7152,7 +7226,7 @@ GameObject:
   - component: {fileID: 9135057363760645198}
   - component: {fileID: 9135057363763545198}
   - component: {fileID: 9135057363762415278}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: p_DizzySpiral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7238,7 +7312,7 @@ PrefabInstance:
     - target: {fileID: 765249041745720606, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2232390502260373334, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
@@ -7313,7 +7387,7 @@ PrefabInstance:
     - target: {fileID: 8121109671158207710, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 9086261057863925528, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
@@ -7323,22 +7397,22 @@ PrefabInstance:
     - target: {fileID: 8121109671158207708, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8121109671158207704, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8121109671158207706, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8710370028601468835, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c43ea75892055442b02d38b83065ae4, type: 3}
@@ -7369,7 +7443,7 @@ PrefabInstance:
     - target: {fileID: 4489662516641847228, guid: 0e14a7979b8f2e846bcf0db040eccd9e,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4489662516641847228, guid: 0e14a7979b8f2e846bcf0db040eccd9e,
         type: 3}

@@ -32,6 +32,13 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<PlayerData> players = new List<PlayerData>();
     public List<PlayerHeartsContainer> playerHearts;
     public List<string> joystickCharInputs;
+    public bool[] PlayersReady = new bool[4] {false,false,false,false};
+    public int ReadyPlayers = 0;
+    public bool PlayGame = false;
+    public GameObject ReadyUpScreen;
+    public GameObject[] playerReadyUpPos;
+    public RawImage[] PlayerReadyUpImg;
+    public List<RenderTexture> renderTextures;
 
     public KnightMeshRenderer KnightMeshRenderer;
 
@@ -49,6 +56,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     private void Awake()
     {
+        ReadyUpScreen.SetActive(true);
         levelLoadInfo levelDatatmp = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
         gameplay = gameObject.GetComponent<MatchGameplay>();
         levelDatatmp.transform.parent = gameObject.transform;
@@ -72,8 +80,6 @@ public class CharacterMovmentScript : MonoBehaviour
             Instantiate(levelDatatmp.KnightSwords[levelDatatmp.meshSelected[j]], players[j].SwordPos.transform);
             Instantiate(levelDatatmp.KnightShields[levelDatatmp.meshSelected[j]], players[j].ShieldPos.transform);
 
-            players[j].gameObject.layer = 14 + j;
-
             List<SkinnedMeshRenderer> skinnedMeshRenderers = new List<SkinnedMeshRenderer>();
             skinnedMeshRenderers.AddRange(players[j].GetComponentsInChildren<SkinnedMeshRenderer>());
             for (int i = 0; i < skinnedMeshRenderers.Count; i++)
@@ -81,6 +87,8 @@ public class CharacterMovmentScript : MonoBehaviour
                 KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.meshSelected[j]);
                 skinnedMeshRenderers.Clear();
             }
+            renderTextures.Add(players[j].gameObject.GetComponentInChildren<Camera>().targetTexture);
+            renderTextures[j].Create();
         }
         //KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.MeshSelected);
 
@@ -133,6 +141,9 @@ public class CharacterMovmentScript : MonoBehaviour
             //getting a reference to all the player's rigidbodies
             playersRB.Add(players[i].gameObject.GetComponent<Rigidbody>());
             playersAni.Add(players[i].gameObject.GetComponentInChildren<Animator>());
+
+            playersRB[i].isKinematic = true;
+            playersRB[i].MovePosition(playerReadyUpPos[i].transform.position);
         }
     }
 
@@ -141,53 +152,28 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
+            if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f && !PlayersReady[i])
+            {
+                PlayersReady[i] = true;
+                ReadyPlayers++;
+            }
+            if (Input.GetAxis("B_Button" + joystickCharInputs[i]) != 0.0f && PlayersReady[i])
+            {
+                PlayersReady[i] = false;
+                ReadyPlayers--;
+            }
+
+            if (ReadyPlayers == joystickCharInputs.Count && !PlayGame)
+            {
+                PlayGame = true;
+                StartGame();
+            }
+
+            PlayerReadyUpImg[i].texture = renderTextures[i];
+
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
             {
-                #region moved to fixedUpdate()
-                //for player1 this will evaluate to "HorizontalP1"
-                //if (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0 || 
-                //    Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
-                //{
-                //    //left stick for rotating if not blocking
-                //    if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) != 0 || Input.GetAxis("VerticalP" + (i + 1)) != 0))
-                //    {
-                //        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * speed, 0, -Input.GetAxis("VerticalP" + (i + 1)) * speed), ForceMode.Impulse);
-                //        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)), 0, -Input.GetAxis("VerticalP" + (i + 1))), Vector3.up), rotSpeed);
-                //        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
-                //    }
-                //    else if (players[i].blocking)
-                //    {
-                //        playersRB[i].AddForce(new Vector3(Input.GetAxis("HorizontalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass), 0, -Input.GetAxis("VerticalP" + (i + 1)) * ((speed * blockSpeedMultiplier) * playersRB[i].mass)), ForceMode.Impulse);
-                //        //only rotate if you have a value to rotate to
-                //        if (Input.GetAxis("R_StickHorizontalP" + (i + 1)) != 0 || Input.GetAxis("R_StickVerticalP" + (i + 1)) != 0)
-                //        {
-                //            playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("R_StickHorizontalP" + (i + 1)), 0, -Input.GetAxis("R_StickVerticalP" + (i + 1))), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
-                //        }
-                //        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
-                //    }
-                //    else
-                //    {
-                //        if (!players[i].blocking && (Input.GetAxis("HorizontalP" + (i + 1)) == 0 || Input.GetAxis("VerticalP" + (i + 1)) == 0))
-                //        {
-                //            playersAni[i].SetInteger("Anim", 0);
-                //        }
-                //    }
-                //
-                //    //lowers your speed to your max speed
-                //    if (playersRB[i].velocity.magnitude > maxSpeed)
-                //    {
-                //        Vector3 VelNorm = playersRB[i].velocity.normalized;
-                //
-                //        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
-                //    }
-                //}
-                //else
-                //{
-                //    //play Idle animation
-                //    playersAni[i].SetInteger("Anim", 0);
-                //}
-                #endregion
 
                 if (Input.GetAxis("L_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked())
                 {
@@ -313,6 +299,17 @@ public class CharacterMovmentScript : MonoBehaviour
         else
         {
             return new Vector3(0, 5.0f, 0);
+        }
+    }
+    private void StartGame()
+    {
+        ReadyUpScreen.SetActive(false);
+        gameObject.GetComponent<MatchGameplay>().StartMatch();
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GameStart();
+            playersRB[i].isKinematic = false;
+            players[i].gameObject.layer = 14 + i;
         }
     }
 

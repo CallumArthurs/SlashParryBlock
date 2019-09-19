@@ -42,13 +42,13 @@ public class MatchGameplay : MonoBehaviour
         endScreenStats.Add(GameObject.FindGameObjectWithTag("Player4Stats").GetComponentsInChildren<Text>());
 
         RoundTimer = RoundLength;
-        StartMatch();
+        RoundStatsUI.SetActive(false);
     }
 
-    void StartMatch()
+    public void StartMatch()
     {
         playMatch = true;
-        RoundStatsUI.SetActive(false);
+        GameUI.SetActive(true);
     }
 
     void Update()
