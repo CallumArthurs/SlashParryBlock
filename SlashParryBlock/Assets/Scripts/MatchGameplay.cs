@@ -173,4 +173,9 @@ public class MatchGameplay : MonoBehaviour
         playMatch = false;
         Debug.Log("MatchEnd");
     }
+
+    public void AddTime(float value)
+    {
+        RoundTimer += value;
+    }
 }

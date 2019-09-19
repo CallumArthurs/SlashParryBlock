@@ -561,7 +561,6 @@ public class PlayerData : MonoBehaviour
         }
 
         parried = true;
-        
 
         float radius = 1;
 

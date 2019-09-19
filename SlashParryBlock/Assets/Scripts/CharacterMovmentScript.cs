@@ -273,6 +273,9 @@ public class CharacterMovmentScript : MonoBehaviour
                     case "Restart":
                         SceneSelector.SceneLoader(SceneSelector.SceneSelecter.SplashScreen);
                         break;
+                    case "AddTime":
+                        gameObject.GetComponent<MatchGameplay>().AddTime(120);
+                        break;
                     default:
                         console.CommandInput = "InvaildCommand";
                         break;
