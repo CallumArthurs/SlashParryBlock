@@ -38,6 +38,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public GameObject ReadyUpScreen;
     public GameObject[] playerReadyUpPos;
     public RawImage[] PlayerReadyUpImg;
+    public Text[] ReadyUpTxt;
     public List<RenderTexture> renderTextures;
 
     public KnightMeshRenderer KnightMeshRenderer;
@@ -45,6 +46,8 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<GameObject> PlayerColliders;
 
     public Sprite emptyHeart, halfHeart, fullHeart;
+
+    private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;
     private List<AudioSource> soundPlayers;
     private List<Rigidbody> playersRB;
@@ -73,10 +76,13 @@ public class CharacterMovmentScript : MonoBehaviour
         gameplay.RoundLength = levelDatatmp.RoundLength;
         gameplay.PlayerLives = levelDatatmp.playerLives;
 
+        PlayerRenderTextures = new List<RenderTexture>();
         for (int j = 0; j < levelDatatmp.meshSelected.Count; j++)
         {
-            players.Insert(players.Count, Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject,gameObject.transform).GetComponent<PlayerData>());
-
+            players.Insert(players.Count, Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject, gameObject.transform).GetComponent<PlayerData>());
+            players[players.Count - 1].gameObject.transform.position = playerReadyUpPos[j].transform.position;
+            PlayerRenderTextures.Add(Resources.Load("Prefabs/" + joystickCharInputs[j] + "TargetTexture") as RenderTexture);
+            players[players.Count - 1].GetComponentInChildren<Camera>().targetTexture = PlayerRenderTextures[j];
             Instantiate(levelDatatmp.KnightSwords[levelDatatmp.meshSelected[j]], players[j].SwordPos.transform);
             Instantiate(levelDatatmp.KnightShields[levelDatatmp.meshSelected[j]], players[j].ShieldPos.transform);
 
@@ -154,20 +160,24 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f && !PlayersReady[i])
             {
+                ReadyUpTxt[i].fontSize = 37;
+                ReadyUpTxt[i].text = "Press B to UnReady";
                 PlayersReady[i] = true;
                 ReadyPlayers++;
             }
             if (Input.GetAxis("B_Button" + joystickCharInputs[i]) != 0.0f && PlayersReady[i])
             {
+                ReadyUpTxt[i].fontSize = 32;
+                ReadyUpTxt[i].text = "Press A to Ready up";
                 PlayersReady[i] = false;
                 ReadyPlayers--;
             }
-
             if (ReadyPlayers == joystickCharInputs.Count && !PlayGame)
             {
                 PlayGame = true;
                 StartGame();
             }
+            Debug.Log(ReadyPlayers);
 
             PlayerReadyUpImg[i].texture = renderTextures[i];
 

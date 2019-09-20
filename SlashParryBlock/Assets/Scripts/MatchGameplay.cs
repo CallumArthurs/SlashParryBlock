@@ -53,65 +53,69 @@ public class MatchGameplay : MonoBehaviour
 
     void Update()
     {
-        if (playMatch)
+        if (CharMovScript.PlayGame)
         {
-            RoundTimer -= Time.deltaTime;
-            if (RoundTimer <= 0.0f)
+            if (playMatch)
             {
-                RoundEnd();
-            }
-
-            for (int i = 0; i < CharMovScript.players.Count; i++)
-            {
-                playerStatsCurRound[i].Deaths = CharMovScript.players[i].Deaths;
-            }
-
-            switch (gameMode)
-            {
-                case Gamemode.Vanilla:
-                    {
-                        break;
-                    }
-                case Gamemode.Stock:
-                    {
-                        for (int i = 0; i < CharMovScript.players.Count; i++)
-                        {
-                            if ((PlayerLives - playerStatsCurRound[i].Deaths) <= 0)
-                            {
-                                CharMovScript.players[i].SetStock(true);
-                            }
-                        }
-                        break;
-                    }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < CharMovScript.players.Count; i++)
-            {
-                if (Input.GetAxis("A_Button" + CharMovScript.joystickCharInputs[i]) > 0.0f)
+                RoundTimer -= Time.deltaTime;
+                if (RoundTimer <= 0.0f)
                 {
-                    if (restartGame)
-                    {
-                        SceneManager.LoadScene(0);
-                    }
-                    else
-                    {
-                        GameUI.SetActive(true);
-                    }
-
-                    for (int j = 0; j < CharMovScript.players.Count; j++)
-                    {
-                        CharMovScript.players[j].ResetPlayer();
-                    }
-
-                    RoundTimer = RoundLength;
-                    StartMatch();
+                    RoundEnd();
                 }
 
+                for (int i = 0; i < CharMovScript.players.Count; i++)
+                {
+                    playerStatsCurRound[i].Deaths = CharMovScript.players[i].Deaths;
+                }
+
+                switch (gameMode)
+                {
+                    case Gamemode.Vanilla:
+                        {
+                            break;
+                        }
+                    case Gamemode.Stock:
+                        {
+                            for (int i = 0; i < CharMovScript.players.Count; i++)
+                            {
+                                if ((PlayerLives - playerStatsCurRound[i].Deaths) <= 0)
+                                {
+                                    CharMovScript.players[i].SetStock(true);
+                                }
+                            }
+                            break;
+                        }
+                }
             }
+            else
+            {
+                for (int i = 0; i < CharMovScript.players.Count; i++)
+                {
+                    if (Input.GetAxis("A_Button" + CharMovScript.joystickCharInputs[i]) > 0.0f)
+                    {
+                        if (restartGame)
+                        {
+                            SceneManager.LoadScene(0);
+                        }
+                        else
+                        {
+                            GameUI.SetActive(true);
+                        }
+
+                        for (int j = 0; j < CharMovScript.players.Count; j++)
+                        {
+                            CharMovScript.players[j].ResetPlayer();
+                        }
+
+                        RoundTimer = RoundLength;
+                        StartMatch();
+                    }
+
+                }
+            }
+            UpdateUI();
+
         }
-        UpdateUI();
     }
 
     void UpdateUI()
