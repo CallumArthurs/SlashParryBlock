@@ -12,21 +12,25 @@ public class SpinSomething : MonoBehaviour
     }
     public Axis axis;
     public float speed = 1.0f;
+    public float delay = 0.0f;
 
     void Update()
     {
-        switch ((int)axis)
+        delay -= Time.deltaTime;
+        if (delay <= 0.0f)
         {
-            case 0:
-                transform.Rotate(Vector3.right, speed, Space.World);
-                break;
-            case 1:
-                transform.Rotate(Vector3.up, speed, Space.World);
-                break;
-            case 2:
-                transform.Rotate(Vector3.forward, speed, Space.World);
-                break;
+            switch ((int)axis)
+            {
+                case 0:
+                    transform.Rotate(Vector3.right, speed, Space.World);
+                    break;
+                case 1:
+                    transform.Rotate(Vector3.up, speed, Space.World);
+                    break;
+                case 2:
+                    transform.Rotate(Vector3.forward, speed, Space.World);
+                    break;
+            }
         }
-        //transform.Rotate(Vector3.up, speed, Space.World);
     }
 }
