@@ -115,7 +115,6 @@ public class MatchGameplay : MonoBehaviour
                 }
             }
             UpdateUI();
-
         }
     }
 

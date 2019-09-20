@@ -182,7 +182,6 @@ public class CharacterMovmentScript : MonoBehaviour
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
             {
-
                 if (Input.GetAxis("L_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked())
                 {
                     players[i].blocking = true;

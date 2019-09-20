@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerStats
 {
+    public int kills, Deaths, successfulParries, damageDealt, damageTaken, killStreak;
+
     public PlayerStats()
     {
         kills = 0;
@@ -23,6 +25,4 @@ public class PlayerStats
         damageTaken = damageTakenVal;
         killStreak = killStreakVal;
     }
-
-    public int kills, Deaths, successfulParries, damageDealt, damageTaken, killStreak;
 }
