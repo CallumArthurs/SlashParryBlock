@@ -25,11 +25,12 @@ public class MatchGameplay : MonoBehaviour
     private List<PlayerStats> playerStatsCurRound = new List<PlayerStats>();
     private List<PlayerStats> playerStatsTotal = new List<PlayerStats>();
     private List<Text[]> endScreenStats = new List<Text[]>();
+    private EndGameInfo endGameInfo;
 
     void Start()
     {
         CharMovScript = gameObject.GetComponent<CharacterMovmentScript>();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < CharMovScript.joystickCharInputs.Count; i++)
         {
             playerStatsTotal.Add(new PlayerStats());
             playerStatsCurRound.Add(new PlayerStats());
@@ -173,8 +174,11 @@ public class MatchGameplay : MonoBehaviour
 
     void MatchEnd()
     {
-        restartGame = true;
+        //restartGame = true;
         playMatch = false;
+        endGameInfo = Instantiate(Resources.Load("Prefabs/EndGameInfo") as GameObject).GetComponent<EndGameInfo>();
+        endGameInfo.playerStatsTotal = new List<PlayerStats>(playerStatsTotal);
+        endGameInfo.CalculateWinner();
         Debug.Log("MatchEnd");
     }
 
