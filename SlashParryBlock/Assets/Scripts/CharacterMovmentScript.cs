@@ -35,17 +35,16 @@ public class CharacterMovmentScript : MonoBehaviour
     public bool[] PlayersReady = new bool[4] {false,false,false,false};
     public int ReadyPlayers = 0;
     public bool PlayGame = false;
+
     public GameObject ReadyUpScreen;
     public GameObject[] playerReadyUpPos;
     public RawImage[] PlayerReadyUpImg;
     public Text[] ReadyUpTxt;
     public List<RenderTexture> renderTextures;
-
     public KnightMeshRenderer KnightMeshRenderer;
-
     public List<GameObject> PlayerColliders;
-
     public Sprite emptyHeart, halfHeart, fullHeart;
+    public List<GameObject> PlayerCams = new List<GameObject>();
 
     private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;
@@ -62,7 +61,6 @@ public class CharacterMovmentScript : MonoBehaviour
         ReadyUpScreen.SetActive(true);
         levelLoadInfo levelDatatmp = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
         gameplay = gameObject.GetComponent<MatchGameplay>();
-        levelDatatmp.transform.parent = gameObject.transform;
         joystickCharInputs = levelDatatmp.joystickCharInputs;
 
         KnightMeshRenderer = gameObject.GetComponent<KnightMeshRenderer>();
@@ -79,10 +77,11 @@ public class CharacterMovmentScript : MonoBehaviour
         PlayerRenderTextures = new List<RenderTexture>();
         for (int j = 0; j < levelDatatmp.meshSelected.Count; j++)
         {
-            players.Insert(players.Count, Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject, gameObject.transform).GetComponent<PlayerData>());
-            players[players.Count - 1].gameObject.transform.position = playerReadyUpPos[j].transform.position;
+            players.Add(Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject, gameObject.transform).GetComponent<PlayerData>());
+            PlayerCams.Add(Instantiate(Resources.Load("Prefabs/PlayerReadyUpCam") as GameObject));
+            players[j].gameObject.transform.position = playerReadyUpPos[j].transform.position;
             PlayerRenderTextures.Add(Resources.Load("Prefabs/" + joystickCharInputs[j] + "TargetTexture") as RenderTexture);
-            players[players.Count - 1].GetComponentInChildren<Camera>().targetTexture = PlayerRenderTextures[j];
+            PlayerCams[j].GetComponent<Camera>().targetTexture = PlayerRenderTextures[j];
             Instantiate(levelDatatmp.KnightSwords[levelDatatmp.meshSelected[j]], players[j].SwordPos.transform);
             Instantiate(levelDatatmp.KnightShields[levelDatatmp.meshSelected[j]], players[j].ShieldPos.transform);
 
@@ -93,7 +92,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.meshSelected[j]);
                 skinnedMeshRenderers.Clear();
             }
-            renderTextures.Add(players[j].gameObject.GetComponentInChildren<Camera>().targetTexture);
+            renderTextures.Add(PlayerCams[j].GetComponent<Camera>().targetTexture);
             renderTextures[j].Create();
         }
         //KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.MeshSelected);
@@ -121,7 +120,6 @@ public class CharacterMovmentScript : MonoBehaviour
 
     void Start()
     {
-
         playersAni = new List<Animator>();
         playersRB = new List<Rigidbody>();
         soundPlayers = new List<AudioSource>();
@@ -160,14 +158,14 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f && !PlayersReady[i])
             {
-                ReadyUpTxt[i].fontSize = 37;
+                ReadyUpTxt[i].fontSize = 32;
                 ReadyUpTxt[i].text = "Press B to UnReady";
                 PlayersReady[i] = true;
                 ReadyPlayers++;
             }
             if (Input.GetAxis("B_Button" + joystickCharInputs[i]) != 0.0f && PlayersReady[i])
             {
-                ReadyUpTxt[i].fontSize = 32;
+                ReadyUpTxt[i].fontSize = 37;
                 ReadyUpTxt[i].text = "Press A to Ready up";
                 PlayersReady[i] = false;
                 ReadyPlayers--;
@@ -178,7 +176,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 StartGame();
             }
             Debug.Log(ReadyPlayers);
-
+            PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
             PlayerReadyUpImg[i].texture = renderTextures[i];
 
             //no inputs taken if you have been knocked back
