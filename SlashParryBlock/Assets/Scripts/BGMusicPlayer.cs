@@ -12,13 +12,14 @@ public class BGMusicPlayer : MonoBehaviour
     {
         player = gameObject.GetComponent<AudioSource>();
         player.clip = music[0];
-        
+        player.Play(44100);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            player.Stop();
             curClip++;
             if (curClip > music.Count)
             {
@@ -29,6 +30,7 @@ public class BGMusicPlayer : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            player.Stop();
             curClip--;
             if (curClip < 0)
             {
