@@ -6,13 +6,13 @@ public class BGMusicPlayer : MonoBehaviour
 {
     public List<AudioClip> music;
 
-    private int curClip;
+    private int curClip = 0;
     private AudioSource player;
     void Start()
     {
         player = gameObject.GetComponent<AudioSource>();
         player.clip = music[0];
-        player.Play(44100);
+        
     }
 
     void Update()
@@ -25,6 +25,7 @@ public class BGMusicPlayer : MonoBehaviour
                 curClip = 0;
             }
             player.clip = music[curClip];
+            player.Play(44100);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -34,6 +35,7 @@ public class BGMusicPlayer : MonoBehaviour
                 curClip = music.Count - 1;
             }
             player.clip = music[curClip];
+            player.Play(44100);
         }
     }
 }
