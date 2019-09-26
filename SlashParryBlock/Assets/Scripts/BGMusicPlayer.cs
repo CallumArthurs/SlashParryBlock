@@ -8,6 +8,7 @@ public class BGMusicPlayer : MonoBehaviour
 
     private int curClip = 0;
     private AudioSource player;
+    private float timer;
     void Start()
     {
         player = gameObject.GetComponent<AudioSource>();
@@ -26,6 +27,7 @@ public class BGMusicPlayer : MonoBehaviour
                 curClip = 0;
             }
             player.clip = music[curClip];
+            timer = player.clip.length;
             player.Play(44100);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -37,7 +39,22 @@ public class BGMusicPlayer : MonoBehaviour
                 curClip = music.Count - 1;
             }
             player.clip = music[curClip];
+            timer = player.clip.length;
             player.Play(44100);
         }
+
+        if(timer <= 0.0f)
+        {
+            player.Stop();
+            curClip++;
+            if (curClip > music.Count)
+            {
+                curClip = 0;
+            }
+            player.clip = music[curClip];
+            timer = player.clip.length;
+            player.Play(44100);
+        }
+        timer -= Time.deltaTime;
     }
 }
