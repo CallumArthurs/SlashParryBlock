@@ -6,27 +6,36 @@ public class ConsoleCommand : MonoBehaviour
 {
     public string CommandInput;
     private bool Focused = false;
+    public bool EnterPressed = false;
 
     void OnGUI()
     {
-
-        GUI.SetNextControlName("Console");
-        CommandInput = GUI.TextField(new Rect(25, 25, 100, 25), CommandInput);
+        Event e = Event.current;
+        if (e.keyCode == KeyCode.Return)
+        {
+            EnterPressed = true;
+        }
+        else
+        {
+            GUI.SetNextControlName("Console");
+            CommandInput = GUI.TextField(new Rect(25, 25, 100, 25), CommandInput);
+            Debug.Log("OnGui");
+        }
 
         FocusSetup();
     }
 
     private void FocusSetup()
     {
-        if (!Focused)
+        if (Focused)
         {
-            Focused = true;
             GUI.FocusControl("Console");
         }
+        Debug.Log(Focused);
     }
 
     public void FocusConsoleToggle(bool value)
     {
-        
+        Focused = value;
     }
 }

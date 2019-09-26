@@ -38,6 +38,8 @@ public class PlayerData : MonoBehaviour
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
     public bool ComboAttack = false;
     public bool Respawning = false, invulnerable = false;
+    public bool Dashed = false;
+    public bool IgnoreSpeedLimit = false;
 
     public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
 
@@ -52,6 +54,7 @@ public class PlayerData : MonoBehaviour
     private float gotParriedTimer = 2.0f;
     private float KnockbackTimer = 0.25f;
     private float RespawnTimer = 2.0f, InvulnerabilityTimer = 4.0f;
+    private float DashTimer = 0.5f;
     private float radius = 0.6f;
     private float knockback;
     private float health, damage;
@@ -393,6 +396,17 @@ public class PlayerData : MonoBehaviour
                     }
                 }
             }
+
+            //if (Dashed)
+            //{
+            //    DashTimer -= Time.deltaTime;
+            //    if (DashTimer <= 0.0f)
+            //    {
+            //        DashTimer = 0.05f;
+            //        IgnoreSpeedLimit = false;
+            //        Dashed = false;
+            //    }
+            //}
         }
     }
 
@@ -598,6 +612,7 @@ public class PlayerData : MonoBehaviour
         DizzySpinner.SetActive(true);
         Glint.SetActive(false);
         Instantiate(particles, transform.position, Quaternion.Euler(transform.up));
+        gotParriedTimer = 2.0f;
         animator.SetInteger("Anim", 0);
         animator.SetTrigger("Stunned");
         for (int i = 0; i < playersHit.Count; i++)

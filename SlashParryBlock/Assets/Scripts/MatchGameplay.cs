@@ -16,11 +16,14 @@ public class MatchGameplay : MonoBehaviour
     public int Rounds = 1;
     public float RoundLength = 15;
     public int PlayerLives = 1;
+
+    [HideInInspector]
     public GameObject RoundStatsUI, GameUI;
+    [HideInInspector]
+    public Text Timer;
 
     private bool playMatch = false, restartGame = false;
     private CharacterMovmentScript CharMovScript;
-    public Text Timer;
     private float RoundTimer;
     private List<PlayerStats> playerStatsCurRound = new List<PlayerStats>();
     private List<PlayerStats> playerStatsTotal = new List<PlayerStats>();
@@ -101,6 +104,7 @@ public class MatchGameplay : MonoBehaviour
                         else
                         {
                             GameUI.SetActive(true);
+                            RoundStatsUI.SetActive(false);
                         }
 
                         for (int j = 0; j < CharMovScript.players.Count; j++)
@@ -125,8 +129,6 @@ public class MatchGameplay : MonoBehaviour
 
     void RoundEnd()
     {
-        GameUI.SetActive(false);
-        RoundStatsUI.SetActive(true);
         playerStatsCurRound.Clear();
         for (int i = 0; i < CharMovScript.players.Count; i++)
         {
@@ -168,7 +170,11 @@ public class MatchGameplay : MonoBehaviour
         {
             MatchEnd();
         }
-        Debug.Log("Round End");
+        else
+        {
+            GameUI.SetActive(false);
+            RoundStatsUI.SetActive(true);
+        }
     }
 
     void MatchEnd()
@@ -178,7 +184,7 @@ public class MatchGameplay : MonoBehaviour
         endGameInfo = Instantiate(Resources.Load("Prefabs/EndGameInfo") as GameObject).GetComponent<EndGameInfo>();
         endGameInfo.playerStatsTotal = new List<PlayerStats>(playerStatsTotal);
         endGameInfo.CalculateWinner();
-        Debug.Log("MatchEnd");
+        SceneManager.LoadScene(10);
     }
 
     public void AddTime(float value)

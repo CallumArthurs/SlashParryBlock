@@ -5,10 +5,12 @@ using UnityEngine;
 public class EndGameInfo : MonoBehaviour
 {
     public List<int> placement = new List<int>();
+    public List<int> MeshSelected;
     public List<PlayerStats> playerStatsTotal;
 
     private void Start()
     {
+        MeshSelected = new List<int>(GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>().meshSelected);
         DontDestroyOnLoad(gameObject);
     }
 
