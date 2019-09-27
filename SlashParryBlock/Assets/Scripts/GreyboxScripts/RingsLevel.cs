@@ -48,7 +48,6 @@ public class RingsLevel : MonoBehaviour
         //If CurrentTime = the randomly generated fall time, choose a ring randomly and initialise the Fall method
         if (CurrentTime == ChosenFallTime && !RingChosen)
         {
-            
             RingSelector = Random.Range(0, Rings.Length);
             FallingRing = Rings[RingSelector];
             RingChosen = true;
@@ -75,14 +74,6 @@ public class RingsLevel : MonoBehaviour
             }
         }
 
-
-        if (CurrentTime >= WarningTime)
-        {
-            Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringFallSpeed), 0));
-
-            Fallen = true;
-        }
-
         if (CurrentTime == TimeActivated && !Fallen)
         {
             Fall();
@@ -90,13 +81,32 @@ public class RingsLevel : MonoBehaviour
             //FallingRing.SetActive(false);
         }
 
+        if (CurrentTime == (TimeActivated - RespawnDelay) && Fallen)
+        {
+            Debug.Log("Moving back up");
+            goingDown = false;
+        }
+
+        if (CurrentTime >= WarningTime && goingDown)
+        {
+            Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringFallSpeed), 0));
+
+            Fallen = true;
+        }
+
+        if (CurrentTime >= (TimeActivated - RespawnDelay) && Fallen && !goingDown)
+        {
+            Rings[RingSelector].transform.Translate((new Vector3(0, 0, 0) - Rings[RingSelector].transform.localPosition) * Time.deltaTime * 5.0f);
+            //Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringFallSpeed), 0));
+        }
+
 
         if (CurrentTime == (TimeActivated + RespawnDelay) && Fallen)
         {
-            Rings[RingSelector].transform.localPosition = new Vector3(0, 0, 0);
             //ColourReset();
             StartLevel();
         }
+
     }
 
     void Fall()
@@ -105,7 +115,7 @@ public class RingsLevel : MonoBehaviour
 
         TimeActivated = CurrentTime;
         TimeActivated += WarningTime;
-
+        goingDown = true;
     }
 
     IEnumerator TimerRoutine()
@@ -139,6 +149,7 @@ public class RingsLevel : MonoBehaviour
 
     void StartLevel()
     {
+        Rings[RingSelector].transform.localPosition = new Vector3(0, 0, 0);
         RingChosen = false;
         CurrentTime = 0;
         Fallen = false;
