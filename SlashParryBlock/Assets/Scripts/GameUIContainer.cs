@@ -9,8 +9,7 @@ public class GameUIContainer : MonoBehaviour
     public List<GameObject> playerPortraits;
     public List<RawImage> readyUpImages;
     public List<Text> readyUpText;
-    public GameObject readyUpScreen;
-    public GameObject playerStatsUI;
-    public GameObject GameScreenUI;
+    public GameObject readyUpScreen, playerStatsUI,GameScreenUI;
+    public GameObject PauseMenu;
     public Text GameTimer;
 }

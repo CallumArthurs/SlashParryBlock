@@ -125,6 +125,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 players[k].spawnpoints.Add(SpawnPoints[i]);
             }
         }
+
         controlSchemeHandler = ControlScheme1;
         controlSchemeHandlerFixedUpdate = ControlScheme1FixedUpdate;
 
@@ -238,6 +239,15 @@ public class CharacterMovmentScript : MonoBehaviour
                 controlSchemeHandlerFixedUpdate = ControlScheme2FixedUpdate;
             }
         }
+        
+        for (int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            if (Input.GetButtonDown("StartButton" + joystickCharInputs[i]))
+            {
+                gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
+            }
+        }
+
     }
 
     public Vector3 SpawnPlayer()
@@ -294,14 +304,14 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (!PlayGame)
             {
-                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f && !PlayersReady[i])
+                if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
                 {
                     ReadyUpTxt[i].fontSize = 32;
                     ReadyUpTxt[i].text = "Press B to UnReady";
                     PlayersReady[i] = true;
                     ReadyPlayers++;
                 }
-                if (Input.GetAxis("B_Button" + joystickCharInputs[i]) != 0.0f && PlayersReady[i])
+                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
                 {
                     ReadyUpTxt[i].fontSize = 37;
                     ReadyUpTxt[i].text = "Press A to Ready up";
@@ -328,7 +338,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 {
                     players[i].blocking = false;
                     //you can't attack if you just did
-                    if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed && !players[i].getParried())
+                    if (Input.GetButtonDown("R_Bumper" + joystickCharInputs[i]) && !players[i].getAttacked() && !players[i].getParried())
                     {
                         players[i].Attack(1);
                         players[i].AttackAxisUsed = true;
@@ -345,10 +355,6 @@ public class CharacterMovmentScript : MonoBehaviour
                         players[i].AttackAxisUsed = true;
                     }
 
-                    if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) == 0)
-                    {
-                        players[i].AttackAxisUsed = false;
-                    }
                     if (Input.GetAxis("L_Trigger" + joystickCharInputs[i]) == 0)
                     {
                         players[i].ParryAxisUsed = false;
@@ -477,14 +483,14 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (!PlayGame)
             {
-                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) != 0.0f && !PlayersReady[i])
+                if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
                 {
                     ReadyUpTxt[i].fontSize = 32;
                     ReadyUpTxt[i].text = "Press B to UnReady";
                     PlayersReady[i] = true;
                     ReadyPlayers++;
                 }
-                if (Input.GetAxis("B_Button" + joystickCharInputs[i]) != 0.0f && PlayersReady[i])
+                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
                 {
                     ReadyUpTxt[i].fontSize = 37;
                     ReadyUpTxt[i].text = "Press A to Ready up";
@@ -511,12 +517,12 @@ public class CharacterMovmentScript : MonoBehaviour
                 {
                     players[i].blocking = false;
                     //you can't attack if you just did
-                    if (Input.GetAxis("X_Button" + joystickCharInputs[i]) > 0 && !players[i].getAttacked() && !players[i].AttackAxisUsed && !players[i].getParried())
+                    if (Input.GetButtonDown("X_Button" + joystickCharInputs[i]) && !players[i].getAttacked() && !players[i].getParried())
                     {
                         players[i].Attack(1);
                         players[i].AttackAxisUsed = true;
                     }
-                    else if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked() && !players[i].ParryAxisUsed)
+                    else if (Input.GetButtonDown("R_Bumper" + joystickCharInputs[i]) && !players[i].getAttacked())
                     {
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
                         players[i].Parry();
@@ -526,15 +532,6 @@ public class CharacterMovmentScript : MonoBehaviour
                     {
                         players[i].Attack(2);
                         players[i].AttackAxisUsed = true;
-                    }
-
-                    if (Input.GetAxis("X_Button" + joystickCharInputs[i]) == 0)
-                    {
-                        players[i].AttackAxisUsed = false;
-                    }
-                    if (Input.GetAxis("R_Bumper" + joystickCharInputs[i]) == 0)
-                    {
-                        players[i].ParryAxisUsed = false;
                     }
                 }
                 playersAni[i].SetBool("Blocking", players[i].blocking);
@@ -591,29 +588,6 @@ public class CharacterMovmentScript : MonoBehaviour
                         playersRB[i].AddForce(new Vector3(HoriInput * speed, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i]) * speed), ForceMode.Impulse);
                         playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(HoriInput, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i])), Vector3.up), rotSpeed);
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
-                    }
-                    else if (players[i].blocking)
-                    {
-                        //playersRB[i].AddForce(new Vector3(HoriInput * (speed * blockSpeedMultiplier), 0, -Input.GetAxis("Vertical" + joystickCharInputs[i]) * (speed * blockSpeedMultiplier)), ForceMode.Impulse);
-                        //playersAni[i].SetFloat("BlockMovVecX", HoriInput);
-                        ////only rotate if you have a value to rotate to
-                        //if (Input.GetAxis("Horizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) != 0)
-                        //{
-                        //    Quaternion RotateTo = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(Input.GetAxis("Horizontal" + joystickCharInputs[i]), 0, -Input.GetAxis("Vertical" + joystickCharInputs[i])), Vector3.up), (rotSpeed * blockRotSpeedMultiplier));
-                        //    float tmpRotDir = RotateTo.eulerAngles.y - playersRB[i].rotation.eulerAngles.y;
-                        //
-                        //    if (tmpRotDir < 0.2f && tmpRotDir > -0.2f)
-                        //    {
-                        //        playersAni[i].SetFloat("BlockMovVecY", 0.0f, 0.2f, Time.deltaTime);
-                        //    }
-                        //    else
-                        //    {
-                        //        playersAni[i].SetFloat("BlockMovVecY", tmpRotDir, 0.5f, Time.deltaTime);
-                        //    }
-                        //
-                        //    playersRB[i].rotation = RotateTo;
-                        //}
-                        //playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
                     }
                     else
                     {

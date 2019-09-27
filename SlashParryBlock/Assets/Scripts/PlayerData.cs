@@ -397,16 +397,6 @@ public class PlayerData : MonoBehaviour
                 }
             }
 
-            //if (Dashed)
-            //{
-            //    DashTimer -= Time.deltaTime;
-            //    if (DashTimer <= 0.0f)
-            //    {
-            //        DashTimer = 0.05f;
-            //        IgnoreSpeedLimit = false;
-            //        Dashed = false;
-            //    }
-            //}
         }
     }
 
