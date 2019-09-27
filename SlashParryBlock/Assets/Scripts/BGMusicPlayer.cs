@@ -48,7 +48,7 @@ public class BGMusicPlayer : MonoBehaviour
         {
             player.Stop();
             curClip++;
-            if (curClip > music.Count)
+            if (curClip >= music.Count)
             {
                 curClip = 0;
             }
