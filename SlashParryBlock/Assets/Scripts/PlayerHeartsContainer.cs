@@ -5,13 +5,20 @@ using UnityEngine.UI;
 
 public class PlayerHeartsContainer : MonoBehaviour
 {
-    public List<Image> hearts = new List<Image>();
+    public List<List<GameObject>> playerHearts = new List<List<GameObject>>();
     void Start()
     {
-        Image[] tempImg = gameObject.GetComponentsInChildren<Image>();
+        List<MeshRenderer> heartstmp = new List<MeshRenderer>();
+        heartstmp.AddRange(GetComponentsInChildren<MeshRenderer>());
+        int iter = 0;
         for (int i = 0; i < 5; i++)
         {
-            hearts.Add(tempImg[i]);
+            playerHearts.Add(new List<GameObject>());
+            for (int j = 0; j < 3; j++)
+            {
+                playerHearts[i].Add(heartstmp[iter].gameObject);
+                iter++;
+            }
         }
     }
 }

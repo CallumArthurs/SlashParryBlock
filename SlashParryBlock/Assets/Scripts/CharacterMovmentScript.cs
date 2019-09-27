@@ -31,12 +31,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public float blockRotSpeedMultiplier;
     public List<PlayerData> players = new List<PlayerData>();
     
-    private List<PlayerHeartsContainer> playerHearts;
-    private List<GameObject> playerPortraits;
-    private GameObject ReadyUpScreen;
-    private List<RawImage> PlayerReadyUpImg;
-    private List<Text> ReadyUpTxt;
-
+    
     [HideInInspector]
     public List<string> joystickCharInputs;
 
@@ -51,6 +46,11 @@ public class CharacterMovmentScript : MonoBehaviour
     private List<AudioSource> soundPlayers;
     private List<Rigidbody> playersRB;
     private List<Animator> playersAni;
+    private List<RawImage> PlayerReadyUpImg;
+    private List<Text> ReadyUpTxt;
+    private List<PlayerHeartsContainer> playerHearts;
+    private List<GameObject> playerPortraits;
+    private GameObject ReadyUpScreen;
     private GameUIContainer gameUIContainer;
     private KnightMeshRenderer KnightMeshRenderer;
     private LayerMask floor;
@@ -59,7 +59,10 @@ public class CharacterMovmentScript : MonoBehaviour
     private SceneSelector SceneSelector;
     private bool[] PlayersReady = new bool[4] { false, false, false, false };
     private int ReadyPlayers = 0;
+    private bool gamePaused = false;
     public bool PlayGame = false;
+
+    private levelLoadInfo levelData;
 
     private bool alternateControls = false;
     private delegate void ControlScheme();
@@ -68,10 +71,10 @@ public class CharacterMovmentScript : MonoBehaviour
 
     private void Awake()
     {
-        levelLoadInfo levelDatatmp = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
-        levelDatatmp.gameObject.transform.parent = gameObject.transform;
+        levelData = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
+        levelData.gameObject.transform.parent = gameObject.transform;
         gameplay = gameObject.GetComponent<MatchGameplay>();
-        joystickCharInputs = levelDatatmp.joystickCharInputs;
+        joystickCharInputs = levelData.joystickCharInputs;
 
         KnightMeshRenderer = gameObject.GetComponent<KnightMeshRenderer>();
 
@@ -79,27 +82,27 @@ public class CharacterMovmentScript : MonoBehaviour
         console.enabled = false;
         SceneSelector = SceneSelector.CreateInstance("SceneSelector") as SceneSelector;
 
-        gameplay.gameMode = levelDatatmp.gamemode;
-        gameplay.Rounds = levelDatatmp.rounds;
-        gameplay.RoundLength = levelDatatmp.RoundLength;
-        gameplay.PlayerLives = levelDatatmp.playerLives;
+        gameplay.gameMode = levelData.gamemode;
+        gameplay.Rounds = levelData.rounds;
+        gameplay.RoundLength = levelData.RoundLength;
+        gameplay.PlayerLives = levelData.playerLives;
 
         PlayerRenderTextures = new List<RenderTexture>();
-        for (int j = 0; j < levelDatatmp.meshSelected.Count; j++)
+        for (int j = 0; j < levelData.meshSelected.Count; j++)
         {
             players.Add(Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject, gameObject.transform).GetComponent<PlayerData>());
             PlayerCams.Add(Instantiate(Resources.Load("Prefabs/PlayerReadyUpCam") as GameObject));
             players[j].gameObject.transform.position = playerReadyUpPos[j].transform.position;
             PlayerRenderTextures.Add(Resources.Load("Prefabs/" + joystickCharInputs[j] + "TargetTexture") as RenderTexture);
             PlayerCams[j].GetComponent<Camera>().targetTexture = PlayerRenderTextures[j];
-            Instantiate(levelDatatmp.KnightSwords[levelDatatmp.meshSelected[j]], players[j].SwordPos.transform);
-            Instantiate(levelDatatmp.KnightShields[levelDatatmp.meshSelected[j]], players[j].ShieldPos.transform);
+            Instantiate(levelData.KnightSwords[levelData.meshSelected[j]], players[j].SwordPos.transform);
+            Instantiate(levelData.KnightShields[levelData.meshSelected[j]], players[j].ShieldPos.transform);
 
             List<SkinnedMeshRenderer> skinnedMeshRenderers = new List<SkinnedMeshRenderer>();
             skinnedMeshRenderers.AddRange(players[j].GetComponentsInChildren<SkinnedMeshRenderer>());
             for (int i = 0; i < skinnedMeshRenderers.Count; i++)
             {
-                KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelDatatmp.meshSelected[j]);
+                KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelData.meshSelected[j]);
                 skinnedMeshRenderers.Clear();
             }
             renderTextures.Add(PlayerCams[j].GetComponent<Camera>().targetTexture);
@@ -163,8 +166,11 @@ public class CharacterMovmentScript : MonoBehaviour
 
         for (int i = 0; i < players.Count; i++)
         {
-            playerHearts[i].gameObject.SetActive(true);
-            playerPortraits[i].SetActive(true);
+            RectTransform tmpRect = gameUIContainer.playerPortraits[i].GetComponent<RectTransform>();
+            tmpRect.position = gameUIContainer.portPositions[levelData.meshSelected[i]].position;
+
+            gameUIContainer.ProfileRing[levelData.meshSelected[i]].SetActive(true);
+
             //setting the values of the players
             players[i].setHealth(playerHealth);
             players[i].setDamage(playerDamage, backstabDamage, riposteDamage);
@@ -182,7 +188,14 @@ public class CharacterMovmentScript : MonoBehaviour
 
     void Update()
     {
-        controlSchemeHandler();
+        if (!gamePaused)
+        {
+            controlSchemeHandler();
+        }
+        else if (gamePaused)
+        {
+
+        }
 
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
@@ -245,9 +258,36 @@ public class CharacterMovmentScript : MonoBehaviour
             if (Input.GetButtonDown("StartButton" + joystickCharInputs[i]))
             {
                 gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
+                gamePaused = !gamePaused;
+            }
+
+            // caching the health values
+            float playerHealth = players[i].getHealth();
+            float fullHeartAmount = players[i].getOriginalHealth() / 5;
+            for (int j = 0; j < playerHearts[i].playerHearts.Count; j++)
+            {
+                //check if you can fill a full heart and take it away from the amount you have
+                if (playerHealth - fullHeartAmount >= 0)
+                {
+                    playerHearts[i].playerHearts[j][0].SetActive(true);
+                    playerHearts[i].playerHearts[j][1].SetActive(false);
+                    playerHealth -= fullHeartAmount;
+                }//check if you can fill half a heart
+                else if (playerHealth - (fullHeartAmount / 2) >= 0)
+                {
+                    playerHearts[i].playerHearts[j][0].SetActive(false);
+                    playerHearts[i].playerHearts[j][1].SetActive(true);
+
+                    playerHealth = 0;
+                }//otherwise you have no heart
+                else
+                {
+                    playerHearts[i].playerHearts[j][0].SetActive(false);
+                    playerHearts[i].playerHearts[j][1].SetActive(false);
+                    playerHearts[i].playerHearts[j][2].SetActive(true);
+                }
             }
         }
-
     }
 
     public Vector3 SpawnPlayer()
@@ -294,7 +334,10 @@ public class CharacterMovmentScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        controlSchemeHandlerFixedUpdate();
+        if (!gamePaused)
+        {
+            controlSchemeHandlerFixedUpdate();
+        }
     }
 
     private void ControlScheme1()
@@ -361,27 +404,6 @@ public class CharacterMovmentScript : MonoBehaviour
                     }
                 }
                 playersAni[i].SetBool("Blocking", players[i].blocking);
-            }
-            // caching the health values
-            float playerHealth = players[i].getHealth();
-            float fullHeartAmount = players[i].getOriginalHealth() / 5;
-            for (int j = 0; j < playerHearts[i].hearts.Count; j++)
-            {
-                //check if you can fill a full heart and take it away from the amount you have
-                if (playerHealth - fullHeartAmount >= 0)
-                {
-                    playerHearts[i].hearts[j].sprite = fullHeart;
-                    playerHealth -= fullHeartAmount;
-                }//check if you can fill half a heart
-                else if (playerHealth - (fullHeartAmount / 2) >= 0)
-                {
-                    playerHearts[i].hearts[j].sprite = halfHeart;
-                    playerHealth = 0;
-                }//otherwise you have no heart
-                else
-                {
-                    playerHearts[i].hearts[j].sprite = emptyHeart;
-                }
             }
         }
 
@@ -463,13 +485,6 @@ public class CharacterMovmentScript : MonoBehaviour
                     playersAni[i].SetInteger("Anim", 0);
                 }
 
-                //if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
-                //{
-                //    Debug.Log("Dashed");
-                //    players[i].Dashed = true;
-                //    players[i].IgnoreSpeedLimit = true;
-                //    playersRB[i].AddForce(playersRB[i].transform.forward * 50.0f, ForceMode.Impulse);
-                //}
             }
             PlayerColliders[i].transform.position = players[i].transform.position;
         }
@@ -535,30 +550,17 @@ public class CharacterMovmentScript : MonoBehaviour
                     }
                 }
                 playersAni[i].SetBool("Blocking", players[i].blocking);
-            }
-            // caching the health values
-            float playerHealth = players[i].getHealth();
-            float fullHeartAmount = players[i].getOriginalHealth() / 5;
-            for (int j = 0; j < playerHearts[i].hearts.Count; j++)
-            {
-                //check if you can fill a full heart and take it away from the amount you have
-                if (playerHealth - fullHeartAmount >= 0)
+
+                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
                 {
-                    playerHearts[i].hearts[j].sprite = fullHeart;
-                    playerHealth -= fullHeartAmount;
-                }//check if you can fill half a heart
-                else if (playerHealth - (fullHeartAmount / 2) >= 0)
-                {
-                    playerHearts[i].hearts[j].sprite = halfHeart;
-                    playerHealth = 0;
-                }//otherwise you have no heart
-                else
-                {
-                    playerHearts[i].hearts[j].sprite = emptyHeart;
+                    Debug.Log("Dashed");
+                    players[i].Dashed = true;
+                    players[i].IgnoreSpeedLimit = true;
+                    playersRB[i].AddForce(playersRB[i].transform.forward * 20.0f, ForceMode.Impulse);
                 }
+
             }
         }
-
     }
     private void ControlScheme2FixedUpdate()
     {

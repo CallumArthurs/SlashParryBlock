@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerData : MonoBehaviour
 {
+    //All clip sounds to make it more readable when playing
     private enum ClipSelector
     {
         attackMiss,
@@ -30,6 +31,7 @@ public class PlayerData : MonoBehaviour
     public GameObject particles;
     public GameObject AttackParticles;
     public GameObject ShieldPos, SwordPos;
+    //Sword light effect when attacking
     public GameObject Glint;
 
     public float ExcaliburKnockbackModifier;
@@ -39,10 +41,11 @@ public class PlayerData : MonoBehaviour
     public bool ComboAttack = false;
     public bool Respawning = false, invulnerable = false;
     public bool Dashed = false;
+    //when the player is in the air it ignores the speed limiter set on it
     public bool IgnoreSpeedLimit = false;
 
+    //player stats
     public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
-
     public float damageTaken = 0, damageDealt = 0;
 
     //original health is their spawned health 
@@ -80,12 +83,11 @@ public class PlayerData : MonoBehaviour
 
     void Start()
     {
-        //playersHit = new List<HitPlayers>();
-        //PlayerSounds = new List<AudioClip>();
         spawnpoints = new List<RespawnPoints>();
         playersHit = new List<HitPlayers>();
         invinciblePlayers = new List<PlayerData>();
 
+        //sword trail effect
         trailEffect = GetComponentInChildren<TrailRenderer>().gameObject;
 
         health = originalHealth;
@@ -94,6 +96,7 @@ public class PlayerData : MonoBehaviour
         halo = gameObject.GetComponent<Light>();
         halo.enabled = false;
         trailEffect.SetActive(false);
+        //getting all the meshes that are in the player object
         SkinnedMeshRenderer[] meshes = GetComponentsInChildren<SkinnedMeshRenderer>();
         for (int i = 0; i < meshes.Length; i++)
         {
@@ -103,17 +106,22 @@ public class PlayerData : MonoBehaviour
 
     void Update()
     {
+        //how many lives a player has
         if (!NoStock)
         {
             //dead
             if (health <= 0)
             {
+                //reset health
                 health = originalHealth;
+                //if they got a higher killstreak set it as such
                 if (killstreakTemp > killStreak)
                 {
                     killStreak = killstreakTemp;
                 }
+                //reset because they died
                 killstreakTemp = 0;
+                //if someone hit them before they died then that player gets the kill
                 if (playerLastHit != null)
                 {
                     playerLastHit.kills++;
@@ -146,7 +154,6 @@ public class PlayerData : MonoBehaviour
                     attacked = false;
                     trailEffect.SetActive(false);
                     invinciblePlayers.Clear();
-                    //AttackTimer = AttackOriginalTime;
                 }//this is the end parry opportunity
                 else if (AttackTimer <= AttackOriginalTime - 0.2f)
                 {
@@ -343,6 +350,7 @@ public class PlayerData : MonoBehaviour
 
             if (Respawning)
             {
+                //slowly lowers the intensity of the halo light
                 RespawnTimer -= Time.deltaTime;
                 halo.intensity -= Time.deltaTime / 2.0f;
                 if (RespawnTimer <= 0.0f)
@@ -369,6 +377,7 @@ public class PlayerData : MonoBehaviour
                 else if (InvulnerabilityTimer < 2.0f)
                 {
                     halo.enabled = false;
+                    //this flashes the player from white to black
                     if (!GotoWhite)
                     {
                         for (int i = 0; i < playerMaterial.Count; i++)
@@ -394,6 +403,17 @@ public class PlayerData : MonoBehaviour
                             GotoWhite = false;
                         }
                     }
+                }
+            }
+
+            if (Dashed)
+            {
+                DashTimer -= Time.deltaTime;
+                if (DashTimer <= 0.0f)
+                {
+                    DashTimer = 0.05f;
+                    IgnoreSpeedLimit = false;
+                    Dashed = false;
                 }
             }
 
@@ -525,9 +545,10 @@ public class PlayerData : MonoBehaviour
                 }
             }
         }
-
+        //you didn't hit anyone
         if (!HitSomeone)
         {
+            //still plays a sound clip and plays animation
             playClip(ClipSelector.attackMiss);
             if (AttackNum == 1)
             {
@@ -547,6 +568,7 @@ public class PlayerData : MonoBehaviour
                 animator.SetTrigger("HoriAttack");
             }
         }
+        //resets attack timer
         trailEffect.SetActive(true);
         AttackOriginalTime = 0.3f;
         AttackTimer = AttackOriginalTime;
