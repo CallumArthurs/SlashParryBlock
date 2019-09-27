@@ -9,14 +9,14 @@ public class CharacterSelect : MonoBehaviour
     enum levels
     {
         ProtoScene = 1,
-        BattleMents,
         Camelot,
         CrystalCrevasse,
+        Rings,
+        JoustingField,
+        BattleMents,
         Holeyheavens,
         LousyLogs,
-        Rings,
-        SpikyHill,
-        JoustingField
+        SpikyHill
     }
 
     public List<GameObject> KnightMeshes;
