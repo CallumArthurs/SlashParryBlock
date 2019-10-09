@@ -16,7 +16,8 @@ public class CharacterSelect : MonoBehaviour
         BattleMents,
         Holeyheavens,
         LousyLogs,
-        SpikyHill
+        SpikyHill,
+        CrystalCrevasse_LEVEL
     }
 
     public List<GameObject> KnightMeshes;
