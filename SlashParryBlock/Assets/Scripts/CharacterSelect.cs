@@ -234,9 +234,9 @@ public class CharacterSelect : MonoBehaviour
             {
                 DPadAxisUsed[i] = true;
                 levelSelected++;
-                if (levelSelected > 9)
+                if (levelSelected > 10)
                 {
-                    levelSelected = 9;
+                    levelSelected = 10;
                 }
 
                 levelText.text = ((levels)levelSelected).ToString();
