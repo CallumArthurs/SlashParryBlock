@@ -33,16 +33,18 @@ public class CharacterSelect : MonoBehaviour
 
     int[] MeshSelected = new int[4] { 0, 0, 0, 0 };
 
-    public GameObject characterSelect, levelSelect, gameplaySelect;
+    public GameObject mainMenu, characterSelect, levelSelect, gameplaySelect;
     public GameObject PlayerLivesLabels;
     public Image Arrow;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
+    public List<Text> menuOptions;
     public Animator bookanimator;
 
     private GameObject levelData;
     private SceneSelector Scenechanger;
+    private int MenuOption = 0;
     public Text levelText;
-    private bool LoadingScene = false, setupPlayerData = false;
+    private bool LoadingScene = false, setupPlayerData = false, gameSetup = false;
     private delegate void MenuControls();
 
     MenuControls ControlHandler;
@@ -50,37 +52,99 @@ public class CharacterSelect : MonoBehaviour
     {
         levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject);
         Scenechanger = SceneSelector.CreateInstance("SceneSelector") as SceneSelector;
-        characterSelect.SetActive(true);
+        mainMenu.SetActive(true);
+        //characterSelect.SetActive(true);
         ControlHandler = CharacterSelectControls;
-
+        Arrow.gameObject.SetActive(true);
+        Arrow.transform.position = new Vector3(Arrow.transform.position.x, menuOptions[0].transform.position.y, menuOptions[0].transform.position.z);
         levelText.text = ((levels)1).ToString();
     }
 
     void Update()
     {
-        for (int i = 0; i < 4; i++)
+        if (gameSetup)
         {
-            if (!ConSelected[i])
+            for (int i = 0; i < 4; i++)
+            {
+                if (!ConSelected[i])
+                {
+                    if (Input.GetButtonDown("StartButtonP" + (i + 1)))
+                    {
+                        ConSelected[i] = true;
+                        joystickCharInputs.Add("P" + (i + 1));
+                        KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
+                    }
+                }
+
+                if (Input.GetButtonDown("B_ButtonP" + (i + 1)))
+                {
+                    gameSetup = false;
+                    mainMenu.SetActive(true);
+                    Arrow.gameObject.SetActive(true);
+                    characterSelect.SetActive(false);
+                    bookanimator.SetTrigger("PageTurn");
+                }
+            }
+            ControlHandler();
+        }
+        else
+        {
+            for (int i = 0; i < 4; i++)
             {
                 if (Input.GetButtonDown("StartButtonP" + (i + 1)))
                 {
-                    ConSelected[i] = true;
-                    joystickCharInputs.Add("P" + (i + 1));
-                    if (joystickCharInputs.Count == 1)
+                    bookanimator.SetTrigger("BookOpen");
+                }
+
+                if (Input.GetAxis("D-PadYP" + (i + 1)) > 0.0f && !DPadAxisUsed[i])
+                {
+                    MenuOption++;
+                    if (MenuOption > 2)
                     {
-                        bookanimator.SetTrigger("BookOpen");
+                        MenuOption = 2;
                     }
-                    KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
+                    DPadAxisUsed[i] = true;
+                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
+                }
+                else if (Input.GetAxis("D-PadYP" + (i + 1)) < 0.0f && !DPadAxisUsed[i])
+                {
+                    MenuOption--;
+                    if (MenuOption < 0)
+                    {
+                        MenuOption = 0;
+                    }
+                    DPadAxisUsed[i] = true;
+                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
+                }
+
+                if (Input.GetAxis("D-PadYP" + (i + 1)) == 0.0f)
+                {
+                    DPadAxisUsed[i] = false;
+                }
+
+                if (Input.GetButtonDown("A_ButtonP" + (i + 1)))
+                {
+                    switch (MenuOption)
+                    {
+                        case 0:
+                            gameSetup = true;
+                            mainMenu.SetActive(false);
+                            characterSelect.SetActive(true);
+                            Arrow.gameObject.SetActive(false);
+                            bookanimator.SetTrigger("PageTurn");
+                            break;
+                        case 1:
+                            Debug.Log("Options");
+                            break;
+                        case 2:
+                            Application.Quit();
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            
-        }
-
-        ControlHandler();
 
         if (LoadingScene)
         {
@@ -202,6 +266,14 @@ public class CharacterSelect : MonoBehaviour
                     }
                 }
 
+                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]))
+                {
+                    gameSetup = false;
+                    characterSelect.SetActive(false);
+                    mainMenu.SetActive(true);
+                    Arrow.gameObject.SetActive(true);
+                }
+
                 if (joystickCharInputs.Count > 1)
                 {
                     if (ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData)
@@ -274,6 +346,7 @@ public class CharacterSelect : MonoBehaviour
                 levelSelect.SetActive(false);
                 gameplaySelect.SetActive(true);
                 bookanimator.SetTrigger("PageTurn");
+                Arrow.gameObject.SetActive(true);
                 //StartCoroutine(Scenechanger.LoadSceneAsync(levelSelected));
             }
             if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]))
@@ -287,6 +360,7 @@ public class CharacterSelect : MonoBehaviour
                 ControlHandler = CharacterSelectControls;
                 levelSelect.SetActive(false);
                 characterSelect.SetActive(true);
+                Arrow.gameObject.SetActive(false);
                 levelData.GetComponent<levelLoadInfo>().meshSelected.Clear();
                 setupPlayerData = false;
                 bookanimator.SetTrigger("PageTurn");
@@ -353,7 +427,7 @@ public class CharacterSelect : MonoBehaviour
                     {
                         PlayerLivesLabels.SetActive(false);
                     }
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, GamemodeSelect.transform.position.y, Arrow.transform.position.z);
+                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, GamemodeSelect.transform.position.y, GamemodeSelect.transform.position.z);
                     break;
                 #endregion
 
@@ -371,7 +445,7 @@ public class CharacterSelect : MonoBehaviour
                             levelData.GetComponent<levelLoadInfo>().rounds = 1;
                         }
                     }
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, RoundsSelect.transform.position.y, Arrow.transform.position.z);
+                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, RoundsSelect.transform.position.y, RoundsSelect.transform.position.z);
                     break;
                 #endregion
 
@@ -389,7 +463,7 @@ public class CharacterSelect : MonoBehaviour
                             levelData.GetComponent<levelLoadInfo>().RoundLength = 15;
                         }
                     }
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, RoundLengthSelect.transform.position.y, Arrow.transform.position.z);
+                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, RoundLengthSelect.transform.position.y, RoundLengthSelect.transform.position.z);
                     break;
                 #endregion
 
@@ -409,7 +483,7 @@ public class CharacterSelect : MonoBehaviour
                                 levelData.GetComponent<levelLoadInfo>().playerLives = 3;
                             }
                         }
-                        Arrow.transform.position = new Vector3(Arrow.transform.position.x, PlayerLivesSelect.transform.position.y, Arrow.transform.position.z);
+                        Arrow.transform.position = new Vector3(Arrow.transform.position.x, PlayerLivesSelect.transform.position.y, PlayerLivesSelect.transform.position.z);
                     }
                     else
                     {
