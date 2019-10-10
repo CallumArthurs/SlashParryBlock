@@ -167,8 +167,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
         for (int i = 0; i < players.Count; i++)
         {
-            RectTransform tmpRect = gameUIContainer.playerPortraits[i].GetComponent<RectTransform>();
-            tmpRect.position = gameUIContainer.portPositions[levelData.meshSelected[i]].position;
+            gameUIContainer.playerPortraits[levelData.meshSelected[i]].GetComponent<RectTransform>().position = gameUIContainer.portPositions[i].position;
 
             gameUIContainer.ProfileRing[levelData.meshSelected[i]].SetActive(true);
 
@@ -203,16 +202,6 @@ public class CharacterMovmentScript : MonoBehaviour
             Debug.Log("backquote pressed");
             console.enabled = true;
             console.FocusConsoleToggle(true);
-            //if (console.enabled)
-            //{
-            //    console.FocusConsoleToggle(false);
-            //    console.CommandInput = "InputCommand";
-            //    console.enabled = false;
-            //}
-            //else
-            //{
-
-            //}
         }
 
         if (console.enabled)
@@ -265,27 +254,27 @@ public class CharacterMovmentScript : MonoBehaviour
             // caching the health values
             float playerHealth = players[i].getHealth();
             float fullHeartAmount = players[i].getOriginalHealth() / 5;
-            for (int j = 0; j < playerHearts[i].playerHearts.Count; j++)
+            for (int j = 0; j < playerHearts[levelData.meshSelected[i]].playerHearts.Count; j++)
             {
                 //check if you can fill a full heart and take it away from the amount you have
                 if (playerHealth - fullHeartAmount >= 0)
                 {
-                    playerHearts[i].playerHearts[j][0].SetActive(true);
-                    playerHearts[i].playerHearts[j][1].SetActive(false);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(true);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(false);
                     playerHealth -= fullHeartAmount;
                 }//check if you can fill half a heart
                 else if (playerHealth - (fullHeartAmount / 2) >= 0)
                 {
-                    playerHearts[i].playerHearts[j][0].SetActive(false);
-                    playerHearts[i].playerHearts[j][1].SetActive(true);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(false);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(true);
 
                     playerHealth = 0;
                 }//otherwise you have no heart
                 else
                 {
-                    playerHearts[i].playerHearts[j][0].SetActive(false);
-                    playerHearts[i].playerHearts[j][1].SetActive(false);
-                    playerHearts[i].playerHearts[j][2].SetActive(true);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(false);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(false);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][2].SetActive(true);
                 }
             }
         }
