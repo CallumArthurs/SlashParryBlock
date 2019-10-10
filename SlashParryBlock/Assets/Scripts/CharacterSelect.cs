@@ -37,6 +37,7 @@ public class CharacterSelect : MonoBehaviour
     public GameObject PlayerLivesLabels;
     public Image Arrow;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
+    public Animator bookanimator;
 
     private GameObject levelData;
     private SceneSelector Scenechanger;
@@ -65,10 +66,18 @@ public class CharacterSelect : MonoBehaviour
                 {
                     ConSelected[i] = true;
                     joystickCharInputs.Add("P" + (i + 1));
-
+                    if (joystickCharInputs.Count == 1)
+                    {
+                        bookanimator.SetTrigger("BookOpen");
+                    }
                     KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            
         }
 
         ControlHandler();
@@ -207,6 +216,7 @@ public class CharacterSelect : MonoBehaviour
                         ControlHandler = LevelSelectControls;
                         characterSelect.SetActive(false);
                         levelSelect.SetActive(true);
+                        bookanimator.SetTrigger("PageTurn");
                     }
                 }
 
@@ -222,6 +232,7 @@ public class CharacterSelect : MonoBehaviour
                     ControlHandler = LevelSelectControls;
                     characterSelect.SetActive(false);
                     levelSelect.SetActive(true);
+                    bookanimator.SetTrigger("PageTurn");
                 }
             }
         }
@@ -262,6 +273,7 @@ public class CharacterSelect : MonoBehaviour
                 ControlHandler = GameplaySelectControls;
                 levelSelect.SetActive(false);
                 gameplaySelect.SetActive(true);
+                bookanimator.SetTrigger("PageTurn");
                 //StartCoroutine(Scenechanger.LoadSceneAsync(levelSelected));
             }
             if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]))
@@ -277,6 +289,7 @@ public class CharacterSelect : MonoBehaviour
                 characterSelect.SetActive(true);
                 levelData.GetComponent<levelLoadInfo>().meshSelected.Clear();
                 setupPlayerData = false;
+                bookanimator.SetTrigger("PageTurn");
             }
         }
     }
@@ -419,6 +432,7 @@ public class CharacterSelect : MonoBehaviour
                 ControlHandler = LevelSelectControls;
                 gameplaySelect.SetActive(false);
                 levelSelect.SetActive(true);
+                bookanimator.SetTrigger("PageTurn");
             }
 
             GamemodeSelect.text = levelData.GetComponent<levelLoadInfo>().gamemode.ToString();
