@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class MenuControllerNavigation : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
+    public delegate void MenuItem();
+
+    MenuItem ControlsHandler;
 
     void Update()
     {
-        
+        ControlsHandler();
+    }
+
+    public void SetDelegate(MenuItem value)
+    {
+        ControlsHandler = value;
     }
 }

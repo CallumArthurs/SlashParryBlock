@@ -21,6 +21,11 @@ public class Animation_ResetTrigger : StateMachineBehaviour
         {
             animator.ResetTrigger("Spring");
         }
+
+        if (stateInfo.IsName("Spring"))
+        {
+            animator.ResetTrigger("Spring");
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
