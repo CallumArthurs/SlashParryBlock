@@ -10,7 +10,7 @@ public class RingsLevel : MonoBehaviour
 
     Color Reset;
 
-    float CurrentTime;
+    public float CurrentTime;
     float Step = 1.0f;
 
     public int LongestTime;
@@ -28,7 +28,7 @@ public class RingsLevel : MonoBehaviour
     bool goingDown = false;
 
     bool Fallen;
-    float ChosenFallTime;
+    public float ChosenFallTime;
     float TimeActivated;
 
     void Start()
@@ -40,7 +40,7 @@ public class RingsLevel : MonoBehaviour
         { WarningTime = 2; }
 
         if (RespawnDelay <=0)
-        { RespawnDelay = 2; }
+        { RespawnDelay = 1; }
     }
 
     void Update()
