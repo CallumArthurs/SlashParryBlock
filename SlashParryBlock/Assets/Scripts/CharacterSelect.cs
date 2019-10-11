@@ -39,14 +39,16 @@ public class CharacterSelect : MonoBehaviour
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
     public List<Text> menuOptions;
     public Animator bookanimator;
+    public Text levelText;
 
     private GameObject levelData;
     private SceneSelector Scenechanger;
     private int MenuOption = 0;
-    public Text levelText;
     private bool LoadingScene = false, setupPlayerData = false, gameSetup = false;
+    private delegate void pageStartFunctions();
     private delegate void MenuControls();
 
+    pageStartFunctions startFunctions;
     MenuControls ControlHandler;
     void Start()
     {
@@ -56,7 +58,7 @@ public class CharacterSelect : MonoBehaviour
         //characterSelect.SetActive(true);
         ControlHandler = CharacterSelectControls;
         Arrow.gameObject.SetActive(true);
-        Arrow.transform.position = new Vector3(Arrow.transform.position.x, menuOptions[0].transform.position.y, menuOptions[0].transform.position.z);
+        Arrow.transform.position = new Vector3(menuOptions[0].transform.position.x + 10.0f, menuOptions[0].transform.position.y, menuOptions[0].transform.position.z);
         levelText.text = ((levels)1).ToString();
     }
 
@@ -74,16 +76,17 @@ public class CharacterSelect : MonoBehaviour
                         joystickCharInputs.Add("P" + (i + 1));
                         KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
                     }
+
+                    if (Input.GetButtonDown("B_ButtonP" + (i + 1)))
+                    {
+                        gameSetup = false;
+                        mainMenu.SetActive(true);
+                        Arrow.gameObject.SetActive(true);
+                        characterSelect.SetActive(false);
+                        bookanimator.SetTrigger("PageTurnLeft");
+                    }
                 }
 
-                if (Input.GetButtonDown("B_ButtonP" + (i + 1)))
-                {
-                    gameSetup = false;
-                    mainMenu.SetActive(true);
-                    Arrow.gameObject.SetActive(true);
-                    characterSelect.SetActive(false);
-                    bookanimator.SetTrigger("PageTurn");
-                }
             }
             ControlHandler();
         }
@@ -104,7 +107,7 @@ public class CharacterSelect : MonoBehaviour
                         MenuOption = 2;
                     }
                     DPadAxisUsed[i] = true;
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
+                    Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
                 }
                 else if (Input.GetAxis("D-PadYP" + (i + 1)) < 0.0f && !DPadAxisUsed[i])
                 {
@@ -114,7 +117,7 @@ public class CharacterSelect : MonoBehaviour
                         MenuOption = 0;
                     }
                     DPadAxisUsed[i] = true;
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
+                    Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
                 }
 
                 if (Input.GetAxis("D-PadYP" + (i + 1)) == 0.0f)
@@ -127,11 +130,11 @@ public class CharacterSelect : MonoBehaviour
                     switch (MenuOption)
                     {
                         case 0:
+                            //wait to run function here
+                            startFunctions = OpenCharacterSelect;
+                            StartCoroutine(WaitAndRunMethod(0.55f, startFunctions));
                             gameSetup = true;
-                            mainMenu.SetActive(false);
-                            characterSelect.SetActive(true);
-                            Arrow.gameObject.SetActive(false);
-                            bookanimator.SetTrigger("PageTurn");
+                            bookanimator.SetTrigger("PageTurnRight");
                             break;
                         case 1:
                             Debug.Log("Options");
@@ -272,6 +275,7 @@ public class CharacterSelect : MonoBehaviour
                     characterSelect.SetActive(false);
                     mainMenu.SetActive(true);
                     Arrow.gameObject.SetActive(true);
+                    bookanimator.SetTrigger("PageTurnLeft");
                 }
 
                 if (joystickCharInputs.Count > 1)
@@ -285,10 +289,9 @@ public class CharacterSelect : MonoBehaviour
                         {
                             levelData.GetComponent<levelLoadInfo>().meshSelected.Insert(levelData.GetComponent<levelLoadInfo>().meshSelected.Count, MeshSelected[j]);
                         }
-                        ControlHandler = LevelSelectControls;
-                        characterSelect.SetActive(false);
-                        levelSelect.SetActive(true);
-                        bookanimator.SetTrigger("PageTurn");
+                        startFunctions = OpenLevelSelect;
+                        StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
+                        bookanimator.SetTrigger("PageTurnRight");
                     }
                 }
 
@@ -301,14 +304,32 @@ public class CharacterSelect : MonoBehaviour
                     {
                         levelData.GetComponent<levelLoadInfo>().meshSelected.Insert(levelData.GetComponent<levelLoadInfo>().meshSelected.Count, MeshSelected[j]);
                     }
-                    ControlHandler = LevelSelectControls;
-                    characterSelect.SetActive(false);
-                    levelSelect.SetActive(true);
-                    bookanimator.SetTrigger("PageTurn");
+                    startFunctions = OpenLevelSelect;
+                    StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
+                    bookanimator.SetTrigger("PageTurnRight");
                 }
             }
         }
     }
+
+    void OpenCharacterSelect()
+    {
+        for (int j = 0; j < playersReady.Length; j++)
+        {
+            playersReady[j] = false;
+            ReservedMeshes[j] = false;
+        }
+        ReadyplayerCount = 0;
+        ControlHandler = CharacterSelectControls;
+        levelData.GetComponent<levelLoadInfo>().meshSelected.Clear();
+        setupPlayerData = false;
+
+        levelSelect.SetActive(false);
+        mainMenu.SetActive(false);
+        characterSelect.SetActive(true);
+        Arrow.gameObject.SetActive(false);
+    }
+
     void LevelSelectControls()
     {
         for (int i = 0; i < joystickCharInputs.Count; i++)
@@ -345,28 +366,28 @@ public class CharacterSelect : MonoBehaviour
                 ControlHandler = GameplaySelectControls;
                 levelSelect.SetActive(false);
                 gameplaySelect.SetActive(true);
-                bookanimator.SetTrigger("PageTurn");
+                bookanimator.SetTrigger("PageTurnRight");
                 Arrow.gameObject.SetActive(true);
                 //StartCoroutine(Scenechanger.LoadSceneAsync(levelSelected));
             }
             if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]))
             {
-                for (int j = 0; j < playersReady.Length; j++)
-                {
-                    playersReady[j] = false;
-                    ReservedMeshes[j] = false;
-                }
-                ReadyplayerCount = 0;
-                ControlHandler = CharacterSelectControls;
-                levelSelect.SetActive(false);
-                characterSelect.SetActive(true);
-                Arrow.gameObject.SetActive(false);
-                levelData.GetComponent<levelLoadInfo>().meshSelected.Clear();
-                setupPlayerData = false;
-                bookanimator.SetTrigger("PageTurn");
+                startFunctions = OpenCharacterSelect;
+                StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
+                bookanimator.SetTrigger("PageTurnLeft");
             }
         }
     }
+
+    void OpenLevelSelect()
+    {
+        ControlHandler = LevelSelectControls;
+        characterSelect.SetActive(false);
+        gameplaySelect.SetActive(false);
+        levelSelect.SetActive(true);
+        Arrow.gameObject.SetActive(false);
+    }
+
     void GameplaySelectControls()
     {
         for (int i = 0; i < joystickCharInputs.Count; i++)
@@ -427,7 +448,7 @@ public class CharacterSelect : MonoBehaviour
                     {
                         PlayerLivesLabels.SetActive(false);
                     }
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, GamemodeSelect.transform.position.y, GamemodeSelect.transform.position.z);
+                    Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, GamemodeSelect.transform.position.y, GamemodeSelect.transform.position.z);
                     break;
                 #endregion
 
@@ -445,7 +466,7 @@ public class CharacterSelect : MonoBehaviour
                             levelData.GetComponent<levelLoadInfo>().rounds = 1;
                         }
                     }
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, RoundsSelect.transform.position.y, RoundsSelect.transform.position.z);
+                    Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, RoundsSelect.transform.position.y, RoundsSelect.transform.position.z);
                     break;
                 #endregion
 
@@ -463,7 +484,7 @@ public class CharacterSelect : MonoBehaviour
                             levelData.GetComponent<levelLoadInfo>().RoundLength = 15;
                         }
                     }
-                    Arrow.transform.position = new Vector3(Arrow.transform.position.x, RoundLengthSelect.transform.position.y, RoundLengthSelect.transform.position.z);
+                    Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, RoundLengthSelect.transform.position.y, RoundLengthSelect.transform.position.z);
                     break;
                 #endregion
 
@@ -483,7 +504,7 @@ public class CharacterSelect : MonoBehaviour
                                 levelData.GetComponent<levelLoadInfo>().playerLives = 3;
                             }
                         }
-                        Arrow.transform.position = new Vector3(Arrow.transform.position.x, PlayerLivesSelect.transform.position.y, PlayerLivesSelect.transform.position.z);
+                        Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, PlayerLivesSelect.transform.position.y, PlayerLivesSelect.transform.position.z);
                     }
                     else
                     {
@@ -503,10 +524,9 @@ public class CharacterSelect : MonoBehaviour
 
             if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]))
             {
-                ControlHandler = LevelSelectControls;
-                gameplaySelect.SetActive(false);
-                levelSelect.SetActive(true);
-                bookanimator.SetTrigger("PageTurn");
+                startFunctions = OpenLevelSelect;
+                StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
+                bookanimator.SetTrigger("PageTurnLeft");
             }
 
             GamemodeSelect.text = levelData.GetComponent<levelLoadInfo>().gamemode.ToString();
@@ -514,5 +534,11 @@ public class CharacterSelect : MonoBehaviour
             RoundLengthSelect.text = levelData.GetComponent<levelLoadInfo>().RoundLength.ToString();
             PlayerLivesSelect.text = levelData.GetComponent<levelLoadInfo>().playerLives.ToString();
         }
+    }
+
+    IEnumerator WaitAndRunMethod(float time, pageStartFunctions function)
+    {
+        yield return new WaitForSeconds(time);
+        function();
     }
 }
