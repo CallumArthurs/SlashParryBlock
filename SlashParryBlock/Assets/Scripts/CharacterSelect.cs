@@ -25,7 +25,7 @@ public class CharacterSelect : MonoBehaviour
     private int ReadyplayerCount = 0;
     private int gameplayChoice = 0;
     private int[] ControllerOrder = new int[4];
-    private bool[] ConSelected =  new bool[4] { false, false, false, false };
+    private bool[] ConSelected = new bool[4] { false, false, false, false };
     private bool[] playersReady = new bool[4] { false, false, false, false };
     private bool[] DPadAxisUsed = new bool[4] { false, false, false, false };
     private bool[] ReservedMeshes = new bool[4] {false, false, false, false};

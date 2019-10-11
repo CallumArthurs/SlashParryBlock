@@ -87,7 +87,7 @@ public class CharacterMovmentScript : MonoBehaviour
         }
         else
         {
-            levelData.GetComponent<levelLoadInfo>();
+            levelData = tmplvlData.GetComponent<levelLoadInfo>();
             levelData.gameObject.transform.parent = gameObject.transform;
         }
         gameplay = gameObject.GetComponent<MatchGameplay>();
