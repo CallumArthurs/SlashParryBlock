@@ -16,10 +16,46 @@ public class levelLoadInfo : MonoBehaviour
     public int playerLives = 1;
     public float RoundLength = 120;
 
+    private bool Loaded = false;
+
     private void Start()
     {
-        int i = 1;
+        if (!Loaded)
+        {
+            int i = 1;
 
+            while (true)
+            {
+                GameObject tmpSword;
+                tmpSword = Resources.Load("Prefabs/p_Sword_" + i + "_Spawn") as GameObject;
+                if (tmpSword == null)
+                {
+                    break;
+                }
+
+                KnightSwords.Add(tmpSword);
+                i++;
+            }
+            i = 1;
+            while (true)
+            {
+                GameObject tmpShield;
+                tmpShield = Resources.Load("Prefabs/p_Shield_" + i + "_Spawn") as GameObject;
+                if (tmpShield == null)
+                {
+                    break;
+                }
+
+                KnightShields.Add(tmpShield);
+                i++;
+            }
+        }
+    }
+
+    public void ManualLoad()
+    {
+        int i = 1;
+        Loaded = true;
         while (true)
         {
             GameObject tmpSword;

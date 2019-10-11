@@ -59,7 +59,8 @@ public class CharacterMovmentScript : MonoBehaviour
     private SceneSelector SceneSelector;
     private bool[] PlayersReady = new bool[4] { false, false, false, false };
     private int ReadyPlayers = 0;
-    private bool gamePaused = false;
+    private bool gamePaused = false, DebugLoad = false;
+
     public bool PlayGame = false;
 
     private levelLoadInfo levelData;
@@ -71,8 +72,24 @@ public class CharacterMovmentScript : MonoBehaviour
 
     private void Awake()
     {
-        levelData = GameObject.FindGameObjectWithTag("levelData").GetComponent<levelLoadInfo>();
-        levelData.gameObject.transform.parent = gameObject.transform;
+        GameObject tmplvlData = GameObject.FindGameObjectWithTag("levelData");
+        if (tmplvlData == null)
+        {
+            levelData = new levelLoadInfo();
+            levelData.gamemode = MatchGameplay.Gamemode.Vanilla;
+            levelData.joystickCharInputs = new List<string> { "P1", "P2", "P3", "P4" };
+            levelData.rounds = 3;
+            levelData.RoundLength = 120;
+            levelData.playerLives = 1;
+            levelData.meshSelected = new List<int> { 0, 1, 2, 3 };
+            levelData.ManualLoad();
+            DebugLoad = true;
+        }
+        else
+        {
+            levelData = tmplvlData.GetComponent<levelLoadInfo>();
+            levelData.gameObject.transform.parent = gameObject.transform;
+        }
         gameplay = gameObject.GetComponent<MatchGameplay>();
         joystickCharInputs = levelData.joystickCharInputs;
 
@@ -351,7 +368,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     PlayersReady[i] = false;
                     ReadyPlayers--;
                 }
-                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame)
+                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
                 {
                     PlayGame = true;
                     StartGame();
@@ -502,7 +519,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     PlayersReady[i] = false;
                     ReadyPlayers--;
                 }
-                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame)
+                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
                 {
                     PlayGame = true;
                     StartGame();
