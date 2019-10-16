@@ -60,7 +60,7 @@ public class EndGameMeshLoader : MonoBehaviour
             if (i < endInfo.placement.Count)
             {
                 KnightRenderers[endInfo.placement[i] - 1].GetComponent<MeshSelector>().LoadMesh(endInfo.MeshSelected[i]);
-                KnightRenderers[i].GetComponentInChildren<Animator>().SetInteger("Placement", endInfo.placement[i]);
+                KnightRenderers[endInfo.placement[i] - 1].GetComponentInChildren<Animator>().SetInteger("Placement", endInfo.placement[i]);
             }
             else
             {

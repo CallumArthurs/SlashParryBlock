@@ -29,6 +29,7 @@ public class MatchGameplay : MonoBehaviour
     private List<PlayerStats> playerStatsTotal = new List<PlayerStats>();
     private List<Text[]> endScreenStats = new List<Text[]>();
     private EndGameInfo endGameInfo;
+    private int numOfLivePlayers;
 
     void Start()
     {
@@ -47,6 +48,13 @@ public class MatchGameplay : MonoBehaviour
 
         RoundTimer = RoundLength;
         RoundStatsUI.SetActive(false);
+
+        numOfLivePlayers = CharMovScript.players.Count;
+
+        if(gameMode == Gamemode.Stock)
+        {
+            Timer.gameObject.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public void StartMatch()
@@ -61,11 +69,7 @@ public class MatchGameplay : MonoBehaviour
         {
             if (playMatch)
             {
-                RoundTimer -= Time.deltaTime;
-                if (RoundTimer <= 0.0f)
-                {
-                    RoundEnd();
-                }
+                
 
                 for (int i = 0; i < CharMovScript.players.Count; i++)
                 {
@@ -76,6 +80,11 @@ public class MatchGameplay : MonoBehaviour
                 {
                     case Gamemode.Vanilla:
                         {
+                            RoundTimer -= Time.deltaTime;
+                            if (RoundTimer <= 0.0f)
+                            {
+                                RoundEnd();
+                            }
                             break;
                         }
                     case Gamemode.Stock:
@@ -85,6 +94,12 @@ public class MatchGameplay : MonoBehaviour
                                 if ((PlayerLives - playerStatsCurRound[i].Deaths) <= 0)
                                 {
                                     CharMovScript.players[i].SetStock(true);
+                                    numOfLivePlayers--;
+                                }
+
+                                if (numOfLivePlayers <= 1)
+                                {
+                                    RoundEnd();
                                 }
                             }
                             break;
