@@ -347,9 +347,11 @@ public class CharacterMovmentScript : MonoBehaviour
         gameObject.GetComponent<MatchGameplay>().StartMatch();
         for (int i = 0; i < players.Count; i++)
         {
+            Destroy(PlayerCams[i]);
             players[i].GameStart();
             playersRB[i].isKinematic = false;
             players[i].gameObject.layer = 14 + i;
+            PlayerCams.Clear();
         }
     }
 

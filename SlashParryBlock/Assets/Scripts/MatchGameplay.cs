@@ -91,8 +91,11 @@ public class MatchGameplay : MonoBehaviour
                             {
                                 if ((PlayerLives - playerStatsCurRound[i].Deaths) <= 0)
                                 {
-                                    CharMovScript.players[i].SetStock(true);
-                                    numOfLivePlayers--;
+                                    if (!CharMovScript.players[i].GetStock())
+                                    {
+                                        CharMovScript.players[i].SetStock(true);
+                                        numOfLivePlayers--;
+                                    }
                                 }
 
                                 if (numOfLivePlayers <= 1)

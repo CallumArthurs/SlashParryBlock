@@ -753,6 +753,10 @@ public class PlayerData : MonoBehaviour
         NoStock = Nostock;
         gameObject.SetActive(!NoStock);
     }
+    public bool GetStock()
+    {
+        return (NoStock);
+    }
     public void ResetPlayer()
     {
         gameObject.transform.position = OriginalPos;
