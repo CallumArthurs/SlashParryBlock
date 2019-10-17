@@ -37,7 +37,7 @@ public class CharacterSelect : MonoBehaviour
     public GameObject PlayerLivesLabels;
     public Image Arrow;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
-    public List<Text> menuOptions;
+    public List<Image> menuOptions;
     public Animator bookanimator;
     public Text levelText;
 

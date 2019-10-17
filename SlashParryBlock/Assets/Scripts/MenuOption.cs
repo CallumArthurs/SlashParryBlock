@@ -26,7 +26,7 @@ public class MenuOption : MenuControllerNavigation
     protected override void Start()
     {
         myUpdate = ControllerUpdate;
-        UnityEditor.Events.UnityEventTools.AddPersistentListener(A_Button, methodDelegate);
+        //UnityEditor.Events.UnityEventTools.AddPersistentListener(A_Button, methodDelegate);
         navigator = GetComponentsInParent<MenuControllerNavigation>()[1];
     }
 
