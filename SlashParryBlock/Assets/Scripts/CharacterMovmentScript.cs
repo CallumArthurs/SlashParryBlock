@@ -351,7 +351,7 @@ public class CharacterMovmentScript : MonoBehaviour
             players[i].GameStart();
             playersRB[i].isKinematic = false;
             players[i].gameObject.layer = 14 + i;
-            PlayerCams.Clear();
+            //PlayerCams.Clear();
         }
     }
 
