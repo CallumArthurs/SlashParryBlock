@@ -423,11 +423,13 @@ public class CharacterMovmentScript : MonoBehaviour
             {
                 speed = originalSpeed;
                 maxSpeed = originalMaxSpeed;
+                playersAni[i].SetBool("Falling", false);
             }
             else
             {
                 speed = AirControlSpeed;
                 maxSpeed = Mathf.Infinity;
+                playersAni[i].SetBool("Falling", true);
             }
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
             {
@@ -577,11 +579,13 @@ public class CharacterMovmentScript : MonoBehaviour
             {
                 speed = originalSpeed;
                 maxSpeed = originalMaxSpeed;
+                playersAni[i].SetBool("Falling", false);
             }
             else
             {
                 speed = AirControlSpeed;
                 maxSpeed = Mathf.Infinity;
+                playersAni[i].SetBool("Falling", true);
             }
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
             {
