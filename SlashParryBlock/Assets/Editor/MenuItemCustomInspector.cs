@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEditor.Events;
 using UnityEngine.EventSystems;
 
-[CustomEditor(typeof(MenuOption))]
+//[CustomEditor(typeof(MenuOption))]
 public class MenuItemCustomInspector : Editor
 {
     SerializedProperty leftMenuItem, rightMenuItem, aboveMenuItem, belowMenuItem;
