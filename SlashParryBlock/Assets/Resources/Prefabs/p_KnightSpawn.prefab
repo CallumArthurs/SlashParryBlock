@@ -109,6 +109,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2183169974334958962}
+  - component: {fileID: 6026010325331594825}
   m_Layer: 18
   m_Name: pos_Shield
   m_TagString: Untagged
@@ -123,13 +124,26 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4866643931262996272}
-  m_LocalRotation: {x: -0.09014617, y: -0.6096584, z: -0.7790513, w: 0.11519302}
-  m_LocalPosition: {x: -0.19500013, y: 0, z: -0.0080000255}
+  m_LocalRotation: {x: 0.07071211, y: -0.62146693, z: -0.71146023, w: 0.32031724}
+  m_LocalPosition: {x: -0.1687, y: -0.0088, z: -0.0066}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6533180403917160467}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -76.091, y: 0, z: -163.17801}
+  m_LocalEulerAnglesHint: {x: -57.034004, y: -66.43301, z: -92.354004}
+--- !u!65 &6026010325331594825
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4866643931262996272}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6533180403916804865
 GameObject:
   m_ObjectHideFlags: 0
@@ -7080,6 +7094,8 @@ MonoBehaviour:
   ComboAttack: 0
   Respawning: 0
   invulnerable: 0
+  Dashed: 0
+  IgnoreSpeedLimit: 0
   kills: 0
   Deaths: 0
   successfulParries: 0
@@ -7305,11 +7321,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.9146005
       objectReference: {fileID: 0}
-    - target: {fileID: 8121109671160138270, guid: 4c43ea75892055442b02d38b83065ae4,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: dd6862acd1fbf25459eb5e849e24f44e, type: 2}
     - target: {fileID: 8121109671158207710, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
@@ -7325,12 +7336,12 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 8121109671158207704, guid: 4c43ea75892055442b02d38b83065ae4,
+    - target: {fileID: 8121109671158207706, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 8121109671158207706, guid: 4c43ea75892055442b02d38b83065ae4,
+    - target: {fileID: 8121109671158207704, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
       value: 18
@@ -7340,6 +7351,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 8121109671160138270, guid: 4c43ea75892055442b02d38b83065ae4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dd6862acd1fbf25459eb5e849e24f44e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c43ea75892055442b02d38b83065ae4, type: 3}
 --- !u!1 &5396385503211757608 stripped
