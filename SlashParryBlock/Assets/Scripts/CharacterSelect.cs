@@ -8,16 +8,18 @@ public class CharacterSelect : MonoBehaviour
 {
     enum levels
     {
-        ProtoScene = 1,
+        JoustingField = 1,
+        CrystalCrevasse,     
+        RiskyRings,
         Camelot,
-        CrystalCrevasse,
-        Rings,
-        JoustingField,
-        BattleMents,
         Holeyheavens,
-        LousyLogs,
-        SpikyHill,
-        CrystalCrevasse_LEVEL
+        PricklyPit,
+        //ProtoScene = 1,
+        //CrystalCrevasse,
+        //BattleMents,
+        //LousyLogs,
+
+
     }
 
     public List<GameObject> KnightMeshes;
