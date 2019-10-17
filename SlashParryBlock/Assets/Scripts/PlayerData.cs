@@ -377,30 +377,32 @@ public class PlayerData : MonoBehaviour
                 else if (InvulnerabilityTimer < 2.0f)
                 {
                     halo.enabled = false;
-                    //this flashes the player from white to black
-                    if (!GotoWhite)
+                    if (!charMovScript.gamePaused)
                     {
-                        for (int i = 0; i < playerMaterial.Count; i++)
+                        //this flashes the player from white to black
+                        if (!GotoWhite)
                         {
-                            playerMaterial[i].color *= 0.95f;
-                        }
+                            for (int i = 0; i < playerMaterial.Count; i++)
+                            {
+                                playerMaterial[i].color *= 0.95f;
+                            }
 
-                        if (playerMaterial[0].color.r <= 0.5f)
-                        {
-                            GotoWhite = true;
+                            if (playerMaterial[0].color.r <= 0.5f)
+                            {
+                                GotoWhite = true;
+                            }
                         }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < playerMaterial.Count; i++)
+                        else
                         {
-                            playerMaterial[i].color *= 1.05f;
+                            for (int i = 0; i < playerMaterial.Count; i++)
+                            {
+                                playerMaterial[i].color *= 1.05f;
+                            }
 
-                        }
-
-                        if (playerMaterial[0].color.r >= 1)
-                        {
-                            GotoWhite = false;
+                            if (playerMaterial[0].color.r >= 1)
+                            {
+                                GotoWhite = false;
+                            }
                         }
                     }
                 }

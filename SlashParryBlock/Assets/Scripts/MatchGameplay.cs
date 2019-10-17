@@ -67,10 +67,8 @@ public class MatchGameplay : MonoBehaviour
     {
         if (CharMovScript.PlayGame)
         {
-            if (playMatch)
+            if (playMatch && !CharMovScript.gamePaused)
             {
-                
-
                 for (int i = 0; i < CharMovScript.players.Count; i++)
                 {
                     playerStatsCurRound[i].Deaths = CharMovScript.players[i].Deaths;
