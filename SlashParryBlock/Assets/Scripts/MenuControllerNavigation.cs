@@ -6,7 +6,7 @@ public class MenuControllerNavigation : MonoBehaviour
 {
     public delegate void MenuItem();
 
-    MenuItem ControlsHandler;
+    public static MenuItem ControlsHandler;
 
     void Update()
     {

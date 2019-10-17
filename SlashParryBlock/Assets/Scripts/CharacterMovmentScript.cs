@@ -30,6 +30,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public float blockSpeedMultiplier;
     public float blockRotSpeedMultiplier;
     public List<PlayerData> players = new List<PlayerData>();
+    public bool gamePaused = false;
     
     
     [HideInInspector]
@@ -59,7 +60,7 @@ public class CharacterMovmentScript : MonoBehaviour
     private SceneSelector SceneSelector;
     private bool[] PlayersReady = new bool[4] { false, false, false, false };
     private int ReadyPlayers = 0;
-    private bool gamePaused = false, DebugLoad = false;
+    private bool DebugLoad = false;
 
     public bool PlayGame = false;
 
@@ -235,6 +236,9 @@ public class CharacterMovmentScript : MonoBehaviour
                     case "AddTime":
                         gameObject.GetComponent<MatchGameplay>().AddTime(120);
                         break;
+                    case "Viviane":
+                        GameObject tempSwordObj = Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), players[0].transform.position,Quaternion.identity) as GameObject;
+                        break;
                     default:
                         Debug.Log("InvalidCommand");
                         break;
@@ -266,6 +270,16 @@ public class CharacterMovmentScript : MonoBehaviour
             {
                 gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
                 gamePaused = !gamePaused;
+                if (gamePaused)
+                {
+                    playersAni[i].speed = 0;
+                    Time.timeScale = 0.0f;
+                }
+                else
+                {
+                    playersAni[i].speed = 1;
+                    Time.timeScale = 1.0f;
+                }
             }
 
             // caching the health values

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-[ExecuteInEditMode]
 public class MenuOption : MenuControllerNavigation
 {
     public enum Method
@@ -15,11 +14,12 @@ public class MenuOption : MenuControllerNavigation
 
     public MenuItem myUpdate;
     public MenuOption leftMenuItem, rightMenuItem, aboveMenuItem, belowMenuItem;
-    public CharacterSelect eventClass;
-    public UnityEvent events;
+    public UnityEvent A_Button;
+
     public UnityAction methodDelegate;
-    public Method method;
     bool Eventadded = false;
+    private bool[] D_PadXUsed = { true, true, true, true };
+    private bool[] D_PadYUsed = { true, true, true, true };
 
     void Start()
     {
@@ -28,7 +28,56 @@ public class MenuOption : MenuControllerNavigation
 
     void Update()
     {
+        for (int i = 0; i < 4; i++)
+        {
+            if (Input.GetButtonDown("A_ButtonP" + (i + 1)))
+            {
+                A_Button.Invoke();
+            }
 
+            if (Input.GetAxis("D-PadXP" + (i + 1)) < 0.0f && !D_PadXUsed[i])
+            {
+                if (leftMenuItem != null)
+                {
+                    ControlsHandler = leftMenuItem.myUpdate;
+                }
+                D_PadXUsed[i] = true;
+            }
+            if (Input.GetAxis("D-PadXP" + (i + 1)) > 0.0f && !D_PadXUsed[i])
+            {
+                if (rightMenuItem != null)
+                {
+                    ControlsHandler = rightMenuItem.myUpdate;
+                }
+                D_PadXUsed[i] = true;
+            }
+
+            if (Input.GetAxis("D-PadYP" + (i + 1)) < 0.0f && !D_PadYUsed[i])
+            {
+                if (belowMenuItem != null)
+                {
+                    ControlsHandler = belowMenuItem.myUpdate;
+                }
+                D_PadYUsed[i] = true;
+            }
+            if (Input.GetAxis("D-PadYP" + (i + 1)) > 0.0f && !D_PadYUsed[i])
+            {
+                if (aboveMenuItem != null)
+                {
+                    ControlsHandler = aboveMenuItem.myUpdate;
+                }
+                D_PadYUsed[i] = true;
+            }
+
+            if (Input.GetAxis("D-PadXP" + (i + 1)) == 0.0f)
+            {
+                D_PadXUsed[i] = false;
+            }
+            if (Input.GetAxis("D-PadYP" + (i + 1)) == 0.0f)
+            {
+                D_PadYUsed[i] = false;
+            }
+        }
     }
 
     private void OnEnable()
@@ -40,11 +89,9 @@ public class MenuOption : MenuControllerNavigation
     {
         if (!Eventadded)
         {
-            eventClass = gameObject.GetComponent<CharacterSelect>();
-            events = new UnityEvent();
+            A_Button = new UnityEvent();
 
-            methodDelegate += System.Delegate.CreateDelegate(typeof(UnityAction), eventClass, "OpenCharacterSelect") as UnityAction;
-            UnityEditor.Events.UnityEventTools.AddPersistentListener(events, methodDelegate);
+            UnityEditor.Events.UnityEventTools.AddPersistentListener(A_Button, methodDelegate);
             Eventadded = true;
         }
     }

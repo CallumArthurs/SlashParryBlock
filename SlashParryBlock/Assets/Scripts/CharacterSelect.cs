@@ -332,6 +332,8 @@ public class CharacterSelect : MonoBehaviour
 
     void LevelSelectControls()
     {
+
+
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadAxisUsed[i])
