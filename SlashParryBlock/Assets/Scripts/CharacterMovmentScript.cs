@@ -258,9 +258,9 @@ public class CharacterMovmentScript : MonoBehaviour
             }
             else
             {
-                alternateControls = true;
                 controlSchemeHandler = ControlScheme2;
                 controlSchemeHandlerFixedUpdate = ControlScheme2FixedUpdate;
+                alternateControls = true;
             }
         }
         
@@ -433,18 +433,22 @@ public class CharacterMovmentScript : MonoBehaviour
     {
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor) && !players[i].IgnoreSpeedLimit)
+            if (PlayGame)
             {
-                speed = originalSpeed;
-                maxSpeed = originalMaxSpeed;
-                playersAni[i].SetBool("Falling", false);
+                if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor) && !players[i].IgnoreSpeedLimit)
+                {
+                    speed = originalSpeed;
+                    maxSpeed = originalMaxSpeed;
+                    playersAni[i].SetBool("Falling", false);
+                }
+                else
+                {
+                    speed = AirControlSpeed;
+                    maxSpeed = Mathf.Infinity;
+                    playersAni[i].SetBool("Falling", true);
+                }
             }
-            else
-            {
-                speed = AirControlSpeed;
-                maxSpeed = Mathf.Infinity;
-                playersAni[i].SetBool("Falling", true);
-            }
+
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
             {
                 //for player1 this will evaluate to "HorizontalP1"
@@ -589,18 +593,22 @@ public class CharacterMovmentScript : MonoBehaviour
     {
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor) && !players[i].IgnoreSpeedLimit)
+            if (PlayGame)
             {
-                speed = originalSpeed;
-                maxSpeed = originalMaxSpeed;
-                playersAni[i].SetBool("Falling", false);
+                if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor) && !players[i].IgnoreSpeedLimit)
+                {
+                    speed = originalSpeed;
+                    maxSpeed = originalMaxSpeed;
+                    playersAni[i].SetBool("Falling", false);
+                }
+                else
+                {
+                    speed = AirControlSpeed;
+                    maxSpeed = Mathf.Infinity;
+                    playersAni[i].SetBool("Falling", true);
+                }
             }
-            else
-            {
-                speed = AirControlSpeed;
-                maxSpeed = Mathf.Infinity;
-                playersAni[i].SetBool("Falling", true);
-            }
+
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
             {
                 //for player1 this will evaluate to "HorizontalP1"
