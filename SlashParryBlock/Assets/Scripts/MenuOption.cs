@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+[ExecuteInEditMode]
 public class MenuOption : MenuControllerNavigation
 {
     public enum Method
@@ -17,21 +18,26 @@ public class MenuOption : MenuControllerNavigation
     public UnityEvent A_Button;
 
     public UnityAction methodDelegate;
-    bool Eventadded = false;
-    private bool[] D_PadXUsed = { true, true, true, true };
-    private bool[] D_PadYUsed = { true, true, true, true };
+    private MenuControllerNavigation navigator;
+    private bool Eventadded = false;
+    public static bool[] D_PadXUsed = { true, true, true, true };
+    public static bool[] D_PadYUsed = { true, true, true, true };
 
-    void Start()
+    protected override void Start()
     {
-        myUpdate = Update;
+        myUpdate = ControllerUpdate;
+        UnityEditor.Events.UnityEventTools.AddPersistentListener(A_Button, methodDelegate);
+        navigator = GetComponentsInParent<MenuControllerNavigation>()[1];
     }
 
-    void Update()
+    public void ControllerUpdate()
     {
         for (int i = 0; i < 4; i++)
         {
             if (Input.GetButtonDown("A_ButtonP" + (i + 1)))
             {
+                Debug.Log("Event run");
+
                 A_Button.Invoke();
             }
 
@@ -39,7 +45,8 @@ public class MenuOption : MenuControllerNavigation
             {
                 if (leftMenuItem != null)
                 {
-                    ControlsHandler = leftMenuItem.myUpdate;
+                    Debug.Log(leftMenuItem.name);
+                    navigator.SetDelegate(leftMenuItem.myUpdate);
                 }
                 D_PadXUsed[i] = true;
             }
@@ -47,24 +54,27 @@ public class MenuOption : MenuControllerNavigation
             {
                 if (rightMenuItem != null)
                 {
-                    ControlsHandler = rightMenuItem.myUpdate;
+                    Debug.Log(rightMenuItem.name);
+                    navigator.SetDelegate(rightMenuItem.myUpdate);
                 }
                 D_PadXUsed[i] = true;
             }
 
-            if (Input.GetAxis("D-PadYP" + (i + 1)) < 0.0f && !D_PadYUsed[i])
+            if (Input.GetAxis("D-PadYP" + (i + 1)) > 0.0f && !D_PadYUsed[i])
             {
                 if (belowMenuItem != null)
                 {
-                    ControlsHandler = belowMenuItem.myUpdate;
+                    Debug.Log(belowMenuItem.name);
+                    navigator.SetDelegate(belowMenuItem.myUpdate);
                 }
                 D_PadYUsed[i] = true;
             }
-            if (Input.GetAxis("D-PadYP" + (i + 1)) > 0.0f && !D_PadYUsed[i])
+            if (Input.GetAxis("D-PadYP" + (i + 1)) < 0.0f && !D_PadYUsed[i])
             {
                 if (aboveMenuItem != null)
                 {
-                    ControlsHandler = aboveMenuItem.myUpdate;
+                    Debug.Log(aboveMenuItem.name);
+                    navigator.SetDelegate(aboveMenuItem.myUpdate);
                 }
                 D_PadYUsed[i] = true;
             }
@@ -80,9 +90,14 @@ public class MenuOption : MenuControllerNavigation
         }
     }
 
+    private void OnGUI()
+    {
+        //UpdateInspector();
+    }
+
     private void OnEnable()
     {
-        UpdateInspector();
+        
     }
 
     void UpdateInspector()
@@ -91,7 +106,7 @@ public class MenuOption : MenuControllerNavigation
         {
             A_Button = new UnityEvent();
 
-            UnityEditor.Events.UnityEventTools.AddPersistentListener(A_Button, methodDelegate);
+            
             Eventadded = true;
         }
     }

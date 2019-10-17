@@ -654,4 +654,26 @@ public class CharacterMovmentScript : MonoBehaviour
 
     }
 
+    public void Quit()
+    {
+        SceneSelector.SceneLoader(SceneSelector.SceneSelecter.SplashScreen);
+    }
+    public void Resume()
+    {
+        gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
+        gamePaused = !gamePaused;
+        for (int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            if (gamePaused)
+            {
+                playersAni[i].speed = 0;
+                Time.timeScale = 0.0f;
+            }
+            else
+            {
+                playersAni[i].speed = 1;
+                Time.timeScale = 1.0f;
+            }
+        }
+    } 
 }

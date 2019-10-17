@@ -6,7 +6,14 @@ public class MenuControllerNavigation : MonoBehaviour
 {
     public delegate void MenuItem();
 
-    public static MenuItem ControlsHandler;
+    public MenuItem ControlsHandler;
+    public MenuOption startingOption;
+
+    protected virtual void Start()
+    {
+        Debug.Log(gameObject.name);
+        ControlsHandler = startingOption.ControllerUpdate;
+    }
 
     void Update()
     {
@@ -15,6 +22,7 @@ public class MenuControllerNavigation : MonoBehaviour
 
     public void SetDelegate(MenuItem value)
     {
+        Debug.Log(gameObject.name);
         ControlsHandler = value;
     }
 }
