@@ -18,8 +18,6 @@ public class CharacterSelect : MonoBehaviour
         //CrystalCrevasse,
         //BattleMents,
         //LousyLogs,
-
-
     }
 
     public List<GameObject> KnightMeshes;
@@ -37,7 +35,7 @@ public class CharacterSelect : MonoBehaviour
 
     public GameObject mainMenu, characterSelect, levelSelect, gameplaySelect;
     public GameObject PlayerLivesLabels;
-    public Image Arrow;
+    public Image Arrow, Stamp;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
     public List<Image> menuOptions;
     public Animator bookanimator;
@@ -47,6 +45,7 @@ public class CharacterSelect : MonoBehaviour
     private SceneSelector Scenechanger;
     private int MenuOption = 0;
     private bool LoadingScene = false, setupPlayerData = false, gameSetup = false;
+    private bool BookOpen = false;
     private delegate void pageStartFunctions();
     private delegate void MenuControls();
 
@@ -59,7 +58,6 @@ public class CharacterSelect : MonoBehaviour
         mainMenu.SetActive(true);
         //characterSelect.SetActive(true);
         ControlHandler = CharacterSelectControls;
-        Arrow.gameObject.SetActive(true);
         Arrow.transform.position = new Vector3(menuOptions[0].transform.position.x + 10.0f, menuOptions[0].transform.position.y, menuOptions[0].transform.position.z);
         levelText.text = ((levels)1).ToString();
     }
@@ -99,6 +97,8 @@ public class CharacterSelect : MonoBehaviour
                 if (Input.GetButtonDown("StartButtonP" + (i + 1)))
                 {
                     bookanimator.SetTrigger("BookOpen");
+                    BookOpen = true;
+                    Arrow.gameObject.SetActive(true);
                 }
 
                 if (Input.GetAxis("D-PadYP" + (i + 1)) > 0.0f && !DPadAxisUsed[i])
@@ -127,7 +127,7 @@ public class CharacterSelect : MonoBehaviour
                     DPadAxisUsed[i] = false;
                 }
 
-                if (Input.GetButtonDown("A_ButtonP" + (i + 1)))
+                if (Input.GetButtonDown("A_ButtonP" + (i + 1)) && BookOpen)
                 {
                     switch (MenuOption)
                     {
@@ -334,8 +334,6 @@ public class CharacterSelect : MonoBehaviour
 
     void LevelSelectControls()
     {
-
-
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadAxisUsed[i])
