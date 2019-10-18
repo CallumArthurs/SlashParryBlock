@@ -9,7 +9,7 @@ public class CharacterSelect : MonoBehaviour
     enum levels
     {
         JoustingField = 1,
-        CrystalCrevasse,     
+        CrystalCrevasse,
         RiskyRings,
         Camelot,
         //Holeyheavens,
@@ -35,13 +35,14 @@ public class CharacterSelect : MonoBehaviour
 
     public GameObject mainMenu, characterSelect, levelSelect, gameplaySelect;
     public GameObject PlayerLivesLabels;
-    public Image Arrow, Stamp;
+    public Image Arrow;
+    public List<Image> PlayerStamps;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
     public List<Image> menuOptions;
     public Animator bookanimator;
     public Text levelText;
 
-    private GameObject levelData;
+    private levelLoadInfo levelData;
     private SceneSelector Scenechanger;
     private int MenuOption = 0;
     private bool LoadingScene = false, setupPlayerData = false, gameSetup = false;
@@ -53,7 +54,7 @@ public class CharacterSelect : MonoBehaviour
     MenuControls ControlHandler;
     void Start()
     {
-        levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject);
+        levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject).GetComponent<levelLoadInfo>();
         Scenechanger = SceneSelector.CreateInstance("SceneSelector") as SceneSelector;
         mainMenu.SetActive(true);
         //characterSelect.SetActive(true);
@@ -286,10 +287,10 @@ public class CharacterSelect : MonoBehaviour
                     {
                         setupPlayerData = true;
                         //GameObject levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject);
-                        levelData.GetComponent<levelLoadInfo>().joystickCharInputs = joystickCharInputs;
+                        levelData.joystickCharInputs = joystickCharInputs;
                         for (int j = 0; j < joystickCharInputs.Count; j++)
                         {
-                            levelData.GetComponent<levelLoadInfo>().meshSelected.Insert(levelData.GetComponent<levelLoadInfo>().meshSelected.Count, MeshSelected[j]);
+                            levelData.meshSelected.Insert(levelData.meshSelected.Count, MeshSelected[j]);
                         }
                         startFunctions = OpenLevelSelect;
                         StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
@@ -301,10 +302,10 @@ public class CharacterSelect : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space) && !setupPlayerData)
                 {
                     setupPlayerData = true;
-                    levelData.GetComponent<levelLoadInfo>().joystickCharInputs = joystickCharInputs;
+                    levelData.joystickCharInputs = joystickCharInputs;
                     for (int j = 0; j < joystickCharInputs.Count; j++)
                     {
-                        levelData.GetComponent<levelLoadInfo>().meshSelected.Insert(levelData.GetComponent<levelLoadInfo>().meshSelected.Count, MeshSelected[j]);
+                        levelData.meshSelected.Insert(levelData.meshSelected.Count, MeshSelected[j]);
                     }
                     startFunctions = OpenLevelSelect;
                     StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
@@ -323,7 +324,7 @@ public class CharacterSelect : MonoBehaviour
         }
         ReadyplayerCount = 0;
         ControlHandler = CharacterSelectControls;
-        levelData.GetComponent<levelLoadInfo>().meshSelected.Clear();
+        levelData.meshSelected.Clear();
         setupPlayerData = false;
 
         levelSelect.SetActive(false);
@@ -427,22 +428,22 @@ public class CharacterSelect : MonoBehaviour
                 case 0:
                     if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f)
                     {
-                        levelData.GetComponent<levelLoadInfo>().gamemode++;
-                        if ((int)levelData.GetComponent<levelLoadInfo>().gamemode > 2)
+                        levelData.gamemode++;
+                        if ((int)levelData.gamemode > 2)
                         {
-                            levelData.GetComponent<levelLoadInfo>().gamemode = (MatchGameplay.Gamemode)2;
+                            levelData.gamemode = (MatchGameplay.Gamemode)2;
                         }
                     }
                     else if(Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f)
                     {
-                        levelData.GetComponent<levelLoadInfo>().gamemode--;
-                        if ((int)levelData.GetComponent<levelLoadInfo>().gamemode < 1)
+                        levelData.gamemode--;
+                        if ((int)levelData.gamemode < 1)
                         {
-                            levelData.GetComponent<levelLoadInfo>().gamemode = (MatchGameplay.Gamemode)1;
+                            levelData.gamemode = (MatchGameplay.Gamemode)1;
                         }
                     }
 
-                    if (levelData.GetComponent<levelLoadInfo>().gamemode == MatchGameplay.Gamemode.Stock)
+                    if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
                     {
                         PlayerLivesLabels.SetActive(true);
                     }
@@ -458,14 +459,14 @@ public class CharacterSelect : MonoBehaviour
                 case 1:
                     if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f)
                     {
-                        levelData.GetComponent<levelLoadInfo>().rounds++;
+                        levelData.rounds++;
                     }
                     else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f)
                     {
-                        levelData.GetComponent<levelLoadInfo>().rounds--;
-                        if (levelData.GetComponent<levelLoadInfo>().rounds < 1)
+                        levelData.rounds--;
+                        if (levelData.rounds < 1)
                         {
-                            levelData.GetComponent<levelLoadInfo>().rounds = 1;
+                            levelData.rounds = 1;
                         }
                     }
                     Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, RoundsSelect.transform.position.y, RoundsSelect.transform.position.z);
@@ -476,14 +477,14 @@ public class CharacterSelect : MonoBehaviour
                 case 2:
                     if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f)
                     {
-                        levelData.GetComponent<levelLoadInfo>().RoundLength++;
+                        levelData.RoundLength++;
                     }
                     else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f)
                     {
-                        levelData.GetComponent<levelLoadInfo>().RoundLength--;
-                        if (levelData.GetComponent<levelLoadInfo>().RoundLength < 15)
+                        levelData.RoundLength--;
+                        if (levelData.RoundLength < 15)
                         {
-                            levelData.GetComponent<levelLoadInfo>().RoundLength = 15;
+                            levelData.RoundLength = 15;
                         }
                     }
                     Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, RoundLengthSelect.transform.position.y, RoundLengthSelect.transform.position.z);
@@ -492,18 +493,18 @@ public class CharacterSelect : MonoBehaviour
 
                 #region PlayerLives
                 case 3:
-                    if (levelData.GetComponent<levelLoadInfo>().gamemode == MatchGameplay.Gamemode.Stock)
+                    if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
                     {
                         if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f)
                         {
-                            levelData.GetComponent<levelLoadInfo>().playerLives++;
+                            levelData.playerLives++;
                         }
                         else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f)
                         {
-                            levelData.GetComponent<levelLoadInfo>().playerLives--;
-                            if (levelData.GetComponent<levelLoadInfo>().playerLives < 3)
+                            levelData.playerLives--;
+                            if (levelData.playerLives < 3)
                             {
-                                levelData.GetComponent<levelLoadInfo>().playerLives = 3;
+                                levelData.playerLives = 3;
                             }
                         }
                         Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, PlayerLivesSelect.transform.position.y, PlayerLivesSelect.transform.position.z);
@@ -531,10 +532,10 @@ public class CharacterSelect : MonoBehaviour
                 bookanimator.SetTrigger("PageTurnLeft");
             }
 
-            GamemodeSelect.text = levelData.GetComponent<levelLoadInfo>().gamemode.ToString();
-            RoundsSelect.text = levelData.GetComponent<levelLoadInfo>().rounds.ToString();
-            RoundLengthSelect.text = levelData.GetComponent<levelLoadInfo>().RoundLength.ToString();
-            PlayerLivesSelect.text = levelData.GetComponent<levelLoadInfo>().playerLives.ToString();
+            GamemodeSelect.text = levelData.gamemode.ToString();
+            RoundsSelect.text = levelData.rounds.ToString();
+            RoundLengthSelect.text = levelData.RoundLength.ToString();
+            PlayerLivesSelect.text = levelData.playerLives.ToString();
         }
     }
 
@@ -542,5 +543,28 @@ public class CharacterSelect : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         function();
+    }
+
+    public void MoveStamp(MenuOption menuData, MenuOption pos)
+    {
+        PlayerStamps[menuData.CurPlayerControl].transform.position = pos.transform.position;
+    }
+
+    public void SelectCharacter(MenuOption menuData, int Character)
+    {
+        if (ReservedMeshes[Character])
+        {
+            return;
+        }
+        else
+        {
+            MeshSelected[menuData.CurPlayerControl] = Character;
+            ReservedMeshes[Character] = true;
+        }
+    }
+    public void UnSelectCharacter(MenuOption menuData, int Character)
+    {
+        MeshSelected[menuData.CurPlayerControl] = Character;
+        ReservedMeshes[Character] = false;
     }
 }

@@ -269,17 +269,7 @@ public class CharacterMovmentScript : MonoBehaviour
             if (Input.GetButtonDown("StartButton" + joystickCharInputs[i]))
             {
                 gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
-                gamePaused = !gamePaused;
-                if (gamePaused)
-                {
-                    playersAni[i].speed = 0;
-                    Time.timeScale = 0.0f;
-                }
-                else
-                {
-                    playersAni[i].speed = 1;
-                    Time.timeScale = 1.0f;
-                }
+                PauseGame();
             }
 
             // caching the health values
@@ -685,5 +675,22 @@ public class CharacterMovmentScript : MonoBehaviour
                 Time.timeScale = 1.0f;
             }
         }
-    } 
+    }
+    public void PauseGame()
+    {
+        gamePaused = !gamePaused;
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (gamePaused)
+            {
+                playersAni[i].speed = 0;
+                Time.timeScale = 0.0f;
+            }
+            else
+            {
+                playersAni[i].speed = 1;
+                Time.timeScale = 1.0f;
+            }
+        }
+    }
 }
