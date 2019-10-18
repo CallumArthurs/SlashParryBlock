@@ -111,8 +111,9 @@ public class MatchGameplay : MonoBehaviour
             {
                 for (int i = 0; i < CharMovScript.players.Count; i++)
                 {
-                    if (Input.GetAxis("A_Button" + CharMovScript.joystickCharInputs[i]) > 0.0f)
+                    if (Input.GetButtonDown("A_Button" + CharMovScript.joystickCharInputs[i]))
                     {
+                        CharMovScript.PauseGame();
                         if (restartGame)
                         {
                             SceneManager.LoadScene(0);
@@ -122,7 +123,6 @@ public class MatchGameplay : MonoBehaviour
                             GameUI.SetActive(true);
                             RoundStatsUI.SetActive(false);
                         }
-
                         for (int j = 0; j < CharMovScript.players.Count; j++)
                         {
                             CharMovScript.players[j].ResetPlayer();
@@ -187,6 +187,7 @@ public class MatchGameplay : MonoBehaviour
         }
         else
         {
+            CharMovScript.PauseGame();
             GameUI.SetActive(false);
             RoundStatsUI.SetActive(true);
         }
