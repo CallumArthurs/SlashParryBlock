@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MenuControllerNavigation : MonoBehaviour
 {
-    public delegate void MenuItem();
+    public delegate void MenuItem(int iter);
 
     public MenuItem ControlsHandler;
     public MenuOption startingOption;
+
+    public int iterI;
 
     protected virtual void Start()
     {
@@ -17,7 +19,10 @@ public class MenuControllerNavigation : MonoBehaviour
 
     void Update()
     {
-        ControlsHandler();
+        for (iterI = 0; iterI < 4; iterI++)
+        {
+            ControlsHandler(iterI);
+        }
     }
 
     public void SetDelegate(MenuItem value)
@@ -27,22 +32,22 @@ public class MenuControllerNavigation : MonoBehaviour
 
     public void DPadLeft(MenuOption curMenuOption)
     {
-        Debug.Log(curMenuOption.leftMenuItem.name);
-        SetDelegate(curMenuOption.leftMenuItem.ControllerUpdate);
+        Debug.Log(curMenuOption.name);
+        SetDelegate(curMenuOption.ControllerUpdate);
     }
     public void DPadRight(MenuOption curMenuOption)
     {
-        Debug.Log(curMenuOption.rightMenuItem.name);
-        SetDelegate(curMenuOption.rightMenuItem.ControllerUpdate);
+        Debug.Log(curMenuOption.name);
+        SetDelegate(curMenuOption.ControllerUpdate);
     }
     public void DPadUp(MenuOption curMenuOption)
     {
-        Debug.Log(curMenuOption.aboveMenuItem.name);
-        SetDelegate(curMenuOption.aboveMenuItem.ControllerUpdate);
+        Debug.Log(curMenuOption.name);
+        SetDelegate(curMenuOption.ControllerUpdate);
     }
     public void DPadDown(MenuOption curMenuOption)
     {
-        Debug.Log(curMenuOption.belowMenuItem.name);
-        SetDelegate(curMenuOption.belowMenuItem.ControllerUpdate);
+        Debug.Log(curMenuOption.name);
+        SetDelegate(curMenuOption.ControllerUpdate);
     }
 }
