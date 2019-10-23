@@ -28,19 +28,21 @@ public class CharacterSelect : MonoBehaviour
     private bool[] ConSelected = new bool[4] { false, false, false, false };
     private bool[] playersReady = new bool[4] { false, false, false, false };
     private bool[] DPadAxisUsed = new bool[4] { false, false, false, false };
-    private bool[] ReservedMeshes = new bool[4] {false, false, false, false};
+    private bool[] ReservedMeshes = new bool[4] { false, false, false, false };
     int levelSelected = 1;
 
     int[] MeshSelected = new int[4] { 0, 0, 0, 0 };
+    bool[] PlayerSelectedMesh = new bool[4] { false, false, false, false };
 
     public GameObject mainMenu, characterSelect, levelSelect, gameplaySelect;
     public GameObject PlayerLivesLabels;
     public Image Arrow;
-    public List<Image> PlayerStamps;
+    public List<RawImage> PlayerStamps;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
     public List<Image> menuOptions;
     public Animator bookanimator;
     public Text levelText;
+    public MenuControllerNavigation CharSelectNavigator;
 
     private levelLoadInfo levelData;
     private SceneSelector Scenechanger;
@@ -545,26 +547,35 @@ public class CharacterSelect : MonoBehaviour
         function();
     }
 
-    public void MoveStamp(MenuOption menuData, MenuOption pos)
+    public void MoveStamp(MenuOption pos)
     {
-        PlayerStamps[menuData.CurPlayerControl].transform.position = pos.transform.position;
+        if (!PlayerSelectedMesh[CharSelectNavigator.iterI])
+        {
+            PlayerStamps[CharSelectNavigator.iterI].transform.position = pos.transform.position;
+        }
     }
 
-    public void SelectCharacter(MenuOption menuData, int Character)
+    public void SelectCharacter(int Character)
     {
         if (ReservedMeshes[Character])
         {
+            Debug.Log("Mesh reserved");
             return;
         }
         else
         {
-            MeshSelected[menuData.CurPlayerControl] = Character;
+            Debug.Log("Reserving Mesh");
+            MeshSelected[CharSelectNavigator.iterI] = Character;
+            PlayerSelectedMesh[CharSelectNavigator.iterI] = true;
             ReservedMeshes[Character] = true;
         }
     }
-    public void UnSelectCharacter(MenuOption menuData, int Character)
+
+    public void UnSelectCharacter(int Character)
     {
-        MeshSelected[menuData.CurPlayerControl] = Character;
+        Debug.Log("Unreserving Mesh");
+        MeshSelected[CharSelectNavigator.iterI] = Character;
+        PlayerSelectedMesh[CharSelectNavigator.iterI] = false;
         ReservedMeshes[Character] = false;
     }
 }
