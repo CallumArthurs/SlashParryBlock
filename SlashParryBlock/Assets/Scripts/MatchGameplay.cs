@@ -107,13 +107,12 @@ public class MatchGameplay : MonoBehaviour
                         }
                 }
             }
-            else
+            else if (!CharMovScript.gamePaused || RoundTimer <= 0.0f)
             {
                 for (int i = 0; i < CharMovScript.players.Count; i++)
                 {
                     if (Input.GetButtonDown("A_Button" + CharMovScript.joystickCharInputs[i]))
                     {
-                        CharMovScript.PauseGame();
                         if (restartGame)
                         {
                             SceneManager.LoadScene(0);
@@ -129,6 +128,7 @@ public class MatchGameplay : MonoBehaviour
                         }
 
                         RoundTimer = RoundLength;
+                        CharMovScript.PauseGame();
                         StartMatch();
                     }
 
