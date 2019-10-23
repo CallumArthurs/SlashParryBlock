@@ -8,7 +8,7 @@ public class MatchGameplay : MonoBehaviour
 {
     public enum Gamemode
     {
-        Vanilla = 1,
+        Timer = 1,
         Stock
     }
 
@@ -76,7 +76,7 @@ public class MatchGameplay : MonoBehaviour
 
                 switch (gameMode)
                 {
-                    case Gamemode.Vanilla:
+                    case Gamemode.Timer:
                         {
                             RoundTimer -= Time.deltaTime;
                             if (RoundTimer <= 0.0f)

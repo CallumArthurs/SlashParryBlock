@@ -77,7 +77,7 @@ public class CharacterMovmentScript : MonoBehaviour
         if (tmplvlData == null)
         {
             levelData = new levelLoadInfo();
-            levelData.gamemode = MatchGameplay.Gamemode.Vanilla;
+            levelData.gamemode = MatchGameplay.Gamemode.Timer;
             levelData.joystickCharInputs = new List<string> { "P1", "P2", "P3", "P4" };
             levelData.rounds = 3;
             levelData.RoundLength = 120;

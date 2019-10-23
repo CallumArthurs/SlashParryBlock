@@ -8,6 +8,7 @@ public class EndGameMeshLoader : MonoBehaviour
 {
     public List<GameObject> KnightRenderers;
     public List<GameObject> PlayerPortraits;
+    public List<Sprite> knightPortraitImages;
     public List<GameObject> PlayerStats;
     public EndGameInfo endInfo;
     public GameObject EndgameStatsScreen;
@@ -84,6 +85,8 @@ public class EndGameMeshLoader : MonoBehaviour
                 tmpPlayerTextStats[3].text = "Damage Dealt: " + endInfo.playerStatsTotal[i].damageDealt.ToString();
                 tmpPlayerTextStats[4].text = "Damage Taken: " + endInfo.playerStatsTotal[i].damageTaken.ToString();
                 tmpPlayerTextStats[5].text = "Killstreak: " + endInfo.playerStatsTotal[i].killStreak.ToString();
+
+                PlayerPortraits[i].GetComponent<Image>().sprite = knightPortraitImages[endInfo.MeshSelected[i]];
             }
             else
             {
