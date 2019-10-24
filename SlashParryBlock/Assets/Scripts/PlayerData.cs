@@ -742,6 +742,8 @@ public class PlayerData : MonoBehaviour
         Deaths++;
         playClip(ClipSelector.death);
         animator.SetInteger("Anim", 0);
+        animator.SetBool("Staggered", false);
+        animator.SetBool("Stunned", false);
         //sleep the rigidbody because velocity doesn't update properly
         GetComponent<Rigidbody>().Sleep();
         GetComponent<Rigidbody>().velocity  = new Vector3(0, 0, 0);
