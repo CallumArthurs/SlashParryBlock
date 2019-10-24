@@ -16,14 +16,35 @@ public class EndGameInfo : MonoBehaviour
 
     public void CalculateWinner()
     {
+        //check placement of i
         for (int i = 0; i < playerStatsTotal.Count; i++)
         {
             placement.Add(playerStatsTotal.Count);
+            //check against j
             for (int j = 0; j < playerStatsTotal.Count; j++)
             {
-                if (playerStatsTotal[i].kills > playerStatsTotal[j].kills && playerStatsTotal[i] != playerStatsTotal[j])
+                if (playerStatsTotal[i] == playerStatsTotal[j])
                 {
-                   placement[i]--;
+                    continue;
+                }
+
+                if (playerStatsTotal[i].kills == playerStatsTotal[j].kills)
+                {
+                    if (playerStatsTotal[i].Deaths == playerStatsTotal[j].Deaths)
+                    {
+                        if (playerStatsTotal[i].damageDealt > playerStatsTotal[j].damageDealt)
+                        {
+                            placement[i]--;
+                        }
+                    }
+                    else if (playerStatsTotal[i].Deaths < playerStatsTotal[j].Deaths)
+                    {
+                        placement[i]--;
+                    }
+                }
+                else if (playerStatsTotal[i].kills > playerStatsTotal[j].kills)
+                {
+                    placement[i]--;
                 }
             }
         }

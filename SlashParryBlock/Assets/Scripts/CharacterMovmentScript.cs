@@ -77,7 +77,7 @@ public class CharacterMovmentScript : MonoBehaviour
         if (tmplvlData == null)
         {
             levelData = new levelLoadInfo();
-            levelData.gamemode = MatchGameplay.Gamemode.Vanilla;
+            levelData.gamemode = MatchGameplay.Gamemode.Timer;
             levelData.joystickCharInputs = new List<string> { "P1", "P2", "P3", "P4" };
             levelData.rounds = 3;
             levelData.RoundLength = 120;
@@ -661,20 +661,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public void Resume()
     {
         gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
-        gamePaused = !gamePaused;
-        for (int i = 0; i < joystickCharInputs.Count; i++)
-        {
-            if (gamePaused)
-            {
-                playersAni[i].speed = 0;
-                Time.timeScale = 0.0f;
-            }
-            else
-            {
-                playersAni[i].speed = 1;
-                Time.timeScale = 1.0f;
-            }
-        }
+        PauseGame();
     }
     public void PauseGame()
     {

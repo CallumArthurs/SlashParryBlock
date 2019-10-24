@@ -11,7 +11,7 @@ public class levelLoadInfo : MonoBehaviour
     public List<GameObject> KnightSwords = new List<GameObject>();
     public List<GameObject> KnightShields = new List<GameObject>();
 
-    public MatchGameplay.Gamemode gamemode = MatchGameplay.Gamemode.Vanilla;
+    public MatchGameplay.Gamemode gamemode = MatchGameplay.Gamemode.Timer;
     public int rounds = 3;
     public int playerLives = 1;
     public float RoundLength = 120;
