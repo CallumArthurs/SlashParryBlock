@@ -642,12 +642,14 @@ public class PlayerData : MonoBehaviour
     {
         damageTaken += damage;
         health -= damage;
+        animator.SetBool("Staggered", true);
     }
     public void TakeDamage(float damage, PlayerData player)
     {
         damageTaken += damage;
         health -= damage;
         playerLastHit = player;
+        animator.SetBool("Staggered", true);
     }
 
     public void setHealth(int value)
@@ -701,7 +703,6 @@ public class PlayerData : MonoBehaviour
     {
         knockedback = value;
         KnockbackTimer = Timer;
-        animator.SetBool("Staggered", true);
     }
     public void setAttackTimer(float length)
     {
