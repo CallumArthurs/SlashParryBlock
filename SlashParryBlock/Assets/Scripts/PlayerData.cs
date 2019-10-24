@@ -765,6 +765,11 @@ public class PlayerData : MonoBehaviour
     }
     public void ResetPlayer()
     {
+        if (HasExcalibur)
+        {
+            SetExcalibur(false);
+            Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), new Vector3(-26,3.71f,0.0f), new Quaternion(0,0,180,0));
+        }
         gameObject.transform.position = OriginalPos;
         Deaths = 0;
         kills = 0;
