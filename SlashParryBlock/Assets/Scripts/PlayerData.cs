@@ -334,6 +334,7 @@ public class PlayerData : MonoBehaviour
             else
             {
                 DizzySpinner.SetActive(false);
+                animator.SetBool("Stunned", false);
             }
 
             //essentially the same as the parry stun except no spinner and different timer
@@ -628,7 +629,7 @@ public class PlayerData : MonoBehaviour
         Instantiate(particles, transform.position, Quaternion.Euler(transform.up));
         gotParriedTimer = 2.0f;
         animator.SetInteger("Anim", 0);
-        animator.SetTrigger("Stunned");
+        animator.SetBool("Stunned", true);
         for (int i = 0; i < playersHit.Count; i++)
         {
             Destroy(playersHit[i]);
