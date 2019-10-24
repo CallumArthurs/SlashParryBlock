@@ -642,6 +642,7 @@ public class PlayerData : MonoBehaviour
     {
         damageTaken += damage;
         health -= damage;
+        animator.SetBool("Staggered", true);
     }
     public void TakeDamage(float damage, PlayerData player)
     {
