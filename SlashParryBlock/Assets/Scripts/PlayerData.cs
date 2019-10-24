@@ -347,6 +347,7 @@ public class PlayerData : MonoBehaviour
                 {
                     knockedback = false;
                     KnockbackTimer = 0.25f;
+                    animator.SetBool("Staggered", false);
                 }
             }
 
@@ -700,6 +701,7 @@ public class PlayerData : MonoBehaviour
     {
         knockedback = value;
         KnockbackTimer = Timer;
+        animator.SetBool("Staggered", true);
     }
     public void setAttackTimer(float length)
     {
