@@ -208,6 +208,7 @@ public class PlayerData : MonoBehaviour
                             if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
                             {
                                 //reset their parry timer
+                                CollisionPlayerData.gotParriedTimer = 0.2f;
                                 playersHit[0].Riposte = true;
                             }
                             else if (CollisionPlayerData.blocking)
@@ -325,7 +326,7 @@ public class PlayerData : MonoBehaviour
                 //run the timer for the attack
                 gotParriedTimer -= Time.deltaTime;
                 DizzySpinner.transform.Rotate(Vector3.up, 1.0f, Space.World);
-                if (gotParriedTimer <= 0)
+                if (gotParriedTimer <= 0.0f)
                 {
                     isParried = false;
                     gotParriedTimer = 2.0f;
@@ -468,7 +469,6 @@ public class PlayerData : MonoBehaviour
                         if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) < 0.0f && CollisionPlayerData.isParried)
                         {
                             //reset their parry timer
-                            CollisionPlayerData.gotParriedTimer = 0.2f;
                             animator.SetTrigger("Riposte");
                             playClip(ClipSelector.riposte);
                         }
