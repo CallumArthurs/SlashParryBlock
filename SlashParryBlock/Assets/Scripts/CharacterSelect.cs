@@ -390,7 +390,7 @@ public class CharacterSelect : MonoBehaviour
                 }
                 DPadAxisUsed[i] = true;
             }
-            
+
             if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) > 0.0f && !DPadAxisUsed[i])
             {
                 gameplayChoice++;
@@ -413,7 +413,7 @@ public class CharacterSelect : MonoBehaviour
             }
 
             switch (gameplayChoice)
-                {
+            {
                 #region GameMode
                 case 0:
                     if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
@@ -425,7 +425,7 @@ public class CharacterSelect : MonoBehaviour
                         }
                         DPadXAxisUsed[i] = true;
                     }
-                    else if(Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
+                    else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
                     {
                         levelData.gamemode--;
                         if ((int)levelData.gamemode < 1)
@@ -641,7 +641,7 @@ public class CharacterSelect : MonoBehaviour
     }
     public void CheckPlayersAreReady()
     {
-        if (ReadyplayerCount >= 2 && ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData )
+        if (ReadyplayerCount >= 2 && ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData)
         {
             setupPlayerData = true;
             //GameObject levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject);
@@ -670,7 +670,7 @@ public class CharacterSelect : MonoBehaviour
     }
     public void SelectRandomLevel()
     {
-        levelSelected = Random.Range(1,5);
+        levelSelected = Random.Range(1, 5);
         levelSelect.SetActive(false);
         levelSelectFlavourGroup.SetActive(false);
         gameplaySelect.SetActive(true);
@@ -691,5 +691,59 @@ public class CharacterSelect : MonoBehaviour
         startFunctions = OpenCharacterSelect;
         StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
         bookanimator.SetTrigger("PageTurnLeft");
+    }
+
+    public void MoveToLevelSelect()
+    {
+        startFunctions = OpenLevelSelect;
+        StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
+        bookanimator.SetTrigger("PageTurnLeft");
+    }
+    public void changeGamemode(int value)
+    {
+        levelData.gamemode = (MatchGameplay.Gamemode)value;
+        GamemodeSelect.text = levelData.gamemode.ToString();
+    }
+    public void AddRound()
+    {
+        levelData.rounds++;
+        RoundsSelect.text = levelData.rounds.ToString();
+    }
+    public void RemoveRound()
+    {
+        levelData.rounds--;
+        if (levelData.rounds < 1)
+        {
+            levelData.rounds = 1;
+        }
+        RoundsSelect.text = levelData.rounds.ToString();
+    }
+    public void AddRoundLength()
+    {
+        levelData.RoundLength += 15.0f;
+        RoundLengthSelect.text = levelData.RoundLength.ToString();
+    }
+    public void RemoveRoundLength()
+    {
+        levelData.RoundLength -= 15.0f;
+        if (levelData.RoundLength < 15)
+        {
+            levelData.RoundLength = 15;
+        }
+        RoundLengthSelect.text = levelData.RoundLength.ToString();
+    }
+    public void AddPlayerLives()
+    {
+        levelData.playerLives++;
+        PlayerLivesSelect.text = levelData.playerLives.ToString();
+    }
+    public void RemovePlayerLives()
+    {
+        levelData.playerLives--;
+        if (levelData.playerLives < 3)
+        {
+            levelData.playerLives = 3;
+        }
+        PlayerLivesSelect.text = levelData.playerLives.ToString();
     }
 }
