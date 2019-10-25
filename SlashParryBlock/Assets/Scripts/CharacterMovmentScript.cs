@@ -432,12 +432,21 @@ public class CharacterMovmentScript : MonoBehaviour
                     speed = originalSpeed;
                     maxSpeed = originalMaxSpeed;
                     playersAni[i].SetBool("Falling", false);
+                    players[i].fallTimer = 0.5f;
                 }
                 else
                 {
-                    speed = AirControlSpeed;
-                    maxSpeed = Mathf.Infinity;
-                    playersAni[i].SetBool("Falling", true);
+                    if (players[i].fallTimer <= 0.0f)
+                    {
+                        speed = AirControlSpeed;
+                        maxSpeed = Mathf.Infinity;
+                        playersAni[i].SetBool("Falling", true);
+                    }
+                    else
+                    {
+                        players[i].fallTimer -= Time.deltaTime;
+                    }
+                    //players[i].gameObject.GetComponent<CapsuleCollider>().material
                 }
             }
 
