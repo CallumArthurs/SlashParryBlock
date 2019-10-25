@@ -34,33 +34,33 @@ public class MenuOption : MonoBehaviour
             B_Button.Invoke();
         }
 
-        if (Input.GetAxis("D-PadX" + joystickChar) > 0.0f && !D_PadXUsed[curPlayer])
+        if (Input.GetAxis("Horizontal" + joystickChar) > 0.0f && !D_PadXUsed[curPlayer])
         {
             D_PadLeft.Invoke();
             D_PadXUsed[curPlayer] = true;
         }
-        if (Input.GetAxis("D-PadX" + joystickChar) < 0.0f && !D_PadXUsed[curPlayer])
+        if (Input.GetAxis("Horizontal" + joystickChar) < 0.0f && !D_PadXUsed[curPlayer])
         {
             D_PadRight.Invoke();
             D_PadXUsed[curPlayer] = true;
         }
 
-        if (Input.GetAxis("D-PadY" + joystickChar) > 0.0f && !D_PadYUsed[curPlayer])
+        if (Input.GetAxis("Vertical" + joystickChar) < 0.0f && !D_PadYUsed[curPlayer])
         {
             D_PadDown.Invoke();
             D_PadYUsed[curPlayer] = true;
         }
-        if (Input.GetAxis("D-PadY" + joystickChar) < 0.0f && !D_PadYUsed[curPlayer])
+        if (Input.GetAxis("Vertical" + joystickChar) > 0.0f && !D_PadYUsed[curPlayer])
         {
             D_PadUp.Invoke();
             D_PadYUsed[curPlayer] = true;
         }
 
-        if (Input.GetAxis("D-PadX" + joystickChar) == 0.0f)
+        if (Input.GetAxis("Horizontal" + joystickChar) == 0.0f)
         {
             D_PadXUsed[curPlayer] = false;
         }
-        if (Input.GetAxis("D-PadY" + joystickChar) == 0.0f)
+        if (Input.GetAxis("Vertical" + joystickChar) == 0.0f)
         {
             D_PadYUsed[curPlayer] = false;
         }
