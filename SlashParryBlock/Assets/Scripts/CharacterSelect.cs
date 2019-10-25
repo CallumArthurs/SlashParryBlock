@@ -71,6 +71,7 @@ public class CharacterSelect : MonoBehaviour
         ControlHandler = CharacterSelectControls;
         levelText.text = ((levels)1).ToString();
         menuOptions[MenuOption].sprite = SelectedImage[MenuOption];
+        mainMenu.SetActive(false);
         for (int i = 0; i < 4; i++)
         {
             PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 5.0f + -4.0f * i);
@@ -114,6 +115,7 @@ public class CharacterSelect : MonoBehaviour
                     BookOpen = true;
                     //Arrow.gameObject.SetActive(true);
                     Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
+                    mainMenu.SetActive(true);
                 }
                 #region OldMainMenu
                 /*
@@ -337,7 +339,8 @@ public class CharacterSelect : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(0);
-            PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+            PlayerStamps[i].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+            PlayerStamps[i].gameObject.SetActive(false);
         }
 
         ControlHandler = CharacterSelectControls;
@@ -358,6 +361,8 @@ public class CharacterSelect : MonoBehaviour
         levelSelect.SetActive(true);
         Arrow.gameObject.SetActive(false);
         CharSelectNavigator.gameObject.SetActive(false);
+        levelStamp.gameObject.SetActive(true);
+        MoveLevelStamp(LevelSelectNavigator.startingOption);
     }
 
     void GameplaySelectControls()
@@ -372,7 +377,6 @@ public class CharacterSelect : MonoBehaviour
                 {
                     gameplayChoice = 1;
                 }
-
 
                 if (gameplayChoice < 0)
                 {
@@ -631,7 +635,7 @@ public class CharacterSelect : MonoBehaviour
     }
     public void CheckPlayersAreReady()
     {
-        if (ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData)
+        if (ReadyplayerCount >= 2 && ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData )
         {
             setupPlayerData = true;
             //GameObject levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject);
@@ -652,6 +656,7 @@ public class CharacterSelect : MonoBehaviour
         levelSelected = level;
         levelSelect.SetActive(false);
         gameplaySelect.SetActive(true);
+        levelStamp.gameObject.SetActive(false);
         bookanimator.SetTrigger("PageTurnRight");
         //Arrow.gameObject.SetActive(true);
         ControlHandler = GameplaySelectControls;
@@ -666,7 +671,7 @@ public class CharacterSelect : MonoBehaviour
     }
     public void MoveLevelStamp(MenuOption pos)
     {
-        levelStamp.transform.position = pos.transform.position + new Vector3(2.0f, -1.0f, 0.0f);
+        levelStamp.transform.position = pos.transform.position + new Vector3(-2.0f, -1.0f, 0.0f);
     }
     public void MoveToCharacterSelect()
     {
