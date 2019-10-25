@@ -39,6 +39,7 @@ public class CharacterSelect : MonoBehaviour
     public GameObject PlayerLivesLabels;
     public Image Arrow;
     public List<RawImage> PlayerStamps;
+    public Image levelStamp;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
     public Text RoundLengthLabel;
     public List<Image> menuOptions;
@@ -90,6 +91,7 @@ public class CharacterSelect : MonoBehaviour
                         joystickCharInputs.Add("P" + (i + 1));
                         KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
                         PlayerStamps[joystickCharInputs.Count - 1].gameObject.SetActive(true);
+                        PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
                         CharSelectNavigator.joystickCharInputs = joystickCharInputs;
                     }
 
@@ -110,7 +112,7 @@ public class CharacterSelect : MonoBehaviour
                 {
                     bookanimator.SetTrigger("BookOpen");
                     BookOpen = true;
-                    Arrow.gameObject.SetActive(true);
+                    //Arrow.gameObject.SetActive(true);
                     Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
                 }
                 #region OldMainMenu
@@ -335,6 +337,7 @@ public class CharacterSelect : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(0);
+            PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         }
 
         ControlHandler = CharacterSelectControls;
@@ -568,7 +571,7 @@ public class CharacterSelect : MonoBehaviour
         gameSetup = false;
         mainMenu.SetActive(true);
         CharSelectNavigator.gameObject.SetActive(false);
-        Arrow.gameObject.SetActive(true);
+        //Arrow.gameObject.SetActive(true);
         characterSelect.SetActive(false);
         bookanimator.SetTrigger("PageTurnLeft");
     }
@@ -596,11 +599,7 @@ public class CharacterSelect : MonoBehaviour
 
     public void SelectCharacter(int Character)
     {
-        if (PlayerSelectedMesh[CharSelectNavigator.iterI])
-        {
-            return;
-        }
-        if (ReservedMeshes[Character])
+        if (PlayerSelectedMesh[CharSelectNavigator.iterI] || ReservedMeshes[Character])
         {
             return;
         }
@@ -609,7 +608,8 @@ public class CharacterSelect : MonoBehaviour
             MeshSelected[CharSelectNavigator.iterI] = Character;
             PlayerSelectedMesh[CharSelectNavigator.iterI] = true;
             ReservedMeshes[Character] = true;
-            PlayerSelectImages[Character].color = new Color(0.3f, 0.3f, 0.3f, 1.0f);
+            PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            //PlayerSelectImages[Character].color = new Color(0.3f, 0.3f, 0.3f, 1.0f);
             CharSelectNavigator.MoveToMenuOption(CharSelectMenuOptions[Character]);
             ReadyplayerCount++;
             MeshSelected[CharSelectNavigator.iterI] = KnightMeshes[CharSelectNavigator.iterI].GetComponent<MeshSelector>().LoadMesh(MeshSelected[CharSelectNavigator.iterI]);
@@ -625,7 +625,8 @@ public class CharacterSelect : MonoBehaviour
         MeshSelected[CharSelectNavigator.iterI] = Character;
         PlayerSelectedMesh[CharSelectNavigator.iterI] = false;
         ReservedMeshes[Character] = false;
-        PlayerSelectImages[Character].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+        //PlayerSelectImages[Character].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         ReadyplayerCount--;
     }
     public void CheckPlayersAreReady()
@@ -652,7 +653,7 @@ public class CharacterSelect : MonoBehaviour
         levelSelect.SetActive(false);
         gameplaySelect.SetActive(true);
         bookanimator.SetTrigger("PageTurnRight");
-        Arrow.gameObject.SetActive(true);
+        //Arrow.gameObject.SetActive(true);
         ControlHandler = GameplaySelectControls;
     }
     public void SelectRandomLevel()
@@ -662,6 +663,10 @@ public class CharacterSelect : MonoBehaviour
         gameplaySelect.SetActive(true);
         bookanimator.SetTrigger("PageTurnRight");
         Arrow.gameObject.SetActive(true);
+    }
+    public void MoveLevelStamp(MenuOption pos)
+    {
+        levelStamp.transform.position = pos.transform.position + new Vector3(2.0f, -1.0f, 0.0f);
     }
     public void MoveToCharacterSelect()
     {
