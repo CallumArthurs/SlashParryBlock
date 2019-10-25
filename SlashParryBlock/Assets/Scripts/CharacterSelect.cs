@@ -35,10 +35,14 @@ public class CharacterSelect : MonoBehaviour
     int[] MeshSelected = new int[4] { 0, 0, 0, 0 };
     bool[] PlayerSelectedMesh = new bool[4] { false, false, false, false };
 
-    public GameObject mainMenu, characterSelect, levelSelect, gameplaySelect;
+    public GameObject mainMenu, characterSelect, levelSelect, levelSelectFlavourGroup, gameplaySelect;
+    public Text levelSelectflavourtext;
+    public Image levelSelectPreview;
+    public List<string> levelDescriptions;
     public GameObject PlayerLivesLabels;
     public Image Arrow;
     public List<RawImage> PlayerStamps;
+    public List<Sprite> levelPreviews;
     public Image levelStamp;
     public Text GamemodeSelect, RoundsSelect, RoundLengthSelect, PlayerLivesSelect;
     public Text RoundLengthLabel;
@@ -348,6 +352,7 @@ public class CharacterSelect : MonoBehaviour
         setupPlayerData = false;
 
         levelSelect.SetActive(false);
+        levelSelectFlavourGroup.SetActive(false);
         mainMenu.SetActive(false);
         characterSelect.SetActive(true);
         Arrow.gameObject.SetActive(false);
@@ -358,6 +363,7 @@ public class CharacterSelect : MonoBehaviour
     {
         characterSelect.SetActive(false);
         gameplaySelect.SetActive(false);
+        levelSelectFlavourGroup.SetActive(true);
         levelSelect.SetActive(true);
         Arrow.gameObject.SetActive(false);
         CharSelectNavigator.gameObject.SetActive(false);
@@ -655,6 +661,7 @@ public class CharacterSelect : MonoBehaviour
     {
         levelSelected = level;
         levelSelect.SetActive(false);
+        levelSelectFlavourGroup.SetActive(false);
         gameplaySelect.SetActive(true);
         levelStamp.gameObject.SetActive(false);
         bookanimator.SetTrigger("PageTurnRight");
@@ -665,6 +672,7 @@ public class CharacterSelect : MonoBehaviour
     {
         levelSelected = Random.Range(1,5);
         levelSelect.SetActive(false);
+        levelSelectFlavourGroup.SetActive(false);
         gameplaySelect.SetActive(true);
         bookanimator.SetTrigger("PageTurnRight");
         Arrow.gameObject.SetActive(true);
@@ -672,6 +680,11 @@ public class CharacterSelect : MonoBehaviour
     public void MoveLevelStamp(MenuOption pos)
     {
         levelStamp.transform.position = pos.transform.position + new Vector3(-2.0f, -1.0f, 0.0f);
+    }
+    public void ChangeLevelDescription(int level)
+    {
+        levelSelectflavourtext.text = levelDescriptions[level];
+        levelSelectPreview.sprite = levelPreviews[level];
     }
     public void MoveToCharacterSelect()
     {
