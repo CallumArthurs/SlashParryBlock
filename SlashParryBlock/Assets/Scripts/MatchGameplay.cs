@@ -98,9 +98,10 @@ public class MatchGameplay : MonoBehaviour
                                     }
                                 }
 
-                                if (numOfLivePlayers <= 1)
+                                if (numOfLivePlayers <= 1 && playMatch)
                                 {
                                     RoundEnd();
+                                    break;
                                 }
                             }
                             break;
@@ -145,6 +146,7 @@ public class MatchGameplay : MonoBehaviour
 
     void RoundEnd()
     {
+        numOfLivePlayers = CharMovScript.players.Count;
         playerStatsCurRound.Clear();
         for (int i = 0; i < CharMovScript.players.Count; i++)
         {
