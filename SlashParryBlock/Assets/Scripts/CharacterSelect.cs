@@ -89,6 +89,7 @@ public class CharacterSelect : MonoBehaviour
                         ConSelected[i] = true;
                         joystickCharInputs.Add("P" + (i + 1));
                         KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
+                        PlayerStamps[joystickCharInputs.Count - 1].gameObject.SetActive(true);
                         CharSelectNavigator.joystickCharInputs = joystickCharInputs;
                     }
 
@@ -554,9 +555,10 @@ public class CharacterSelect : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
+            PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 5.0f + -4.0f * i);
             KnightMeshes[i].SetActive(false);
             ConSelected[i] = false;
-            PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 5.0f + -4.0f * i);
+            PlayerStamps[i].gameObject.SetActive(false);
             PlayerSelectImages[i].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
         }
@@ -600,12 +602,10 @@ public class CharacterSelect : MonoBehaviour
         }
         if (ReservedMeshes[Character])
         {
-            Debug.Log("Mesh reserved");
             return;
         }
         else
         {
-            Debug.Log("Reserving Mesh");
             MeshSelected[CharSelectNavigator.iterI] = Character;
             PlayerSelectedMesh[CharSelectNavigator.iterI] = true;
             ReservedMeshes[Character] = true;
