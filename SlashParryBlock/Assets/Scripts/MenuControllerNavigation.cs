@@ -4,50 +4,48 @@ using UnityEngine;
 
 public class MenuControllerNavigation : MonoBehaviour
 {
-    public delegate void MenuItem(int iter);
-
-    public MenuItem ControlsHandler;
+    public delegate void MenuItem(int iter, string charInput);
+    public List<string> joystickCharInputs;
+    public List<MenuItem> ControlsHandler = new List<MenuItem>();
     public MenuOption startingOption;
 
     public int iterI;
-
+    public bool individualControls;
     protected virtual void Start()
     {
-        Debug.Log(gameObject.name);
-        ControlsHandler = startingOption.ControllerUpdate;
+        ControlsHandler.Add(startingOption.ControllerUpdate);
+
+        if (individualControls)
+        {
+            ControlsHandler.Add(startingOption.ControllerUpdate);
+            ControlsHandler.Add(startingOption.ControllerUpdate);
+            ControlsHandler.Add(startingOption.ControllerUpdate);
+        }
     }
 
     void Update()
     {
-        for (iterI = 0; iterI < 4; iterI++)
+        if (individualControls)
         {
-            ControlsHandler(iterI);
+            for (iterI = 0; iterI < joystickCharInputs.Count; iterI++)
+            {
+                ControlsHandler[iterI](iterI, joystickCharInputs[iterI]);
+            }
+        }
+        else
+        {
+            ControlsHandler[0](0,"P1");
         }
     }
 
     public void SetDelegate(MenuItem value)
     {
-        ControlsHandler = value;
+        ControlsHandler[iterI] = value;
     }
 
-    public void DPadLeft(MenuOption curMenuOption)
+    public void MoveToMenuOption(MenuOption curMenuOption)
     {
-        Debug.Log(curMenuOption.name);
-        SetDelegate(curMenuOption.ControllerUpdate);
-    }
-    public void DPadRight(MenuOption curMenuOption)
-    {
-        Debug.Log(curMenuOption.name);
-        SetDelegate(curMenuOption.ControllerUpdate);
-    }
-    public void DPadUp(MenuOption curMenuOption)
-    {
-        Debug.Log(curMenuOption.name);
-        SetDelegate(curMenuOption.ControllerUpdate);
-    }
-    public void DPadDown(MenuOption curMenuOption)
-    {
-        Debug.Log(curMenuOption.name);
+        Debug.Log(curMenuOption.gameObject.name);
         SetDelegate(curMenuOption.ControllerUpdate);
     }
 }

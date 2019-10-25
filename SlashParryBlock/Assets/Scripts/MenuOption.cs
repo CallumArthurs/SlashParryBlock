@@ -19,48 +19,48 @@ public class MenuOption : MonoBehaviour
         navigator = GetComponentInParent<MenuControllerNavigation>();
     }
 
-    public void ControllerUpdate(int curPlayer)
+    public void ControllerUpdate(int curPlayer, string joystickChar)
     {
-        if (Input.GetButtonDown("A_ButtonP" + (curPlayer + 1)))
+        if (Input.GetButtonDown("A_Button" + joystickChar))
         {
             Debug.Log("A_Button Event run");
 
             A_Button.Invoke();
         }
-        if (Input.GetButtonDown("B_ButtonP" + (curPlayer + 1)))
+        if (Input.GetButtonDown("B_Button" + joystickChar))
         {
             Debug.Log("B_Button Event run");
 
             B_Button.Invoke();
         }
 
-        if (Input.GetAxis("D-PadXP" + (curPlayer + 1)) > 0.0f && !D_PadXUsed[curPlayer])
+        if (Input.GetAxis("D-PadX" + joystickChar) > 0.0f && !D_PadXUsed[curPlayer])
         {
             D_PadLeft.Invoke();
             D_PadXUsed[curPlayer] = true;
         }
-        if (Input.GetAxis("D-PadXP" + (curPlayer + 1)) < 0.0f && !D_PadXUsed[curPlayer])
+        if (Input.GetAxis("D-PadX" + joystickChar) < 0.0f && !D_PadXUsed[curPlayer])
         {
             D_PadRight.Invoke();
             D_PadXUsed[curPlayer] = true;
         }
 
-        if (Input.GetAxis("D-PadYP" + (curPlayer + 1)) > 0.0f && !D_PadYUsed[curPlayer])
+        if (Input.GetAxis("D-PadY" + joystickChar) > 0.0f && !D_PadYUsed[curPlayer])
         {
             D_PadDown.Invoke();
             D_PadYUsed[curPlayer] = true;
         }
-        if (Input.GetAxis("D-PadYP" + (curPlayer + 1)) < 0.0f && !D_PadYUsed[curPlayer])
+        if (Input.GetAxis("D-PadY" + joystickChar) < 0.0f && !D_PadYUsed[curPlayer])
         {
             D_PadUp.Invoke();
             D_PadYUsed[curPlayer] = true;
         }
 
-        if (Input.GetAxis("D-PadXP" + (curPlayer + 1)) == 0.0f)
+        if (Input.GetAxis("D-PadX" + joystickChar) == 0.0f)
         {
             D_PadXUsed[curPlayer] = false;
         }
-        if (Input.GetAxis("D-PadYP" + (curPlayer + 1)) == 0.0f)
+        if (Input.GetAxis("D-PadY" + joystickChar) == 0.0f)
         {
             D_PadYUsed[curPlayer] = false;
         }
