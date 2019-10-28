@@ -294,6 +294,29 @@ Transform:
   m_Father: {fileID: 1434211389}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.082, y: -357.457, z: 4.237}
+--- !u!114 &33656497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59306422a2ca4454aabce3daa79c3334, type: 3}
+  m_Name: New Aura Base Settings
+  m_EditorClassIdentifier: 
+  useDensity: 1
+  density: 0.25
+  useScattering: 1
+  scattering: 0.5
+  useAmbientLighting: 1
+  ambientLightingStrength: 1
+  useColor: 0
+  color: {r: 0, g: 0.5, b: 0.5, a: 0.5}
+  colorStrength: 1
+  useExtinction: 0
+  extinction: 0.75
 --- !u!1 &160062085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1914,11 +1937,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: p_Camelot_Tower 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7005970676841092866, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 8177406918223372516, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1974,51 +1992,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3527058183654187593, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3527058183654187595, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3527058183654187597, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3527058183656127625, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 9fe4078b26926c349952487dd2d58952, type: 2}
-    - target: {fileID: 3527058183654187599, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3527058183656127627, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 9fe4078b26926c349952487dd2d58952, type: 2}
-    - target: {fileID: 3527058183654187585, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3527058183656127629, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 22e65d8de421b5940b369db8c6335323, type: 2}
-    - target: {fileID: 3527058183656127631, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fc5cdd148e3def4abc2681c6a8cae8a, type: 3}
 --- !u!1001 &538037078
@@ -2038,7 +2011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5915711e74c6b6245a34ee117ed56008, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.014
+      value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5915711e74c6b6245a34ee117ed56008, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2078,16 +2051,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5915711e74c6b6245a34ee117ed56008, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 1.44
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5915711e74c6b6245a34ee117ed56008, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.8775
+      value: 4.1436005
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5915711e74c6b6245a34ee117ed56008, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 1.44
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 5915711e74c6b6245a34ee117ed56008, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 115429992c8c09f42bda2843c15de88e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5915711e74c6b6245a34ee117ed56008, type: 3}
 --- !u!1 &543286325
@@ -2182,6 +2159,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543286325}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &552808269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59306422a2ca4454aabce3daa79c3334, type: 3}
+  m_Name: New Aura Base Settings
+  m_EditorClassIdentifier: 
+  useDensity: 1
+  density: 0.25
+  useScattering: 1
+  scattering: 0.5
+  useAmbientLighting: 1
+  ambientLightingStrength: 1
+  useColor: 0
+  color: {r: 0, g: 0.5, b: 0.5, a: 0.5}
+  colorStrength: 1
+  useExtinction: 0
+  extinction: 0.75
 --- !u!1 &590510174
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,29 +2538,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c43ea75892055442b02d38b83065ae4, type: 3}
---- !u!114 &817338029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59306422a2ca4454aabce3daa79c3334, type: 3}
-  m_Name: New Aura Base Settings
-  m_EditorClassIdentifier: 
-  useDensity: 1
-  density: 0.25
-  useScattering: 1
-  scattering: 0.5
-  useAmbientLighting: 1
-  ambientLightingStrength: 1
-  useColor: 0
-  color: {r: 0, g: 0.5, b: 0.5, a: 0.5}
-  colorStrength: 1
-  useExtinction: 0
-  extinction: 0.75
 --- !u!114 &879547012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7602,29 +7579,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1126278771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59306422a2ca4454aabce3daa79c3334, type: 3}
-  m_Name: New Aura Base Settings
-  m_EditorClassIdentifier: 
-  useDensity: 1
-  density: 0.25
-  useScattering: 1
-  scattering: 0.5
-  useAmbientLighting: 1
-  ambientLightingStrength: 1
-  useColor: 0
-  color: {r: 0, g: 0.5, b: 0.5, a: 0.5}
-  colorStrength: 1
-  useExtinction: 0
-  extinction: 0.75
 --- !u!1 &1161832879
 GameObject:
   m_ObjectHideFlags: 0
@@ -7717,7 +7671,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1161832879}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1165742806
+--- !u!114 &1299845344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10926,26 +10880,6 @@ Transform:
   m_Father: {fileID: 1352376339}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1406065117 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3527058183654187587, guid: 3fc5cdd148e3def4abc2681c6a8cae8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 481543639}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1406065121
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1406065117}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300006, guid: f7b330707276d8c499ab8de45ba644fb, type: 3}
 --- !u!1 &1434211388
 GameObject:
   m_ObjectHideFlags: 0
@@ -11372,29 +11306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a598d80cf379d4ea8b631d6b2c856c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1842822553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59306422a2ca4454aabce3daa79c3334, type: 3}
-  m_Name: New Aura Base Settings
-  m_EditorClassIdentifier: 
-  useDensity: 1
-  density: 0.25
-  useScattering: 1
-  scattering: 0.5
-  useAmbientLighting: 1
-  ambientLightingStrength: 1
-  useColor: 0
-  color: {r: 0, g: 0.5, b: 0.5, a: 0.5}
-  colorStrength: 1
-  useExtinction: 0
-  extinction: 0.75
 --- !u!1 &1847413873
 GameObject:
   m_ObjectHideFlags: 0
@@ -12915,6 +12826,29 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &2050410109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59306422a2ca4454aabce3daa79c3334, type: 3}
+  m_Name: New Aura Base Settings
+  m_EditorClassIdentifier: 
+  useDensity: 1
+  density: 0.25
+  useScattering: 1
+  scattering: 0.5
+  useAmbientLighting: 1
+  ambientLightingStrength: 1
+  useColor: 0
+  color: {r: 0, g: 0.5, b: 0.5, a: 0.5}
+  colorStrength: 1
+  useExtinction: 0
+  extinction: 0.75
 --- !u!43 &2128167010
 Mesh:
   m_ObjectHideFlags: 0
