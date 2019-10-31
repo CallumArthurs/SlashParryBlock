@@ -35,6 +35,8 @@ public class CharacterSelect : MonoBehaviour
     int[] MeshSelected = new int[4] { 0, 0, 0, 0 };
     bool[] PlayerSelectedMesh = new bool[4] { false, false, false, false };
 
+    public int MaxRounds, MaxRoundLength, MaxPlayerLives;
+
     public GameObject mainMenu, characterSelect, levelSelect, levelSelectFlavourGroup, gameplaySelect;
     public Text levelSelectflavourtext;
     public Image levelSelectPreview;
@@ -49,12 +51,13 @@ public class CharacterSelect : MonoBehaviour
     public List<Image> menuOptions;
     public Animator bookanimator;
     public Text levelText;
-    public MenuControllerNavigation CharSelectNavigator, LevelSelectNavigator;
+    public MenuControllerNavigation CharSelectNavigator, LevelSelectNavigator, GameplaySelectNavigator;
     public List<Sprite> SelectedImage;
     public List<Sprite> DeSelectedImage;
     public List<Image> PlayerSelectImages;
 
     public List<MenuOption> CharSelectMenuOptions;
+    public MenuOption RoundLength, PlayerLives;
 
     private levelLoadInfo levelData;
     private SceneSelector Scenechanger;
@@ -79,6 +82,7 @@ public class CharacterSelect : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 5.0f + -4.0f * i);
+            KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(0);
         }
     }
 
@@ -342,9 +346,19 @@ public class CharacterSelect : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(0);
+            if (!PlayerSelectedMesh[i])
+            {
+                MeshSelected[i] = KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(0);
+            }
+            
             PlayerStamps[i].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
             PlayerStamps[i].gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            PlayerStamps[i].gameObject.SetActive(true);
+            PlayerStamps[i].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
         ControlHandler = CharacterSelectControls;
@@ -353,6 +367,7 @@ public class CharacterSelect : MonoBehaviour
 
         levelSelect.SetActive(false);
         levelSelectFlavourGroup.SetActive(false);
+        gameplaySelect.SetActive(false);
         mainMenu.SetActive(false);
         characterSelect.SetActive(true);
         Arrow.gameObject.SetActive(false);
@@ -362,183 +377,191 @@ public class CharacterSelect : MonoBehaviour
     void OpenLevelSelect()
     {
         characterSelect.SetActive(false);
-        gameplaySelect.SetActive(false);
+        gameplaySelect.SetActive(true);
         levelSelectFlavourGroup.SetActive(true);
         levelSelect.SetActive(true);
         Arrow.gameObject.SetActive(false);
         CharSelectNavigator.gameObject.SetActive(false);
         levelStamp.gameObject.SetActive(true);
+        LevelSelectNavigator.enabled = true;
+        GameplaySelectNavigator.enabled = false;
         MoveLevelStamp(LevelSelectNavigator.startingOption);
+
+        GamemodeSelect.text = levelData.gamemode.ToString();
+        RoundsSelect.text = levelData.rounds.ToString();
+        RoundLengthSelect.text = levelData.RoundLength.ToString();
+        PlayerLivesSelect.text = levelData.playerLives.ToString();
     }
 
     void GameplaySelectControls()
     {
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) < 0.0f && !DPadAxisUsed[i])
-            {
-                gameplayChoice--;
-
-                if (gameplayChoice == 2 && levelData.gamemode == MatchGameplay.Gamemode.Stock)
-                {
-                    gameplayChoice = 1;
-                }
-
-                if (gameplayChoice < 0)
-                {
-                    gameplayChoice = 0;
-                }
-                DPadAxisUsed[i] = true;
-            }
-
-            if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) > 0.0f && !DPadAxisUsed[i])
-            {
-                gameplayChoice++;
-
-                if (gameplayChoice == 2 && levelData.gamemode == MatchGameplay.Gamemode.Stock)
-                {
-                    gameplayChoice = 3;
-                }
-
-                if (gameplayChoice > 3)
-                {
-                    gameplayChoice = 3;
-                }
-                DPadAxisUsed[i] = true;
-            }
-
-            if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) == 0.0f)
-            {
-                DPadAxisUsed[i] = false;
-            }
-
-            switch (gameplayChoice)
-            {
-                #region GameMode
-                case 0:
-                    if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
-                    {
-                        levelData.gamemode++;
-                        if ((int)levelData.gamemode > 2)
-                        {
-                            levelData.gamemode = (MatchGameplay.Gamemode)2;
-                        }
-                        DPadXAxisUsed[i] = true;
-                    }
-                    else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
-                    {
-                        levelData.gamemode--;
-                        if ((int)levelData.gamemode < 1)
-                        {
-                            levelData.gamemode = (MatchGameplay.Gamemode)1;
-                        }
-                        DPadXAxisUsed[i] = true;
-                    }
-
-                    if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
-                    {
-                        RoundLengthSelect.gameObject.SetActive(false);
-                        RoundLengthLabel.gameObject.SetActive(false);
-                        PlayerLivesLabels.SetActive(true);
-                    }
-                    else
-                    {
-                        RoundLengthSelect.gameObject.SetActive(true);
-                        RoundLengthLabel.gameObject.SetActive(true);
-                        PlayerLivesLabels.SetActive(false);
-                    }
-                    Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, GamemodeSelect.transform.position.y, GamemodeSelect.transform.position.z);
-                    break;
-                #endregion
-
-                #region NumOfRounds
-                case 1:
-                    if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
-                    {
-                        levelData.rounds++;
-                        DPadXAxisUsed[i] = true;
-                    }
-                    else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
-                    {
-                        levelData.rounds--;
-                        if (levelData.rounds < 1)
-                        {
-                            levelData.rounds = 1;
-                        }
-                        DPadXAxisUsed[i] = true;
-                    }
-                    Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, RoundsSelect.transform.position.y, RoundsSelect.transform.position.z);
-                    break;
-                #endregion
-
-                #region RoundLength
-                case 2:
-                    if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
-                    {
-                        levelData.RoundLength += 15.0f;
-                        DPadXAxisUsed[i] = true;
-                    }
-                    else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
-                    {
-                        levelData.RoundLength -= 15.0f;
-                        if (levelData.RoundLength < 15)
-                        {
-                            levelData.RoundLength = 15;
-                        }
-                        DPadXAxisUsed[i] = true;
-                    }
-                    Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, RoundLengthSelect.transform.position.y, RoundLengthSelect.transform.position.z);
-                    break;
-                #endregion
-
-                #region PlayerLives
-                case 3:
-                    if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
-                    {
-                        if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
-                        {
-                            levelData.playerLives++;
-                            DPadXAxisUsed[i] = true;
-                        }
-                        else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
-                        {
-                            levelData.playerLives--;
-                            if (levelData.playerLives < 3)
-                            {
-                                levelData.playerLives = 3;
-                            }
-                            DPadXAxisUsed[i] = true;
-                        }
-                        Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, PlayerLivesSelect.transform.position.y, PlayerLivesSelect.transform.position.z);
-                    }
-                    else
-                    {
-                        gameplayChoice = 2;
-                    }
-                    break;
-                #endregion
-
-                default:
-                    break;
-            }
-
-            if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) == 0.0f)
-            {
-                DPadXAxisUsed[i] = false;
-            }
-
-            if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]))
-            {
-                LoadingScene = true;
-            }
-
-            if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]))
-            {
-                startFunctions = OpenLevelSelect;
-                StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
-                bookanimator.SetTrigger("PageTurnLeft");
-            }
-
+            #region OldGameplaySelectControls
+            //if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) < 0.0f && !DPadAxisUsed[i])
+            //{
+            //    gameplayChoice--;
+            //
+            //    if (gameplayChoice == 2 && levelData.gamemode == MatchGameplay.Gamemode.Stock)
+            //    {
+            //        gameplayChoice = 1;
+            //    }
+            //
+            //    if (gameplayChoice < 0)
+            //    {
+            //        gameplayChoice = 0;
+            //    }
+            //    DPadAxisUsed[i] = true;
+            //}
+            //
+            //if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) > 0.0f && !DPadAxisUsed[i])
+            //{
+            //    gameplayChoice++;
+            //
+            //    if (gameplayChoice == 2 && levelData.gamemode == MatchGameplay.Gamemode.Stock)
+            //    {
+            //        gameplayChoice = 3;
+            //    }
+            //
+            //    if (gameplayChoice > 3)
+            //    {
+            //        gameplayChoice = 3;
+            //    }
+            //    DPadAxisUsed[i] = true;
+            //}
+            //
+            //if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) == 0.0f)
+            //{
+            //    DPadAxisUsed[i] = false;
+            //}
+            //
+            //switch (gameplayChoice)
+            //{
+            //    #region GameMode
+            //    case 0:
+            //        if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
+            //        {
+            //            levelData.gamemode++;
+            //            if ((int)levelData.gamemode > 2)
+            //            {
+            //                levelData.gamemode = (MatchGameplay.Gamemode)2;
+            //            }
+            //            DPadXAxisUsed[i] = true;
+            //        }
+            //        else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
+            //        {
+            //            levelData.gamemode--;
+            //            if ((int)levelData.gamemode < 1)
+            //            {
+            //                levelData.gamemode = (MatchGameplay.Gamemode)1;
+            //            }
+            //            DPadXAxisUsed[i] = true;
+            //        }
+            //
+            //        if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
+            //        {
+            //            RoundLengthSelect.gameObject.SetActive(false);
+            //            RoundLengthLabel.gameObject.SetActive(false);
+            //            PlayerLivesLabels.SetActive(true);
+            //        }
+            //        else
+            //        {
+            //            RoundLengthSelect.gameObject.SetActive(true);
+            //            RoundLengthLabel.gameObject.SetActive(true);
+            //            PlayerLivesLabels.SetActive(false);
+            //        }
+            //        Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, GamemodeSelect.transform.position.y, GamemodeSelect.transform.position.z);
+            //        break;
+            //    #endregion
+            //
+            //    #region NumOfRounds
+            //    case 1:
+            //        if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
+            //        {
+            //            levelData.rounds++;
+            //            DPadXAxisUsed[i] = true;
+            //        }
+            //        else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
+            //        {
+            //            levelData.rounds--;
+            //            if (levelData.rounds < 1)
+            //            {
+            //                levelData.rounds = 1;
+            //            }
+            //            DPadXAxisUsed[i] = true;
+            //        }
+            //        Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, RoundsSelect.transform.position.y, RoundsSelect.transform.position.z);
+            //        break;
+            //    #endregion
+            //
+            //    #region RoundLength
+            //    case 2:
+            //        if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
+            //        {
+            //            levelData.RoundLength += 15.0f;
+            //            DPadXAxisUsed[i] = true;
+            //        }
+            //        else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
+            //        {
+            //            levelData.RoundLength -= 15.0f;
+            //            if (levelData.RoundLength < 15)
+            //            {
+            //                levelData.RoundLength = 15;
+            //            }
+            //            DPadXAxisUsed[i] = true;
+            //        }
+            //        Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, RoundLengthSelect.transform.position.y, RoundLengthSelect.transform.position.z);
+            //        break;
+            //    #endregion
+            //
+            //    #region PlayerLives
+            //    case 3:
+            //        if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
+            //        {
+            //            if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) < 0.0f && !DPadXAxisUsed[i])
+            //            {
+            //                levelData.playerLives++;
+            //                DPadXAxisUsed[i] = true;
+            //            }
+            //            else if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) > 0.0f && !DPadXAxisUsed[i])
+            //            {
+            //                levelData.playerLives--;
+            //                if (levelData.playerLives < 3)
+            //                {
+            //                    levelData.playerLives = 3;
+            //                }
+            //                DPadXAxisUsed[i] = true;
+            //            }
+            //            Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, PlayerLivesSelect.transform.position.y, PlayerLivesSelect.transform.position.z);
+            //        }
+            //        else
+            //        {
+            //            gameplayChoice = 2;
+            //        }
+            //        break;
+            //    #endregion
+            //
+            //    default:
+            //        break;
+            //}
+            //
+            //if (Input.GetAxis("D-PadX" + joystickCharInputs[i]) == 0.0f)
+            //{
+            //    DPadXAxisUsed[i] = false;
+            //}
+            //
+            //if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]))
+            //{
+            //    LoadingScene = true;
+            //}
+            //
+            //if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]))
+            //{
+            //    startFunctions = OpenLevelSelect;
+            //    StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
+            //    bookanimator.SetTrigger("PageTurnLeft");
+            //}
+            #endregion
             GamemodeSelect.text = levelData.gamemode.ToString();
             RoundsSelect.text = levelData.rounds.ToString();
             RoundLengthSelect.text = levelData.RoundLength.ToString();
@@ -591,7 +614,7 @@ public class CharacterSelect : MonoBehaviour
         MenuOption = MenuItem;
         menuOptions[MenuItem].sprite = SelectedImage[MenuItem];
     }
-    public void StartGame()
+    public void StartSelection()
     {
         startFunctions = OpenCharacterSelect;
         StartCoroutine(WaitAndRunMethod(0.55f, startFunctions));
@@ -660,22 +683,19 @@ public class CharacterSelect : MonoBehaviour
     public void SelectLevel(int level)
     {
         levelSelected = level;
-        levelSelect.SetActive(false);
-        levelSelectFlavourGroup.SetActive(false);
-        gameplaySelect.SetActive(true);
+        //levelSelect.SetActive(false);
+        //levelSelectFlavourGroup.SetActive(false);
+        //gameplaySelect.SetActive(true);
+        LevelSelectNavigator.enabled = false;
+        GameplaySelectNavigator.enabled = true;
         levelStamp.gameObject.SetActive(false);
-        bookanimator.SetTrigger("PageTurnRight");
         //Arrow.gameObject.SetActive(true);
         ControlHandler = GameplaySelectControls;
     }
     public void SelectRandomLevel()
     {
         levelSelected = Random.Range(1, 5);
-        levelSelect.SetActive(false);
-        levelSelectFlavourGroup.SetActive(false);
-        gameplaySelect.SetActive(true);
-        bookanimator.SetTrigger("PageTurnRight");
-        Arrow.gameObject.SetActive(true);
+        SelectLevel(levelSelected);
     }
     public void MoveLevelStamp(MenuOption pos)
     {
@@ -695,18 +715,36 @@ public class CharacterSelect : MonoBehaviour
 
     public void MoveToLevelSelect()
     {
+        LevelSelectNavigator.enabled = true;
+        GameplaySelectNavigator.enabled = false;
         startFunctions = OpenLevelSelect;
         StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
-        bookanimator.SetTrigger("PageTurnLeft");
     }
     public void changeGamemode(int value)
     {
         levelData.gamemode = (MatchGameplay.Gamemode)value;
         GamemodeSelect.text = levelData.gamemode.ToString();
+
+        if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
+        {
+            RoundLengthSelect.gameObject.SetActive(false);
+            RoundLengthLabel.gameObject.SetActive(false);
+            PlayerLivesLabels.SetActive(true);
+        }
+        else
+        {
+            RoundLengthSelect.gameObject.SetActive(true);
+            RoundLengthLabel.gameObject.SetActive(true);
+            PlayerLivesLabels.SetActive(false);
+        }
     }
     public void AddRound()
     {
         levelData.rounds++;
+        if (levelData.rounds > MaxRounds)
+        {
+            levelData.rounds = MaxRounds;
+        }
         RoundsSelect.text = levelData.rounds.ToString();
     }
     public void RemoveRound()
@@ -721,6 +759,10 @@ public class CharacterSelect : MonoBehaviour
     public void AddRoundLength()
     {
         levelData.RoundLength += 15.0f;
+        if (levelData.RoundLength > MaxRoundLength)
+        {
+            levelData.RoundLength = MaxRoundLength;
+        }
         RoundLengthSelect.text = levelData.RoundLength.ToString();
     }
     public void RemoveRoundLength()
@@ -735,6 +777,10 @@ public class CharacterSelect : MonoBehaviour
     public void AddPlayerLives()
     {
         levelData.playerLives++;
+        if (levelData.playerLives > MaxPlayerLives)
+        {
+            levelData.playerLives = MaxPlayerLives;
+        }
         PlayerLivesSelect.text = levelData.playerLives.ToString();
     }
     public void RemovePlayerLives()
@@ -745,5 +791,20 @@ public class CharacterSelect : MonoBehaviour
             levelData.playerLives = 3;
         }
         PlayerLivesSelect.text = levelData.playerLives.ToString();
+    }
+    public void CheckGamemode()
+    {
+        if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
+        {
+            GameplaySelectNavigator.MoveToMenuOption(PlayerLives);
+        }
+        else
+        {
+            GameplaySelectNavigator.MoveToMenuOption(RoundLength);
+        }
+    }
+    public void StartGame()
+    {
+        LoadingScene = true;
     }
 }

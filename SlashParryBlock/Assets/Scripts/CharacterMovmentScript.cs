@@ -198,9 +198,14 @@ public class CharacterMovmentScript : MonoBehaviour
             //getting a reference to all the player's rigidbodies
             playersRB.Add(players[i].gameObject.GetComponent<Rigidbody>());
             playersAni.Add(players[i].gameObject.GetComponentInChildren<Animator>());
-
+            playerPortraits[i].SetActive(true);
             playersRB[i].isKinematic = true;
             playersRB[i].MovePosition(playerReadyUpPos[i].transform.position);
+
+            if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
+            {
+                gameUIContainer.PlayerlivesImage[i].gameObject.SetActive(true);
+            }
         }
     }
 
@@ -271,34 +276,9 @@ public class CharacterMovmentScript : MonoBehaviour
                 gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
                 PauseGame();
             }
-
-            // caching the health values
-            float playerHealth = players[i].getHealth();
-            float fullHeartAmount = players[i].getOriginalHealth() / 5;
-            for (int j = 0; j < playerHearts[levelData.meshSelected[i]].playerHearts.Count; j++)
-            {
-                //check if you can fill a full heart and take it away from the amount you have
-                if (playerHealth - fullHeartAmount >= 0)
-                {
-                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(true);
-                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(false);
-                    playerHealth -= fullHeartAmount;
-                }//check if you can fill half a heart
-                else if (playerHealth - (fullHeartAmount / 2) >= 0)
-                {
-                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(false);
-                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(true);
-
-                    playerHealth = 0;
-                }//otherwise you have no heart
-                else
-                {
-                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(false);
-                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(false);
-                    playerHearts[levelData.meshSelected[i]].playerHearts[j][2].SetActive(true);
-                }
-            }
         }
+
+        UpdateHealth();
     }
 
     public Vector3 SpawnPlayer()
@@ -661,6 +641,44 @@ public class CharacterMovmentScript : MonoBehaviour
             PlayerColliders[i].transform.position = players[i].transform.position;
         }
 
+    }
+
+    public void UpdateHealth()
+    {
+        for (int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            // caching the health values
+            float playerHealth = players[i].getHealth();
+            float fullHeartAmount = players[i].getOriginalHealth() / 5;
+            for (int j = 0; j < playerHearts[levelData.meshSelected[i]].playerHearts.Count; j++)
+            {
+                //check if you can fill a full heart and take it away from the amount you have
+                if (playerHealth - fullHeartAmount >= 0)
+                {
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(true);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(false);
+                    playerHealth -= fullHeartAmount;
+                }//check if you can fill half a heart
+                else if (playerHealth - (fullHeartAmount / 2) >= 0)
+                {
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(false);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(true);
+
+                    playerHealth = 0;
+                }//otherwise you have no heart
+                else
+                {
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][0].SetActive(false);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][1].SetActive(false);
+                    playerHearts[levelData.meshSelected[i]].playerHearts[j][2].SetActive(true);
+                }
+            }
+
+            if (gameObject.GetComponent<MatchGameplay>().gameMode == MatchGameplay.Gamemode.Stock)
+            {
+                gameUIContainer.PlayerlivesImage[i].GetComponentInChildren<Text>().text = "Lives: " + (gameObject.GetComponent<MatchGameplay>().PlayerLives - players[i].Deaths).ToString();
+            }
+        }
     }
 
     public void Quit()

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameUIContainer : MonoBehaviour
 {
+    public List<GameObject> PlayerlivesImage;
     public List<RectTransform> portPositions;
     public List<PlayerHeartsContainer> playerHearts;
     public List<GameObject> ProfileRing;

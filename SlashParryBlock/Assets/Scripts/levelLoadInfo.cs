@@ -14,7 +14,7 @@ public class levelLoadInfo : MonoBehaviour
     public MatchGameplay.Gamemode gamemode = MatchGameplay.Gamemode.Timer;
     public int rounds = 3;
     public int playerLives = 1;
-    public float RoundLength = 120;
+    public float RoundLength = 60;
 
     private bool Loaded = false;
 

@@ -48,5 +48,16 @@ public class EndGameInfo : MonoBehaviour
                 }
             }
         }
+
+        //if (playerStatsTotal.Count == 2)
+        //{
+        //    for (int i = 0; i < 2; i++)
+        //    {
+        //        if (placement[i] == 2)
+        //        {
+        //            placement[i] = 3;
+        //        }
+        //    }
+        //}
     }
 }
