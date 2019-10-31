@@ -96,7 +96,7 @@ public class RingsLevel : MonoBehaviour
 
         if (CurrentTime >= (TimeActivated - RespawnDelay) && Fallen && !goingDown)
         {
-            Rings[RingSelector].transform.Translate((new Vector3(0, 0, 0) - Rings[RingSelector].transform.localPosition) * Time.deltaTime * 5.0f);
+            Rings[RingSelector].transform.Translate((new Vector3(Rings[RingSelector].transform.localPosition.x, 0, Rings[RingSelector].transform.localPosition.z) - Rings[RingSelector].transform.localPosition) * Time.deltaTime * 5.0f);
             //Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringFallSpeed), 0));
         }
 
