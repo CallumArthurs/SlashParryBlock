@@ -108,7 +108,7 @@ public class MatchGameplay : MonoBehaviour
                         }
                 }
             }
-            else if (!CharMovScript.gamePaused || RoundTimer <= 0.0f)
+            else if (!CharMovScript.gamePaused || !playMatch)
             {
                 for (int i = 0; i < CharMovScript.players.Count; i++)
                 {
