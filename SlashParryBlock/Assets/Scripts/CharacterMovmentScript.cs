@@ -198,7 +198,7 @@ public class CharacterMovmentScript : MonoBehaviour
             //getting a reference to all the player's rigidbodies
             playersRB.Add(players[i].gameObject.GetComponent<Rigidbody>());
             playersAni.Add(players[i].gameObject.GetComponentInChildren<Animator>());
-            playerPortraits[i].SetActive(true);
+            playerPortraits[levelData.meshSelected[i]].SetActive(true);
             playersRB[i].isKinematic = true;
             playersRB[i].MovePosition(playerReadyUpPos[i].transform.position);
 
