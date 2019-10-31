@@ -141,7 +141,8 @@ public class MatchGameplay : MonoBehaviour
 
     void UpdateUI()
     {
-        Timer.text = RoundTimer.ToString("F0");
+        int TimerMins = (int)(RoundTimer / 60.0f);
+        Timer.text = TimerMins.ToString() + ":" + ((int)(RoundTimer % 60.0f)).ToString();
     }
 
     void RoundEnd()
