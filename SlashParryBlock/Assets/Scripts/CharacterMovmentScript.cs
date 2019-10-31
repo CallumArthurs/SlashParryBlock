@@ -31,6 +31,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public float blockRotSpeedMultiplier;
     public List<PlayerData> players = new List<PlayerData>();
     public bool gamePaused = false;
+    public Transform ExcaliburSpawnPos;
     
     
     [HideInInspector]
