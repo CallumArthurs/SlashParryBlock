@@ -12,12 +12,20 @@ public class EndGameMeshLoader : MonoBehaviour
     public List<GameObject> PlayerStats;
     public EndGameInfo endInfo;
     public GameObject EndgameStatsScreen;
+    public SceneTransitonerScript SceneTransScript;
     private bool LoadedMeshes = false;
     private bool[] ButtonPressed = new bool[4] { false, false, false, false };
+    private delegate void DelegateFunction();
+
+    private DelegateFunction function;
+
     void Start()
     {
         endInfo = GameObject.FindGameObjectWithTag("EndGameInfo").GetComponent<EndGameInfo>();
+        SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
         endInfo.transform.parent = gameObject.transform;
+
+        SceneTransScript.OpenTransition();
     }
 
     void Update()
@@ -35,7 +43,8 @@ public class EndGameMeshLoader : MonoBehaviour
                 {
                     if (Input.GetAxis("A_ButtonP" + (i + 1)) != 0.0f && EndgameStatsScreen.activeInHierarchy)
                     {
-                        SceneManager.LoadScene(0);
+                        SceneTransScript.CloseTransition();
+                        StartCoroutine(WaitAndRunMethod(2.0f, LoadMainMenu));
                     }
 
                     if (Input.GetAxis("A_ButtonP" + (i + 1)) != 0.0f)
@@ -95,4 +104,16 @@ public class EndGameMeshLoader : MonoBehaviour
             }
         }
     }
+
+    private void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    IEnumerator WaitAndRunMethod(float time, DelegateFunction function)
+    {
+        yield return new WaitForSeconds(time);
+        function();
+    }
+
 }

@@ -653,6 +653,7 @@ public class PlayerData : MonoBehaviour
         animator.SetBool("Staggered", true);
     }
 
+    #region Getters&Setters
     public void setHealth(int value)
     {
         originalHealth = value;
@@ -721,6 +722,7 @@ public class PlayerData : MonoBehaviour
         halo.enabled = value;
         ExcaliburObj.SetActive(value);
     }
+    #endregion
 
     private void playClip(ClipSelector clip)
     {

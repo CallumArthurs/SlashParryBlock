@@ -30,7 +30,9 @@ public class MatchGameplay : MonoBehaviour
     private List<Text[]> endScreenStats = new List<Text[]>();
     private EndGameInfo endGameInfo;
     private int numOfLivePlayers;
+    private delegate void DelegateFunction();
 
+    private DelegateFunction function;
     void Start()
     {
         CharMovScript = gameObject.GetComponent<CharacterMovmentScript>();
@@ -120,6 +122,7 @@ public class MatchGameplay : MonoBehaviour
                         }
                         else
                         {
+                            CharMovScript.FreezePlayers();
                             GameUI.SetActive(true);
                             RoundStatsUI.SetActive(false);
                         }
@@ -155,6 +158,7 @@ public class MatchGameplay : MonoBehaviour
 
     void RoundEnd()
     {
+        CharMovScript.FreezePlayers();
         numOfLivePlayers = CharMovScript.players.Count;
         playerStatsCurRound.Clear();
         for (int i = 0; i < CharMovScript.players.Count; i++)
@@ -194,7 +198,8 @@ public class MatchGameplay : MonoBehaviour
         playMatch = false;
         if (Rounds == 0)
         {
-            MatchEnd();
+            CharMovScript.SceneTransScript.CloseTransition();
+            StartCoroutine(WaitAndRunMethod(2.0f, MatchEnd));
         }
         else
         {
@@ -218,4 +223,11 @@ public class MatchGameplay : MonoBehaviour
     {
         RoundTimer += value;
     }
+
+    IEnumerator WaitAndRunMethod(float time, DelegateFunction function)
+    {
+        yield return new WaitForSeconds(time);
+        function();
+    }
+
 }

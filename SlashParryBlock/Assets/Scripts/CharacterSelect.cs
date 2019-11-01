@@ -58,11 +58,12 @@ public class CharacterSelect : MonoBehaviour
 
     public List<MenuOption> CharSelectMenuOptions;
     public MenuOption RoundLength, PlayerLives;
+    public SceneTransitonerScript SceneTransScript;
 
     private levelLoadInfo levelData;
     private SceneSelector Scenechanger;
     private int MenuOption = 0;
-    private bool LoadingScene = false, setupPlayerData = false, gameSetup = false;
+    private bool setupPlayerData = false, gameSetup = false;
     private bool BookOpen = false;
     private delegate void pageStartFunctions();
     private delegate void MenuControls();
@@ -71,6 +72,15 @@ public class CharacterSelect : MonoBehaviour
     MenuControls ControlHandler;
     void Start()
     {
+        if (GameObject.FindGameObjectWithTag("SceneTransitioner") != null)
+        {
+            SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
+            SceneTransScript.OpenTransition();
+        }
+        else
+        {
+            SceneTransScript = (Instantiate(Resources.Load("Prefabs/SceneTransitioner")) as GameObject).GetComponent<SceneTransitonerScript>();
+        }
         levelData = (Instantiate(Resources.Load("Prefabs/levelData")) as GameObject).GetComponent<levelLoadInfo>();
         Scenechanger = SceneSelector.CreateInstance("SceneSelector") as SceneSelector;
         mainMenu.SetActive(true);
@@ -175,12 +185,6 @@ public class CharacterSelect : MonoBehaviour
                 */
                 #endregion
             }
-        }
-
-        if (LoadingScene)
-        {
-            DontDestroyOnLoad(levelData);
-            Scenechanger.SceneLoader(levelSelected);
         }
     }
 
@@ -562,11 +566,13 @@ public class CharacterSelect : MonoBehaviour
             //    bookanimator.SetTrigger("PageTurnLeft");
             //}
             #endregion
-            GamemodeSelect.text = levelData.gamemode.ToString();
-            RoundsSelect.text = levelData.rounds.ToString();
-            RoundLengthSelect.text = levelData.RoundLength.ToString();
-            PlayerLivesSelect.text = levelData.playerLives.ToString();
         }
+
+        GamemodeSelect.text = levelData.gamemode.ToString();
+        RoundsSelect.text = levelData.rounds.ToString();
+        RoundLengthSelect.text = levelData.RoundLength.ToString();
+        PlayerLivesSelect.text = levelData.playerLives.ToString();
+
     }
 
     IEnumerator WaitAndRunMethod(float time, pageStartFunctions function)
@@ -662,6 +668,7 @@ public class CharacterSelect : MonoBehaviour
         //PlayerSelectImages[Character].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         ReadyplayerCount--;
     }
+
     public void CheckPlayersAreReady()
     {
         if (ReadyplayerCount >= 2 && ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData)
@@ -805,6 +812,14 @@ public class CharacterSelect : MonoBehaviour
     }
     public void StartGame()
     {
-        LoadingScene = true;
+        SceneTransScript.CloseTransition();
+        StartCoroutine(WaitAndRunMethod(2.0f, LoadScene));
+    }
+
+    private void LoadScene()
+    {
+        DontDestroyOnLoad(SceneTransScript.gameObject);
+        DontDestroyOnLoad(levelData);
+        Scenechanger.SceneLoader(levelSelected);
     }
 }

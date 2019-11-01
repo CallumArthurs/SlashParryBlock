@@ -30,10 +30,9 @@ public class CharacterMovmentScript : MonoBehaviour
     public float blockSpeedMultiplier;
     public float blockRotSpeedMultiplier;
     public List<PlayerData> players = new List<PlayerData>();
-    public bool gamePaused = false;
+    public bool gamePaused = false, playersFrozen = false;
     public Transform ExcaliburSpawnPos;
-    
-    
+        
     [HideInInspector]
     public List<string> joystickCharInputs;
 
@@ -42,6 +41,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<GameObject> PlayerColliders;
     public Sprite emptyHeart, halfHeart, fullHeart;
     public List<GameObject> PlayerCams = new List<GameObject>();
+    public SceneTransitonerScript SceneTransScript;
 
     private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;
@@ -208,17 +208,18 @@ public class CharacterMovmentScript : MonoBehaviour
                 gameUIContainer.PlayerlivesImage[i].gameObject.SetActive(true);
             }
         }
+        SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
+        SceneTransScript.OpenTransition();
     }
 
     void Update()
     {
         if (!gamePaused)
         {
-            controlSchemeHandler();
-        }
-        else if (gamePaused)
-        {
-
+            if (!playersFrozen)
+            {
+                controlSchemeHandler();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.BackQuote))
@@ -330,7 +331,10 @@ public class CharacterMovmentScript : MonoBehaviour
     {
         if (!gamePaused)
         {
-            controlSchemeHandlerFixedUpdate();
+            if (!playersFrozen)
+            {
+                controlSchemeHandlerFixedUpdate();
+            }
         }
     }
 
@@ -707,5 +711,22 @@ public class CharacterMovmentScript : MonoBehaviour
                 Time.timeScale = 1.0f;
             }
         }
+    }
+
+    public void FreezePlayers()
+    {
+        playersFrozen = !playersFrozen;
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (playersFrozen)
+            {
+                playersAni[i].speed = 0.0f;
+            }
+            else
+            {
+                playersAni[i].speed = 1.0f;
+            }
+        }
+        Debug.Log("freeze is " + playersFrozen);
     }
 }
