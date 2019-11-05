@@ -38,10 +38,11 @@ public class CharacterSelect : MonoBehaviour
     public int MaxRounds, MaxRoundLength, MaxPlayerLives;
 
     public GameObject mainMenu, characterSelect, levelSelect, levelSelectFlavourGroup, gameplaySelect;
+    public GameObject PlayerLivesLabels;
+    public GameObject CreditsLeft, CreditsRight;
     public Text levelSelectflavourtext;
     public Image levelSelectPreview;
     public List<string> levelDescriptions;
-    public GameObject PlayerLivesLabels;
     public Image Arrow;
     public List<RawImage> PlayerStamps;
     public List<Sprite> levelPreviews;
@@ -92,7 +93,6 @@ public class CharacterSelect : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 5.0f + -4.0f * i);
-            KnightMeshes[i].GetComponent<MeshSelector>().LoadMesh(0);
         }
     }
 
@@ -134,6 +134,13 @@ public class CharacterSelect : MonoBehaviour
                     //Arrow.gameObject.SetActive(true);
                     Arrow.transform.position = new Vector3(menuOptions[MenuOption].transform.position.x + 10.0f, menuOptions[MenuOption].transform.position.y, menuOptions[MenuOption].transform.position.z);
                     mainMenu.SetActive(true);
+
+                    for (int j = 0; j < 4; j++)
+                    {
+                        KnightMeshes[j].SetActive(true);
+                        KnightMeshes[j].GetComponent<MeshSelector>().LoadMesh(0);
+                        KnightMeshes[j].SetActive(false);
+                    }
                 }
                 #region OldMainMenu
                 /*
@@ -627,9 +634,18 @@ public class CharacterSelect : MonoBehaviour
         gameSetup = true;
         bookanimator.SetTrigger("PageTurnRight");
     }
-    public void OptionsMenu()
+    public void Credits()
     {
-        Debug.Log("Options");
+        bookanimator.SetTrigger("PageTurnRight");
+        CreditsLeft.SetActive(true);
+        CreditsRight.SetActive(true);
+        Debug.Log("Credits open");
+    }
+    public void CloseCredits()
+    {
+        CreditsLeft.SetActive(false);
+        CreditsRight.SetActive(false);
+        MoveToMainMenu();
     }
     public void QuitGame()
     {
