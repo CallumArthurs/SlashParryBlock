@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17757899, g: 0.22232248, b: 0.3045191, a: 1}
+  m_IndirectSpecularColor: {r: 0.17757899, g: 0.2223225, b: 0.30451906, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6073,6 +6073,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5372248229689736825, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1818721569258700590, guid: 115f64894e56fee4bb58cbb266c892b3,
         type: 3}
       propertyPath: m_IsActive
@@ -6198,31 +6203,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5372248229689736825, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6719729327452119216, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.45999908
-      objectReference: {fileID: 0}
     - target: {fileID: 5372248230344877979, guid: 115f64894e56fee4bb58cbb266c892b3,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5034971496294016739, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.1999512
-      objectReference: {fileID: 0}
-    - target: {fileID: 5034971496294016739, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000030517578
-      objectReference: {fileID: 0}
     - target: {fileID: 6584841085923623679, guid: 115f64894e56fee4bb58cbb266c892b3,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -6342,11 +6327,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316757276829885504, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1234003312, guid: 115f64894e56fee4bb58cbb266c892b3, type: 3}
       propertyPath: frustumSettings.qualitySettings
@@ -6380,6 +6360,26 @@ PrefabInstance:
       propertyPath: frustumSettings.baseSettings
       value: 
       objectReference: {fileID: 443952653}
+    - target: {fileID: 5316757276829885504, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6719729327452119216, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.45999908
+      objectReference: {fileID: 0}
+    - target: {fileID: 5034971496294016739, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.1999512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5034971496294016739, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 115f64894e56fee4bb58cbb266c892b3, type: 3}
 --- !u!1 &930619108 stripped
@@ -10763,7 +10763,7 @@ PrefabInstance:
     - target: {fileID: 8476531400420255463, guid: 82d767490ac3e0c4f8a8622b75ab344d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -9.8
       objectReference: {fileID: 0}
     - target: {fileID: 8476531400420255463, guid: 82d767490ac3e0c4f8a8622b75ab344d,
         type: 3}
@@ -10773,7 +10773,7 @@ PrefabInstance:
     - target: {fileID: 8476531400420255463, guid: 82d767490ac3e0c4f8a8622b75ab344d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8476531400420255463, guid: 82d767490ac3e0c4f8a8622b75ab344d,
         type: 3}
@@ -13940,25 +13940,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6719729327452119216, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.45999908
-      objectReference: {fileID: 0}
     - target: {fileID: 5372248230344877979, guid: 115f64894e56fee4bb58cbb266c892b3,
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5034971496294016739, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.1999512
-      objectReference: {fileID: 0}
-    - target: {fileID: 5034971496294016739, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 6584841085923623679, guid: 115f64894e56fee4bb58cbb266c892b3,
         type: 3}
@@ -14112,6 +14097,21 @@ PrefabInstance:
       propertyPath: frustumSettings.baseSettings
       value: 
       objectReference: {fileID: 443952653}
+    - target: {fileID: 6719729327452119216, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.45999908
+      objectReference: {fileID: 0}
+    - target: {fileID: 5034971496294016739, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.1999512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5034971496294016739, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 115f64894e56fee4bb58cbb266c892b3, type: 3}
 --- !u!224 &1968353024 stripped
