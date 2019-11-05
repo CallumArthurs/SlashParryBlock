@@ -23,14 +23,10 @@ public class MenuOption : MonoBehaviour
     {
         if (Input.GetButtonDown("A_Button" + joystickChar))
         {
-            Debug.Log("A_Button Event run");
-
             A_Button.Invoke();
         }
         if (Input.GetButtonDown("B_Button" + joystickChar))
         {
-            Debug.Log("B_Button Event run");
-
             B_Button.Invoke();
         }
 

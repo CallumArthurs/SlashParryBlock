@@ -706,12 +706,8 @@ public class CharacterSelect : MonoBehaviour
     public void SelectLevel(int level)
     {
         levelSelected = level;
-        //levelSelect.SetActive(false);
-        //levelSelectFlavourGroup.SetActive(false);
-        //gameplaySelect.SetActive(true);
         LevelSelectNavigator.enabled = false;
         GameplaySelectNavigator.enabled = true;
-        levelStamp.gameObject.SetActive(false);
         //Arrow.gameObject.SetActive(true);
         ControlHandler = GameplaySelectControls;
     }
@@ -809,9 +805,9 @@ public class CharacterSelect : MonoBehaviour
     public void RemovePlayerLives()
     {
         levelData.playerLives--;
-        if (levelData.playerLives < 3)
+        if (levelData.playerLives < 1)
         {
-            levelData.playerLives = 3;
+            levelData.playerLives = 1;
         }
         PlayerLivesSelect.text = levelData.playerLives.ToString();
     }
