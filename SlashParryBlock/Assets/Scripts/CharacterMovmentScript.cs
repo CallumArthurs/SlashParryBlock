@@ -206,7 +206,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
             if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
             {
-                gameUIContainer.PlayerlivesImage[i].gameObject.SetActive(true);
+                gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].gameObject.SetActive(true);
             }
 
             gameUIContainer.playerReadyUpPanels[i].SetActive(true);
@@ -946,7 +946,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
             if (gameObject.GetComponent<MatchGameplay>().gameMode == MatchGameplay.Gamemode.Stock)
             {
-                gameUIContainer.PlayerlivesImage[i].GetComponentInChildren<Text>().text = "Lives: " + (gameObject.GetComponent<MatchGameplay>().PlayerLives - players[i].Deaths).ToString();
+                gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].GetComponentInChildren<Text>().text = "Lives: " + (gameObject.GetComponent<MatchGameplay>().PlayerLives - players[i].Deaths).ToString();
             }
         }
     }

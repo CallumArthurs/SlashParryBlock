@@ -3263,7 +3263,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9123721239610392342
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6749,6 +6749,7 @@ MonoBehaviour:
   GameScreenUI: {fileID: 5372248229689736825}
   PauseMenu: {fileID: 1818721569258700590}
   GameTimer: {fileID: 712085967527224410}
+  ControlSchemeIndicator: {fileID: 0}
 --- !u!1 &5372248229152272713
 GameObject:
   m_ObjectHideFlags: 0
@@ -12345,7 +12346,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.2, y: 0.7}
+  m_AnchoredPosition: {x: 1.2000008, y: 0.70000076}
   m_SizeDelta: {x: 1818.5, y: 980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8502645228249728369
@@ -15297,6 +15298,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5372248229231114554}
     m_Modifications:
+    - target: {fileID: 1056283272632735412, guid: 1fdffb28a7e7bf24a91308d074f6b770,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_PortraitSimulation
+      objectReference: {fileID: 0}
     - target: {fileID: 6577329985262992236, guid: 1fdffb28a7e7bf24a91308d074f6b770,
         type: 3}
       propertyPath: m_IsActive
@@ -15387,11 +15393,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.6396242
       objectReference: {fileID: 0}
-    - target: {fileID: 1056283272632735412, guid: 1fdffb28a7e7bf24a91308d074f6b770,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_PortraitSimulation
-      objectReference: {fileID: 0}
     - target: {fileID: 6577329985261053348, guid: 1fdffb28a7e7bf24a91308d074f6b770,
         type: 3}
       propertyPath: m_CastShadows
@@ -15411,6 +15412,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CastShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1056283273627865204, guid: 1fdffb28a7e7bf24a91308d074f6b770,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1056283271817632760, guid: 1fdffb28a7e7bf24a91308d074f6b770,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 1056283271644547766, guid: 1fdffb28a7e7bf24a91308d074f6b770,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.82
       objectReference: {fileID: 0}
     - target: {fileID: 1027484773819234400, guid: 1fdffb28a7e7bf24a91308d074f6b770,
         type: 3}
@@ -15436,31 +15452,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1056283273627865204, guid: 1fdffb28a7e7bf24a91308d074f6b770,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 11.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1056283271817632760, guid: 1fdffb28a7e7bf24a91308d074f6b770,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 1056283271644547766, guid: 1fdffb28a7e7bf24a91308d074f6b770,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 14.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 5821397851920624579, guid: 1fdffb28a7e7bf24a91308d074f6b770,
-        type: 3}
-      propertyPath: m_Name
-      value: h_Heart2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5984580789392658457, guid: 1fdffb28a7e7bf24a91308d074f6b770,
-        type: 3}
-      propertyPath: m_Name
-      value: h_Heart5
       objectReference: {fileID: 0}
     - target: {fileID: 1056283273627865206, guid: 1fdffb28a7e7bf24a91308d074f6b770,
         type: 3}
@@ -15491,6 +15482,16 @@ PrefabInstance:
         type: 3}
       propertyPath: far clip plane
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821397851920624579, guid: 1fdffb28a7e7bf24a91308d074f6b770,
+        type: 3}
+      propertyPath: m_Name
+      value: h_Heart2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5984580789392658457, guid: 1fdffb28a7e7bf24a91308d074f6b770,
+        type: 3}
+      propertyPath: m_Name
+      value: h_Heart5
       objectReference: {fileID: 0}
     - target: {fileID: 8203120312554143767, guid: 1fdffb28a7e7bf24a91308d074f6b770,
         type: 3}
