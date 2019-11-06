@@ -373,6 +373,7 @@ public class CharacterSelect : MonoBehaviour
         {
             PlayerStamps[i].gameObject.SetActive(true);
             PlayerStamps[i].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            playerJoinInstructions[i].SetActive(false);
         }
 
         ControlHandler = CharacterSelectControls;
