@@ -263,28 +263,24 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             controlSchemeHandler = ControlScheme1;
             controlSchemeHandlerFixedUpdate = ControlScheme1FixedUpdate;
-            Debug.Log("Control scheme 1");
             controlSchemeIndicator.text = "Control scheme 1";
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             controlSchemeHandler = ControlScheme2;
             controlSchemeHandlerFixedUpdate = ControlScheme2FixedUpdate;
-            Debug.Log("Control scheme 2");
             controlSchemeIndicator.text = "Control scheme 2";
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             controlSchemeHandler = ControlScheme3;
             controlSchemeHandlerFixedUpdate = ControlScheme3FixedUpdate;
-            Debug.Log("Control scheme 3");
             controlSchemeIndicator.text = "Control scheme 3";
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             controlSchemeHandler = ControlScheme4;
             controlSchemeHandlerFixedUpdate = ControlScheme4FixedUpdate;
-            Debug.Log("Control scheme 4");
             controlSchemeIndicator.text = "Control scheme 4";
         }
 
@@ -981,6 +977,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     public void Quit()
     {
+        Time.timeScale = 1.0f;
         SceneSelector.SceneLoader(SceneSelector.SceneSelecter.SplashScreen);
     }
     public void Resume()

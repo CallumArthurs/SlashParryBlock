@@ -39,7 +39,7 @@ public class EndGameMeshLoader : MonoBehaviour
         {
             if (!SceneTransScript.portcullisAnimator.IsInTransition(0))
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < endInfo.placement.Count; i++)
                 {
                     KnightRenderers[endInfo.placement[i] - 1].GetComponentInChildren<Animator>().speed = 1.0f;
                 }
@@ -53,6 +53,10 @@ public class EndGameMeshLoader : MonoBehaviour
                     {
                         SceneTransScript.CloseTransition();
                         StartCoroutine(WaitAndRunMethod(2.0f, LoadMainMenu));
+                    }
+                    else if (Input.GetButtonDown("B_ButtonP" + (i + 1)) && EndgameStatsScreen.activeInHierarchy)
+                    {
+                        EndgameStatsScreen.SetActive(false);
                     }
 
                     if (Input.GetAxis("A_ButtonP" + (i + 1)) != 0.0f)
