@@ -637,15 +637,18 @@ public class CharacterSelect : MonoBehaviour
     public void Credits()
     {
         bookanimator.SetTrigger("PageTurnRight");
+        mainMenu.SetActive(false);
         CreditsLeft.SetActive(true);
         CreditsRight.SetActive(true);
         Debug.Log("Credits open");
     }
     public void CloseCredits()
     {
+        bookanimator.SetTrigger("PageTurnLeft");
         CreditsLeft.SetActive(false);
         CreditsRight.SetActive(false);
         MoveToMainMenu();
+        Debug.Log("Credits close");
     }
     public void QuitGame()
     {
