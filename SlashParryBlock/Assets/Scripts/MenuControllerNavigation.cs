@@ -45,7 +45,6 @@ public class MenuControllerNavigation : MonoBehaviour
 
     public void MoveToMenuOption(MenuOption curMenuOption)
     {
-        Debug.Log(curMenuOption.gameObject.name);
         SetDelegate(curMenuOption.ControllerUpdate);
     }
 }
