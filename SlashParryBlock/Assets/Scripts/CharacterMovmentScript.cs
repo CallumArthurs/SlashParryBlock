@@ -42,6 +42,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public Sprite emptyHeart, halfHeart, fullHeart;
     public List<GameObject> PlayerCams = new List<GameObject>();
     public SceneTransitonerScript SceneTransScript;
+    public Text controlSchemeIndicator;
 
     private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;
@@ -210,6 +211,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
             gameUIContainer.playerReadyUpPanels[i].SetActive(true);
         }
+        controlSchemeIndicator = gameUIContainer.ControlSchemeIndicator;
         SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
         SceneTransScript.OpenTransition();
     }
@@ -246,7 +248,7 @@ public class CharacterMovmentScript : MonoBehaviour
                         gameObject.GetComponent<MatchGameplay>().AddTime(120);
                         break;
                     case "Viviane":
-                        GameObject tempSwordObj = Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), players[0].transform.position,Quaternion.identity) as GameObject;
+                        GameObject tempSwordObj = Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), players[0].transform.position, Quaternion.identity) as GameObject;
                         break;
                     default:
                         Debug.Log("InvalidCommand");
@@ -257,22 +259,35 @@ public class CharacterMovmentScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (alternateControls)
-            {
-                controlSchemeHandler = ControlScheme1;
-                controlSchemeHandlerFixedUpdate = ControlScheme1FixedUpdate;
-                alternateControls = false;
-            }
-            else
-            {
-                controlSchemeHandler = ControlScheme2;
-                controlSchemeHandlerFixedUpdate = ControlScheme2FixedUpdate;
-                alternateControls = true;
-            }
+            controlSchemeHandler = ControlScheme1;
+            controlSchemeHandlerFixedUpdate = ControlScheme1FixedUpdate;
+            Debug.Log("Control scheme 1");
+            controlSchemeIndicator.text = "Control scheme 1";
         }
-        
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            controlSchemeHandler = ControlScheme2;
+            controlSchemeHandlerFixedUpdate = ControlScheme2FixedUpdate;
+            Debug.Log("Control scheme 2");
+            controlSchemeIndicator.text = "Control scheme 2";
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            controlSchemeHandler = ControlScheme3;
+            controlSchemeHandlerFixedUpdate = ControlScheme3FixedUpdate;
+            Debug.Log("Control scheme 3");
+            controlSchemeIndicator.text = "Control scheme 3";
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            controlSchemeHandler = ControlScheme4;
+            controlSchemeHandlerFixedUpdate = ControlScheme4FixedUpdate;
+            Debug.Log("Control scheme 4");
+            controlSchemeIndicator.text = "Control scheme 4";
+        }
+
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
             if (Input.GetButtonDown("StartButton" + joystickCharInputs[i]))
@@ -506,7 +521,6 @@ public class CharacterMovmentScript : MonoBehaviour
         }
 
     }
-
     private void ControlScheme2()
     {
         //iterate through all the players
@@ -579,6 +593,282 @@ public class CharacterMovmentScript : MonoBehaviour
         }
     }
     private void ControlScheme2FixedUpdate()
+    {
+        for (int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            if (PlayGame)
+            {
+                if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor) && !players[i].IgnoreSpeedLimit)
+                {
+                    speed = originalSpeed;
+                    maxSpeed = originalMaxSpeed;
+                    playersAni[i].SetBool("Falling", false);
+                }
+                else
+                {
+                    speed = AirControlSpeed;
+                    maxSpeed = Mathf.Infinity;
+                    playersAni[i].SetBool("Falling", true);
+                }
+            }
+
+            if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
+            {
+                //for player1 this will evaluate to "HorizontalP1"
+                if (Input.GetAxis("Horizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) != 0 ||
+                    Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("R_StickVertical" + joystickCharInputs[i]) != 0)
+                {
+                    float HoriInput = Input.GetAxis("Horizontal" + joystickCharInputs[i]);
+                    float VertInput = Input.GetAxis("Vertical" + joystickCharInputs[i]);
+                    //left stick for rotating if not blocking
+                    if (!players[i].blocking && (HoriInput != 0 || VertInput != 0))
+                    {
+                        playersRB[i].AddForce(new Vector3(HoriInput * speed, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i]) * speed), ForceMode.Impulse);
+                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(HoriInput, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i])), Vector3.up), rotSpeed);
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
+                    }
+                    else
+                    {
+                        if (!players[i].blocking && (Input.GetAxis("Horizontal" + joystickCharInputs[i]) == 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) == 0))
+                        {
+                            playersAni[i].SetInteger("Anim", 0);
+                        }
+                    }
+
+                    //lowers your speed to your max speed
+                    if (playersRB[i].velocity.magnitude > maxSpeed)
+                    {
+                        Vector3 VelNorm = playersRB[i].velocity.normalized;
+
+                        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
+                    }
+                }
+                else
+                {
+                    //play Idle animation
+                    playersAni[i].SetFloat("BlockMovVecY", 0.0f, 0.2f, Time.deltaTime);
+                    playersAni[i].SetFloat("BlockMovVecX", 0.0f, 0.2f, Time.deltaTime);
+
+                    playersAni[i].SetInteger("Anim", 0);
+                }
+
+                //if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
+                //{
+                //    Debug.Log("Dashed");
+                //    players[i].Dashed = true;
+                //    players[i].IgnoreSpeedLimit = true;
+                //    playersRB[i].AddForce(playersRB[i].transform.forward * 50.0f, ForceMode.Impulse);
+                //}
+            }
+            PlayerColliders[i].transform.position = players[i].transform.position;
+        }
+
+    }
+    private void ControlScheme3()
+    {
+        //iterate through all the players
+        for (int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            if (!PlayGame)
+            {
+                if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
+                {
+                    ReadyUpTxt[i].fontSize = 32;
+                    ReadyUpTxt[i].text = "Press B to UnReady";
+                    PlayersReady[i] = true;
+                    ReadyPlayers++;
+                }
+                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
+                {
+                    ReadyUpTxt[i].fontSize = 37;
+                    ReadyUpTxt[i].text = "Press A to Ready up";
+                    PlayersReady[i] = false;
+                    ReadyPlayers--;
+                }
+                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
+                {
+                    PlayGame = true;
+                    StartGame();
+                }
+                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
+                PlayerReadyUpImg[i].texture = renderTextures[i];
+            }
+
+            //no inputs taken if you have been knocked back
+            if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning && !players[i].Dashed)
+            {
+                if (Input.GetAxis("L_Bumper" + joystickCharInputs[i]) > 0 && !players[i].getAttacked())
+                {
+                    players[i].blocking = true;
+                }
+                else
+                {
+                    players[i].blocking = false;
+                    //you can't attack if you just did
+                    if (Input.GetAxis("R_Trigger" + joystickCharInputs[i]) != 0.0f && !players[i].getAttacked() && !players[i].getParried())
+                    {
+                        players[i].Attack(1);
+                        players[i].AttackAxisUsed = true;
+                    }
+                    else if (Input.GetButtonDown("R_Bumper" + joystickCharInputs[i]) && !players[i].getAttacked())
+                    {
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
+                        players[i].Parry();
+                        players[i].ParryAxisUsed = true;
+                    }
+                }
+                playersAni[i].SetBool("Blocking", players[i].blocking);
+
+                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
+                {
+                    Debug.Log("Dashed");
+                    players[i].Dashed = true;
+                    players[i].IgnoreSpeedLimit = true;
+                    playersRB[i].AddForce(playersRB[i].transform.forward * 20.0f, ForceMode.Impulse);
+                }
+
+            }
+        }
+    }
+    private void ControlScheme3FixedUpdate()
+    {
+        for (int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            if (PlayGame)
+            {
+                if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor) && !players[i].IgnoreSpeedLimit)
+                {
+                    speed = originalSpeed;
+                    maxSpeed = originalMaxSpeed;
+                    playersAni[i].SetBool("Falling", false);
+                }
+                else
+                {
+                    speed = AirControlSpeed;
+                    maxSpeed = Mathf.Infinity;
+                    playersAni[i].SetBool("Falling", true);
+                }
+            }
+
+            if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning)
+            {
+                //for player1 this will evaluate to "HorizontalP1"
+                if (Input.GetAxis("Horizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) != 0 ||
+                    Input.GetAxis("R_StickHorizontal" + joystickCharInputs[i]) != 0 || Input.GetAxis("R_StickVertical" + joystickCharInputs[i]) != 0)
+                {
+                    float HoriInput = Input.GetAxis("Horizontal" + joystickCharInputs[i]);
+                    float VertInput = Input.GetAxis("Vertical" + joystickCharInputs[i]);
+                    //left stick for rotating if not blocking
+                    if (!players[i].blocking && (HoriInput != 0 || VertInput != 0))
+                    {
+                        playersRB[i].AddForce(new Vector3(HoriInput * speed, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i]) * speed), ForceMode.Impulse);
+                        playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(HoriInput, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i])), Vector3.up), rotSpeed);
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
+                    }
+                    else
+                    {
+                        if (!players[i].blocking && (Input.GetAxis("Horizontal" + joystickCharInputs[i]) == 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) == 0))
+                        {
+                            playersAni[i].SetInteger("Anim", 0);
+                        }
+                    }
+
+                    //lowers your speed to your max speed
+                    if (playersRB[i].velocity.magnitude > maxSpeed)
+                    {
+                        Vector3 VelNorm = playersRB[i].velocity.normalized;
+
+                        playersRB[i].velocity = new Vector3(VelNorm.x * maxSpeed, playersRB[i].velocity.y, VelNorm.z * maxSpeed);
+                    }
+                }
+                else
+                {
+                    //play Idle animation
+                    playersAni[i].SetFloat("BlockMovVecY", 0.0f, 0.2f, Time.deltaTime);
+                    playersAni[i].SetFloat("BlockMovVecX", 0.0f, 0.2f, Time.deltaTime);
+
+                    playersAni[i].SetInteger("Anim", 0);
+                }
+
+                //if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
+                //{
+                //    Debug.Log("Dashed");
+                //    players[i].Dashed = true;
+                //    players[i].IgnoreSpeedLimit = true;
+                //    playersRB[i].AddForce(playersRB[i].transform.forward * 50.0f, ForceMode.Impulse);
+                //}
+            }
+            PlayerColliders[i].transform.position = players[i].transform.position;
+        }
+
+    }
+    private void ControlScheme4()
+    {
+        //iterate through all the players
+        for (int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            if (!PlayGame)
+            {
+                if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
+                {
+                    ReadyUpTxt[i].fontSize = 32;
+                    ReadyUpTxt[i].text = "Press B to UnReady";
+                    PlayersReady[i] = true;
+                    ReadyPlayers++;
+                }
+                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
+                {
+                    ReadyUpTxt[i].fontSize = 37;
+                    ReadyUpTxt[i].text = "Press A to Ready up";
+                    PlayersReady[i] = false;
+                    ReadyPlayers--;
+                }
+                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
+                {
+                    PlayGame = true;
+                    StartGame();
+                }
+                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
+                PlayerReadyUpImg[i].texture = renderTextures[i];
+            }
+
+            //no inputs taken if you have been knocked back
+            if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning && !players[i].Dashed)
+            {
+                if (Input.GetButton("B_Button" + joystickCharInputs[i]) && !players[i].getAttacked())
+                {
+                    players[i].blocking = true;
+                }
+                else
+                {
+                    players[i].blocking = false;
+                    //you can't attack if you just did
+                    if (Input.GetButtonDown("X_Button" + joystickCharInputs[i]) && !players[i].getAttacked() && !players[i].getParried())
+                    {
+                        players[i].Attack(1);
+                        players[i].AttackAxisUsed = true;
+                    }
+                    else if (Input.GetButtonDown("Y_Button" + joystickCharInputs[i]) && !players[i].getAttacked())
+                    {
+                        playersAni[i].SetInteger("Anim", (int)AnimSelector.Parry);
+                        players[i].Parry();
+                        players[i].ParryAxisUsed = true;
+                    }
+                }
+                playersAni[i].SetBool("Blocking", players[i].blocking);
+
+                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
+                {
+                    Debug.Log("Dashed");
+                    players[i].Dashed = true;
+                    players[i].IgnoreSpeedLimit = true;
+                    playersRB[i].AddForce(playersRB[i].transform.forward * 20.0f, ForceMode.Impulse);
+                }
+
+            }
+        }
+    }
+    private void ControlScheme4FixedUpdate()
     {
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {

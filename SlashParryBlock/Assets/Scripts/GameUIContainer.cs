@@ -16,4 +16,5 @@ public class GameUIContainer : MonoBehaviour
     public GameObject readyUpScreen, playerStatsUI,GameScreenUI;
     public GameObject PauseMenu;
     public Text GameTimer;
+    public Text ControlSchemeIndicator;
 }

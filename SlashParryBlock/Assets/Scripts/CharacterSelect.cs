@@ -56,6 +56,7 @@ public class CharacterSelect : MonoBehaviour
     public List<Sprite> SelectedImage;
     public List<Sprite> DeSelectedImage;
     public List<Image> PlayerSelectImages;
+    public List<GameObject> playerJoinInstructions;
 
     public List<MenuOption> CharSelectMenuOptions;
     public MenuOption RoundLength, PlayerLives;
@@ -110,6 +111,7 @@ public class CharacterSelect : MonoBehaviour
                         joystickCharInputs.Add("P" + (i + 1));
                         KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
                         PlayerStamps[joystickCharInputs.Count - 1].gameObject.SetActive(true);
+                        playerJoinInstructions[i].SetActive(false);
                         PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
                         CharSelectNavigator.joystickCharInputs = joystickCharInputs;
                     }
@@ -364,6 +366,7 @@ public class CharacterSelect : MonoBehaviour
             
             PlayerStamps[i].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
             PlayerStamps[i].gameObject.SetActive(false);
+            playerJoinInstructions[i].SetActive(true);
         }
 
         for (int i = 0; i < joystickCharInputs.Count; i++)
@@ -609,7 +612,6 @@ public class CharacterSelect : MonoBehaviour
             ConSelected[i] = false;
             PlayerStamps[i].gameObject.SetActive(false);
             PlayerSelectImages[i].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-
         }
         startFunctions = null;
         joystickCharInputs.Clear();
