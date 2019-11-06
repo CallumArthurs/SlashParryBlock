@@ -41,6 +41,8 @@ public class RingsLevel : MonoBehaviour
 
         if (RespawnDelay <=0)
         { RespawnDelay = 1; }
+
+        Random.InitState((int)Time.realtimeSinceStartup);
     }
 
     void Update()

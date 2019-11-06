@@ -286,7 +286,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            if (Input.GetButtonDown("StartButton" + joystickCharInputs[i]))
+            if (Input.GetButtonDown("StartButton" + joystickCharInputs[i]) && PlayGame)
             {
                 gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
                 PauseGame();
@@ -577,14 +577,6 @@ public class CharacterMovmentScript : MonoBehaviour
                 }
                 playersAni[i].SetBool("Blocking", players[i].blocking);
 
-                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
-                {
-                    Debug.Log("Dashed");
-                    players[i].Dashed = true;
-                    players[i].IgnoreSpeedLimit = true;
-                    playersRB[i].AddForce(playersRB[i].transform.forward * 20.0f, ForceMode.Impulse);
-                }
-
             }
         }
     }
@@ -715,14 +707,6 @@ public class CharacterMovmentScript : MonoBehaviour
                 }
                 playersAni[i].SetBool("Blocking", players[i].blocking);
 
-                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
-                {
-                    Debug.Log("Dashed");
-                    players[i].Dashed = true;
-                    players[i].IgnoreSpeedLimit = true;
-                    playersRB[i].AddForce(playersRB[i].transform.forward * 20.0f, ForceMode.Impulse);
-                }
-
             }
         }
     }
@@ -852,14 +836,6 @@ public class CharacterMovmentScript : MonoBehaviour
                     }
                 }
                 playersAni[i].SetBool("Blocking", players[i].blocking);
-
-                if (Input.GetAxis("A_Button" + joystickCharInputs[i]) > 0.0f && !players[i].Dashed)
-                {
-                    Debug.Log("Dashed");
-                    players[i].Dashed = true;
-                    players[i].IgnoreSpeedLimit = true;
-                    playersRB[i].AddForce(playersRB[i].transform.forward * 20.0f, ForceMode.Impulse);
-                }
 
             }
         }
