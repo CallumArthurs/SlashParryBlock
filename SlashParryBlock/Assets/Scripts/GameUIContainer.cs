@@ -12,6 +12,7 @@ public class GameUIContainer : MonoBehaviour
     public List<GameObject> playerPortraits;
     public List<RawImage> readyUpImages;
     public List<Text> readyUpText;
+    public List<GameObject> playerReadyUpPanels;
     public GameObject readyUpScreen, playerStatsUI,GameScreenUI;
     public GameObject PauseMenu;
     public Text GameTimer;

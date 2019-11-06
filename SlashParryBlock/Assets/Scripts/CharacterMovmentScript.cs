@@ -207,6 +207,8 @@ public class CharacterMovmentScript : MonoBehaviour
             {
                 gameUIContainer.PlayerlivesImage[i].gameObject.SetActive(true);
             }
+
+            gameUIContainer.playerReadyUpPanels[i].SetActive(true);
         }
         SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
         SceneTransScript.OpenTransition();
@@ -316,6 +318,7 @@ public class CharacterMovmentScript : MonoBehaviour
     private void StartGame()
     {
         ReadyUpScreen.SetActive(false);
+        gameUIContainer.GameScreenUI.SetActive(true);
         gameObject.GetComponent<MatchGameplay>().StartMatch();
         for (int i = 0; i < players.Count; i++)
         {
