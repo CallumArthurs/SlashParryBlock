@@ -37,6 +37,14 @@ public class EndGameMeshLoader : MonoBehaviour
         }
         else
         {
+            if (!SceneTransScript.portcullisAnimator.IsInTransition(0))
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    KnightRenderers[endInfo.placement[i] - 1].GetComponentInChildren<Animator>().speed = 1.0f;
+                }
+            }
+
             for (int i = 0; i < 4; i++)
             {
                 if (!ButtonPressed[i])
@@ -71,6 +79,7 @@ public class EndGameMeshLoader : MonoBehaviour
             {
                 KnightRenderers[endInfo.placement[i] - 1].GetComponent<MeshSelector>().LoadMesh(endInfo.MeshSelected[i]);
                 KnightRenderers[endInfo.placement[i] - 1].GetComponentInChildren<Animator>().SetInteger("Placement", endInfo.placement[i]);
+                KnightRenderers[endInfo.placement[i] - 1].GetComponentInChildren<Animator>().speed = 0.0f;
             }
             else
             {

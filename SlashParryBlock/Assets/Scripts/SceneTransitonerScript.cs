@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SceneTransitonerScript : MonoBehaviour
 {
-    Animator portcullisAnimator;
+    public Animator portcullisAnimator;
     void Start()
     {
         portcullisAnimator = gameObject.GetComponentInChildren<Animator>();
