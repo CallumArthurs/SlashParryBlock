@@ -655,7 +655,9 @@ public class CharacterSelect : MonoBehaviour
     }
     public void QuitGame()
     {
-        Application.Quit();
+        StartCoroutine(WaitAndRunMethod(2.5f, Application.Quit));
+        StartCoroutine(WaitAndRunMethod(0.5f, SceneTransScript.CloseTransition));
+        bookanimator.SetTrigger("BookClose");
     }
 
     public void SelectCharacter(int Character)
