@@ -382,24 +382,16 @@ MonoBehaviour:
   blockSpeedMultiplier: 0.1
   blockRotSpeedMultiplier: 0.2
   players: []
-  playerHearts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  gamePaused: 0
+  playersFrozen: 0
+  ExcaliburSpawnPos: {fileID: 0}
   joystickCharInputs: []
-  PlayersReady: 00000000
-  ReadyPlayers: 0
-  PlayGame: 0
-  ReadyUpScreen: {fileID: 0}
   playerReadyUpPos:
   - {fileID: 1097417956653400159}
   - {fileID: 477545661454705948}
   - {fileID: 357442033277400275}
   - {fileID: 1375632593140452144}
-  PlayerReadyUpImg: []
   renderTextures: []
-  KnightMeshRenderer: {fileID: 0}
   PlayerColliders:
   - {fileID: 607410986}
   - {fileID: 576111424}
@@ -408,6 +400,10 @@ MonoBehaviour:
   emptyHeart: {fileID: 21300000, guid: b79acf99a4e92564c97141a032e8cd2a, type: 3}
   halfHeart: {fileID: 21300000, guid: 1d005ccfe41524a429df707ba760beb1, type: 3}
   fullHeart: {fileID: 21300000, guid: a2aa26ee24bc6404690a14ed940604a5, type: 3}
+  PlayerCams: []
+  SceneTransScript: {fileID: 0}
+  controlSchemeIndicator: {fileID: 0}
+  PlayGame: 0
 --- !u!82 &2060373516
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1192,6 +1188,22 @@ MonoBehaviour:
   Rounds: 2
   RoundLength: 5
   PlayerLives: 3
+  knightPortraitImages:
+  - {fileID: 21300000, guid: 22afda42c1f643c49bc229af0e4a00a0, type: 3}
+  - {fileID: 21300000, guid: 00864642b0b39494a9f8da353548b018, type: 3}
+  - {fileID: 21300000, guid: 51eb6771139d4fe4eb3ad0322bb65501, type: 3}
+  - {fileID: 21300000, guid: b4cec7d06b655f54ba6b54fc9af865fc, type: 3}
+  PlayerStats:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  PlayerPortraits:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  meshSelected: 
   RoundStatsUI: {fileID: 0}
   GameUI: {fileID: 0}
   Timer: {fileID: 0}
@@ -1220,3 +1232,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CommandInput: InputCommand
+  EnterPressed: 0
