@@ -45,6 +45,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<GameObject> PlayerCams = new List<GameObject>();
     public SceneTransitonerScript SceneTransScript;
     public Text controlSchemeIndicator;
+    public AudioClip CountDownHorn;
 
     private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;
@@ -55,11 +56,10 @@ public class CharacterMovmentScript : MonoBehaviour
     private List<Text> ReadyUpTxt;
     private List<PlayerHeartsContainer> playerHearts;
     private List<GameObject> playerPortraits;
+    private AudioSource horn;
     private GameObject ReadyUpScreen;
-    private GameUIContainer gameUIContainer;
     private KnightMeshRenderer KnightMeshRenderer;
     private LayerMask floor;
-    private ConsoleCommand console;
     private MatchGameplay gameplay;
     private SceneSelector SceneSelector;
     private bool[] PlayersReady = new bool[4] { false, false, false, false };
@@ -68,6 +68,7 @@ public class CharacterMovmentScript : MonoBehaviour
     private bool DebugLoad = false;
 
     public bool PlayGame = false;
+    public GameUIContainer gameUIContainer;
 
     private levelLoadInfo levelData;
 
@@ -105,8 +106,6 @@ public class CharacterMovmentScript : MonoBehaviour
 
         KnightMeshRenderer = gameObject.GetComponent<KnightMeshRenderer>();
 
-        console = gameObject.GetComponent<ConsoleCommand>();
-        console.enabled = false;
         SceneSelector = SceneSelector.CreateInstance("SceneSelector") as SceneSelector;
 
         gameplay.gameMode = levelData.gamemode;
@@ -193,7 +192,8 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             soundPlayers.Add(tmpSources[i]);
         }
-
+        horn = soundPlayers[4];
+        horn.clip = CountDownHorn;
         for (int i = 0; i < players.Count; i++)
         {
             gameUIContainer.playerPortraits[levelData.meshSelected[i]].GetComponent<RectTransform>().position = gameUIContainer.portPositions[i].position;
@@ -221,101 +221,80 @@ public class CharacterMovmentScript : MonoBehaviour
             gameUIContainer.playerReadyUpPanels[i].SetActive(true);
         }
         controlSchemeIndicator = gameUIContainer.ControlSchemeIndicator;
-        SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
-        SceneTransScript.OpenTransition();
         ReadyUpScreen.SetActive(false);
         countDownTimer = gameUIContainer.CountDownTimer;
+
+        if (GameObject.FindGameObjectWithTag("SceneTransitioner") != null)
+        {
+            SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
+            SceneTransScript.OpenTransition();
+        }
+        else
+        {
+            SceneTransScript = (Instantiate(Resources.Load("Prefabs/SceneTransitioner")) as GameObject).GetComponent<SceneTransitonerScript>();
+        }
     }
 
     void Update()
     {
-        if (!gamePaused)
+        if ((!gamePaused && !playersFrozen) && !DebugLoad)
         {
-            if (!playersFrozen)
-            {
-                controlSchemeHandler();
-            }
+            controlSchemeHandler();
         }
-        for(int i = 0; i < joystickCharInputs.Count; i++)
+        else
         {
-            if (!PlayGame)
+            for (int i = 0; i < joystickCharInputs.Count; i++)
             {
-                if (!parryTutorialScreen)
+                if (!PlayGame)
                 {
-                    if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
+                    if (!parryTutorialScreen && !DebugLoad)
                     {
-                        gameUIContainer.ParryTutorialScreen.SetActive(false);
-                        ReadyUpScreen.SetActive(true);
-                        parryTutorialScreen = true;
-                    }
-                }
-                else
-                {
-                    if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
-                    {
-                        ReadyUpTxt[i].fontSize = 32;
-                        ReadyUpTxt[i].text = "Press B to UnReady";
-                        PlayersReady[i] = true;
-                        ReadyPlayers++;
-                    }
-                    if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
-                    {
-                        ReadyUpTxt[i].fontSize = 37;
-                        ReadyUpTxt[i].text = "Press A to Ready up";
-                        PlayersReady[i] = false;
-                        ReadyPlayers--;
-                    }
-                    if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
-                    {
-                        PlayGame = true;
-                        ReadyUpScreen.SetActive(false);
-                        for (int j = 0; j < players.Count; j++)
+                        if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
                         {
-                            Destroy(PlayerCams[j]);
-                            players[j].GameStart();
-                            playersRB[j].isKinematic = false;
-                            players[j].gameObject.layer = 14 + j;
+                            gameUIContainer.ParryTutorialScreen.SetActive(false);
+                            ReadyUpScreen.SetActive(true);
+                            parryTutorialScreen = true;
                         }
-
-                        Countdown();
                     }
-                }
-                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
-                PlayerReadyUpImg[i].texture = renderTextures[i];
-            }
-        }
+                    else
+                    {
+                        if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
+                        {
+                            ReadyUpTxt[i].fontSize = 32;
+                            ReadyUpTxt[i].text = "Press B to UnReady";
+                            PlayersReady[i] = true;
+                            ReadyPlayers++;
+                        }
+                        if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
+                        {
+                            ReadyUpTxt[i].fontSize = 37;
+                            ReadyUpTxt[i].text = "Press A to Ready up";
+                            PlayersReady[i] = false;
+                            ReadyPlayers--;
+                        }
+                        if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
+                        {
+                            PlayGame = true;
+                            ReadyUpScreen.SetActive(false);
+                            gameUIContainer.ParryTutorialScreen.SetActive(false);
+                            Camera.main.GetComponent<Blur>().enabled = false;
+                            DebugLoad = false;
+                            for (int j = 0; j < players.Count; j++)
+                            {
+                                Destroy(PlayerCams[j]);
+                                players[j].GameStart();
+                                playersRB[j].isKinematic = false;
+                                players[j].gameObject.layer = 14 + j;
+                            }
 
-        if (Input.GetKeyDown(KeyCode.BackQuote))
-        {
-            Debug.Log("backquote pressed");
-            console.enabled = true;
-            console.FocusConsoleToggle(true);
-        }
-
-        if (console.enabled)
-        {
-            if (console.EnterPressed)
-            {
-                console.EnterPressed = false;
-                console.FocusConsoleToggle(false);
-                switch (console.CommandInput)
-                {
-                    case "Restart":
-                        SceneSelector.SceneLoader(SceneSelector.SceneSelecter.SplashScreen);
-                        break;
-                    case "AddTime":
-                        gameObject.GetComponent<MatchGameplay>().AddTime(120);
-                        break;
-                    case "Viviane":
-                        GameObject tempSwordObj = Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), players[0].transform.position, Quaternion.identity) as GameObject;
-                        break;
-                    default:
-                        Debug.Log("InvalidCommand");
-                        break;
+                            Countdown();
+                        }
+                    }
+                    PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
+                    PlayerReadyUpImg[i].texture = renderTextures[i];
                 }
-                console.CommandInput = "";
-                console.enabled = false;
             }
+
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -341,15 +320,6 @@ public class CharacterMovmentScript : MonoBehaviour
             controlSchemeHandler = ControlScheme4;
             controlSchemeHandlerFixedUpdate = ControlScheme4FixedUpdate;
             controlSchemeIndicator.text = "Control scheme 4";
-        }
-
-        for (int i = 0; i < joystickCharInputs.Count; i++)
-        {
-            if (Input.GetButtonDown("StartButton" + joystickCharInputs[i]) && PlayGame)
-            {
-                gameUIContainer.PauseMenu.SetActive(!gameUIContainer.PauseMenu.activeInHierarchy);
-                PauseGame();
-            }
         }
 
         UpdateHealth();
@@ -416,8 +386,6 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            
-
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning && !players[i].Dashed)
             {
@@ -558,31 +526,6 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            if (!PlayGame)
-            {
-                if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
-                {
-                    ReadyUpTxt[i].fontSize = 32;
-                    ReadyUpTxt[i].text = "Press B to UnReady";
-                    PlayersReady[i] = true;
-                    ReadyPlayers++;
-                }
-                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
-                {
-                    ReadyUpTxt[i].fontSize = 37;
-                    ReadyUpTxt[i].text = "Press A to Ready up";
-                    PlayersReady[i] = false;
-                    ReadyPlayers--;
-                }
-                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
-                {
-                    PlayGame = true;
-                    StartGame();
-                }
-                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
-                PlayerReadyUpImg[i].texture = renderTextures[i];
-            }
-
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning && !players[i].Dashed)
             {
@@ -693,31 +636,6 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            if (!PlayGame)
-            {
-                if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
-                {
-                    ReadyUpTxt[i].fontSize = 32;
-                    ReadyUpTxt[i].text = "Press B to UnReady";
-                    PlayersReady[i] = true;
-                    ReadyPlayers++;
-                }
-                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
-                {
-                    ReadyUpTxt[i].fontSize = 37;
-                    ReadyUpTxt[i].text = "Press A to Ready up";
-                    PlayersReady[i] = false;
-                    ReadyPlayers--;
-                }
-                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
-                {
-                    PlayGame = true;
-                    StartGame();
-                }
-                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
-                PlayerReadyUpImg[i].texture = renderTextures[i];
-            }
-
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning && !players[i].Dashed)
             {
@@ -823,31 +741,6 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            if (!PlayGame)
-            {
-                if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
-                {
-                    ReadyUpTxt[i].fontSize = 32;
-                    ReadyUpTxt[i].text = "Press B to UnReady";
-                    PlayersReady[i] = true;
-                    ReadyPlayers++;
-                }
-                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
-                {
-                    ReadyUpTxt[i].fontSize = 37;
-                    ReadyUpTxt[i].text = "Press A to Ready up";
-                    PlayersReady[i] = false;
-                    ReadyPlayers--;
-                }
-                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
-                {
-                    PlayGame = true;
-                    StartGame();
-                }
-                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
-                PlayerReadyUpImg[i].texture = renderTextures[i];
-            }
-
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning && !players[i].Dashed)
             {
@@ -1048,6 +941,7 @@ public class CharacterMovmentScript : MonoBehaviour
         countDownTimer.text = "1";
         yield return new WaitForSeconds(1.0f);
         countDownTimer.text = "GO!";
+        horn.Play();
         yield return new WaitForSeconds(0.5f);
         countDownTimer.transform.parent.gameObject.SetActive(false);
         StartGame();

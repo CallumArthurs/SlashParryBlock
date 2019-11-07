@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConsoleCommand : MonoBehaviour
+public class ConsoleCommandGUI : MonoBehaviour
 {
     public string CommandInput;
     private bool Focused = false;

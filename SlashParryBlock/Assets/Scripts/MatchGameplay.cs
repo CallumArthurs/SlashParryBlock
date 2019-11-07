@@ -192,15 +192,6 @@ public class MatchGameplay : MonoBehaviour
             }
         }
         LoadStatsUI();
-        //for (int i = 0; i < CharMovScript.players.Count; i++)
-        //{
-        //    endScreenStats[i][0].text = "Kills: " + playerStatsCurRound[i].kills.ToString();
-        //    endScreenStats[i][1].text = "Deaths: " + playerStatsCurRound[i].Deaths.ToString();
-        //    endScreenStats[i][2].text = "Parries: " + playerStatsCurRound[i].successfulParries.ToString();
-        //    endScreenStats[i][3].text = "Damage Dealt: " + playerStatsCurRound[i].damageDealt.ToString();
-        //    endScreenStats[i][4].text = "Damage Taken: " + playerStatsCurRound[i].damageTaken.ToString();
-        //    endScreenStats[i][5].text = "Kill Streak: " + playerStatsCurRound[i].killStreak.ToString();
-        //}
 
         Rounds--;
 
@@ -231,6 +222,14 @@ public class MatchGameplay : MonoBehaviour
     public void AddTime(float value)
     {
         RoundTimer += value;
+    }
+    public void SetTime(float value)
+    {
+        RoundTimer = value;
+    }
+    public float GetTime()
+    {
+        return(RoundTimer);
     }
 
     IEnumerator WaitAndRunMethod(float time, DelegateFunction function)
