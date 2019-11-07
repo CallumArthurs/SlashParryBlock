@@ -23,6 +23,10 @@ public class RespawnPoints : MonoBehaviour
             {
                 return false;
             }
+            else if (!Physics.Raycast(transform.position, -transform.up, 5.0f))
+            {
+                return false;
+            }
         }
         return true;
     }
