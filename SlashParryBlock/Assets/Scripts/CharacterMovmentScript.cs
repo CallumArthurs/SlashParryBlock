@@ -224,6 +224,7 @@ public class CharacterMovmentScript : MonoBehaviour
         SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
         SceneTransScript.OpenTransition();
         ReadyUpScreen.SetActive(false);
+        countDownTimer = gameUIContainer.CountDownTimer;
     }
 
     void Update()
