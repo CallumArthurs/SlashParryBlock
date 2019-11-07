@@ -94,6 +94,7 @@ public class CharacterMovmentScript : MonoBehaviour
             levelData.gameObject.transform.parent = gameObject.transform;
         }
         gameplay = gameObject.GetComponent<MatchGameplay>();
+        gameObject.GetComponent<MatchGameplay>().meshSelected = levelData.meshSelected;
         joystickCharInputs = levelData.joystickCharInputs;
 
         KnightMeshRenderer = gameObject.GetComponent<KnightMeshRenderer>();
@@ -164,6 +165,8 @@ public class CharacterMovmentScript : MonoBehaviour
 
         ReadyUpScreen.SetActive(true);
 
+        gameplay.PlayerPortraits = gameUIContainer.PlayerRoundPortraits;
+        gameplay.PlayerStats = gameUIContainer.PlayerRoundStats;
         gameplay.RoundStatsUI = gameUIContainer.playerStatsUI;
         gameplay.GameUI = gameUIContainer.GameScreenUI;
         gameplay.Timer = gameUIContainer.GameTimer;

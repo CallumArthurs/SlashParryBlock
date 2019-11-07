@@ -10,6 +10,8 @@ public class GameUIContainer : MonoBehaviour
     public List<PlayerHeartsContainer> playerHearts;
     public List<GameObject> ProfileRing;
     public List<GameObject> playerPortraits;
+    public List<GameObject> PlayerRoundStats;
+    public List<GameObject> PlayerRoundPortraits;
     public List<RawImage> readyUpImages;
     public List<Text> readyUpText;
     public List<GameObject> playerReadyUpPanels;

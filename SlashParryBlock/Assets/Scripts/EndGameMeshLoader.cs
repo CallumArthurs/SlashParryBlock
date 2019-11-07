@@ -13,6 +13,7 @@ public class EndGameMeshLoader : MonoBehaviour
     public EndGameInfo endInfo;
     public GameObject EndgameStatsScreen;
     public SceneTransitonerScript SceneTransScript;
+    public List<GameObject> FlagPoles;
     private bool LoadedMeshes = false;
     private bool[] ButtonPressed = new bool[4] { false, false, false, false };
     private delegate void DelegateFunction();
@@ -24,7 +25,6 @@ public class EndGameMeshLoader : MonoBehaviour
         endInfo = GameObject.FindGameObjectWithTag("EndGameInfo").GetComponent<EndGameInfo>();
         SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
         endInfo.transform.parent = gameObject.transform;
-
         SceneTransScript.OpenTransition();
     }
 
@@ -37,7 +37,7 @@ public class EndGameMeshLoader : MonoBehaviour
         }
         else
         {
-            if (!SceneTransScript.portcullisAnimator.IsInTransition(0))
+            if (SceneTransScript.portcullisAnimator.IsInTransition(0))
             {
                 for (int i = 0; i < endInfo.placement.Count; i++)
                 {
@@ -81,6 +81,10 @@ public class EndGameMeshLoader : MonoBehaviour
         {
             if (i < endInfo.placement.Count)
             {
+                if (endInfo.placement[i] - 1 == 0)
+                {
+                    FlagPoles[endInfo.MeshSelected[i]].SetActive(true);
+                }
                 KnightRenderers[endInfo.placement[i] - 1].GetComponent<MeshSelector>().LoadMesh(endInfo.MeshSelected[i]);
                 KnightRenderers[endInfo.placement[i] - 1].GetComponentInChildren<Animator>().SetInteger("Placement", endInfo.placement[i]);
                 KnightRenderers[endInfo.placement[i] - 1].GetComponentInChildren<Animator>().speed = 0.0f;
