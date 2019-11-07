@@ -34,6 +34,6 @@ public class RespawnPoints : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + (transform.forward * 1), 3);
+        Gizmos.DrawWireSphere(transform.position , 3);
     }
 }
