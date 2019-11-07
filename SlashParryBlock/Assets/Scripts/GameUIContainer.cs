@@ -16,7 +16,7 @@ public class GameUIContainer : MonoBehaviour
     public List<Text> readyUpText;
     public List<GameObject> playerReadyUpPanels;
     public GameObject readyUpScreen, playerStatsUI,GameScreenUI;
-    public GameObject PauseMenu;
+    public GameObject PauseMenu,ParryTutorialScreen;
     public Text GameTimer;
     public Text ControlSchemeIndicator;
 }

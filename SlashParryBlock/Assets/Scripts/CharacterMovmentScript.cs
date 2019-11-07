@@ -61,6 +61,7 @@ public class CharacterMovmentScript : MonoBehaviour
     private MatchGameplay gameplay;
     private SceneSelector SceneSelector;
     private bool[] PlayersReady = new bool[4] { false, false, false, false };
+    private bool parryTutorialScreen = false;
     private int ReadyPlayers = 0;
     private bool DebugLoad = false;
 
@@ -163,7 +164,7 @@ public class CharacterMovmentScript : MonoBehaviour
         PlayerReadyUpImg = gameUIContainer.readyUpImages;
         ReadyUpTxt = gameUIContainer.readyUpText;
 
-        ReadyUpScreen.SetActive(true);
+        gameUIContainer.ParryTutorialScreen.SetActive(true);
 
         gameplay.PlayerPortraits = gameUIContainer.PlayerRoundPortraits;
         gameplay.PlayerStats = gameUIContainer.PlayerRoundStats;
@@ -217,6 +218,7 @@ public class CharacterMovmentScript : MonoBehaviour
         controlSchemeIndicator = gameUIContainer.ControlSchemeIndicator;
         SceneTransScript = GameObject.FindGameObjectWithTag("SceneTransitioner").GetComponent<SceneTransitonerScript>();
         SceneTransScript.OpenTransition();
+        ReadyUpScreen.SetActive(false);
     }
 
     void Update()
@@ -226,6 +228,45 @@ public class CharacterMovmentScript : MonoBehaviour
             if (!playersFrozen)
             {
                 controlSchemeHandler();
+            }
+        }
+        for(int i = 0; i < joystickCharInputs.Count; i++)
+        {
+            if (!PlayGame)
+            {
+                if (!parryTutorialScreen)
+                {
+                    if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
+                    {
+                        gameUIContainer.ParryTutorialScreen.SetActive(false);
+                        ReadyUpScreen.SetActive(true);
+                        parryTutorialScreen = true;
+                    }
+                }
+                else
+                {
+                    if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
+                    {
+                        ReadyUpTxt[i].fontSize = 32;
+                        ReadyUpTxt[i].text = "Press B to UnReady";
+                        PlayersReady[i] = true;
+                        ReadyPlayers++;
+                    }
+                    if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
+                    {
+                        ReadyUpTxt[i].fontSize = 37;
+                        ReadyUpTxt[i].text = "Press A to Ready up";
+                        PlayersReady[i] = false;
+                        ReadyPlayers--;
+                    }
+                    if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
+                    {
+                        PlayGame = true;
+                        StartGame();
+                    }
+                }
+                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
+                PlayerReadyUpImg[i].texture = renderTextures[i];
             }
         }
 
@@ -360,30 +401,7 @@ public class CharacterMovmentScript : MonoBehaviour
         //iterate through all the players
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            if (!PlayGame)
-            {
-                if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
-                {
-                    ReadyUpTxt[i].fontSize = 32;
-                    ReadyUpTxt[i].text = "Press B to UnReady";
-                    PlayersReady[i] = true;
-                    ReadyPlayers++;
-                }
-                if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
-                {
-                    ReadyUpTxt[i].fontSize = 37;
-                    ReadyUpTxt[i].text = "Press A to Ready up";
-                    PlayersReady[i] = false;
-                    ReadyPlayers--;
-                }
-                if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
-                {
-                    PlayGame = true;
-                    StartGame();
-                }
-                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
-                PlayerReadyUpImg[i].texture = renderTextures[i];
-            }
+            
 
             //no inputs taken if you have been knocked back
             if (!players[i].getIsParried() && !players[i].getKnockedBack() && !players[i].Respawning && !players[i].Dashed)
