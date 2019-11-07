@@ -3937,7 +3937,7 @@ PrefabInstance:
     - target: {fileID: 761691457133800098, guid: 2f6893000ef5987419f7803c14c4745c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 761691457133800098, guid: 2f6893000ef5987419f7803c14c4745c,
         type: 3}
@@ -9414,6 +9414,7 @@ GameObject:
   - component: {fileID: 1577005390}
   - component: {fileID: 1577005389}
   - component: {fileID: 1577005388}
+  - component: {fileID: 1577005391}
   m_Layer: 0
   m_Name: txt_PressStart
   m_TagString: Untagged
@@ -9494,6 +9495,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577005386}
   m_CullTransparentMesh: 0
+--- !u!114 &1577005391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577005386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da234630c930d24793cbb24d6a2db9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1577889858
 GameObject:
   m_ObjectHideFlags: 0
@@ -11787,9 +11800,9 @@ MonoBehaviour:
   - {fileID: 1407701728}
   playerJoinInstructions:
   - {fileID: 609921008}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1682392707}
+  - {fileID: 1835399836}
+  - {fileID: 489618102}
   CharSelectMenuOptions:
   - {fileID: 672336715}
   - {fileID: 2036417454}
