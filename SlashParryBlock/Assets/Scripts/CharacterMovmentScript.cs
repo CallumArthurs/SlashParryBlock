@@ -71,7 +71,6 @@ public class CharacterMovmentScript : MonoBehaviour
 
     private levelLoadInfo levelData;
 
-    private bool alternateControls = false;
     private delegate void ControlScheme();
     ControlScheme controlSchemeHandler;
     ControlScheme controlSchemeHandlerFixedUpdate;
@@ -396,6 +395,7 @@ public class CharacterMovmentScript : MonoBehaviour
     {
         gameUIContainer.GameScreenUI.SetActive(true);
         gameObject.GetComponent<MatchGameplay>().StartMatch();
+        
         FreezePlayers();
     }
 
