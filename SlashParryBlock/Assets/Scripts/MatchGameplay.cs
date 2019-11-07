@@ -131,6 +131,7 @@ public class MatchGameplay : MonoBehaviour
                         else
                         {
                             CharMovScript.FreezePlayers();
+                            CharMovScript.Countdown();
                             GameUI.SetActive(true);
                             RoundStatsUI.SetActive(false);
                         }

@@ -20,6 +20,7 @@ public class CharacterMovmentScript : MonoBehaviour
     [Tooltip("this is a multiplier on knockback hit, halved for the shield")]
     public float playerKnockback;
     public List<AudioClip> playerClips;
+    public AudioClip RoundStartSound;
 
     [Header("CharacterMovementScript values")]
     public float AirControlSpeed;
@@ -32,6 +33,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public List<PlayerData> players = new List<PlayerData>();
     public bool gamePaused = false, playersFrozen = false;
     public Transform ExcaliburSpawnPos;
+    public Text countDownTimer;
         
     [HideInInspector]
     public List<string> joystickCharInputs;
@@ -73,6 +75,10 @@ public class CharacterMovmentScript : MonoBehaviour
     private delegate void ControlScheme();
     ControlScheme controlSchemeHandler;
     ControlScheme controlSchemeHandlerFixedUpdate;
+    private delegate void DelegateFunction();
+
+    private DelegateFunction function;
+
 
     private void Awake()
     {
@@ -262,7 +268,16 @@ public class CharacterMovmentScript : MonoBehaviour
                     if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
                     {
                         PlayGame = true;
-                        StartGame();
+                        ReadyUpScreen.SetActive(false);
+                        for (int j = 0; j < players.Count; j++)
+                        {
+                            Destroy(PlayerCams[j]);
+                            players[j].GameStart();
+                            playersRB[j].isKinematic = false;
+                            players[j].gameObject.layer = 14 + i;
+                        }
+
+                        Countdown();
                     }
                 }
                 PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
@@ -370,19 +385,18 @@ public class CharacterMovmentScript : MonoBehaviour
         }
     }
 
+    public void Countdown()
+    {
+        countDownTimer.transform.parent.gameObject.SetActive(true);
+        FreezePlayers();
+        StartCoroutine(CountdownTimer());
+    }
+
     private void StartGame()
     {
-        ReadyUpScreen.SetActive(false);
         gameUIContainer.GameScreenUI.SetActive(true);
         gameObject.GetComponent<MatchGameplay>().StartMatch();
-        for (int i = 0; i < players.Count; i++)
-        {
-            Destroy(PlayerCams[i]);
-            players[i].GameStart();
-            playersRB[i].isKinematic = false;
-            players[i].gameObject.layer = 14 + i;
-            //PlayerCams.Clear();
-        }
+        FreezePlayers();
     }
 
     private void FixedUpdate()
@@ -1013,7 +1027,28 @@ public class CharacterMovmentScript : MonoBehaviour
             {
                 playersAni[i].speed = 1.0f;
             }
+            playersRB[i].velocity = new Vector3(0, 0, 0);
         }
         Debug.Log("freeze is " + playersFrozen);
+    }
+
+    IEnumerator WaitAndRunMethod(float time, DelegateFunction function)
+    {
+        yield return new WaitForSeconds(time);
+        function();
+    }
+
+    IEnumerator CountdownTimer()
+    {
+        countDownTimer.text = "3";
+        yield return new WaitForSeconds(1.0f);
+        countDownTimer.text = "2";
+        yield return new WaitForSeconds(1.0f);
+        countDownTimer.text = "1";
+        yield return new WaitForSeconds(1.0f);
+        countDownTimer.text = "GO!";
+        yield return new WaitForSeconds(0.5f);
+        countDownTimer.transform.parent.gameObject.SetActive(false);
+        StartGame();
     }
 }
