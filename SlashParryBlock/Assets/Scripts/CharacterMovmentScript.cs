@@ -274,7 +274,7 @@ public class CharacterMovmentScript : MonoBehaviour
                             Destroy(PlayerCams[j]);
                             players[j].GameStart();
                             playersRB[j].isKinematic = false;
-                            players[j].gameObject.layer = 14 + i;
+                            players[j].gameObject.layer = 14 + j;
                         }
 
                         Countdown();
