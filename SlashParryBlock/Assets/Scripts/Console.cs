@@ -18,7 +18,6 @@ public class Console : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
-            Debug.Log("backquote pressed");
             console.enabled = true;
             console.FocusConsoleToggle(true);
         }
