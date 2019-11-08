@@ -23,8 +23,6 @@ public class RingsLevel : MonoBehaviour
     public float RespawnDelay;
     public float WarningTime;
 
-    public float maxFallDist;
-
     int RingSelector;
     bool RingChosen;
     bool goingDown = false;
@@ -59,7 +57,7 @@ public class RingsLevel : MonoBehaviour
             //Fall();
         }
         else if (RingChosen && !Fallen)
-        {//warning logic
+        {
             if (!goingDown)
             {
                 if (Rings[RingSelector].transform.localPosition.y >= ringRumblemovement)
@@ -86,22 +84,20 @@ public class RingsLevel : MonoBehaviour
         }
 
         if (CurrentTime == (TimeActivated - RespawnDelay) && Fallen)
-        {//moving pos to original pos (move back up)
+        {
+            Debug.Log("Moving back up");
             goingDown = false;
         }
 
         if (CurrentTime >= WarningTime && goingDown)
-        {//falling
-            if (Rings[RingSelector].transform.position.y >= maxFallDist)
-            {
-                Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringFallSpeed), 0));
-            }
+        {
+            Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringFallSpeed), 0));
 
             Fallen = true;
         }
 
         if (CurrentTime >= (TimeActivated - RespawnDelay) && Fallen && !goingDown)
-        {//reseting y pos in case of over/undershooting
+        {
             Rings[RingSelector].transform.Translate((new Vector3(Rings[RingSelector].transform.localPosition.x, 0, Rings[RingSelector].transform.localPosition.z) - Rings[RingSelector].transform.localPosition) * Time.deltaTime * 5.0f);
             //Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringFallSpeed), 0));
         }
