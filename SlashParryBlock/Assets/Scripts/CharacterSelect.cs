@@ -604,7 +604,7 @@ public class CharacterSelect : MonoBehaviour
     {
         if (!PlayerSelectedMesh[CharSelectNavigator.iterI])
         {
-            PlayerStamps[CharSelectNavigator.iterI].transform.position = pos.transform.position + new Vector3(-4.0f, 5.0f + -4.0f * CharSelectNavigator.iterI);
+            PlayerStamps[CharSelectNavigator.iterI].transform.position = pos.transform.position + new Vector3(-4.0f, 0.0f ,-5.0f + 4.0f * CharSelectNavigator.iterI);
         }
     }
     public void ChangeCharMesh(int character)
