@@ -392,7 +392,6 @@ public class CharacterSelect : MonoBehaviour
         ControlHandler = CharacterSelectControls;
         levelData.meshSelected.Clear();
         setupPlayerData = false;
-
         levelSelect.SetActive(false);
         levelSelectFlavourGroup.SetActive(false);
         gameplaySelect.SetActive(false);
@@ -709,7 +708,6 @@ public class CharacterSelect : MonoBehaviour
         PlayerSelectedMesh[CharSelectNavigator.iterI] = false;
         ReservedMeshes[Character] = false;
         PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
-        //PlayerSelectImages[Character].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         ReadyplayerCount--;
     }
 
@@ -761,7 +759,11 @@ public class CharacterSelect : MonoBehaviour
     public void MoveToCharacterSelect()
     {
         startFunctions = OpenCharacterSelect;
-        StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
+        CharSelectNavigator.gameObject.SetActive(true);
+        characterSelect.SetActive(true);
+        StartCoroutine(flipOntoRightPage(characterSelect));
+        StartCoroutine(flipOntoLeftPage(levelSelect));
+        StartCoroutine(WaitAndRunMethod(0.4f, startFunctions));
         bookanimator.SetTrigger("PageTurnLeft");
     }
 

@@ -237,7 +237,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     void Update()
     {
-        if ((!gamePaused && !playersFrozen) && !DebugLoad)
+        if ((!gamePaused && !playersFrozen) && !DebugLoad && PlayGame)
         {
             controlSchemeHandler();
         }
