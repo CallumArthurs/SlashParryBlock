@@ -46,6 +46,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public SceneTransitonerScript SceneTransScript;
     public Text controlSchemeIndicator;
     public AudioClip CountDownHorn;
+    public List<Text> playerHealthTxt;
 
     private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;
@@ -851,6 +852,7 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             // caching the health values
             float playerHealth = players[i].getHealth();
+            playerHealthTxt[levelData.meshSelected[i]].text = "Health: \n" + playerHealth;
             float fullHeartAmount = players[i].getOriginalHealth() / 5;
             for (int j = 0; j < playerHearts[levelData.meshSelected[i]].playerHearts.Count; j++)
             {
