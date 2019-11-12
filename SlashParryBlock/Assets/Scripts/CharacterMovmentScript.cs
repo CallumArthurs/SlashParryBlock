@@ -277,7 +277,10 @@ public class CharacterMovmentScript : MonoBehaviour
                             PlayGame = true;
                             ReadyUpScreen.SetActive(false);
                             gameUIContainer.ParryTutorialScreen.SetActive(false);
-                            Camera.main.GetComponent<Blur>().enabled = false;
+                            if (Camera.main.GetComponent<Blur>() != null)
+                            {
+                                Camera.main.GetComponent<Blur>().enabled = false;
+                            }
                             DebugLoad = false;
                             for (int j = 0; j < players.Count; j++)
                             {
