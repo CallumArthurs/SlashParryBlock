@@ -878,7 +878,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
             if (gameObject.GetComponent<MatchGameplay>().gameMode == MatchGameplay.Gamemode.Stock)
             {
-                gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].GetComponentInChildren<Text>().text = "Lives: " + (gameObject.GetComponent<MatchGameplay>().PlayerLives - players[i].Deaths).ToString();
+                gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].GetComponentInChildren<Text>().text = (gameObject.GetComponent<MatchGameplay>().PlayerLives - players[i].Deaths).ToString();
             }
         }
     }
