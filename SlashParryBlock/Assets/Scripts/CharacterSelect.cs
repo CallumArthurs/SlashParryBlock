@@ -354,9 +354,13 @@ public class CharacterSelect : MonoBehaviour
                     {
                         levelData.meshSelected.Insert(levelData.meshSelected.Count, MeshSelected[j]);
                     }
+                    gameplaySelect.SetActive(true);
+                    levelSelectFlavourGroup.SetActive(true);
+                    levelSelect.SetActive(true);
                     startFunctions = OpenLevelSelect;
                     StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
                     StartCoroutine(flipOntoRightPage(characterSelect));
+                    StartCoroutine(flipOntoLeftPage(levelSelect));
                     bookanimator.SetTrigger("PageTurnRight");
                 }
             }
@@ -399,9 +403,7 @@ public class CharacterSelect : MonoBehaviour
     void OpenLevelSelect()
     {
         characterSelect.SetActive(false);
-        gameplaySelect.SetActive(true);
-        levelSelectFlavourGroup.SetActive(true);
-        levelSelect.SetActive(true);
+        
         Arrow.gameObject.SetActive(false);
         CharSelectNavigator.gameObject.SetActive(false);
         levelStamp.gameObject.SetActive(true);
@@ -722,9 +724,13 @@ public class CharacterSelect : MonoBehaviour
             {
                 levelData.meshSelected.Insert(levelData.meshSelected.Count, MeshSelected[j]);
             }
+            gameplaySelect.SetActive(true);
+            levelSelectFlavourGroup.SetActive(true);
+            levelSelect.SetActive(true);
             startFunctions = OpenLevelSelect;
             StartCoroutine(WaitAndRunMethod(0.2f, startFunctions));
             StartCoroutine(flipOntoRightPage(characterSelect));
+            StartCoroutine(flipOntoLeftPage(levelSelect));
             bookanimator.SetTrigger("PageTurnRight");
             LevelSelectNavigator.joystickCharInputs = joystickCharInputs;
         }
@@ -864,26 +870,26 @@ public class CharacterSelect : MonoBehaviour
 
     IEnumerator flipOntoRightPage(GameObject menu)
     {
-        menu.transform.parent = CanvasRightPagePos.transform;
-        menu.transform.localScale = new Vector3(1, 1, 1);
+        menu.transform.SetParent(CanvasRightPagePos.transform, false);
+        //menu.transform.localScale = new Vector3(1, 1, 1);
         menu.transform.position = CanvasRightPagePos.transform.position;
         menu.transform.rotation = CanvasRightPagePos.transform.rotation;
-        yield return new WaitForSeconds(0.47f);
-        menu.transform.parent = MainCanvasRightPagePos.transform;
+        yield return new WaitForSeconds(0.44f);
+        menu.transform.SetParent(MainCanvasRightPagePos.transform, false);
         menu.transform.position = MainCanvasRightPagePos.transform.position;
         menu.transform.rotation = MainCanvasRightPagePos.transform.rotation;
-        menu.transform.localScale = new Vector3(1, 1, 1);
+        //menu.transform.localScale = new Vector3(1, 1, 1);
     }
     IEnumerator flipOntoLeftPage(GameObject menu)
     {
-        menu.transform.parent = CanvasLeftPagePos.transform;
-        menu.transform.localScale = new Vector3(1, 1, 1);
+        menu.transform.SetParent(CanvasLeftPagePos.transform, false);
+        //menu.transform.localScale = new Vector3(1, 1, 1);
         menu.transform.position = CanvasLeftPagePos.transform.position;
         menu.transform.rotation = CanvasLeftPagePos.transform.rotation;
-        yield return new WaitForSeconds(0.47f);
-        menu.transform.parent = MainCanvasLeftPagePos.transform;
+        yield return new WaitForSeconds(0.44f);
+        menu.transform.SetParent(MainCanvasLeftPagePos.transform, false);
         menu.transform.position = MainCanvasLeftPagePos.transform.position;
         menu.transform.rotation = MainCanvasLeftPagePos.transform.rotation;
-        menu.transform.localScale = new Vector3(1, 1, 1);
+        //menu.transform.localScale = new Vector3(1, 1, 1);
     }
 }
