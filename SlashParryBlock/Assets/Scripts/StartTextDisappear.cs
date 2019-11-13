@@ -17,9 +17,12 @@ public class StartTextDisappear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("StartButtonP1"))
+        for (int i = 0; i < 4; i++)
         {
-            StartCoroutine(TimerRoutine());
+            if (Input.GetButtonDown("StartButtonP" + (i + 1)))
+            {
+                StartCoroutine(TimerRoutine());
+            }
         }
 
         if (CurrentTime >= 0.5f)
