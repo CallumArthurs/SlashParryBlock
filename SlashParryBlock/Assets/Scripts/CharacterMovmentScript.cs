@@ -46,6 +46,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public SceneTransitonerScript SceneTransScript;
     public Text controlSchemeIndicator;
     public AudioClip CountDownHorn;
+    public List<Text> playerHealthTxt;
 
     private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;
@@ -67,8 +68,9 @@ public class CharacterMovmentScript : MonoBehaviour
     private int ReadyPlayers = 0;
     private bool DebugLoad = false;
 
-    public bool PlayGame = false;
+    public bool PlayGame = false, countDown = false;
     public GameUIContainer gameUIContainer;
+    public List<HeartFollower> heartFollowers;
 
     private levelLoadInfo levelData;
 
@@ -119,7 +121,7 @@ public class CharacterMovmentScript : MonoBehaviour
             players.Add(Instantiate(Resources.Load("Prefabs/p_KnightSpawn") as GameObject, gameObject.transform).GetComponent<PlayerData>());
             PlayerCams.Add(Instantiate(Resources.Load("Prefabs/PlayerReadyUpCam") as GameObject));
             players[j].gameObject.transform.position = playerReadyUpPos[j].transform.position;
-
+            heartFollowers[j].Player = players[j].gameObject;
             PlayerRenderTextures.Add(Resources.Load("Prefabs/" + joystickCharInputs[j] + "TargetTexture") as RenderTexture);
             PlayerCams[j].GetComponent<Camera>().targetTexture = PlayerRenderTextures[j];
             Instantiate(levelData.KnightSwords[levelData.meshSelected[j]], players[j].SwordPos.transform);
@@ -237,7 +239,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     void Update()
     {
-        if ((!gamePaused && !playersFrozen) && !DebugLoad)
+        if ((!gamePaused && !playersFrozen) && !DebugLoad && PlayGame)
         {
             controlSchemeHandler();
         }
@@ -277,7 +279,10 @@ public class CharacterMovmentScript : MonoBehaviour
                             PlayGame = true;
                             ReadyUpScreen.SetActive(false);
                             gameUIContainer.ParryTutorialScreen.SetActive(false);
-                            Camera.main.GetComponent<Blur>().enabled = false;
+                            if (Camera.main.GetComponent<Blur>() != null)
+                            {
+                                Camera.main.GetComponent<Blur>().enabled = false;
+                            }
                             DebugLoad = false;
                             for (int j = 0; j < players.Count; j++)
                             {
@@ -357,6 +362,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     public void Countdown()
     {
+        countDown = true;
         countDownTimer.transform.parent.gameObject.SetActive(true);
         FreezePlayers();
         StartCoroutine(CountdownTimer());
@@ -430,7 +436,7 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (PlayGame)
             {
-                if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor) && !players[i].IgnoreSpeedLimit)
+                if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.25f, 1.0f, floor) && !players[i].IgnoreSpeedLimit)
                 {
                     speed = originalSpeed;
                     maxSpeed = originalMaxSpeed;
@@ -848,6 +854,7 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             // caching the health values
             float playerHealth = players[i].getHealth();
+            playerHealthTxt[levelData.meshSelected[i]].text = "Health: \n" + playerHealth;
             float fullHeartAmount = players[i].getOriginalHealth() / 5;
             for (int j = 0; j < playerHearts[levelData.meshSelected[i]].playerHearts.Count; j++)
             {
@@ -875,7 +882,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
             if (gameObject.GetComponent<MatchGameplay>().gameMode == MatchGameplay.Gamemode.Stock)
             {
-                gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].GetComponentInChildren<Text>().text = "Lives: " + (gameObject.GetComponent<MatchGameplay>().PlayerLives - players[i].Deaths).ToString();
+                gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].GetComponentInChildren<Text>().text = (gameObject.GetComponent<MatchGameplay>().PlayerLives - players[i].Deaths).ToString();
             }
         }
     }
@@ -945,5 +952,6 @@ public class CharacterMovmentScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         countDownTimer.transform.parent.gameObject.SetActive(false);
         StartGame();
+        countDown = false;
     }
 }

@@ -118,7 +118,7 @@ public class MatchGameplay : MonoBehaviour
                         }
                 }
             }
-            else if (!CharMovScript.gamePaused || !playMatch)
+            else if ((!CharMovScript.gamePaused || !playMatch) && !CharMovScript.countDown)
             {
                 for (int i = 0; i < CharMovScript.players.Count; i++)
                 {
