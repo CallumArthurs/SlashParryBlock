@@ -9,8 +9,8 @@ public class HeartFollower : MonoBehaviour
     void Update()
     {
         if (Player != null)
-        {
-            gameObject.transform.position = new Vector3(Player.transform.position.x, gameObject.transform.position.y, Player.transform.position.z + 1.0f);
+        { 
+            gameObject.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y - 0.5f, Player.transform.position.z + 1.0f);
         }
     }
 }
