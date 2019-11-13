@@ -68,7 +68,7 @@ public class CharacterMovmentScript : MonoBehaviour
     private int ReadyPlayers = 0;
     private bool DebugLoad = false;
 
-    public bool PlayGame = false;
+    public bool PlayGame = false, countDown = false;
     public GameUIContainer gameUIContainer;
 
     private levelLoadInfo levelData;
@@ -361,6 +361,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     public void Countdown()
     {
+        countDown = true;
         countDownTimer.transform.parent.gameObject.SetActive(true);
         FreezePlayers();
         StartCoroutine(CountdownTimer());
@@ -434,7 +435,7 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (PlayGame)
             {
-                if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.5f, 0.5f, floor) && !players[i].IgnoreSpeedLimit)
+                if (Physics.SphereCast(new Ray(players[i].transform.position, Vector3.down), 0.25f, 1.0f, floor) && !players[i].IgnoreSpeedLimit)
                 {
                     speed = originalSpeed;
                     maxSpeed = originalMaxSpeed;
@@ -950,5 +951,6 @@ public class CharacterMovmentScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         countDownTimer.transform.parent.gameObject.SetActive(false);
         StartGame();
+        countDown = false;
     }
 }

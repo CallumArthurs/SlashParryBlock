@@ -796,6 +796,6 @@ public class PlayerData : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position + (transform.forward * radius), radius);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), 0.5f);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), 0.25f);
     }
 }
