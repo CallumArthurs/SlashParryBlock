@@ -7,7 +7,7 @@ public class ParticleDelete : MonoBehaviour
     ParticleSystem particles;
     void Start()
     {
-        particles = gameObject.GetComponent<ParticleSystem>();
+        particles = gameObject.GetComponentInChildren<ParticleSystem>();
     }
 
     void Update()

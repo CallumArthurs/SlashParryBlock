@@ -796,7 +796,6 @@ public class PlayerData : MonoBehaviour
         }
         yield return new WaitForSeconds(1.0f);
         GetComponent<Rigidbody>().MovePosition(spawnPos);
-        Destroy(tmpParticles);
     }
 
     public void SetStock(bool Nostock)
