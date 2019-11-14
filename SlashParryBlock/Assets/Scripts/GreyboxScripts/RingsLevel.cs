@@ -24,6 +24,9 @@ public class RingsLevel : MonoBehaviour
     public float WarningTime;
 
     public float maxFallDist;
+
+    public CharacterMovmentScript charMovmentScript;
+    public bool levelStartUp = true;
     int RingSelector;
     bool RingChosen;
     bool goingDown = false;
@@ -34,7 +37,6 @@ public class RingsLevel : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(TimerRoutine());
         StartLevel();
 
         if (WarningTime <= 0)
@@ -48,76 +50,88 @@ public class RingsLevel : MonoBehaviour
 
     void Update()
     {
-        //If CurrentTime = the randomly generated fall time, choose a ring randomly and initialise the Fall method
-        if (CurrentTime == ChosenFallTime && !RingChosen)
+        if (charMovmentScript.PlayGame && !charMovmentScript.countDown)
         {
-            RingSelector = Random.Range(0, Rings.Length);
-            FallingRing = Rings[RingSelector];
-            RingChosen = true;
-
-            //Fall();
-        }
-        else if (RingChosen && !Fallen)
-        {//warning logic
-            if (!goingDown)
+            if (levelStartUp)
             {
-                if (Rings[RingSelector].transform.localPosition.y >= ringRumblemovement)
+                StartCoroutine(TimerRoutine());
+                levelStartUp = false;
+            }
+            //If CurrentTime = the randomly generated fall time, choose a ring randomly and initialise the Fall method
+            if (CurrentTime == ChosenFallTime && !RingChosen)
+            {
+                RingSelector = Random.Range(0, Rings.Length);
+                FallingRing = Rings[RingSelector];
+                RingChosen = true;
+
+                //Fall();
+            }
+            else if (RingChosen && !Fallen)
+            {//warning logic
+                if (!goingDown)
                 {
-                    goingDown = true;
+                    if (Rings[RingSelector].transform.localPosition.y >= ringRumblemovement)
+                    {
+                        goingDown = true;
+                    }
+                    Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringRumbleSpeed), 0));
                 }
-                Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringRumbleSpeed), 0));
-            }
-            else if (goingDown)
-            {
-                if (Rings[RingSelector].transform.localPosition.y <= -ringRumblemovement)
+                else if (goingDown)
                 {
-                    goingDown = false;
+                    if (Rings[RingSelector].transform.localPosition.y <= -ringRumblemovement)
+                    {
+                        goingDown = false;
+                    }
+                    Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringRumbleSpeed), 0));
                 }
-                Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringRumbleSpeed), 0));
             }
-        }
 
-        if (CurrentTime == TimeActivated && !Fallen)
-        {
-            Fall();
-            //Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * 5.0f), 0));
-            //FallingRing.SetActive(false);
-        }
-
-        if (CurrentTime == (TimeActivated - RespawnDelay) && Fallen)
-        {//moving pos to original pos (move back up)
-            goingDown = false;
-        }
-
-        if (CurrentTime >= WarningTime && goingDown)
-        {//falling
-            if (Rings[RingSelector].transform.position.y >= maxFallDist)
+            if (CurrentTime == TimeActivated && !Fallen)
             {
-                Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringFallSpeed), 0));
+                Fall();
+                //Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * 5.0f), 0));
+                //FallingRing.SetActive(false);
             }
 
-            Fallen = true;
+            if (CurrentTime == (TimeActivated - RespawnDelay) && Fallen)
+            {//moving pos to original pos (move back up)
+                goingDown = false;
+            }
+
+            if (CurrentTime >= WarningTime && goingDown)
+            {//falling
+                if (Rings[RingSelector].transform.position.y >= maxFallDist)
+                {
+                    Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringFallSpeed), 0));
+                }
+
+                Fallen = true;
+            }
+
+            if (CurrentTime >= (TimeActivated - RespawnDelay) && Fallen && !goingDown)
+            {//reseting y pos in case of over/undershooting
+                Rings[RingSelector].transform.Translate((new Vector3(Rings[RingSelector].transform.localPosition.x, 0, Rings[RingSelector].transform.localPosition.z) - Rings[RingSelector].transform.localPosition) * Time.deltaTime * 5.0f);
+                //Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringFallSpeed), 0));
+            }
+
+
+            if (CurrentTime == (TimeActivated + RespawnDelay) && Fallen)
+            {
+                //ColourReset();
+                StartLevel();
+            }
+
+            Debug.Log("playing level");
         }
-
-        if (CurrentTime >= (TimeActivated - RespawnDelay) && Fallen && !goingDown)
-        {//reseting y pos in case of over/undershooting
-            Rings[RingSelector].transform.Translate((new Vector3(Rings[RingSelector].transform.localPosition.x, 0, Rings[RingSelector].transform.localPosition.z) - Rings[RingSelector].transform.localPosition) * Time.deltaTime * 5.0f);
-            //Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringFallSpeed), 0));
-        }
-
-
-        if (CurrentTime == (TimeActivated + RespawnDelay) && Fallen)
+        else
         {
-            //ColourReset();
-            StartLevel();
+            Debug.Log("Not playing level");
         }
-
     }
 
     void Fall()
     {
         //FallingRing.GetComponent<MeshRenderer>().material.color = Color.black;
-
         TimeActivated = CurrentTime;
         TimeActivated += WarningTime;
         goingDown = true;
