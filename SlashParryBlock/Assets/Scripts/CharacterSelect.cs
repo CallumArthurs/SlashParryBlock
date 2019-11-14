@@ -99,8 +99,12 @@ public class CharacterSelect : MonoBehaviour
             PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 5.0f + -4.0f * i);
         }
 
+        #if UNITY_EDITOR
+        Debug.Log("Mouse is free from the screen");
+        #else
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        #endif
     }
 
     void Update()
@@ -151,7 +155,7 @@ public class CharacterSelect : MonoBehaviour
                         KnightMeshes[j].SetActive(false);
                     }
                 }
-                #region OldMainMenu
+#region OldMainMenu
                 /*
                 if (Input.GetAxis("D-PadYP" + (i + 1)) > 0.0f && !DPadAxisUsed[i])
                 {
@@ -199,7 +203,7 @@ public class CharacterSelect : MonoBehaviour
                     }
                 }
                 */
-                #endregion
+#endregion
             }
         }
     }
@@ -211,7 +215,7 @@ public class CharacterSelect : MonoBehaviour
             //count = how many objects there are so if 1 connected, i will only go up to 0
             for (int i = 0; i < joystickCharInputs.Count; i++)
             {
-                #region Old CharSelect
+#region Old CharSelect
                 //Cycles through the connected controllers
                 /*if (Input.GetButtonDown("R_Bumper" + joystickCharInputs[i]) && !playersReady[i])
                 {
@@ -343,7 +347,7 @@ public class CharacterSelect : MonoBehaviour
                     }
                 }
                 */
-                #endregion
+#endregion
 
                 //Dev controls
                 if (Input.GetKeyDown(KeyCode.Space) && !setupPlayerData)
@@ -418,7 +422,7 @@ public class CharacterSelect : MonoBehaviour
     {
         for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            #region OldGameplaySelectControls
+#region OldGameplaySelectControls
             //if (Input.GetAxis("D-PadY" + joystickCharInputs[i]) < 0.0f && !DPadAxisUsed[i])
             //{
             //    gameplayChoice--;
@@ -582,7 +586,7 @@ public class CharacterSelect : MonoBehaviour
             //    StartCoroutine(WaitAndRunMethod(0.5f, startFunctions));
             //    bookanimator.SetTrigger("PageTurnLeft");
             //}
-            #endregion
+#endregion
         }
 
         GamemodeSelect.text = levelData.gamemode.ToString();
