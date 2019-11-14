@@ -44,6 +44,7 @@ public class PlayerData : MonoBehaviour
     //when the player is in the air it ignores the speed limiter set on it
     public bool IgnoreSpeedLimit = false;
     public float fallTimer = 0.5f;
+    public GameObject heartFollower;
 
     //player stats
     public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
@@ -761,6 +762,7 @@ public class PlayerData : MonoBehaviour
     {
         NoStock = Nostock;
         gameObject.SetActive(!NoStock);
+        heartFollower.SetActive(!NoStock);
     }
     public bool GetStock()
     {
