@@ -745,7 +745,7 @@ public class CharacterSelect : MonoBehaviour
         levelSelected = level;
         LevelSelectNavigator.enabled = false;
         GameplaySelectNavigator.enabled = true;
-        //Arrow.gameObject.SetActive(true);
+        Arrow.gameObject.SetActive(true);
         ControlHandler = GameplaySelectControls;
     }
     public void SelectRandomLevel()
@@ -867,6 +867,11 @@ public class CharacterSelect : MonoBehaviour
             GameplaySelectNavigator.MoveToMenuOption(RoundLength);
         }
     }
+    public void MoveArrow(MenuOption option)
+    {
+        Arrow.transform.position = new Vector3(option.gameObject.transform.position.x - 5.0f, option.gameObject.transform.position.y, option.gameObject.transform.position.z);
+    }
+
     public void StartGame()
     {
         SceneTransScript.CloseTransition();
