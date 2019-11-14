@@ -122,6 +122,7 @@ public class CharacterMovmentScript : MonoBehaviour
             PlayerCams.Add(Instantiate(Resources.Load("Prefabs/PlayerReadyUpCam") as GameObject));
             players[j].gameObject.transform.position = playerReadyUpPos[j].transform.position;
             heartFollowers[levelData.meshSelected[j]].Player = players[j].gameObject;
+            players[j].heartFollower = heartFollowers[levelData.meshSelected[j]].gameObject;
             PlayerRenderTextures.Add(Resources.Load("Prefabs/" + joystickCharInputs[j] + "TargetTexture") as RenderTexture);
             PlayerCams[j].GetComponent<Camera>().targetTexture = PlayerRenderTextures[j];
             Instantiate(levelData.KnightSwords[levelData.meshSelected[j]], players[j].SwordPos.transform);
