@@ -206,6 +206,7 @@ public class CharacterMovmentScript : MonoBehaviour
             players[i].setDamage(playerDamage, backstabDamage, riposteDamage);
             players[i].setKnockback(playerKnockback);
             players[i].SetSounds(soundPlayers[i],playerClips);
+            players[i].MeshSelected = levelData.meshSelected[i];
 
             //getting a reference to all the player's rigidbodies
             playersRB.Add(players[i].gameObject.GetComponent<Rigidbody>());
@@ -929,7 +930,6 @@ public class CharacterMovmentScript : MonoBehaviour
             }
             playersRB[i].velocity = new Vector3(0, 0, 0);
         }
-        Debug.Log("freeze is " + playersFrozen);
     }
 
     IEnumerator WaitAndRunMethod(float time, DelegateFunction function)

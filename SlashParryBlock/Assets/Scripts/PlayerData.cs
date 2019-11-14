@@ -49,7 +49,7 @@ public class PlayerData : MonoBehaviour
     //player stats
     public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
     public float damageTaken = 0, damageDealt = 0;
-
+    public int MeshSelected;
     //original health is their spawned health 
     private int originalHealth, backstabDamage, RiposteDamage;
 
@@ -733,6 +733,7 @@ public class PlayerData : MonoBehaviour
 
     private void Respawn()
     {
+        GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f,1000.0f,0));
         Respawning = true;
         invulnerable = true;
         halo.enabled = true;
@@ -757,8 +758,47 @@ public class PlayerData : MonoBehaviour
             Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), excaliburSpawn, Quaternion.identity);
         }
         animator.SetTrigger("ResetAnimation");
-        GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
+        Vector3 spawnPos = charMovScript.SpawnPlayer();
+        StartCoroutine(WaitAndSpawn(spawnPos));
     }
+
+    IEnumerator WaitAndSpawn(Vector3 spawnPos)
+    {
+        GameObject tmpParticles;
+        //figuring out what colour effect should play
+        switch (MeshSelected)
+        {
+            case 0:
+                {
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    break;
+                }
+            case 1:
+                {
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleGreen"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    break;
+                }
+            case 2:
+                {
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleYellow"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    break;
+                }
+            case 3:
+                {
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleRed"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    break;
+                }
+            default:
+                {
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    break;
+                }
+        }
+        yield return new WaitForSeconds(1.0f);
+        GetComponent<Rigidbody>().MovePosition(spawnPos);
+        Destroy(tmpParticles);
+    }
+
     public void SetStock(bool Nostock)
     {
         NoStock = Nostock;
