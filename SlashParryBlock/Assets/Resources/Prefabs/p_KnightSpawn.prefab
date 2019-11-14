@@ -7112,6 +7112,7 @@ MonoBehaviour:
   Dashed: 0
   IgnoreSpeedLimit: 0
   fallTimer: 0.5
+  heartFollower: {fileID: 0}
   kills: 0
   Deaths: 0
   successfulParries: 0
@@ -7347,7 +7348,7 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8121109671158207708, guid: 4c43ea75892055442b02d38b83065ae4,
+    - target: {fileID: 8121109671158207704, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
       value: 18
@@ -7357,7 +7358,7 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 8121109671158207704, guid: 4c43ea75892055442b02d38b83065ae4,
+    - target: {fileID: 8121109671158207708, guid: 4c43ea75892055442b02d38b83065ae4,
         type: 3}
       propertyPath: m_Layer
       value: 18
@@ -7372,7 +7373,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: dd6862acd1fbf25459eb5e849e24f44e, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4680822016072240669, guid: 4c43ea75892055442b02d38b83065ae4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4c43ea75892055442b02d38b83065ae4, type: 3}
 --- !u!1 &5396385503211757608 stripped
 GameObject:
