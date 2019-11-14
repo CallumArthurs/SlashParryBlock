@@ -756,6 +756,7 @@ public class PlayerData : MonoBehaviour
             SetExcalibur(false);
             Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), excaliburSpawn, Quaternion.identity);
         }
+        animator.SetTrigger("ResetAnimation");
         GetComponent<Rigidbody>().MovePosition(charMovScript.SpawnPlayer());
     }
     public void SetStock(bool Nostock)
