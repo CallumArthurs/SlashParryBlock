@@ -770,27 +770,27 @@ public class PlayerData : MonoBehaviour
         {
             case 0:
                 {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
                     break;
                 }
             case 1:
                 {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleGreen"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleGreen"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
                     break;
                 }
             case 2:
                 {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleYellow"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleYellow"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
                     break;
                 }
             case 3:
                 {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleRed"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleRed"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
                     break;
                 }
             default:
                 {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y + 0.05f, spawnPos.z), Quaternion.identity);
+                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
                     break;
                 }
         }
