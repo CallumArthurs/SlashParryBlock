@@ -198,9 +198,7 @@ public class CharacterMovmentScript : MonoBehaviour
         horn.clip = CountDownHorn;
         for (int i = 0; i < players.Count; i++)
         {
-            gameUIContainer.playerPortraits[levelData.meshSelected[i]].GetComponent<RectTransform>().position = gameUIContainer.portPositions[i].position;
-
-            gameUIContainer.ProfileRing[levelData.meshSelected[i]].SetActive(true);
+            
 
             //setting the values of the players
             players[i].setHealth(playerHealth);
@@ -211,13 +209,14 @@ public class CharacterMovmentScript : MonoBehaviour
             //getting a reference to all the player's rigidbodies
             playersRB.Add(players[i].gameObject.GetComponent<Rigidbody>());
             playersAni.Add(players[i].gameObject.GetComponentInChildren<Animator>());
-            playerPortraits[levelData.meshSelected[i]].SetActive(true);
             playersRB[i].isKinematic = true;
             playersRB[i].MovePosition(playerReadyUpPos[i].transform.position);
 
             if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
             {
                 gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].gameObject.SetActive(true);
+                gameUIContainer.playerPortraits[levelData.meshSelected[i]].GetComponent<RectTransform>().position = gameUIContainer.portPositions[i].position;
+                playerPortraits[levelData.meshSelected[i]].SetActive(true);
             }
 
             gameUIContainer.playerReadyUpPanels[i].SetActive(true);
@@ -854,7 +853,6 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             // caching the health values
             float playerHealth = players[i].getHealth();
-            playerHealthTxt[levelData.meshSelected[i]].text = "Health: \n" + playerHealth;
             float fullHeartAmount = players[i].getOriginalHealth() / 5;
             for (int j = 0; j < playerHearts[levelData.meshSelected[i]].playerHearts.Count; j++)
             {
