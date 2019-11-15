@@ -252,7 +252,7 @@ public class MatchGameplay : MonoBehaviour
                 tmpPlayerTextStats[3].text = "Damage Dealt: " + playerStatsCurRound[i].damageDealt.ToString();
                 tmpPlayerTextStats[4].text = "Damage Taken: " + playerStatsCurRound[i].damageTaken.ToString();
                 tmpPlayerTextStats[5].text = "Killstreak: " + playerStatsCurRound[i].killStreak.ToString();
-
+                PlayerStats[i].GetComponent<Image>().sprite = CharMovScript.playerStatsBanners[meshSelected[i]];
                 PlayerPortraits[i].GetComponent<Image>().sprite = knightPortraitImages[meshSelected[i]];
             }
             else
