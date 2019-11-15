@@ -869,7 +869,7 @@ public class CharacterSelect : MonoBehaviour
     }
     public void MoveArrow(MenuOption option)
     {
-        Arrow.transform.position = new Vector3(option.gameObject.transform.position.x - 5.0f, option.gameObject.transform.position.y, option.gameObject.transform.position.z);
+        Arrow.transform.position = new Vector3(option.gameObject.transform.position.x + 0.1f, option.gameObject.transform.position.y, option.gameObject.transform.position.z);
     }
 
     public void StartGame()
