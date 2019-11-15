@@ -844,11 +844,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: canvas_MainUI
       objectReference: {fileID: 0}
-    - target: {fileID: 5372248229146181577, guid: 115f64894e56fee4bb58cbb266c892b3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3337612241751930629, guid: 115f64894e56fee4bb58cbb266c892b3,
         type: 3}
       propertyPath: A_Button.m_PersistentCalls.m_Calls.Array.size
@@ -1713,6 +1708,11 @@ PrefabInstance:
     - target: {fileID: 1920956532343773043, guid: 115f64894e56fee4bb58cbb266c892b3,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316572571285821543, guid: 115f64894e56fee4bb58cbb266c892b3,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8565,6 +8565,7 @@ MonoBehaviour:
   ringRumblemovement: 0.005
   ringFallSpeed: 20
   RespawnDelay: 1
+  RespawnTime: 0
   WarningTime: 5
   maxFallDist: -70
   charMovmentScript: {fileID: 1169392000}
