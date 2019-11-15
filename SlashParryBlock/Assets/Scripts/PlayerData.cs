@@ -389,7 +389,7 @@ public class PlayerData : MonoBehaviour
                         {
                             for (int i = 0; i < playerMaterial.Count; i++)
                             {
-                                playerMaterial[i].color *= 0.95f;
+                                playerMaterial[i].color *= 0.93f;
                             }
 
                             if (playerMaterial[0].color.r <= 0.5f)
@@ -401,7 +401,7 @@ public class PlayerData : MonoBehaviour
                         {
                             for (int i = 0; i < playerMaterial.Count; i++)
                             {
-                                playerMaterial[i].color *= 1.05f;
+                                playerMaterial[i].color *= 1.07f;
                             }
 
                             if (playerMaterial[0].color.r >= 1)
