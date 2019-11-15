@@ -134,6 +134,7 @@ public class PlayerData : MonoBehaviour
             }//check if you fell out of the map
             else if (transform.position.y <= -5.0f)
             {
+                transform.position = new Vector3(0,1000.0f,0);
                 health = 0;
             }
 
@@ -734,33 +735,36 @@ public class PlayerData : MonoBehaviour
     private void Respawn()
     {
         #region DeathParticleSpawn
-        switch (playerLastHit.MeshSelected)
+        if (playerLastHit != null)
         {
-            case 0:
-                {
-                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
-                    break;
-                }
-            case 1:
-                {
-                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleGreen"), transform.position, Quaternion.identity);
-                    break;
-                }
-            case 2:
-                {
-                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleYellow"), transform.position, Quaternion.identity);
-                    break;
-                }
-            case 3:
-                {
-                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleRed"), transform.position, Quaternion.identity);
-                    break;
-                }
-            default:
-                {
-                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
-                    break;
-                }
+            switch (playerLastHit.MeshSelected)
+            {
+                case 0:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 1:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleGreen"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 2:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleYellow"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 3:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleRed"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                default:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
+                        break;
+                    }
+            }
         }
         playerLastHit = null;
         #endregion
@@ -776,6 +780,7 @@ public class PlayerData : MonoBehaviour
         isParried = false;
         knockedback = false;
         Vector3 excaliburSpawn = GetComponent<Rigidbody>().position;
+        transform.position = new Vector3(0, 1000.0f, 0);
         Deaths++;
         playClip(ClipSelector.death);
         animator.SetInteger("Anim", 0);
