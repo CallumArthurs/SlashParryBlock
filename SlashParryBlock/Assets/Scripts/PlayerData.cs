@@ -128,7 +128,7 @@ public class PlayerData : MonoBehaviour
                 {
                     playerLastHit.kills++;
                     playerLastHit.killstreakTemp++;
-                    playerLastHit = null;
+                    
                 }
                 Respawn();
             }//check if you fell out of the map
@@ -733,6 +733,38 @@ public class PlayerData : MonoBehaviour
 
     private void Respawn()
     {
+        #region DeathParticleSpawn
+        switch (playerLastHit.MeshSelected)
+        {
+            case 0:
+                {
+                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
+                    break;
+                }
+            case 1:
+                {
+                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleGreen"), transform.position, Quaternion.identity);
+                    break;
+                }
+            case 2:
+                {
+                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleYellow"), transform.position, Quaternion.identity);
+                    break;
+                }
+            case 3:
+                {
+                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleRed"), transform.position, Quaternion.identity);
+                    break;
+                }
+            default:
+                {
+                    Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
+                    break;
+                }
+        }
+        playerLastHit = null;
+        #endregion
+
         GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f,1000.0f,0));
         Respawning = true;
         invulnerable = true;
