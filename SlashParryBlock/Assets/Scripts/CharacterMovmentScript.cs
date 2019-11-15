@@ -47,6 +47,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public Text controlSchemeIndicator;
     public AudioClip CountDownHorn;
     public List<Text> playerHealthTxt;
+    public List<Sprite> playerStatsBanners;
 
     private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;

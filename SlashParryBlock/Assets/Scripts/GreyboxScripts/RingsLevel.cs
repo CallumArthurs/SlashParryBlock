@@ -132,12 +132,9 @@ public class RingsLevel : MonoBehaviour
     IEnumerator TimerRoutine()
     {
         CurrentTime = 0;
-        Debug.Log(WarningTime + ChosenFallTime + RespawnDelay + RespawnTime);
         while (CurrentTime <= WarningTime + ChosenFallTime + RespawnDelay + RespawnTime)
         {
             yield return new WaitForSeconds(Step);
-            Debug.Log(CurrentTime);
-            Debug.Log(WarningTime + ChosenFallTime + RespawnDelay + RespawnTime);
             CurrentTime += Step;
         }
         fallComplete = true;
@@ -147,7 +144,6 @@ public class RingsLevel : MonoBehaviour
     {
         if (!charMovmentScript.gamePaused && !charMovmentScript.countDown)
         {
-            Debug.Log("Started to fall");
             Rings[RingSelector].transform.localPosition = new Vector3(0, 0, 0);
             fallComplete = false;
             RingChosen = false;
