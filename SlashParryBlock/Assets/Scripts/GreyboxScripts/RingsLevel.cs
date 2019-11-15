@@ -21,6 +21,7 @@ public class RingsLevel : MonoBehaviour
     public float ringFallSpeed = 1.0f;
 
     public float RespawnDelay;
+    public float RespawnTime;
     public float WarningTime;
 
     public float maxFallDist;
@@ -30,6 +31,8 @@ public class RingsLevel : MonoBehaviour
     int RingSelector;
     bool RingChosen;
     bool goingDown = false;
+    private bool fallComplete = true;
+    private bool warning = false;
 
     bool Fallen;
     public float ChosenFallTime;
@@ -37,8 +40,6 @@ public class RingsLevel : MonoBehaviour
 
     void Start()
     {
-        StartLevel();
-
         if (WarningTime <= 0)
         { WarningTime = 2; }
 
@@ -54,7 +55,6 @@ public class RingsLevel : MonoBehaviour
         {
             if (levelStartUp)
             {
-                StartCoroutine(TimerRoutine());
                 levelStartUp = false;
             }
             //If CurrentTime = the randomly generated fall time, choose a ring randomly and initialise the Fall method
@@ -66,7 +66,7 @@ public class RingsLevel : MonoBehaviour
 
                 //Fall();
             }
-            else if (RingChosen && !Fallen)
+            else if (RingChosen && !Fallen && warning)
             {//warning logic
                 if (!goingDown)
                 {
@@ -86,14 +86,14 @@ public class RingsLevel : MonoBehaviour
                 }
             }
 
-            if (CurrentTime == TimeActivated && !Fallen)
+            if (!Fallen && !warning)
             {
                 Fall();
                 //Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * 5.0f), 0));
                 //FallingRing.SetActive(false);
             }
 
-            if (CurrentTime == (TimeActivated - RespawnDelay) && Fallen)
+            if (CurrentTime >= WarningTime + ChosenFallTime + RespawnDelay && Fallen)
             {//moving pos to original pos (move back up)
                 goingDown = false;
             }
@@ -104,77 +104,56 @@ public class RingsLevel : MonoBehaviour
                 {
                     Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringFallSpeed), 0));
                 }
-
                 Fallen = true;
             }
 
-            if (CurrentTime >= (TimeActivated - RespawnDelay) && Fallen && !goingDown)
+            if (CurrentTime >= RespawnDelay + RespawnTime && Fallen && !goingDown)
             {//reseting y pos in case of over/undershooting
                 Rings[RingSelector].transform.Translate((new Vector3(Rings[RingSelector].transform.localPosition.x, 0, Rings[RingSelector].transform.localPosition.z) - Rings[RingSelector].transform.localPosition) * Time.deltaTime * 5.0f);
+                
                 //Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringFallSpeed), 0));
             }
 
 
-            if (CurrentTime == (TimeActivated + RespawnDelay) && Fallen)
+            if (fallComplete)
             {
-                //ColourReset();
                 StartLevel();
             }
-
-            Debug.Log("playing level");
-        }
-        else
-        {
-            Debug.Log("Not playing level");
         }
     }
 
     void Fall()
     {
         //FallingRing.GetComponent<MeshRenderer>().material.color = Color.black;
-        TimeActivated = CurrentTime;
-        TimeActivated += WarningTime;
         goingDown = true;
+        warning = true;
     }
 
     IEnumerator TimerRoutine()
     {
-        while (CurrentTime < 50)
+        CurrentTime = 0;
+        Debug.Log(WarningTime + ChosenFallTime + RespawnDelay + RespawnTime);
+        while (CurrentTime <= WarningTime + ChosenFallTime + RespawnDelay + RespawnTime)
         {
             yield return new WaitForSeconds(Step);
+            Debug.Log(CurrentTime);
+            Debug.Log(WarningTime + ChosenFallTime + RespawnDelay + RespawnTime);
             CurrentTime += Step;
         }
-    }
-
-    void ColourReset()
-    {
-        if (FallingRing == Rings[0])
-        {
-            Reset = Color.yellow;
-        }
-
-        if (FallingRing == Rings[1])
-        {
-            Reset = Color.blue;
-        }
-
-        if (FallingRing == Rings[2])
-        {
-            Reset = Color.red;
-        }
-
-        FallingRing.GetComponent<MeshRenderer>().material.color = Reset;
+        fallComplete = true;
     }
 
     void StartLevel()
     {
-        Rings[RingSelector].transform.localPosition = new Vector3(0, 0, 0);
-        RingChosen = false;
-        CurrentTime = 0;
-        Fallen = false;
-        TimeActivated = 0;
-        ChosenFallTime = Random.Range(LongestTime, ShortestTime);
+        if (!charMovmentScript.gamePaused && !charMovmentScript.countDown)
+        {
+            Debug.Log("Started to fall");
+            Rings[RingSelector].transform.localPosition = new Vector3(0, 0, 0);
+            fallComplete = false;
+            RingChosen = false;
+            Fallen = false;
+            ChosenFallTime = Random.Range(LongestTime, ShortestTime);
+            StartCoroutine(TimerRoutine());
+        }
     }
 }
-
-

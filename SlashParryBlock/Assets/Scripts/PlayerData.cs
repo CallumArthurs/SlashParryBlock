@@ -95,8 +95,8 @@ public class PlayerData : MonoBehaviour
         health = originalHealth;
         animator = gameObject.GetComponentInChildren<Animator>();
         charMovScript = gameObject.GetComponentInParent<CharacterMovmentScript>();
-        halo = gameObject.GetComponent<Light>();
-        halo.enabled = false;
+        //halo = gameObject.GetComponent<Light>();
+        //halo.enabled = false;
         trailEffect.SetActive(false);
         //getting all the meshes that are in the player object
         SkinnedMeshRenderer[] meshes = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -357,10 +357,10 @@ public class PlayerData : MonoBehaviour
             {
                 //slowly lowers the intensity of the halo light
                 RespawnTimer -= Time.deltaTime;
-                halo.intensity -= Time.deltaTime / 2.0f;
+                //halo.intensity -= Time.deltaTime / 2.0f;
                 if (RespawnTimer <= 0.0f)
                 {
-                    halo.intensity = 1.0f;
+                    //halo.intensity = 1.0f;
                     Respawning = false;
                     RespawnTimer = 2.0f;
                 }
@@ -381,7 +381,7 @@ public class PlayerData : MonoBehaviour
                 }
                 else if (InvulnerabilityTimer < 2.0f)
                 {
-                    halo.enabled = false;
+                    //halo.enabled = false;
                     if (!charMovScript.gamePaused)
                     {
                         //this flashes the player from white to black
@@ -720,7 +720,7 @@ public class PlayerData : MonoBehaviour
     public void SetExcalibur(bool value)
     {
         HasExcalibur = value;
-        halo.enabled = value;
+        //halo.enabled = value;
         ExcaliburObj.SetActive(value);
     }
     #endregion
@@ -736,7 +736,7 @@ public class PlayerData : MonoBehaviour
         GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f,1000.0f,0));
         Respawning = true;
         invulnerable = true;
-        halo.enabled = true;
+       //halo.enabled = true;
         Glint.SetActive(false);
 
         attacked = false;
