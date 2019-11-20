@@ -779,7 +779,7 @@ public class PlayerData : MonoBehaviour
         parried = false;
         isParried = false;
         knockedback = false;
-        Vector3 excaliburSpawn = GetComponent<Rigidbody>().position;
+        Vector3 excaliburSpawn = transform.position;
         transform.position = new Vector3(0, 1000.0f, 0);
         Deaths++;
         playClip(ClipSelector.death);
