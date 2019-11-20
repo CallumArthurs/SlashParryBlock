@@ -20,7 +20,6 @@ public class CharacterMovmentScript : MonoBehaviour
     [Tooltip("this is a multiplier on knockback hit, halved for the shield")]
     public float playerKnockback;
     public List<AudioClip> playerClips;
-    public AudioClip RoundStartSound;
 
     [Header("CharacterMovementScript values")]
     public float AirControlSpeed;
