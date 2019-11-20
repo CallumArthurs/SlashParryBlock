@@ -751,6 +751,7 @@ public class CharacterSelect : MonoBehaviour
 
     public void SelectLevel(int level)
     {
+        levelStamp.color = new Color(1, 1, 1, 1);
         levelSelected = level;
         LevelSelectNavigator.enabled = false;
         GameplaySelectNavigator.enabled = true;
@@ -765,6 +766,7 @@ public class CharacterSelect : MonoBehaviour
     }
     public void MoveLevelStamp(MenuOption pos)
     {
+        levelStamp.color = new Color(1, 1, 1, 0.75f);
         levelStamp.transform.position = pos.transform.position + new Vector3(-2.0f, -1.0f, 0.0f);
     }
     public void ChangeLevelDescription(int level)
