@@ -885,6 +885,12 @@ public class CharacterSelect : MonoBehaviour
         Scenechanger.SceneLoader(levelSelected);
     }
 
+    public void PlaySound(AudioClip clip)
+    {
+        GetComponent<AudioSource>().clip = clip;
+        GetComponent<AudioSource>().Play();
+    }
+
     IEnumerator flipOntoRightPage(GameObject menu, float TimeToWait)
     {
         menu.transform.SetParent(CanvasRightPagePos.transform, false);
