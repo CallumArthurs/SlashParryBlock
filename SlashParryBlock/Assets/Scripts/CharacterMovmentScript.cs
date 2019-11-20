@@ -219,7 +219,7 @@ public class CharacterMovmentScript : MonoBehaviour
             if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
             {
                 gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].gameObject.SetActive(true);
-                gameUIContainer.playerPortraits[levelData.meshSelected[i]].GetComponent<RectTransform>().position = gameUIContainer.portPositions[i].position;
+                //gameUIContainer.playerPortraits[levelData.meshSelected[i]].GetComponent<RectTransform>().position = gameUIContainer.portPositions[i].position;
                 playerPortraits[levelData.meshSelected[i]].SetActive(true);
             }
 
