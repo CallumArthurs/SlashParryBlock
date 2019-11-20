@@ -144,6 +144,7 @@ public class CharacterSelect : MonoBehaviour
                 if (Input.GetButtonDown("StartButtonP" + (i + 1)))
                 {
                     StartCoroutine(flipOntoRightPage(mainMenu,0.75f));
+                    Camera.main.GetComponent<Animator>().SetBool("ZoomIntoBook", true);
                     bookanimator.SetTrigger("BookOpen");
                     BookOpen = true;
                     //Arrow.gameObject.SetActive(true);
@@ -685,6 +686,7 @@ public class CharacterSelect : MonoBehaviour
     }
     public void QuitGame()
     {
+        Camera.main.GetComponent<Animator>().SetBool("ZoomIntoBook", false);
         StartCoroutine(WaitAndRunMethod(2.5f, Application.Quit));
         StartCoroutine(WaitAndRunMethod(0.5f, SceneTransScript.CloseTransition));
         bookanimator.SetTrigger("BookClose");

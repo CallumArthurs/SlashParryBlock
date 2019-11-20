@@ -67,6 +67,7 @@ public class CharacterMovmentScript : MonoBehaviour
     private bool parryTutorialScreen = false;
     private int ReadyPlayers = 0;
     private bool DebugLoad = false;
+    private AudioSource[] runningSoundPlayers;
 
     public bool PlayGame = false, countDown = false;
     public GameUIContainer gameUIContainer;
@@ -197,6 +198,7 @@ public class CharacterMovmentScript : MonoBehaviour
         }
         horn = soundPlayers[4];
         horn.clip = CountDownHorn;
+        runningSoundPlayers = new AudioSource[4] { soundPlayers[5], soundPlayers[6], soundPlayers[7], soundPlayers[8] };
         for (int i = 0; i < players.Count; i++)
         {
             
@@ -462,6 +464,11 @@ public class CharacterMovmentScript : MonoBehaviour
                         playersRB[i].AddForce(new Vector3(HoriInput * speed, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i]) * speed), ForceMode.Impulse);
                         playersRB[i].rotation = Quaternion.RotateTowards(playersRB[i].rotation, Quaternion.LookRotation(new Vector3(HoriInput, 0, -Input.GetAxis("Vertical" + joystickCharInputs[i])), Vector3.up), rotSpeed);
                         playersAni[i].SetInteger("Anim", (int)AnimSelector.Run);
+                        if (!runningSoundPlayers[i].isPlaying)
+                        {
+                            runningSoundPlayers[i].Play();
+                        }
+                        
                     }
                     else if (players[i].blocking)
                     {
@@ -491,6 +498,7 @@ public class CharacterMovmentScript : MonoBehaviour
                         if (!players[i].blocking && (Input.GetAxis("Horizontal" + joystickCharInputs[i]) == 0 || Input.GetAxis("Vertical" + joystickCharInputs[i]) == 0))
                         {
                             playersAni[i].SetInteger("Anim", 0);
+                            runningSoundPlayers[i].Stop();
                         }
                     }
 
@@ -509,6 +517,7 @@ public class CharacterMovmentScript : MonoBehaviour
                     playersAni[i].SetFloat("BlockMovVecX", 0.0f, 0.2f, Time.deltaTime);
 
                     playersAni[i].SetInteger("Anim", 0);
+                    runningSoundPlayers[i].Stop();
                 }
 
             }
