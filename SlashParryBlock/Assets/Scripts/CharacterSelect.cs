@@ -117,6 +117,7 @@ public class CharacterSelect : MonoBehaviour
                 {
                     if (Input.GetButtonDown("StartButtonP" + (i + 1))/* || Input.GetButtonDown("A_ButtonP" + (i + 1))*/)
                     {
+                        ResetCharStamp(i);
                         ConSelected[i] = true;
                         joystickCharInputs.Add("P" + (i + 1));
                         KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
@@ -390,7 +391,6 @@ public class CharacterSelect : MonoBehaviour
             playerJoinInstructions[i].SetActive(false);
         }
 
-
         ControlHandler = CharacterSelectControls;
         levelData.meshSelected.Clear();
         setupPlayerData = false;
@@ -609,6 +609,14 @@ public class CharacterSelect : MonoBehaviour
             PlayerStamps[CharSelectNavigator.iterI].transform.position = pos.transform.position + new Vector3(-4.0f, 0.0f ,-5.0f + 4.0f * CharSelectNavigator.iterI);
         }
     }
+
+    private void ResetCharStamp(int i)
+    {
+        if (!PlayerSelectedMesh[i])
+        {
+            PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 0.0f, -5.0f + 4.0f * i);
+        }
+    }
     public void ChangeCharMesh(int character)
     {
         MeshSelected[CharSelectNavigator.iterI] = KnightMeshes[CharSelectNavigator.iterI].GetComponent<MeshSelector>().LoadMesh(character);
@@ -746,6 +754,7 @@ public class CharacterSelect : MonoBehaviour
         LevelSelectNavigator.enabled = false;
         GameplaySelectNavigator.enabled = true;
         Arrow.gameObject.SetActive(true);
+        ResetGameplayStamp();
         ControlHandler = GameplaySelectControls;
     }
     public void SelectRandomLevel()
@@ -783,6 +792,11 @@ public class CharacterSelect : MonoBehaviour
         GameplaySelectNavigator.enabled = false;
         startFunctions = OpenLevelSelect;
         StartCoroutine(WaitAndRunMethod(0.4f, startFunctions));
+    }
+
+    private void ResetGameplayStamp()
+    {
+        Arrow.transform.position = new Vector3(GameplaySelectNavigator.startingOption.gameObject.transform.position.x + 0.1f, GameplaySelectNavigator.startingOption.gameObject.transform.position.y, GameplaySelectNavigator.startingOption.gameObject.transform.position.z);
     }
     public void changeGamemode(int value)
     {
