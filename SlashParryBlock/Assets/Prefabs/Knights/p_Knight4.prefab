@@ -31,6 +31,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1308514022323617655}
   - {fileID: 8322730408257059784}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -64,10 +65,35 @@ MonoBehaviour:
   score: 0
   blocking: 0
   spawnpoints: []
+  DizzySpinner: {fileID: 0}
+  ExcaliburObj: {fileID: 0}
+  trailEffect: {fileID: 0}
   particles: {fileID: 3623630282080540649, guid: fc9683958652a034687d8070822b8a40,
     type: 3}
   AttackParticles: {fileID: 3623630282080540649, guid: 2b8f3f873f24f0844ab1916a5d6e8e2b,
     type: 3}
+  ShieldPos: {fileID: 0}
+  SwordPos: {fileID: 0}
+  Glint: {fileID: 0}
+  ExcaliburKnockbackModifier: 0
+  ExcaliburDamageModifier: 0
+  AttackAxisUsed: 0
+  ParryAxisUsed: 0
+  ComboAttack: 0
+  Respawning: 0
+  invulnerable: 0
+  Dashed: 0
+  IgnoreSpeedLimit: 0
+  fallTimer: 0.5
+  heartFollower: {fileID: 0}
+  kills: 0
+  Deaths: 0
+  successfulParries: 0
+  killStreak: 0
+  killstreakTemp: 0
+  damageTaken: 0
+  damageDealt: 0
+  MeshSelected: 0
 --- !u!54 &5660682517429925954
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5266,7 +5292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8322730408257059784
 Transform:
   m_ObjectHideFlags: 0
@@ -5283,7 +5309,7 @@ Transform:
   - {fileID: 8322730408257059528}
   - {fileID: 8322730408257059530}
   m_Father: {fileID: 7735091255943514517}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8322730408250053672
 Animator:
@@ -7042,6 +7068,73 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &1308514022323217911
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7735091255943514517}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_Name
+      value: Ani_Skeletalmesh_Knight4 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 39f8adf9f8cbf2249b6ea04202e467c5, type: 3}
+--- !u!4 &1308514022323617655 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 39f8adf9f8cbf2249b6ea04202e467c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1308514022323217911}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3959046583779318901
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -803,33 +803,37 @@ public class PlayerData : MonoBehaviour
     {
         GameObject tmpParticles;
         //figuring out what colour effect should play
-        switch (MeshSelected)
+        if (!NoStock)
         {
-            case 0:
-                {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
-                    break;
-                }
-            case 1:
-                {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleGreen"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
-                    break;
-                }
-            case 2:
-                {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleYellow"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
-                    break;
-                }
-            case 3:
-                {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleRed"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
-                    break;
-                }
-            default:
-                {
-                    tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
-                    break;
-                }
+            switch (MeshSelected)
+            {
+                case 0:
+                    {
+                        tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
+                        break;
+                    }
+                case 1:
+                    {
+                        tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleGreen"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
+                        break;
+                    }
+                case 2:
+                    {
+                        tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleYellow"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
+                        break;
+                    }
+                case 3:
+                    {
+                        tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleRed"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
+                        break;
+                    }
+                default:
+                    {
+                        tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
+                        break;
+                    }
+            }
+
         }
         yield return new WaitForSeconds(2.0f);
         GetComponent<Rigidbody>().MovePosition(spawnPos);
