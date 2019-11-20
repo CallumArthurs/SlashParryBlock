@@ -59,6 +59,7 @@ public class CharacterSelect : MonoBehaviour
     public List<Sprite> DeSelectedImage;
     public List<Image> PlayerSelectImages;
     public List<GameObject> playerJoinInstructions;
+    public AudioClip PageTurn;
 
     public List<MenuOption> CharSelectMenuOptions;
     public MenuOption RoundLength, PlayerLives;
@@ -907,6 +908,7 @@ public class CharacterSelect : MonoBehaviour
 
     IEnumerator flipOntoRightPage(GameObject menu, float TimeToWait)
     {
+        PlaySound(PageTurn);
         menu.transform.SetParent(CanvasRightPagePos.transform, false);
         //menu.transform.localScale = new Vector3(1, 1, 1);
         menu.transform.position = CanvasRightPagePos.transform.position;
@@ -919,6 +921,7 @@ public class CharacterSelect : MonoBehaviour
     }
     IEnumerator flipOntoLeftPage(GameObject menu, float TimeToWait)
     {
+        PlaySound(PageTurn);
         menu.transform.SetParent(CanvasLeftPagePos.transform, false);
         //menu.transform.localScale = new Vector3(1, 1, 1);
         menu.transform.position = CanvasLeftPagePos.transform.position;

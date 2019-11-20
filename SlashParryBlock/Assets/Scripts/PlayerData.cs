@@ -14,7 +14,10 @@ public class PlayerData : MonoBehaviour
         parry,
         riposte,
         block,
-        death
+        death,
+        parryMiss,
+        excaliburHit,
+        excaliburMiss
     }
 
     #region variables
@@ -507,7 +510,14 @@ public class PlayerData : MonoBehaviour
                                 else // hit their side with shield up
                                 {
                                     //playersHit[0].Normal = true;
-                                    playClip(ClipSelector.attackHit);
+                                    if (HasExcalibur)
+                                    {
+                                        playClip(ClipSelector.excaliburHit);
+                                    }
+                                    else
+                                    {
+                                        playClip(ClipSelector.attackHit);
+                                    }
                                 }
                             }
                             else //hit their shield
@@ -545,7 +555,14 @@ public class PlayerData : MonoBehaviour
                             else // hit their side or front
                             {
                                 //playersHit[0].Normal = true;
-                                playClip(ClipSelector.attackHit);
+                                if (HasExcalibur)
+                                {
+                                    playClip(ClipSelector.excaliburHit);
+                                }
+                                else
+                                {
+                                    playClip(ClipSelector.attackHit);
+                                }
                             }
                         }
                     }
@@ -556,7 +573,14 @@ public class PlayerData : MonoBehaviour
         if (!HitSomeone)
         {
             //still plays a sound clip and plays animation
-            playClip(ClipSelector.attackMiss);
+            if (HasExcalibur)
+            {
+                playClip(ClipSelector.excaliburMiss);
+            }
+            else
+            {
+                playClip(ClipSelector.attackMiss);
+            }
             if (AttackNum == 1)
             {
                 if (AttackTimer > -0.2f && ComboAttack)
@@ -623,6 +647,10 @@ public class PlayerData : MonoBehaviour
                     }
                 }
             }
+        }
+        else
+        {
+            playClip(ClipSelector.parryMiss);
         }
     }
 
