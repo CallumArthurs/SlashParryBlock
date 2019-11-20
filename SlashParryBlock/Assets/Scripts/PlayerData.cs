@@ -802,8 +802,9 @@ public class PlayerData : MonoBehaviour
     IEnumerator WaitAndSpawn(Vector3 spawnPos)
     {
         GameObject tmpParticles;
+        MatchGameplay tmpGamplay = charMovScript.GetComponent<MatchGameplay>();
         //figuring out what colour effect should play
-        if (!NoStock)
+        if (!(tmpGamplay.PlayerLives - Deaths <= 0) || tmpGamplay.gameMode == MatchGameplay.Gamemode.Timer)
         {
             switch (MeshSelected)
             {
