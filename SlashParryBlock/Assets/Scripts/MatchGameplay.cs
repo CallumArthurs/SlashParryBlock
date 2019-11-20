@@ -216,7 +216,7 @@ public class MatchGameplay : MonoBehaviour
         endGameInfo = Instantiate(Resources.Load("Prefabs/EndGameInfo") as GameObject).GetComponent<EndGameInfo>();
         endGameInfo.playerStatsTotal = new List<PlayerStats>(playerStatsTotal);
         endGameInfo.CalculateWinner();
-        SceneManager.LoadScene("EndGame");
+        SceneManager.LoadScene(5);
     }
 
     public void AddTime(float value)
