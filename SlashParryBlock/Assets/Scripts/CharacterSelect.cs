@@ -141,7 +141,7 @@ public class CharacterSelect : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                if (Input.GetButtonDown("StartButtonP" + (i + 1)))
+                if (Input.GetButtonDown("StartButtonP" + (i + 1)) && !BookOpen)
                 {
                     StartCoroutine(flipOntoRightPage(mainMenu,0.75f));
                     Camera.main.GetComponent<Animator>().SetBool("ZoomIntoBook", true);
