@@ -269,12 +269,14 @@ public class CharacterMovmentScript : MonoBehaviour
                 {
                     if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
                     {
+                        ReadyUpTxt[i].GetComponentInChildren<Image>().gameObject.SetActive(false);
                         ReadyUpTxt[i].text = "READY";
                         PlayersReady[i] = true;
                         ReadyPlayers++;
                     }
                     if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
                     {
+                        ReadyUpTxt[i].GetComponentInChildren<Image>().gameObject.SetActive(false);
                         ReadyUpTxt[i].text = "PRESS";
                         PlayersReady[i] = false;
                         ReadyPlayers--;
