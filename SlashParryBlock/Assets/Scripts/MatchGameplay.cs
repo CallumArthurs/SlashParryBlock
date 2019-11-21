@@ -137,7 +137,7 @@ public class MatchGameplay : MonoBehaviour
                         }
                         for (int j = 0; j < CharMovScript.players.Count; j++)
                         {
-                            CharMovScript.players[j].ResetPlayer();
+                            CharMovScript.players[j].transform.position = new Vector3(0,1000.0f,0);
                         }
 
                         RoundTimer = RoundLength;
