@@ -269,15 +269,13 @@ public class CharacterMovmentScript : MonoBehaviour
                 {
                     if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
                     {
-                        ReadyUpTxt[i].fontSize = 32;
-                        ReadyUpTxt[i].text = "Press B to UnReady";
+                        ReadyUpTxt[i].text = "READY";
                         PlayersReady[i] = true;
                         ReadyPlayers++;
                     }
                     if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
                     {
-                        ReadyUpTxt[i].fontSize = 37;
-                        ReadyUpTxt[i].text = "Press A to Ready up";
+                        ReadyUpTxt[i].text = "PRESS";
                         PlayersReady[i] = false;
                         ReadyPlayers--;
                     }
@@ -910,6 +908,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 globalSpeed = 0.0f;
                 playersRB[i].isKinematic = true;
                 playersRB[i].velocity = Vector3.zero;
+                runningSoundPlayers[i].Stop();
             }
             else
             {
@@ -919,6 +918,7 @@ public class CharacterMovmentScript : MonoBehaviour
                 }
                 globalSpeed = 1.0f;
                 playersRB[i].isKinematic = false;
+                runningSoundPlayers[i].Stop();
             }
         }
     }
@@ -936,6 +936,7 @@ public class CharacterMovmentScript : MonoBehaviour
             {
                 playersAni[i].SetBool("FreezePlayerAnim", false);
             }
+            runningSoundPlayers[i].Stop();
             playersRB[i].velocity = new Vector3(0, 0, 0);
         }
     }
