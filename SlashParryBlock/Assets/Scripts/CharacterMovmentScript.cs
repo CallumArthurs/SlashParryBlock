@@ -47,6 +47,7 @@ public class CharacterMovmentScript : MonoBehaviour
     public AudioClip CountDownHorn;
     public List<Text> playerHealthTxt;
     public List<Sprite> playerStatsBanners;
+    public GameObject riskyRings;
 
     private List<RenderTexture> PlayerRenderTextures;
     private List<RespawnPoints> SpawnPoints;
@@ -293,8 +294,6 @@ public class CharacterMovmentScript : MonoBehaviour
                         for (int j = 0; j < players.Count; j++)
                         {
                             Destroy(PlayerCams[j]);
-                            players[j].GameStart();
-                            playersRB[j].isKinematic = false;
                             players[j].gameObject.layer = 14 + j;
                         }
                         Countdown();
@@ -949,6 +948,14 @@ public class CharacterMovmentScript : MonoBehaviour
 
     IEnumerator CountdownTimer()
     {
+        if (riskyRings != null)
+        {
+            riskyRings.GetComponent<Animator>().SetTrigger("StartIntroAnim");
+        }
+        else
+        {
+            Camera.main.GetComponentInChildren<Animator>().SetTrigger("StartIntroAnim");
+        }
         countDownTimer.text = "3";
         yield return new WaitForSeconds(1.0f);
         countDownTimer.text = "2";
@@ -960,6 +967,11 @@ public class CharacterMovmentScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         countDownTimer.transform.parent.gameObject.SetActive(false);
         StartGame();
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GameStart();
+            playersRB[i].isKinematic = false;
+        }
         countDown = false;
     }
 }

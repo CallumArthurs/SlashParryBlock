@@ -898,8 +898,9 @@ public class PlayerData : MonoBehaviour
     }
     public void GameStart()
     {
-        transform.position = charMovScript.SpawnPlayer();
-        OriginalPos = transform.position;
+        Vector3 spawnPos = charMovScript.SpawnPlayer();
+        StartCoroutine(WaitAndSpawn(spawnPos));
+        OriginalPos = spawnPos;
     }
     private void OnDrawGizmosSelected()
     {
