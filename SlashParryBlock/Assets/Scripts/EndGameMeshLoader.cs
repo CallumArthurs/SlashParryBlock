@@ -30,7 +30,7 @@ public class EndGameMeshLoader : MonoBehaviour
 
     void Update()
     {
-        if (!LoadedMeshes && SceneManager.GetActiveScene().name == "EndGame")
+        if (!LoadedMeshes && SceneManager.GetActiveScene().name == "EndGame_ThroneRoom")
         {
             LoadMeshes();
             LoadedMeshes = true;
