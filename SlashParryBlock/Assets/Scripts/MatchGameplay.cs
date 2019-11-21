@@ -104,6 +104,7 @@ public class MatchGameplay : MonoBehaviour
                                     if (!CharMovScript.players[i].GetStock())
                                     {
                                         CharMovScript.players[i].SetStock(true);
+                                        playerStatsTotal[i].StockDeathOrder += numOfLivePlayers;
                                         numOfLivePlayers--;
                                     }
                                 }

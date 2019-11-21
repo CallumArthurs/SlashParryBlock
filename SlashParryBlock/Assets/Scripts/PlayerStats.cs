@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStats
 {
-    public int kills, Deaths, successfulParries, damageDealt, damageTaken, killStreak;
+    public int kills, Deaths, successfulParries, damageDealt, damageTaken, killStreak, StockDeathOrder;
 
     public PlayerStats()
     {
