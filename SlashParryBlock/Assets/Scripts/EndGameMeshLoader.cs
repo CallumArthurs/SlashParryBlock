@@ -14,6 +14,8 @@ public class EndGameMeshLoader : MonoBehaviour
     public GameObject EndgameStatsScreen;
     public SceneTransitonerScript SceneTransScript;
     public List<GameObject> FlagPoles;
+    public List<GameObject> playerStatBanners;
+    public List<Sprite> PlayerBanners;
     private bool LoadedMeshes = false;
     private bool[] ButtonPressed = new bool[4] { false, false, false, false };
     private delegate void DelegateFunction();
@@ -113,6 +115,7 @@ public class EndGameMeshLoader : MonoBehaviour
                 tmpPlayerTextStats[5].text = "Killstreak: " + endInfo.playerStatsTotal[i].killStreak.ToString();
 
                 PlayerPortraits[i].GetComponent<Image>().sprite = knightPortraitImages[endInfo.MeshSelected[i]];
+                playerStatBanners[i].GetComponent<Image>().sprite = PlayerBanners[endInfo.MeshSelected[i]];
             }
             else
             {
