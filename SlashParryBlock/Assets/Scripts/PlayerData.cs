@@ -885,7 +885,6 @@ public class PlayerData : MonoBehaviour
             SetExcalibur(false);
             Instantiate(Resources.Load("Prefabs/p_ExcaliburIndicator"), charMovScript.ExcaliburSpawnPos.position, charMovScript.ExcaliburSpawnPos.rotation);
         }
-        gameObject.transform.position = OriginalPos;
         Deaths = 0;
         kills = 0;
         killStreak = 0;
