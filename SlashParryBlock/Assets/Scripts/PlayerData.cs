@@ -262,12 +262,14 @@ public class PlayerData : MonoBehaviour
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(damage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += damage * (ExcaliburDamageModifier / 100);
+                                    playClip(ClipSelector.excaliburHit);
                                 }
                                 else
                                 {
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(damage, this);
                                     damageDealt += damage;
+                                    playClip(ClipSelector.attackHit);
                                 }
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
@@ -279,12 +281,14 @@ public class PlayerData : MonoBehaviour
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(backstabDamage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += backstabDamage * (ExcaliburDamageModifier / 100);
+                                    playClip(ClipSelector.excaliburHit);
                                 }
                                 else
                                 {
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(backstabDamage, this);
                                     damageDealt += backstabDamage;
+                                    playClip(ClipSelector.backstab);
                                 }
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
@@ -296,12 +300,14 @@ public class PlayerData : MonoBehaviour
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(RiposteDamage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += RiposteDamage * (ExcaliburDamageModifier / 100);
+                                    playClip(ClipSelector.excaliburHit);
                                 }
                                 else
                                 {
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(RiposteDamage, this);
                                     damageDealt += RiposteDamage;
+                                    playClip(ClipSelector.riposte);
                                 }
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
