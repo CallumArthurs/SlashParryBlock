@@ -68,8 +68,9 @@ public class CharacterMovmentScript : MonoBehaviour
     private int ReadyPlayers = 0;
     private bool DebugLoad = false;
     private AudioSource[] runningSoundPlayers;
+    private float globalSpeed = 1.0f;
 
-    public bool PlayGame = false, countDown = false;
+    public bool PlayGame = false, countDown = false, playersReadyingUp = false;
     public GameUIContainer gameUIContainer;
     public List<HeartFollower> heartFollowers;
 
@@ -238,71 +239,70 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             SceneTransScript = (Instantiate(Resources.Load("Prefabs/SceneTransitioner")) as GameObject).GetComponent<SceneTransitonerScript>();
         }
+
+        FreezePlayers();
     }
 
     void Update()
     {
-        if ((!gamePaused && !playersFrozen) && !DebugLoad && PlayGame)
+        if ((!gamePaused && !playersFrozen) && !DebugLoad)
         {
             controlSchemeHandler();
         }
-        else
+
+        for (int i = 0; i < joystickCharInputs.Count; i++)
         {
-            for (int i = 0; i < joystickCharInputs.Count; i++)
+            if (!PlayGame)
             {
-                if (!PlayGame)
+                if (!parryTutorialScreen && !DebugLoad)
                 {
-                    if (!parryTutorialScreen && !DebugLoad)
+                    if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
                     {
-                        if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
-                        {
-                            gameUIContainer.ParryTutorialScreen.SetActive(false);
-                            ReadyUpScreen.SetActive(true);
-                            parryTutorialScreen = true;
-                        }
+                        gameUIContainer.ParryTutorialScreen.SetActive(false);
+                        ReadyUpScreen.SetActive(true);
+                        parryTutorialScreen = true;
+                        FreezePlayers();
                     }
-                    else
-                    {
-                        if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
-                        {
-                            ReadyUpTxt[i].fontSize = 32;
-                            ReadyUpTxt[i].text = "Press B to UnReady";
-                            PlayersReady[i] = true;
-                            ReadyPlayers++;
-                        }
-                        if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
-                        {
-                            ReadyUpTxt[i].fontSize = 37;
-                            ReadyUpTxt[i].text = "Press A to Ready up";
-                            PlayersReady[i] = false;
-                            ReadyPlayers--;
-                        }
-                        if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
-                        {
-                            PlayGame = true;
-                            ReadyUpScreen.SetActive(false);
-                            gameUIContainer.ParryTutorialScreen.SetActive(false);
-                            if (Camera.main.GetComponent<Blur>() != null)
-                            {
-                                Camera.main.GetComponent<Blur>().enabled = false;
-                            }
-                            DebugLoad = false;
-                            for (int j = 0; j < players.Count; j++)
-                            {
-                                Destroy(PlayerCams[j]);
-                                players[j].GameStart();
-                                playersRB[j].isKinematic = false;
-                                players[j].gameObject.layer = 14 + j;
-                            }
-
-                            Countdown();
-                        }
-                    }
-                    PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
-                    PlayerReadyUpImg[i].texture = renderTextures[i];
                 }
+                else
+                {
+                    if (Input.GetButtonDown("A_Button" + joystickCharInputs[i]) && !PlayersReady[i])
+                    {
+                        ReadyUpTxt[i].fontSize = 32;
+                        ReadyUpTxt[i].text = "Press B to UnReady";
+                        PlayersReady[i] = true;
+                        ReadyPlayers++;
+                    }
+                    if (Input.GetButtonDown("B_Button" + joystickCharInputs[i]) && PlayersReady[i])
+                    {
+                        ReadyUpTxt[i].fontSize = 37;
+                        ReadyUpTxt[i].text = "Press A to Ready up";
+                        PlayersReady[i] = false;
+                        ReadyPlayers--;
+                    }
+                    if (ReadyPlayers == joystickCharInputs.Count && !PlayGame || DebugLoad)
+                    {
+                        PlayGame = true;
+                        ReadyUpScreen.SetActive(false);
+                        gameUIContainer.ParryTutorialScreen.SetActive(false);
+                        if (Camera.main.GetComponent<Blur>() != null)
+                        {
+                            Camera.main.GetComponent<Blur>().enabled = false;
+                        }
+                        DebugLoad = false;
+                        for (int j = 0; j < players.Count; j++)
+                        {
+                            Destroy(PlayerCams[j]);
+                            players[j].GameStart();
+                            playersRB[j].isKinematic = false;
+                            players[j].gameObject.layer = 14 + j;
+                        }
+                        Countdown();
+                    }
+                }
+                PlayerCams[i].transform.position = new Vector3(players[i].transform.position.x, players[i].transform.position.y, players[i].transform.position.z + 2.0f);
+                PlayerReadyUpImg[i].texture = renderTextures[i];
             }
-
         }
 
         //if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -889,7 +889,7 @@ public class CharacterMovmentScript : MonoBehaviour
 
     public void Quit()
     {
-        Time.timeScale = 1.0f;
+        globalSpeed = 1.0f;
         SceneSelector.SceneLoader(SceneSelector.SceneSelecter.SplashScreen);
     }
     public void Resume()
@@ -904,13 +904,22 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (gamePaused)
             {
-                playersAni[i].speed = 0;
-                Time.timeScale = 0.0f;
+                if (!playersFrozen)
+                {
+                    playersAni[i].SetBool("FreezePlayerAnim", true);
+                }
+                globalSpeed = 0.0f;
+                playersRB[i].isKinematic = true;
+                playersRB[i].velocity = Vector3.zero;
             }
             else
             {
-                playersAni[i].speed = 1;
-                Time.timeScale = 1.0f;
+                if (!playersFrozen)
+                {
+                    playersAni[i].SetBool("FreezePlayerAnim", false);
+                }
+                globalSpeed = 1.0f;
+                playersRB[i].isKinematic = false;
             }
         }
     }
@@ -922,11 +931,11 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             if (playersFrozen)
             {
-                playersAni[i].speed = 0.0f;
+                playersAni[i].SetBool("FreezePlayerAnim", true);
             }
             else
             {
-                playersAni[i].speed = 1.0f;
+                playersAni[i].SetBool("FreezePlayerAnim", false);
             }
             playersRB[i].velocity = new Vector3(0, 0, 0);
         }
