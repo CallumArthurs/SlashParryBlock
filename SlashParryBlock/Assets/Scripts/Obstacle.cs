@@ -26,6 +26,7 @@ public class Obstacle : MonoBehaviour
             //reset their velocity so it doesn't add up after every hit
             //double damage if you hit their back
             other.gameObject.GetComponent<PlayerData>().TakeDamage(damage);
+            other.gameObject.GetComponent<PlayerData>().PlayObstacleHit();
             //Vector3 ClosestPoint = other.ClosestPoint(transform.position).normalized;
             ClosestPoint = gameObject.GetComponent<Collider>().ClosestPoint(other.transform.position);
             other.gameObject.GetComponent<PlayerData>().setKnockedBack(true,Timer);

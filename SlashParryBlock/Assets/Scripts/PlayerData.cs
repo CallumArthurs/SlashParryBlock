@@ -17,7 +17,8 @@ public class PlayerData : MonoBehaviour
         death,
         parryMiss,
         excaliburHit,
-        excaliburMiss
+        excaliburMiss,
+        ObstacleHit
     }
 
     #region variables
@@ -675,6 +676,10 @@ public class PlayerData : MonoBehaviour
         playersHit.Clear();
     }
 
+    public void PlayObstacleHit()
+    {
+        playClip(ClipSelector.ObstacleHit);
+    }
     public void TakeDamage(float damage)
     {
         damageTaken += damage;
