@@ -799,6 +799,16 @@ public class PlayerData : MonoBehaviour
                         Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleRed"), transform.position, Quaternion.identity);
                         break;
                     }
+                case 4:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleWhite"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 5:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlack"), transform.position, Quaternion.identity);
+                        break;
+                    }
                 default:
                     {
                         Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
