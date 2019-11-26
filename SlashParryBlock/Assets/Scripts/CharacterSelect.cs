@@ -29,7 +29,7 @@ public class CharacterSelect : MonoBehaviour
     private bool[] playersReady = new bool[4] { false, false, false, false };
     private bool[] DPadAxisUsed = new bool[4] { false, false, false, false };
     private bool[] DPadXAxisUsed = new bool[4] { false, false, false, false };
-    private bool[] ReservedMeshes = new bool[4] { false, false, false, false };
+    private bool[] ReservedMeshes = new bool[6] { false, false, false, false, false, false };
     int levelSelected = 1;
 
     int[] MeshSelected = new int[4] { 0, 0, 0, 0 };
