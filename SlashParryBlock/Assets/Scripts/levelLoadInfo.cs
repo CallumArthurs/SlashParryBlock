@@ -64,7 +64,6 @@ public class levelLoadInfo : MonoBehaviour
             tmpSword = Resources.Load("Prefabs/p_Sword_" + i + "_Spawn") as GameObject;
             if (tmpSword == null)
             {
-                tmpSword = Resources.Load("Prefabs/p_Sword_" + "1" + "_Spawn") as GameObject;
                 break;
             }
 
@@ -78,7 +77,6 @@ public class levelLoadInfo : MonoBehaviour
             tmpShield = Resources.Load("Prefabs/p_Shield_" + i + "_Spawn") as GameObject;
             if (tmpShield == null)
             {
-                tmpShield = Resources.Load("Prefabs/p_Shield_" + "1" + "_Spawn") as GameObject;
                 break;
             }
 

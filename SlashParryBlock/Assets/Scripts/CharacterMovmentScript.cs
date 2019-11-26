@@ -128,11 +128,7 @@ public class CharacterMovmentScript : MonoBehaviour
             players[j].heartFollower = heartFollowers[levelData.meshSelected[j]].gameObject;
             PlayerRenderTextures.Add(Resources.Load("Prefabs/" + joystickCharInputs[j] + "TargetTexture") as RenderTexture);
             PlayerCams[j].GetComponent<Camera>().targetTexture = PlayerRenderTextures[j];
-            if (levelData.meshSelected[j] > 3)
-            {
-                Instantiate(levelData.KnightSwords[0], players[j].SwordPos.transform);
-                Instantiate(levelData.KnightShields[0], players[j].ShieldPos.transform);
-            }
+
 
             List<SkinnedMeshRenderer> skinnedMeshRenderers = new List<SkinnedMeshRenderer>();
             skinnedMeshRenderers.AddRange(players[j].GetComponentsInChildren<SkinnedMeshRenderer>());
@@ -141,6 +137,10 @@ public class CharacterMovmentScript : MonoBehaviour
                 KnightMeshRenderer.LoadMesh(skinnedMeshRenderers, levelData.meshSelected[j]);
                 skinnedMeshRenderers.Clear();
             }
+
+            Instantiate(levelData.KnightSwords[levelData.meshSelected[j]], players[j].SwordPos.transform);
+            Instantiate(levelData.KnightShields[levelData.meshSelected[j]], players[j].ShieldPos.transform);
+
             renderTextures.Add(PlayerCams[j].GetComponent<Camera>().targetTexture);
             renderTextures[j].Create();
         }
