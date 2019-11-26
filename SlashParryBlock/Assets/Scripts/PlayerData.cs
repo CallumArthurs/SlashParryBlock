@@ -867,6 +867,16 @@ public class PlayerData : MonoBehaviour
                         tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleRed"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
                         break;
                     }
+                case 4:
+                    {
+                        tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleWhite"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
+                        break;
+                    }
+                case 5:
+                    {
+                        tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlack"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
+                        break;
+                    }
                 default:
                     {
                         tmpParticles = (GameObject)Instantiate(Resources.Load("particles/RespawnParticles/P_RespawnParticleBlue"), new Vector3(spawnPos.x, spawnPos.y - 0.5f, spawnPos.z), Quaternion.identity);
