@@ -57,7 +57,7 @@ public class CharacterMovmentScript : MonoBehaviour
     private List<RawImage> PlayerReadyUpImg;
     private List<Text> ReadyUpTxt;
     private List<PlayerHeartsContainer> playerHearts;
-    private List<GameObject> playerPortraits;
+    public List<GameObject> playerPortraits;
     private AudioSource horn;
     private GameObject ReadyUpScreen;
     private KnightMeshRenderer KnightMeshRenderer;

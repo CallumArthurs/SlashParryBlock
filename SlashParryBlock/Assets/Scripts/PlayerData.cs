@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerData : MonoBehaviour
@@ -894,6 +895,15 @@ public class PlayerData : MonoBehaviour
         NoStock = Nostock;
         gameObject.SetActive(!NoStock);
         heartFollower.SetActive(!NoStock);
+        if (Nostock)
+        {
+            charMovScript.playerPortraits[MeshSelected].GetComponent<Image>().color = new Color(1, 1, 1, 0.50f);
+
+        }
+        else
+        {
+            charMovScript.playerPortraits[MeshSelected].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        }
     }
     public bool GetStock()
     {
