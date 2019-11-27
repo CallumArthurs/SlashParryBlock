@@ -824,7 +824,7 @@ public class PlayerData : MonoBehaviour
         invulnerable = true;
        //halo.enabled = true;
         Glint.SetActive(false);
-
+        trailEffect.SetActive(false);
         attacked = false;
         parried = false;
         isParried = false;
