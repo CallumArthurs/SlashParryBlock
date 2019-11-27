@@ -816,6 +816,48 @@ public class PlayerData : MonoBehaviour
                     }
             }
         }
+        else
+        {
+            switch (MeshSelected)
+            {
+                case 0:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 1:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleGreen"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 2:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleYellow"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 3:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleRed"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 4:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleWhite"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 5:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlack"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                default:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
+                        break;
+                    }
+            }
+
+        }
         playerLastHit = null;
         #endregion
 
@@ -824,7 +866,7 @@ public class PlayerData : MonoBehaviour
         invulnerable = true;
        //halo.enabled = true;
         Glint.SetActive(false);
-
+        trailEffect.SetActive(false);
         attacked = false;
         parried = false;
         isParried = false;
