@@ -65,7 +65,7 @@ public class CharacterSelect : MonoBehaviour
     public MenuOption RoundLength, PlayerLives;
     public SceneTransitonerScript SceneTransScript;
 
-    public GameObject aConfirmation;
+    public GameObject charAConfirmation, gameplayAConfirmation;
     public GameObject currentLevelHighlight;
 
     private levelLoadInfo levelData;
@@ -375,11 +375,11 @@ public class CharacterSelect : MonoBehaviour
 
                 if (ReadyplayerCount >= 2)
                 {
-                    aConfirmation.SetActive(true);
+                    charAConfirmation.SetActive(true);
                 }
                 else
                 {
-                    aConfirmation.SetActive(false);
+                    charAConfirmation.SetActive(false);
                 }
             }
         }
