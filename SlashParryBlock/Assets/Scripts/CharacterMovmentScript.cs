@@ -221,12 +221,6 @@ public class CharacterMovmentScript : MonoBehaviour
             playersRB[i].isKinematic = true;
             playersRB[i].MovePosition(playerReadyUpPos[i].transform.position);
 
-            if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
-            {
-                gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].gameObject.SetActive(true);
-                //gameUIContainer.playerPortraits[levelData.meshSelected[i]].GetComponent<RectTransform>().position = gameUIContainer.portPositions[i].position;
-                playerPortraits[levelData.meshSelected[i]].SetActive(true);
-            }
 
             gameUIContainer.playerReadyUpPanels[i].SetActive(true);
         }
@@ -962,6 +956,7 @@ public class CharacterMovmentScript : MonoBehaviour
         {
             Camera.main.GetComponentInChildren<Animator>().SetTrigger("StartIntroAnim");
         }
+
         countDownTimer.text = "3";
         yield return new WaitForSeconds(1.0f);
         countDownTimer.text = "2";
@@ -975,6 +970,13 @@ public class CharacterMovmentScript : MonoBehaviour
         StartGame();
         for (int i = 0; i < players.Count; i++)
         {
+            if (levelData.gamemode == MatchGameplay.Gamemode.Stock)
+            {
+                gameUIContainer.PlayerlivesImage[levelData.meshSelected[i]].gameObject.SetActive(true);
+                //gameUIContainer.playerPortraits[levelData.meshSelected[i]].GetComponent<RectTransform>().position = gameUIContainer.portPositions[i].position;
+                playerPortraits[levelData.meshSelected[i]].SetActive(true);
+            }
+
             players[i].GameStart();
             playersRB[i].isKinematic = false;
         }
