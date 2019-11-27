@@ -220,6 +220,7 @@ public class PlayerData : MonoBehaviour
                                 //reset their parry timer
                                 CollisionPlayerData.gotParriedTimer = 0.2f;
                                 playersHit[0].Riposte = true;
+                                Debug.Log("Riposte damage");
                             }
                             else if (CollisionPlayerData.blocking)
                             {
@@ -230,10 +231,12 @@ public class PlayerData : MonoBehaviour
                                     if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back with shield up
                                     {
                                         playersHit[0].BackStab = true;
+                                        Debug.Log("BackStab damage (Shield)");
                                     }
                                     else // hit their side with shield up
                                     {
                                         playersHit[0].Normal = true;
+                                        Debug.Log("Normal damage (Shield)");
                                     }
                                 }
                             }
@@ -241,10 +244,12 @@ public class PlayerData : MonoBehaviour
                             {
                                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back normal hit
                                 {
+                                    Debug.Log("Backstab damage");
                                     playersHit[0].BackStab = true;
                                 }
                                 else // hit their side or front
                                 {
+                                    Debug.Log("Normal damage");
                                     playersHit[0].Normal = true;
                                 }
                             }
@@ -256,7 +261,7 @@ public class PlayerData : MonoBehaviour
                         //this stops you hitting people if you've been parried
                         if (!isParried)
                         {
-                            Debug.Log("Dealing parried damage");
+                            
                             Instantiate(AttackParticles, playersHit[i].ParticlePos, Quaternion.Euler(playersHit[i].hitPlayerData.gameObject.transform.position - transform.position));
 
                             if (playersHit[i].Normal)
@@ -264,6 +269,7 @@ public class PlayerData : MonoBehaviour
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                                 if (HasExcalibur)
                                 {
+                                    Debug.Log("Dealing Normal damage Excalibur");
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(damage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += damage * (ExcaliburDamageModifier / 100);
@@ -271,6 +277,7 @@ public class PlayerData : MonoBehaviour
                                 }
                                 else
                                 {
+                                    Debug.Log("Dealing Normal damage");
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(damage, this);
                                     damageDealt += damage;
@@ -283,18 +290,19 @@ public class PlayerData : MonoBehaviour
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                                 if (HasExcalibur)
                                 {
+                                    Debug.Log("Dealing Backstab damage Excalibur");
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(backstabDamage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += backstabDamage * (ExcaliburDamageModifier / 100);
-                                    playClip(ClipSelector.excaliburHit);
                                 }
                                 else
                                 {
+                                    Debug.Log("Dealing Backstab damage");
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(backstabDamage, this);
                                     damageDealt += backstabDamage;
-                                    playClip(ClipSelector.backstab);
                                 }
+                                playClip(ClipSelector.backstab);
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
                             else if (playersHit[i].Riposte)
@@ -302,19 +310,20 @@ public class PlayerData : MonoBehaviour
                                 playersHit[i].HitPlayersRB.velocity = new Vector3(0, 0, 0);
                                 if (HasExcalibur)
                                 {
+                                    Debug.Log("Dealing Riposte damage Excalibur");
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * (knockback * (ExcaliburKnockbackModifier / 100)), ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(RiposteDamage * (ExcaliburDamageModifier / 100), this);
                                     damageDealt += RiposteDamage * (ExcaliburDamageModifier / 100);
-                                    playClip(ClipSelector.excaliburHit);
                                 }
                                 else
                                 {
+                                    Debug.Log("Dealing Riposte damage");
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(RiposteDamage, this);
                                     damageDealt += RiposteDamage;
                                     animator.SetTrigger("Riposte");
-                                    playClip(ClipSelector.riposte);
                                 }
+                                playClip(ClipSelector.riposte);
                                 playersHit[i].hitPlayerData.knockedback = true;
                             }
                         }
