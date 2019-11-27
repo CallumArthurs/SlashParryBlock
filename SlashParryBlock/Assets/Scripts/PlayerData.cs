@@ -311,6 +311,7 @@ public class PlayerData : MonoBehaviour
                                     playersHit[i].HitPlayersRB.AddForce((playersHit[i].HitPlayersRB.transform.position - transform.position).normalized * knockback, ForceMode.VelocityChange);
                                     playersHit[i].hitPlayerData.TakeDamage(RiposteDamage, this);
                                     damageDealt += RiposteDamage;
+                                    animator.SetTrigger("Riposte");
                                     playClip(ClipSelector.riposte);
                                 }
                                 playersHit[i].hitPlayerData.knockedback = true;
@@ -500,7 +501,7 @@ public class PlayerData : MonoBehaviour
                         {
                             //reset their parry timer
                             animator.SetTrigger("Riposte");
-                            playClip(ClipSelector.riposte);
+                            //playClip(ClipSelector.riposte);
                         }
                         else if (CollisionPlayerData.blocking)
                         {
@@ -528,18 +529,18 @@ public class PlayerData : MonoBehaviour
                                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.7f) // hit their back with shield up
                                 {
                                     //playersHit[0].BackStab = true;
-                                    playClip(ClipSelector.backstab);
+                                    //playClip(ClipSelector.backstab);
                                 }
                                 else // hit their side with shield up
                                 {
                                     //playersHit[0].Normal = true;
                                     if (HasExcalibur)
                                     {
-                                        playClip(ClipSelector.excaliburHit);
+                                        //playClip(ClipSelector.excaliburHit);
                                     }
                                     else
                                     {
-                                        playClip(ClipSelector.attackHit);
+                                        //playClip(ClipSelector.attackHit);
                                     }
                                 }
                             }
@@ -580,11 +581,11 @@ public class PlayerData : MonoBehaviour
                                 //playersHit[0].Normal = true;
                                 if (HasExcalibur)
                                 {
-                                    playClip(ClipSelector.excaliburHit);
+                                    //playClip(ClipSelector.excaliburHit);
                                 }
                                 else
                                 {
-                                    playClip(ClipSelector.attackHit);
+                                    //playClip(ClipSelector.attackHit);
                                 }
                             }
                         }
