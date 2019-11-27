@@ -391,53 +391,6 @@ public class PlayerData : MonoBehaviour
                 }
             }
 
-            if (invulnerable)
-            {
-                InvulnerabilityTimer -= Time.deltaTime;
-
-                if (InvulnerabilityTimer <= 0.0f)
-                {
-                    for (int i = 0; i < playerMaterial.Count; i++)
-                    {
-                        playerMaterial[i].color = Color.white;
-                    }
-                    invulnerable = false;
-                    InvulnerabilityTimer = 4.0f;
-                }
-                else if (InvulnerabilityTimer < 2.0f)
-                {
-                    //halo.enabled = false;
-                    if (!charMovScript.gamePaused)
-                    {
-                        //this flashes the player from white to black
-                        if (!GotoWhite)
-                        {
-                            for (int i = 0; i < playerMaterial.Count; i++)
-                            {
-                                playerMaterial[i].color *= 0.93f;
-                            }
-
-                            if (playerMaterial[0].color.r <= 0.5f)
-                            {
-                                GotoWhite = true;
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < playerMaterial.Count; i++)
-                            {
-                                playerMaterial[i].color *= 1.07f;
-                            }
-
-                            if (playerMaterial[0].color.r >= 1)
-                            {
-                                GotoWhite = false;
-                            }
-                        }
-                    }
-                }
-            }
-
             if (Dashed)
             {
                 DashTimer -= Time.deltaTime;
@@ -463,6 +416,57 @@ public class PlayerData : MonoBehaviour
                 hitFlashTimer -= Time.deltaTime;
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (invulnerable)
+        {
+            InvulnerabilityTimer -= Time.deltaTime;
+
+            if (InvulnerabilityTimer <= 0.0f)
+            {
+                for (int i = 0; i < playerMaterial.Count; i++)
+                {
+                    playerMaterial[i].color = Color.white;
+                }
+                invulnerable = false;
+                InvulnerabilityTimer = 4.0f;
+            }
+            else if (InvulnerabilityTimer < 2.0f)
+            {
+                //halo.enabled = false;
+                if (!charMovScript.gamePaused)
+                {
+                    //this flashes the player from white to black
+                    if (!GotoWhite)
+                    {
+                        for (int i = 0; i < playerMaterial.Count; i++)
+                        {
+                            playerMaterial[i].color *= 0.93f;
+                        }
+
+                        if (playerMaterial[0].color.r <= 0.5f)
+                        {
+                            GotoWhite = true;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < playerMaterial.Count; i++)
+                        {
+                            playerMaterial[i].color *= 1.07f;
+                        }
+
+                        if (playerMaterial[0].color.r >= 1)
+                        {
+                            GotoWhite = false;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     public void Attack(int AttackNum)

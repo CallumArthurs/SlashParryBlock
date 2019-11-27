@@ -66,25 +66,6 @@ public class RingsLevel : MonoBehaviour
 
                 //Fall();
             }
-            else if (RingChosen && !Fallen && warning)
-            {//warning logic
-                if (!goingDown)
-                {
-                    if (Rings[RingSelector].transform.localPosition.y >= ringRumblemovement)
-                    {
-                        goingDown = true;
-                    }
-                    Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringRumbleSpeed), 0));
-                }
-                else if (goingDown)
-                {
-                    if (Rings[RingSelector].transform.localPosition.y <= -ringRumblemovement)
-                    {
-                        goingDown = false;
-                    }
-                    Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringRumbleSpeed), 0));
-                }
-            }
 
             if (!Fallen && !warning)
             {
@@ -120,6 +101,30 @@ public class RingsLevel : MonoBehaviour
                 StartLevel();
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (RingChosen && !Fallen && warning)
+        {//warning logic
+            if (!goingDown)
+            {
+                if (Rings[RingSelector].transform.localPosition.y >= ringRumblemovement)
+                {
+                    goingDown = true;
+                }
+                Rings[RingSelector].transform.Translate(new Vector3(0, (1.0f * Time.deltaTime * ringRumbleSpeed), 0));
+            }
+            else if (goingDown)
+            {
+                if (Rings[RingSelector].transform.localPosition.y <= -ringRumblemovement)
+                {
+                    goingDown = false;
+                }
+                Rings[RingSelector].transform.Translate(new Vector3(0, (-1.0f * Time.deltaTime * ringRumbleSpeed), 0));
+            }
+        }
+
     }
 
     void Fall()
