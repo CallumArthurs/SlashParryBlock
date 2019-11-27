@@ -105,7 +105,7 @@ public class EndGameMeshLoader : MonoBehaviour
             if (i < endInfo.placement.Count)
             {
                 List<Text> tmpPlayerTextStats = new List<Text>();
-                tmpPlayerTextStats.AddRange(PlayerStats[i].GetComponentsInChildren<Text>());
+                tmpPlayerTextStats.AddRange(PlayerStats[endInfo.placement[i] - 1].GetComponentsInChildren<Text>());
 
                 tmpPlayerTextStats[0].text = "Kills: " + endInfo.playerStatsTotal[i].kills.ToString();
                 tmpPlayerTextStats[1].text = "Deaths: " + endInfo.playerStatsTotal[i].Deaths.ToString();
@@ -114,8 +114,8 @@ public class EndGameMeshLoader : MonoBehaviour
                 tmpPlayerTextStats[4].text = "Damage Taken: " + endInfo.playerStatsTotal[i].damageTaken.ToString();
                 tmpPlayerTextStats[5].text = "Killstreak: " + endInfo.playerStatsTotal[i].killStreak.ToString();
 
-                PlayerPortraits[i].GetComponent<Image>().sprite = knightPortraitImages[endInfo.MeshSelected[i]];
-                playerStatBanners[i].GetComponent<Image>().sprite = PlayerBanners[endInfo.MeshSelected[i]];
+                PlayerPortraits[i].GetComponent<Image>().sprite = knightPortraitImages[endInfo.MeshSelected[endInfo.placement[i] - 1]];
+                playerStatBanners[i].GetComponent<Image>().sprite = PlayerBanners[endInfo.MeshSelected[endInfo.placement[i] - 1]];
             }
             else
             {

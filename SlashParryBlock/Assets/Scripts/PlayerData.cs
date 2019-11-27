@@ -256,6 +256,7 @@ public class PlayerData : MonoBehaviour
                         //this stops you hitting people if you've been parried
                         if (!isParried)
                         {
+                            Debug.Log("Dealing parried damage");
                             Instantiate(AttackParticles, playersHit[i].ParticlePos, Quaternion.Euler(playersHit[i].hitPlayerData.gameObject.transform.position - transform.position));
 
                             if (playersHit[i].Normal)
