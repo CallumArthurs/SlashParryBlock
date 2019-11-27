@@ -118,13 +118,14 @@ public class CharacterSelect : MonoBehaviour
                 {
                     if (Input.GetButtonDown("StartButtonP" + (i + 1))/* || Input.GetButtonDown("A_ButtonP" + (i + 1))*/)
                     {
-                        ResetCharStamp(i);
                         ConSelected[i] = true;
                         joystickCharInputs.Add("P" + (i + 1));
+                        ResetCharStamp(joystickCharInputs.Count - 1);
                         KnightMeshes[joystickCharInputs.Count - 1].gameObject.SetActive(true);
                         PlayerStamps[joystickCharInputs.Count - 1].gameObject.SetActive(true);
-                        playerJoinInstructions[i].SetActive(false);
+                        playerJoinInstructions[joystickCharInputs.Count - 1].SetActive(false);
                         PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+
                         CharSelectNavigator.joystickCharInputs = joystickCharInputs;
                     }
 
@@ -614,6 +615,7 @@ public class CharacterSelect : MonoBehaviour
 
     private void ResetCharStamp(int i)
     {
+        Debug.Log(i);
         if (!PlayerSelectedMesh[i])
         {
             PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 0.0f, -5.0f + 4.0f * i);
@@ -729,7 +731,14 @@ public class CharacterSelect : MonoBehaviour
         for (int i = 0; i < PlayerSelectedMesh.Length; i++)
         {
             PlayerSelectedMesh[i] = false;
+            PlayerStamps[i].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         }
+
+        for (int i = 0; i < 6; i++)
+        {
+            ReservedMeshes[i] = false;
+        }
+        ReadyplayerCount = 0;
     }
     public void CheckPlayersAreReady()
     {

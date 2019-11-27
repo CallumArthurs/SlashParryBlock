@@ -44,7 +44,7 @@ public class PlayerData : MonoBehaviour
 
     public bool AttackAxisUsed = false, ParryAxisUsed = false;
     public bool ComboAttack = false;
-    public bool Respawning = false, invulnerable = false;
+    public bool Respawning = false, invulnerable = false, hitFlash = false;
     public bool Dashed = false;
     //when the player is in the air it ignores the speed limiter set on it
     public bool IgnoreSpeedLimit = false;
@@ -52,15 +52,17 @@ public class PlayerData : MonoBehaviour
     public GameObject heartFollower;
 
     //player stats
-    public int kills = 0,Deaths = 0,successfulParries = 0,killStreak = 0, killstreakTemp = 0;
+    public int kills = 0, Deaths = 0, successfulParries = 0, killStreak = 0, killstreakTemp = 0;
     public float damageTaken = 0, damageDealt = 0;
     public int MeshSelected;
+
+    public Color hitFlashColour;
     //original health is their spawned health 
     private int originalHealth, backstabDamage, RiposteDamage;
 
     //how long an attack goes for this is temp fix waitng for animation
     private float AttackTimer, AttackOriginalTime;
-    private float ParryTimer = 0.6f;
+    private float ParryTimer = 0.6f, hitFlashTimer = 0.25f;
     private float gotParriedTimer = 2.0f;
     private float KnockbackTimer = 0.25f;
     private float RespawnTimer = 2.0f, InvulnerabilityTimer = 4.0f;
@@ -133,13 +135,13 @@ public class PlayerData : MonoBehaviour
                 {
                     playerLastHit.kills++;
                     playerLastHit.killstreakTemp++;
-                    
+
                 }
                 Respawn();
             }//check if you fell out of the map
             else if (transform.position.y <= -5.0f)
             {
-                transform.position = new Vector3(0,1000.0f,0);
+                transform.position = new Vector3(0, 1000.0f, 0);
                 health = 0;
             }
 
@@ -220,7 +222,7 @@ public class PlayerData : MonoBehaviour
                                 playersHit[0].Riposte = true;
                             }
                             else if (CollisionPlayerData.blocking)
-                            {                               
+                            {
                                 //dot product confirms which direction you hit the other player from
                                 //1 = back, -1 = front
                                 if (Vector3.Dot(other.GetComponent<Transform>().forward, transform.forward) > 0.0f)
@@ -436,6 +438,19 @@ public class PlayerData : MonoBehaviour
                 }
             }
 
+            if (hitFlash)
+            {
+                if (hitFlashTimer <= 0.0f)
+                {
+                    for (int i = 0; i < playerMaterial.Count; i++)
+                    {
+                        playerMaterial[i].color = new Color(1, 1, 1, 1);
+                    }
+                    hitFlashTimer = 0.25f;
+                    hitFlash = false;
+                }
+                hitFlashTimer -= Time.deltaTime;
+            }
         }
     }
 
@@ -686,6 +701,8 @@ public class PlayerData : MonoBehaviour
         damageTaken += damage;
         health -= damage;
         animator.SetBool("Staggered", true);
+        hitFlash = true;
+        TurnPlayerRed();
     }
     public void TakeDamage(float damage, PlayerData player)
     {
@@ -693,8 +710,17 @@ public class PlayerData : MonoBehaviour
         health -= damage;
         playerLastHit = player;
         animator.SetBool("Staggered", true);
+        hitFlash = true;
+        TurnPlayerRed();
     }
 
+    private void TurnPlayerRed()
+    {
+        for (int i = 0; i < playerMaterial.Count; i++)
+        {
+            playerMaterial[i].color = hitFlashColour;
+        }
+    }
     #region Getters&Setters
     public void setHealth(int value)
     {
@@ -816,6 +842,48 @@ public class PlayerData : MonoBehaviour
                     }
             }
         }
+        else
+        {
+            switch (MeshSelected)
+            {
+                case 0:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 1:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleGreen"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 2:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleYellow"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 3:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleRed"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 4:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleWhite"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                case 5:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlack"), transform.position, Quaternion.identity);
+                        break;
+                    }
+                default:
+                    {
+                        Instantiate(Resources.Load("particles/DeathParticles/p_DeathParticleBlue"), transform.position, Quaternion.identity);
+                        break;
+                    }
+            }
+
+        }
         playerLastHit = null;
         #endregion
 
@@ -824,7 +892,7 @@ public class PlayerData : MonoBehaviour
         invulnerable = true;
        //halo.enabled = true;
         Glint.SetActive(false);
-
+        trailEffect.SetActive(false);
         attacked = false;
         parried = false;
         isParried = false;
