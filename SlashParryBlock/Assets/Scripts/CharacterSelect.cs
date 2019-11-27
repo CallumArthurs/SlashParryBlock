@@ -630,6 +630,7 @@ public class CharacterSelect : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             PlayerStamps[i].transform.position = CharSelectNavigator.startingOption.transform.position + new Vector3(-4.0f, 5.0f + -4.0f * i);
+
             KnightMeshes[i].SetActive(false);
             ConSelected[i] = false;
             PlayerStamps[i].gameObject.SetActive(false);
@@ -723,7 +724,13 @@ public class CharacterSelect : MonoBehaviour
         PlayerStamps[CharSelectNavigator.iterI].color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
         ReadyplayerCount--;
     }
-
+    public void ResetAllPlayerMeshes()
+    {
+        for (int i = 0; i < PlayerSelectedMesh.Length; i++)
+        {
+            PlayerSelectedMesh[i] = false;
+        }
+    }
     public void CheckPlayersAreReady()
     {
         if (ReadyplayerCount >= 2 && ReadyplayerCount == joystickCharInputs.Count && !setupPlayerData)
