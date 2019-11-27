@@ -674,18 +674,29 @@ public class CharacterSelect : MonoBehaviour
     public void Credits()
     {
         bookanimator.SetTrigger("PageTurnRight");
+        StartCoroutine(flipOntoLeftPage(CreditsLeft, 0.53f));
+        StartCoroutine(flipOntoRightPage(mainMenu, 0.44f));
+        StartCoroutine(WaitAndRunMethod(0.2f,ShowCredits));
+        Debug.Log("Credits open");
+    }
+    private void ShowCredits()
+    {
         mainMenu.SetActive(false);
         CreditsLeft.SetActive(true);
         CreditsRight.SetActive(true);
-        Debug.Log("Credits open");
     }
     public void CloseCredits()
     {
         bookanimator.SetTrigger("PageTurnLeft");
-        CreditsLeft.SetActive(false);
-        CreditsRight.SetActive(false);
+        StartCoroutine(flipOntoLeftPage(CreditsLeft, 0.53f));
+        StartCoroutine(WaitAndRunMethod(0.4f, HideCredits));
         MoveToMainMenu();
         Debug.Log("Credits close");
+    }
+    private void HideCredits()
+    {
+        CreditsLeft.SetActive(false);
+        CreditsRight.SetActive(false);
     }
     public void QuitGame()
     {
