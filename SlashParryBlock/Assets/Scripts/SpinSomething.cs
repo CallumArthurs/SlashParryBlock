@@ -14,7 +14,7 @@ public class SpinSomething : MonoBehaviour
     public float speed = 1.0f;
     public float delay = 0.0f;
 
-    void Update()
+    void FixedUpdate()
     {
         delay -= Time.deltaTime;
         if (delay <= 0.0f)
