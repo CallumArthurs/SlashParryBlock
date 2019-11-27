@@ -796,6 +796,7 @@ public class CharacterSelect : MonoBehaviour
         levelSelected = level;
         LevelSelectNavigator.enabled = false;
         GameplaySelectNavigator.enabled = true;
+        gameplayAConfirmation.SetActive(true);
         Arrow.gameObject.SetActive(true);
         ResetGameplayStamp();
         ControlHandler = GameplaySelectControls;
@@ -842,6 +843,7 @@ public class CharacterSelect : MonoBehaviour
     public void MoveToLevelSelect()
     {
         LevelSelectNavigator.enabled = true;
+        gameplayAConfirmation.SetActive(false);
         GameplaySelectNavigator.enabled = false;
         startFunctions = OpenLevelSelect;
         StartCoroutine(WaitAndRunMethod(0.4f, startFunctions));
