@@ -65,6 +65,9 @@ public class CharacterSelect : MonoBehaviour
     public MenuOption RoundLength, PlayerLives;
     public SceneTransitonerScript SceneTransScript;
 
+    public GameObject aConfirmation;
+    public GameObject currentLevelHighlight;
+
     private levelLoadInfo levelData;
     private SceneSelector Scenechanger;
     private int MenuOption = 0;
@@ -368,6 +371,15 @@ public class CharacterSelect : MonoBehaviour
                     StartCoroutine(flipOntoRightPage(characterSelect,0.5f));
                     StartCoroutine(flipOntoLeftPage(levelSelect,0.56f));
                     bookanimator.SetTrigger("PageTurnRight");
+                }
+
+                if (ReadyplayerCount >= 2)
+                {
+                    aConfirmation.SetActive(true);
+                }
+                else
+                {
+                    aConfirmation.SetActive(false);
                 }
             }
         }
@@ -797,6 +809,15 @@ public class CharacterSelect : MonoBehaviour
     {
         levelStamp.color = new Color(1, 1, 1, 0.75f);
         levelStamp.transform.position = pos.transform.position + new Vector3(-2.0f, -1.0f, 0.0f);
+    }
+    public void HighLightLevel(GameObject highlight)
+    {
+        if (currentLevelHighlight != null)
+        {
+            currentLevelHighlight.SetActive(false);
+        }
+        highlight.SetActive(true);
+        currentLevelHighlight = highlight;
     }
     public void ChangeLevelDescription(int level)
     {
