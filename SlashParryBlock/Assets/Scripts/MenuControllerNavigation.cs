@@ -43,6 +43,13 @@ public class MenuControllerNavigation : MonoBehaviour
         ControlsHandler[iterI] = value;
     }
 
+    public void ResetAllControllers()
+    {
+        for (int i = 0; i < ControlsHandler.Count; i++)
+        {
+            ControlsHandler[i] = startingOption.ControllerUpdate;
+        }
+    }
     public void MoveToMenuOption(MenuOption curMenuOption)
     {
         SetDelegate(curMenuOption.ControllerUpdate);
